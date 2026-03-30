@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-app-bg: #f7f8fa;
+  --color-app-surface: #ffffff;
+  --color-app-text: #111827;
+  --color-app-muted: #6b7280;
+  --color-app-border: #e5e7eb;
+  --color-app-border-subtle: #f0f1f3;
+  --color-app-primary: #2563eb;
+  --color-app-primary-fg: #ffffff;
+  --color-app-sport: #16a34a;
+  --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+  /* Elevation — single source for cards & surfaces */
+  --shadow-card: 0 1px 0 rgba(15, 23, 42, 0.05);
+  --shadow-card-hover: 0 1px 0 rgba(15, 23, 42, 0.06),
+    0 4px 12px rgba(15, 23, 42, 0.05);
+  --shadow-nav: 0 -4px 20px rgba(15, 23, 42, 0.05);
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--color-app-bg);
+  color: var(--color-app-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Safe area for fixed bottom nav (touch targets + labels + safe inset) */
+.safe-pb-nav {
+  padding-bottom: calc(4.375rem + env(safe-area-inset-bottom, 0px));
+}
+
+.safe-nav-h {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
