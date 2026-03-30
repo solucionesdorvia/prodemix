@@ -1,5 +1,5 @@
 /**
- * Escudos: primero assets locales (`public/escudos/honor-a`), luego Wikimedia.
+ * Escudos: Honor A locales, Argenliga A (`public/escudos/argenliga-a`), Wikimedia.
  * Libre = sin imagen (fecha libre).
  */
 
@@ -41,6 +41,34 @@ const HONOR_A_LOCAL: Record<string, string> = {
   platense: "/escudos/honor-a/platense.png",
 };
 
+/**
+ * Argenliga (fixtures `argenliga-zona-*-rounds.json`).
+ * Claves = `normalizeTeamKey(nombre en app)`; rutas desde assets Segundopalo 2024/2025.
+ */
+const ARGENLIGA_LOCAL: Record<string, string> = {
+  "amigos (vl)": "/escudos/argenliga-a/2025/131_amigos-v-luro.png",
+  avellaneda: "/escudos/argenliga-a/2025/141_avellaneda.png",
+  "barrio nuevo": "/escudos/argenliga-a/2025/132_barrio-nvo.png",
+  "bomberos (lm)": "/escudos/argenliga-a/2025/385_bomberos.png",
+  bristol: "/escudos/argenliga-a/2025/415_bristol.png",
+  "def. cervantes": "/escudos/argenliga-a/2024/147_cervantes.png",
+  "defensores (sl)": "/escudos/argenliga-a/2025/153_defensores-sl.png",
+  fatima: "/escudos/argenliga-a/2025/143_fatima.png",
+  gon: "/escudos/argenliga-a/2025/112_gon.png",
+  hurlingham: "/escudos/argenliga-a/2025/55_hurlingham.png",
+  ipa: "/escudos/argenliga-a/2025/123_ipa.png",
+  "la cantera": "/escudos/argenliga-a/2025/133_la-cantera.png",
+  "la matanza": "/escudos/argenliga-a/2025/148_la-matanza.png",
+  "los muchachos": "/escudos/argenliga-a/2025/61_los-muchachos.png",
+  newells: "/escudos/argenliga-a/2024/140_newells-ba.png",
+  nolting: "/escudos/argenliga-a/2025/413_nolting.png",
+  "padre mugica": "/escudos/argenliga-a/2024/126_padre-mugica.png",
+  quintana: "/escudos/argenliga-a/2024/383_quintana.png",
+  "saenz pena": "/escudos/argenliga-a/2025/151_saenz-pena.png",
+  "velez (m)": "/escudos/argenliga-a/2025/124_velez-martinez.png",
+  "villa luro (n)": "/escudos/argenliga-a/2025/152_villa-luro-norte.png",
+};
+
 /** Otros torneos / equipos no cargados en honor-a (Commons). */
 const CREST_URL_BY_KEY: Record<string, string> = {
   "racing club":
@@ -55,8 +83,10 @@ export function getTeamCrestUrl(teamName: string): string | undefined {
   if (isLibreTeam(teamName)) return undefined;
   let k = normalizeTeamKey(teamName);
   k = CREST_KEY_ALIASES[k] ?? k;
-  const local = HONOR_A_LOCAL[k];
-  if (local) return local;
+  const honor = HONOR_A_LOCAL[k];
+  if (honor) return honor;
+  const argenliga = ARGENLIGA_LOCAL[k];
+  if (argenliga) return argenliga;
   return CREST_URL_BY_KEY[k];
 }
 
