@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-03-30T23:23:58.879Z",
+  "urls": [
+    "https://www.segundopalo.com/es/competencia/22/argenliga-a?tab=standings&a%C3%B1o=2024",
+    "https://www.segundopalo.com/es/competencia/22/argenliga-a?tab=standings&a%C3%B1o=2025"
+  ],
+  "años": {
+    "2024": {
+      "competencia_id": 22,
+      "slug": "argenliga-a",
+      "edicion_competencias_id": 41,
+      "source_url": "https://www.segundopalo.com/es/competencia/22/argenliga-a?tab=standings&a%C3%B1o=2024",
+      "equipos": 28,
+      "manifest": "escudos/argenliga-a/2024/manifest.json"
+    },
+    "2025": {
+      "competencia_id": 22,
+      "slug": "argenliga-a",
+      "edicion_competencias_id": 42,
+      "source_url": "https://www.segundopalo.com/es/competencia/22/argenliga-a?tab=standings&a%C3%B1o=2025",
+      "equipos": 26,
+      "manifest": "escudos/argenliga-a/2025/manifest.json"
+    }
+  }
+}

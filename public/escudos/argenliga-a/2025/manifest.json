@@ -1,0 +1,236 @@
+[
+  {
+    "equipo_id": 139,
+    "nombre": "Dep Tigre",
+    "posicion": 1,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1761708281146-0tcni.png",
+    "archivo": "escudos/argenliga-a/2025/139_dep-tigre.png",
+    "sha256": "219856204184db3c6f1cc5a3b254f8af5502f8445d08c76284ebab0301c9972e",
+    "error": null
+  },
+  {
+    "equipo_id": 128,
+    "nombre": "Social Club",
+    "posicion": 2,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1761709146224-bb6xu.png",
+    "archivo": "escudos/argenliga-a/2025/128_social-club.png",
+    "sha256": "3eece27973455bcb6d0975eb2b19f0b21a7f55c327487853c43e4b46fa86d016",
+    "error": null
+  },
+  {
+    "equipo_id": 112,
+    "nombre": "GON",
+    "posicion": 3,
+    "escudo_url": "https://firebasestorage.googleapis.com/v0/b/segundopalodatabase.appspot.com/o/ARGENLIGA%20Z2%2FGon.png?alt=media&token=c0c2abe7-3f99-4a03-a9fd-0e102c9928a8",
+    "archivo": "escudos/argenliga-a/2025/112_gon.png",
+    "sha256": "a49c8220778198109a66e718046de60682d4ad1b25f468efe300ef040cca31be",
+    "error": null
+  },
+  {
+    "equipo_id": 415,
+    "nombre": "Bristol",
+    "posicion": 4,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1761708418507-mj2szf.png",
+    "archivo": "escudos/argenliga-a/2025/415_bristol.png",
+    "sha256": "e20a7818780d7cfac869452e054054106cc7197255a01f1cb17ff369d6012c9b",
+    "error": null
+  },
+  {
+    "equipo_id": 55,
+    "nombre": "Hurlingham",
+    "posicion": 5,
+    "escudo_url": "https://firebasestorage.googleapis.com/v0/b/segundopalodatabase.appspot.com/o/PRIMERA%20C%2Fhurligan.png?alt=media&token=286a0efa-4511-46ed-a97b-aeb06584e890",
+    "archivo": "escudos/argenliga-a/2025/55_hurlingham.png",
+    "sha256": "3834da041ff035303ca388cf46867b3965703e6a18bee4bf11eb994324a6a4e2",
+    "error": null
+  },
+  {
+    "equipo_id": 428,
+    "nombre": "Dep America",
+    "posicion": 6,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1761455969684-hys1ur.png",
+    "archivo": "escudos/argenliga-a/2025/428_dep-america.png",
+    "sha256": "314785d253a6b2e576ccd294d7f1504f7f8657bcf982fbedb1941a7432ce93e1",
+    "error": null
+  },
+  {
+    "equipo_id": 142,
+    "nombre": "El Fortin",
+    "posicion": 7,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1761707503445-t7ut8k.png",
+    "archivo": "escudos/argenliga-a/2025/142_el-fortin.png",
+    "sha256": "ec727ab084a733133e5f1099b7ce48b589db0867b320d6e5db5984bf52e43191",
+    "error": null
+  },
+  {
+    "equipo_id": 124,
+    "nombre": "Velez Martinez",
+    "posicion": 8,
+    "escudo_url": "https://firebasestorage.googleapis.com/v0/b/segundopalodatabase.appspot.com/o/ARGENLIGA%20Z1%2F20231208_225716_0000.png?alt=media&token=2b656a85-890a-4bf9-a33f-e02e648c1033",
+    "archivo": "escudos/argenliga-a/2025/124_velez-martinez.png",
+    "sha256": "851f1e3ae93727361cfca7c98e5e7fb0fb122e4310fe3e8ee337bfe4793915e5",
+    "error": null
+  },
+  {
+    "equipo_id": 419,
+    "nombre": "Mitre",
+    "posicion": 9,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1761707672940-rx09qd.png",
+    "archivo": "escudos/argenliga-a/2025/419_mitre.png",
+    "sha256": "e82b606e7c30613c7812b43b08791e9024bde9edb7c35c72654bdeb8d6bd8a2e",
+    "error": null
+  },
+  {
+    "equipo_id": 151,
+    "nombre": "Saenz Peña",
+    "posicion": 10,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1761708523401-96y31.png",
+    "archivo": "escudos/argenliga-a/2025/151_saenz-pena.png",
+    "sha256": "975f9e0515fae61b1b0eb762c3cd59237ce09a053a74c2078d9b4694cbb802d8",
+    "error": null
+  },
+  {
+    "equipo_id": 152,
+    "nombre": "Villa Luro Norte",
+    "posicion": 11,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1761455612839-ygqt2m.png",
+    "archivo": "escudos/argenliga-a/2025/152_villa-luro-norte.png",
+    "sha256": "2d12b9760791e2cb29b3521db2f99dc9255403cae91a0dfa4ac65961d8817b4f",
+    "error": null
+  },
+  {
+    "equipo_id": 63,
+    "nombre": "Reconquista",
+    "posicion": 12,
+    "escudo_url": "https://firebasestorage.googleapis.com/v0/b/segundopalodatabase.appspot.com/o/PRIMERA%20D1%2Freconquista.png?alt=media&token=bcc2f953-57b4-445f-ae46-335c9f21d0dd",
+    "archivo": "escudos/argenliga-a/2025/63_reconquista.png",
+    "sha256": "8cf1de87171f6841f5aa7175c9fee6ac3f618d46c402968bdb4719f1a6dd5807",
+    "error": null
+  },
+  {
+    "equipo_id": 385,
+    "nombre": "Bomberos",
+    "posicion": 13,
+    "escudo_url": "https://firebasestorage.googleapis.com/v0/b/segundopalodatabase.appspot.com/o/ARGENLIGA%20Z1%2Fbomberos.png?alt=media&token=e87e92d0-9513-408f-9da6-2d73c3cb1ee9",
+    "archivo": "escudos/argenliga-a/2025/385_bomberos.png",
+    "sha256": "990a01d9628e66029b2d20bc8491b5bda0cb7fd81f9f28dbac1980e1a18e7520",
+    "error": null
+  },
+  {
+    "equipo_id": 141,
+    "nombre": "Avellaneda",
+    "posicion": 14,
+    "escudo_url": "https://qrwpiwjgcjyltcezwgus.supabase.co/storage/v1/object/public/equipos/1759098999903-t3s5pv3jok.PNG",
+    "archivo": "escudos/argenliga-a/2025/141_avellaneda.png",
+    "sha256": "6ab3893a2067fc96f53295665b6e71bda16efd6b2f4e0c9823ff2b194d833cc1",
+    "error": null
+  },
+  {
+    "equipo_id": 153,
+    "nombre": "Defensores(SL)",
+    "posicion": 15,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1761707907914-q8nm1r.png",
+    "archivo": "escudos/argenliga-a/2025/153_defensores-sl.png",
+    "sha256": "e3d3b067e6e9534b14ea930e67469eb7bfe99dbe5bb8a846c5fc8bf56ae5b6ce",
+    "error": null
+  },
+  {
+    "equipo_id": 119,
+    "nombre": "Estrada",
+    "posicion": 16,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1761708879388-os0t1n.png",
+    "archivo": "escudos/argenliga-a/2025/119_estrada.png",
+    "sha256": "1e4b8dfa6ecf60cd4950cab8f5f1113ebf5420d73e2754bb53bda1f9a2dffe66",
+    "error": null
+  },
+  {
+    "equipo_id": 131,
+    "nombre": "Amigos V Luro",
+    "posicion": 17,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1761708600183-gl47z7.png",
+    "archivo": "escudos/argenliga-a/2025/131_amigos-v-luro.png",
+    "sha256": "98081ee4a9841a86a4e0618275eb41cd6ed71c677338a62346a65ef7a8c41523",
+    "error": null
+  },
+  {
+    "equipo_id": 413,
+    "nombre": "Nolting",
+    "posicion": 18,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1762019329407-3yeb1q.png",
+    "archivo": "escudos/argenliga-a/2025/413_nolting.png",
+    "sha256": "eb60cacd80f03365234949cf2c1becc485869394835074d6b1d2560e8eb65028",
+    "error": null
+  },
+  {
+    "equipo_id": 132,
+    "nombre": "Barrio Nvo",
+    "posicion": 19,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1761708110228-hsq2ch.png",
+    "archivo": "escudos/argenliga-a/2025/132_barrio-nvo.png",
+    "sha256": "c5507eb9e92417427a33b16f34f0455a9cd6f52c840526d0b3b949a0d8df7b1a",
+    "error": null
+  },
+  {
+    "equipo_id": 148,
+    "nombre": "La Matanza",
+    "posicion": 20,
+    "escudo_url": "https://firebasestorage.googleapis.com/v0/b/segundopalodatabase.appspot.com/o/ARGENLIGA%20Z2%2FLamatanza.png?alt=media&token=559d2513-efbe-454b-bdcc-d3d9f9134ae4",
+    "archivo": "escudos/argenliga-a/2025/148_la-matanza.png",
+    "sha256": "1eee3dd87b12b60dca640b8691123bcf4cd9b6e88cedf6ba8db5b73741f81668",
+    "error": null
+  },
+  {
+    "equipo_id": 123,
+    "nombre": "IPA",
+    "posicion": 21,
+    "escudo_url": "https://firebasestorage.googleapis.com/v0/b/segundopalodatabase.appspot.com/o/ARGENLIGA%20Z1%2FIPA.png?alt=media&token=961aad25-dda8-4123-be0d-08e51ee0839f",
+    "archivo": "escudos/argenliga-a/2025/123_ipa.png",
+    "sha256": "23abb2ef6a2ff75802e23a98713501970129656d15801fb76e4179b278fcd46d",
+    "error": null
+  },
+  {
+    "equipo_id": 61,
+    "nombre": "Los Muchachos",
+    "posicion": 22,
+    "escudo_url": "https://firebasestorage.googleapis.com/v0/b/segundopalodatabase.appspot.com/o/PRIMERA%20D1%2Flosmuchachos.png?alt=media&token=929418c1-b488-422a-a152-ef38868aa264",
+    "archivo": "escudos/argenliga-a/2025/61_los-muchachos.png",
+    "sha256": "90f02950f0d95c68def01f7fbc3fd7d9f8a6e5536b087c3f4e95fdc57d37d51e",
+    "error": null
+  },
+  {
+    "equipo_id": 133,
+    "nombre": "La Cantera",
+    "posicion": 23,
+    "escudo_url": "https://firebasestorage.googleapis.com/v0/b/segundopalodatabase.appspot.com/o/ARGENLIGA%20Z1%2FLaCantera.png?alt=media&token=df387f0f-2efd-41b0-a001-768634eedf73",
+    "archivo": "escudos/argenliga-a/2025/133_la-cantera.png",
+    "sha256": "a579024e147f43908dba8bd167aba3de7eae45ed72f5aec40c960d4a78812912",
+    "error": null
+  },
+  {
+    "equipo_id": 143,
+    "nombre": "Fatima",
+    "posicion": 24,
+    "escudo_url": "https://firebasestorage.googleapis.com/v0/b/segundopalodatabase.appspot.com/o/ARGENLIGA%20Z2%2FSraFatima.png?alt=media&token=ce80307c-7d76-4071-931a-425b90db803c",
+    "archivo": "escudos/argenliga-a/2025/143_fatima.png",
+    "sha256": "c3270e126b4884124250243d6e2ae7a4631124495d245029aecd701552b73d0f",
+    "error": null
+  },
+  {
+    "equipo_id": 157,
+    "nombre": "Pampero",
+    "posicion": 25,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1774832618002-9desh.png",
+    "archivo": "escudos/argenliga-a/2025/157_pampero.png",
+    "sha256": "29c09f59c0ace3bfefecff5c25ce36362d88e0a190a9fcf7dfd52796ad27012a",
+    "error": null
+  },
+  {
+    "equipo_id": 38,
+    "nombre": "Don Bosco",
+    "posicion": 26,
+    "escudo_url": "https://firebasestorage.googleapis.com/v0/b/segundopalodatabase.appspot.com/o/PRIMERA%20C%2F20231030_101537_0000.png?alt=media&token=d3affee1-6c62-4b38-866a-37de9ef1424c&_gl=1*mo76k0*_ga*NjE2MDYyNDQ4LjE2NzIxNzE2NDY.*_ga_CW55HF8NVT*MTY5ODY3MDY5OC4yMjAuMS4xNjk4NjcxNzYyLjQ2LjAuMA..",
+    "archivo": "escudos/argenliga-a/2025/38_don-bosco.png",
+    "sha256": "ef6a73c07c1c8a17264be1fdb1bdb41ba4f7de97b097a32580c3b19033aa4d86",
+    "error": null
+  }
+]

@@ -1,0 +1,254 @@
+[
+  {
+    "equipo_id": 129,
+    "nombre": "Def Olivos",
+    "posicion": 1,
+    "escudo_url": "https://firebasestorage.googleapis.com/v0/b/segundopalodatabase.appspot.com/o/defeolivos.png?alt=media&token=089b014e-e80b-4cb3-b4df-b09c2d87211c",
+    "archivo": "escudos/argenliga-a/2024/129_def-olivos.png",
+    "sha256": "2dcfec54aa72353d2e25450575f23c0e4222333d2eb08fc64c4866e3289b4af9",
+    "error": null
+  },
+  {
+    "equipo_id": 77,
+    "nombre": "Las Heras",
+    "posicion": 2,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1762455825459-ysq3ee.svg",
+    "archivo": "escudos/argenliga-a/2024/77_las-heras.svg",
+    "sha256": "a1d9f4bbc411b9f422ff33c9dad0b1f4f8f23cf18f72a462cef0ac2c13b45c10",
+    "error": null
+  },
+  {
+    "equipo_id": 383,
+    "nombre": "Quintana",
+    "posicion": 3,
+    "escudo_url": "https://firebasestorage.googleapis.com/v0/b/segundopalodatabase.appspot.com/o/ARGENLIGA%20Z1%2Fquintana.png?alt=media&token=37629ab3-1562-49bb-9e89-9fadbbc2c55d",
+    "archivo": "escudos/argenliga-a/2024/383_quintana.png",
+    "sha256": "14a75c9195a14a6d8c667ce5774d6f559101a5d85dd89df5b4de5308436c1c42",
+    "error": null
+  },
+  {
+    "equipo_id": 135,
+    "nombre": "Stentor",
+    "posicion": 4,
+    "escudo_url": "https://firebasestorage.googleapis.com/v0/b/segundopalodatabase.appspot.com/o/ARGENLIGA%20Z2%2FStentor.png?alt=media&token=d33f099c-e798-4c56-a2f1-87b6a4d0f4e4",
+    "archivo": "escudos/argenliga-a/2024/135_stentor.png",
+    "sha256": "141ae3fde8f6110b6a79e57d156ae83ad9b06145f56ebc6f1c57a6de85b262e2",
+    "error": null
+  },
+  {
+    "equipo_id": 139,
+    "nombre": "Dep Tigre",
+    "posicion": 5,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1761708281146-0tcni.png",
+    "archivo": "escudos/argenliga-a/2024/139_dep-tigre.png",
+    "sha256": "219856204184db3c6f1cc5a3b254f8af5502f8445d08c76284ebab0301c9972e",
+    "error": null
+  },
+  {
+    "equipo_id": 384,
+    "nombre": "Sarmiento (O)",
+    "posicion": 6,
+    "escudo_url": "https://firebasestorage.googleapis.com/v0/b/segundopalodatabase.appspot.com/o/ARGENLIGA%20Z1%2Fsarmientoo.png?alt=media&token=ac88a2cb-33a7-4742-8ca6-c0ec7f1a1c82",
+    "archivo": "escudos/argenliga-a/2024/384_sarmiento-o.png",
+    "sha256": "099cd7201cb0c64bb6a1d903d66d92b7fd920d19f5dd802ebec6e058436dacb8",
+    "error": null
+  },
+  {
+    "equipo_id": 385,
+    "nombre": "Bomberos",
+    "posicion": 7,
+    "escudo_url": "https://firebasestorage.googleapis.com/v0/b/segundopalodatabase.appspot.com/o/ARGENLIGA%20Z1%2Fbomberos.png?alt=media&token=e87e92d0-9513-408f-9da6-2d73c3cb1ee9",
+    "archivo": "escudos/argenliga-a/2024/385_bomberos.png",
+    "sha256": "990a01d9628e66029b2d20bc8491b5bda0cb7fd81f9f28dbac1980e1a18e7520",
+    "error": null
+  },
+  {
+    "equipo_id": 130,
+    "nombre": "Moran",
+    "posicion": 8,
+    "escudo_url": "https://firebasestorage.googleapis.com/v0/b/segundopalodatabase.appspot.com/o/ARGENLIGA%20Z1%2FMoran.png?alt=media&token=e6865fdf-bada-4a4a-a40d-db0270b4da26",
+    "archivo": "escudos/argenliga-a/2024/130_moran.png",
+    "sha256": "cfe779d142e275162c749374fc1866c949cc483bce04ff73572a0239df9097b1",
+    "error": null
+  },
+  {
+    "equipo_id": 119,
+    "nombre": "Estrada",
+    "posicion": 9,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1761708879388-os0t1n.png",
+    "archivo": "escudos/argenliga-a/2024/119_estrada.png",
+    "sha256": "1e4b8dfa6ecf60cd4950cab8f5f1113ebf5420d73e2754bb53bda1f9a2dffe66",
+    "error": null
+  },
+  {
+    "equipo_id": 142,
+    "nombre": "El Fortin",
+    "posicion": 10,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1761707503445-t7ut8k.png",
+    "archivo": "escudos/argenliga-a/2024/142_el-fortin.png",
+    "sha256": "ec727ab084a733133e5f1099b7ce48b589db0867b320d6e5db5984bf52e43191",
+    "error": null
+  },
+  {
+    "equipo_id": 153,
+    "nombre": "Defensores(SL)",
+    "posicion": 11,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1761707907914-q8nm1r.png",
+    "archivo": "escudos/argenliga-a/2024/153_defensores-sl.png",
+    "sha256": "e3d3b067e6e9534b14ea930e67469eb7bfe99dbe5bb8a846c5fc8bf56ae5b6ce",
+    "error": null
+  },
+  {
+    "equipo_id": 132,
+    "nombre": "Barrio Nvo",
+    "posicion": 12,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1761708110228-hsq2ch.png",
+    "archivo": "escudos/argenliga-a/2024/132_barrio-nvo.png",
+    "sha256": "c5507eb9e92417427a33b16f34f0455a9cd6f52c840526d0b3b949a0d8df7b1a",
+    "error": null
+  },
+  {
+    "equipo_id": 131,
+    "nombre": "Amigos V Luro",
+    "posicion": 13,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1761708600183-gl47z7.png",
+    "archivo": "escudos/argenliga-a/2024/131_amigos-v-luro.png",
+    "sha256": "98081ee4a9841a86a4e0618275eb41cd6ed71c677338a62346a65ef7a8c41523",
+    "error": null
+  },
+  {
+    "equipo_id": 151,
+    "nombre": "Saenz Peña",
+    "posicion": 14,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1761708523401-96y31.png",
+    "archivo": "escudos/argenliga-a/2024/151_saenz-pena.png",
+    "sha256": "975f9e0515fae61b1b0eb762c3cd59237ce09a053a74c2078d9b4694cbb802d8",
+    "error": null
+  },
+  {
+    "equipo_id": 133,
+    "nombre": "La Cantera",
+    "posicion": 15,
+    "escudo_url": "https://firebasestorage.googleapis.com/v0/b/segundopalodatabase.appspot.com/o/ARGENLIGA%20Z1%2FLaCantera.png?alt=media&token=df387f0f-2efd-41b0-a001-768634eedf73",
+    "archivo": "escudos/argenliga-a/2024/133_la-cantera.png",
+    "sha256": "a579024e147f43908dba8bd167aba3de7eae45ed72f5aec40c960d4a78812912",
+    "error": null
+  },
+  {
+    "equipo_id": 152,
+    "nombre": "Villa Luro Norte",
+    "posicion": 16,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1761455612839-ygqt2m.png",
+    "archivo": "escudos/argenliga-a/2024/152_villa-luro-norte.png",
+    "sha256": "2d12b9760791e2cb29b3521db2f99dc9255403cae91a0dfa4ac65961d8817b4f",
+    "error": null
+  },
+  {
+    "equipo_id": 128,
+    "nombre": "Social Club",
+    "posicion": 17,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1761709146224-bb6xu.png",
+    "archivo": "escudos/argenliga-a/2024/128_social-club.png",
+    "sha256": "3eece27973455bcb6d0975eb2b19f0b21a7f55c327487853c43e4b46fa86d016",
+    "error": null
+  },
+  {
+    "equipo_id": 141,
+    "nombre": "Avellaneda",
+    "posicion": 18,
+    "escudo_url": "https://qrwpiwjgcjyltcezwgus.supabase.co/storage/v1/object/public/equipos/1759098999903-t3s5pv3jok.PNG",
+    "archivo": "escudos/argenliga-a/2024/141_avellaneda.png",
+    "sha256": "6ab3893a2067fc96f53295665b6e71bda16efd6b2f4e0c9823ff2b194d833cc1",
+    "error": null
+  },
+  {
+    "equipo_id": 61,
+    "nombre": "Los Muchachos",
+    "posicion": 19,
+    "escudo_url": "https://firebasestorage.googleapis.com/v0/b/segundopalodatabase.appspot.com/o/PRIMERA%20D1%2Flosmuchachos.png?alt=media&token=929418c1-b488-422a-a152-ef38868aa264",
+    "archivo": "escudos/argenliga-a/2024/61_los-muchachos.png",
+    "sha256": "90f02950f0d95c68def01f7fbc3fd7d9f8a6e5536b087c3f4e95fdc57d37d51e",
+    "error": null
+  },
+  {
+    "equipo_id": 428,
+    "nombre": "Dep America",
+    "posicion": 20,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1761455969684-hys1ur.png",
+    "archivo": "escudos/argenliga-a/2024/428_dep-america.png",
+    "sha256": "314785d253a6b2e576ccd294d7f1504f7f8657bcf982fbedb1941a7432ce93e1",
+    "error": null
+  },
+  {
+    "equipo_id": 123,
+    "nombre": "IPA",
+    "posicion": 21,
+    "escudo_url": "https://firebasestorage.googleapis.com/v0/b/segundopalodatabase.appspot.com/o/ARGENLIGA%20Z1%2FIPA.png?alt=media&token=961aad25-dda8-4123-be0d-08e51ee0839f",
+    "archivo": "escudos/argenliga-a/2024/123_ipa.png",
+    "sha256": "23abb2ef6a2ff75802e23a98713501970129656d15801fb76e4179b278fcd46d",
+    "error": null
+  },
+  {
+    "equipo_id": 112,
+    "nombre": "GON",
+    "posicion": 22,
+    "escudo_url": "https://firebasestorage.googleapis.com/v0/b/segundopalodatabase.appspot.com/o/ARGENLIGA%20Z2%2FGon.png?alt=media&token=c0c2abe7-3f99-4a03-a9fd-0e102c9928a8",
+    "archivo": "escudos/argenliga-a/2024/112_gon.png",
+    "sha256": "a49c8220778198109a66e718046de60682d4ad1b25f468efe300ef040cca31be",
+    "error": null
+  },
+  {
+    "equipo_id": 143,
+    "nombre": "Fatima",
+    "posicion": 23,
+    "escudo_url": "https://firebasestorage.googleapis.com/v0/b/segundopalodatabase.appspot.com/o/ARGENLIGA%20Z2%2FSraFatima.png?alt=media&token=ce80307c-7d76-4071-931a-425b90db803c",
+    "archivo": "escudos/argenliga-a/2024/143_fatima.png",
+    "sha256": "c3270e126b4884124250243d6e2ae7a4631124495d245029aecd701552b73d0f",
+    "error": null
+  },
+  {
+    "equipo_id": 147,
+    "nombre": "Cervantes",
+    "posicion": 24,
+    "escudo_url": "https://firebasestorage.googleapis.com/v0/b/segundopalodatabase.appspot.com/o/FEMENINO%2Fcervantes.png?alt=media&token=3111d703-cfa9-45de-b18a-7099b1807f3f",
+    "archivo": "escudos/argenliga-a/2024/147_cervantes.png",
+    "sha256": "09b1d2e21c3e7e7e49b8980fef1b0dbe4349480f9aa9cfc42382194fe4a011cf",
+    "error": null
+  },
+  {
+    "equipo_id": 140,
+    "nombre": "Newells(BA)",
+    "posicion": 25,
+    "escudo_url": "https://firebasestorage.googleapis.com/v0/b/segundopalodatabase.appspot.com/o/PRIMERA%20B%2Fnewlss_hcjj5i.png?alt=media&token=55be48ee-9a87-4f6e-a6e1-d11bc5d3acb5",
+    "archivo": "escudos/argenliga-a/2024/140_newells-ba.png",
+    "sha256": "af3bb814e91dc2d4f86780980305f4839271177d3ea9cf214bc686424fac3c94",
+    "error": null
+  },
+  {
+    "equipo_id": 126,
+    "nombre": "Padre Mugica",
+    "posicion": 26,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1761739943872-tefflh.png",
+    "archivo": "escudos/argenliga-a/2024/126_padre-mugica.png",
+    "sha256": "a6a85980d11dbee5fa8672b66120430ccd3a4b449b7b151a40b67e7ea451cfcf",
+    "error": null
+  },
+  {
+    "equipo_id": 154,
+    "nombre": "San Antonio",
+    "posicion": 27,
+    "escudo_url": "https://firebasestorage.googleapis.com/v0/b/segundopalodatabase.appspot.com/o/ARGENLIGA%20Z1%2FSanAntonio.png?alt=media&token=5628b788-5a8c-4a02-8b4a-24cd9fc067f5",
+    "archivo": "escudos/argenliga-a/2024/154_san-antonio.png",
+    "sha256": "3eabe87c043f96a73de482891ee076ac4a0211a1c7330b531f1aeda89e384142",
+    "error": null
+  },
+  {
+    "equipo_id": 145,
+    "nombre": "Corvalan",
+    "posicion": 28,
+    "escudo_url": "https://arikqvkvamkwzncojzrr.supabase.co/storage/v1/object/public/Escudos/1761740556366-f2i02i.png",
+    "archivo": "escudos/argenliga-a/2024/145_corvalan.png",
+    "sha256": "7f8cc8495d6d1c45146b7f1eae52b0001d51334b188862f67741ee860ce36344",
+    "error": null
+  }
+]
