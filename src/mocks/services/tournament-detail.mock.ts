@@ -60,6 +60,22 @@ function activityForCatalogue(id: string): TournamentActivityNote[] {
         timeLabel: "Hoy",
       },
     ],
+    "argenliga-zona-1": [
+      {
+        id: "a1",
+        title: "Argenliga Zona 1",
+        detail: "Fixture según planilla oficial (16 equipos).",
+        timeLabel: "Hoy",
+      },
+    ],
+    "argenliga-zona-2": [
+      {
+        id: "a1",
+        title: "Argenliga Zona 2",
+        detail: "Fixture oficial · 15 fechas · 16 equipos.",
+        timeLabel: "Hoy",
+      },
+    ],
     "afa-futsal-a": [
       {
         id: "a1",

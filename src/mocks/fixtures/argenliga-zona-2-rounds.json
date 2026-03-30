@@ -1,0 +1,152 @@
+[
+  [
+    ["L. DEL MIRADOR", "GIM. CHACABUCO"],
+    ["GON", "PADRE MUGICA"],
+    ["LA CANTERA", "LOS MUCHACHOS"],
+    ["LA MATANZA", "FATIMA"],
+    ["BARRIO NUEVO", "DEF. CERVANTES"],
+    ["AVELLANEDA", "BOMBEROS (LM)"],
+    ["QUINTANA", "FERRO (M)"],
+    ["M. MORENO", "NOLTING"]
+  ],
+  [
+    ["M. MORENO", "L. DEL MIRADOR"],
+    ["NOLTING", "QUINTANA"],
+    ["FERRO (M)", "AVELLANEDA"],
+    ["BOMBEROS (LM)", "BARRIO NUEVO"],
+    ["DEF. CERVANTES", "LA MATANZA"],
+    ["FATIMA", "LA CANTERA"],
+    ["LOS MUCHACHOS", "GON"],
+    ["PADRE MUGICA", "GIM. CHACABUCO"]
+  ],
+  [
+    ["L. DEL MIRADOR", "PADRE MUGICA"],
+    ["GIM. CHACABUCO", "LOS MUCHACHOS"],
+    ["GON", "FATIMA"],
+    ["LA CANTERA", "DEF. CERVANTES"],
+    ["LA MATANZA", "BOMBEROS (LM)"],
+    ["BARRIO NUEVO", "FERRO (M)"],
+    ["AVELLANEDA", "NOLTING"],
+    ["QUINTANA", "M. MORENO"]
+  ],
+  [
+    ["QUINTANA", "L. DEL MIRADOR"],
+    ["M. MORENO", "AVELLANEDA"],
+    ["NOLTING", "BARRIO NUEVO"],
+    ["FERRO (M)", "LA MATANZA"],
+    ["BOMBEROS (LM)", "LA CANTERA"],
+    ["DEF. CERVANTES", "GON"],
+    ["FATIMA", "GIM. CHACABUCO"],
+    ["LOS MUCHACHOS", "PADRE MUGICA"]
+  ],
+  [
+    ["L. DEL MIRADOR", "LOS MUCHACHOS"],
+    ["PADRE MUGICA", "FATIMA"],
+    ["GIM. CHACABUCO", "DEF. CERVANTES"],
+    ["GON", "BOMBEROS (LM)"],
+    ["LA CANTERA", "FERRO (M)"],
+    ["LA MATANZA", "NOLTING"],
+    ["BARRIO NUEVO", "M. MORENO"],
+    ["AVELLANEDA", "QUINTANA"]
+  ],
+  [
+    ["AVELLANEDA", "L. DEL MIRADOR"],
+    ["QUINTANA", "BARRIO NUEVO"],
+    ["M. MORENO", "LA MATANZA"],
+    ["NOLTING", "LA CANTERA"],
+    ["FERRO (M)", "GON"],
+    ["BOMBEROS (LM)", "GIM. CHACABUCO"],
+    ["DEF. CERVANTES", "PADRE MUGICA"],
+    ["FATIMA", "LOS MUCHACHOS"]
+  ],
+  [
+    ["L. DEL MIRADOR", "FATIMA"],
+    ["LOS MUCHACHOS", "DEF. CERVANTES"],
+    ["PADRE MUGICA", "BOMBEROS (LM)"],
+    ["GIM. CHACABUCO", "FERRO (M)"],
+    ["GON", "NOLTING"],
+    ["LA CANTERA", "M. MORENO"],
+    ["LA MATANZA", "QUINTANA"],
+    ["BARRIO NUEVO", "AVELLANEDA"]
+  ],
+  [
+    ["BARRIO NUEVO", "L. DEL MIRADOR"],
+    ["AVELLANEDA", "LA MATANZA"],
+    ["QUINTANA", "LA CANTERA"],
+    ["M. MORENO", "GON"],
+    ["NOLTING", "GIM. CHACABUCO"],
+    ["FERRO (M)", "PADRE MUGICA"],
+    ["BOMBEROS (LM)", "LOS MUCHACHOS"],
+    ["DEF. CERVANTES", "FATIMA"]
+  ],
+  [
+    ["L. DEL MIRADOR", "DEF. CERVANTES"],
+    ["FATIMA", "BOMBEROS (LM)"],
+    ["LOS MUCHACHOS", "FERRO (M)"],
+    ["PADRE MUGICA", "NOLTING"],
+    ["GIM. CHACABUCO", "M. MORENO"],
+    ["GON", "QUINTANA"],
+    ["LA CANTERA", "AVELLANEDA"],
+    ["LA MATANZA", "BARRIO NUEVO"]
+  ],
+  [
+    ["LA MATANZA", "L. DEL MIRADOR"],
+    ["BARRIO NUEVO", "LA CANTERA"],
+    ["AVELLANEDA", "GON"],
+    ["QUINTANA", "GIM. CHACABUCO"],
+    ["M. MORENO", "PADRE MUGICA"],
+    ["NOLTING", "LOS MUCHACHOS"],
+    ["FERRO (M)", "FATIMA"],
+    ["BOMBEROS (LM)", "DEF. CERVANTES"]
+  ],
+  [
+    ["L. DEL MIRADOR", "BOMBEROS (LM)"],
+    ["DEF. CERVANTES", "FERRO (M)"],
+    ["FATIMA", "NOLTING"],
+    ["LOS MUCHACHOS", "M. MORENO"],
+    ["PADRE MUGICA", "QUINTANA"],
+    ["GIM. CHACABUCO", "AVELLANEDA"],
+    ["GON", "BARRIO NUEVO"],
+    ["LA CANTERA", "LA MATANZA"]
+  ],
+  [
+    ["LA CANTERA", "L. DEL MIRADOR"],
+    ["LA MATANZA", "GON"],
+    ["BARRIO NUEVO", "GIM. CHACABUCO"],
+    ["AVELLANEDA", "PADRE MUGICA"],
+    ["QUINTANA", "LOS MUCHACHOS"],
+    ["M. MORENO", "FATIMA"],
+    ["NOLTING", "DEF. CERVANTES"],
+    ["FERRO (M)", "BOMBEROS (LM)"]
+  ],
+  [
+    ["L. DEL MIRADOR", "FERRO (M)"],
+    ["BOMBEROS (LM)", "NOLTING"],
+    ["DEF. CERVANTES", "M. MORENO"],
+    ["FATIMA", "QUINTANA"],
+    ["LOS MUCHACHOS", "AVELLANEDA"],
+    ["PADRE MUGICA", "BARRIO NUEVO"],
+    ["GIM. CHACABUCO", "LA MATANZA"],
+    ["GON", "LA CANTERA"]
+  ],
+  [
+    ["GON", "L. DEL MIRADOR"],
+    ["LA CANTERA", "GIM. CHACABUCO"],
+    ["LA MATANZA", "PADRE MUGICA"],
+    ["BARRIO NUEVO", "LOS MUCHACHOS"],
+    ["AVELLANEDA", "FATIMA"],
+    ["QUINTANA", "DEF. CERVANTES"],
+    ["M. MORENO", "BOMBEROS (LM)"],
+    ["NOLTING", "FERRO (M)"]
+  ],
+  [
+    ["L. DEL MIRADOR", "NOLTING"],
+    ["FERRO (M)", "M. MORENO"],
+    ["BOMBEROS (LM)", "QUINTANA"],
+    ["DEF. CERVANTES", "AVELLANEDA"],
+    ["FATIMA", "BARRIO NUEVO"],
+    ["LOS MUCHACHOS", "LA MATANZA"],
+    ["PADRE MUGICA", "LA CANTERA"],
+    ["GIM. CHACABUCO", "GON"]
+  ]
+]

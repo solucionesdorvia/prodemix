@@ -1,0 +1,512 @@
+[
+  [
+    [
+      "SAENZ PEÑA",
+      "NEWELLS"
+    ],
+    [
+      "AMIGOS (VL)",
+      "HURACAN"
+    ],
+    [
+      "IPA",
+      "VILLA LURO (N)"
+    ],
+    [
+      "VELEZ (M)",
+      "BPNA"
+    ],
+    [
+      "BRISTOL",
+      "EL CAMPITO"
+    ],
+    [
+      "HURLINGHAM",
+      "EST. DE ALMAGRO"
+    ],
+    [
+      "ARTIGUENSE",
+      "ARSENAL"
+    ],
+    [
+      "VERSAILLES",
+      "DEFENSORES (SL)"
+    ]
+  ],
+  [
+    [
+      "VERSAILLES",
+      "SAENZ PEÑA"
+    ],
+    [
+      "DEFENSORES (SL)",
+      "ARTIGUENSE"
+    ],
+    [
+      "ARSENAL",
+      "HURLINGHAM"
+    ],
+    [
+      "EST. DE ALMAGRO",
+      "BRISTOL"
+    ],
+    [
+      "EL CAMPITO",
+      "VELEZ (M)"
+    ],
+    [
+      "BPNA",
+      "IPA"
+    ],
+    [
+      "VILLA LURO (N)",
+      "AMIGOS (VL)"
+    ],
+    [
+      "HURACAN",
+      "NEWELLS"
+    ]
+  ],
+  [
+    [
+      "SAENZ PEÑA",
+      "HURACAN"
+    ],
+    [
+      "NEWELLS",
+      "VILLA LURO (N)"
+    ],
+    [
+      "AMIGOS (VL)",
+      "BPNA"
+    ],
+    [
+      "IPA",
+      "EL CAMPITO"
+    ],
+    [
+      "VELEZ (M)",
+      "EST. DE ALMAGRO"
+    ],
+    [
+      "BRISTOL",
+      "ARSENAL"
+    ],
+    [
+      "HURLINGHAM",
+      "DEFENSORES (SL)"
+    ],
+    [
+      "ARTIGUENSE",
+      "VERSAILLES"
+    ]
+  ],
+  [
+    [
+      "ARTIGUENSE",
+      "SAENZ PEÑA"
+    ],
+    [
+      "VERSAILLES",
+      "HURLINGHAM"
+    ],
+    [
+      "DEFENSORES (SL)",
+      "BRISTOL"
+    ],
+    [
+      "ARSENAL",
+      "VELEZ (M)"
+    ],
+    [
+      "EST. DE ALMAGRO",
+      "IPA"
+    ],
+    [
+      "EL CAMPITO",
+      "AMIGOS (VL)"
+    ],
+    [
+      "BPNA",
+      "NEWELLS"
+    ],
+    [
+      "VILLA LURO (N)",
+      "HURACAN"
+    ]
+  ],
+  [
+    [
+      "SAENZ PEÑA",
+      "VILLA LURO (N)"
+    ],
+    [
+      "HURACAN",
+      "BPNA"
+    ],
+    [
+      "NEWELLS",
+      "EL CAMPITO"
+    ],
+    [
+      "AMIGOS (VL)",
+      "EST. DE ALMAGRO"
+    ],
+    [
+      "IPA",
+      "ARSENAL"
+    ],
+    [
+      "VELEZ (M)",
+      "DEFENSORES (SL)"
+    ],
+    [
+      "BRISTOL",
+      "VERSAILLES"
+    ],
+    [
+      "HURLINGHAM",
+      "ARTIGUENSE"
+    ]
+  ],
+  [
+    [
+      "HURLINGHAM",
+      "SAENZ PEÑA"
+    ],
+    [
+      "ARTIGUENSE",
+      "BRISTOL"
+    ],
+    [
+      "VERSAILLES",
+      "VELEZ (M)"
+    ],
+    [
+      "DEFENSORES (SL)",
+      "IPA"
+    ],
+    [
+      "ARSENAL",
+      "AMIGOS (VL)"
+    ],
+    [
+      "EST. DE ALMAGRO",
+      "NEWELLS"
+    ],
+    [
+      "EL CAMPITO",
+      "HURACAN"
+    ],
+    [
+      "BPNA",
+      "VILLA LURO (N)"
+    ]
+  ],
+  [
+    [
+      "SAENZ PEÑA",
+      "BPNA"
+    ],
+    [
+      "VILLA LURO (N)",
+      "EL CAMPITO"
+    ],
+    [
+      "HURACAN",
+      "EST. DE ALMAGRO"
+    ],
+    [
+      "NEWELLS",
+      "ARSENAL"
+    ],
+    [
+      "AMIGOS (VL)",
+      "DEFENSORES (SL)"
+    ],
+    [
+      "IPA",
+      "VERSAILLES"
+    ],
+    [
+      "VELEZ (M)",
+      "ARTIGUENSE"
+    ],
+    [
+      "BRISTOL",
+      "HURLINGHAM"
+    ]
+  ],
+  [
+    [
+      "BRISTOL",
+      "SAENZ PEÑA"
+    ],
+    [
+      "HURLINGHAM",
+      "VELEZ (M)"
+    ],
+    [
+      "ARTIGUENSE",
+      "IPA"
+    ],
+    [
+      "VERSAILLES",
+      "AMIGOS (VL)"
+    ],
+    [
+      "DEFENSORES (SL)",
+      "NEWELLS"
+    ],
+    [
+      "ARSENAL",
+      "HURACAN"
+    ],
+    [
+      "EST. DE ALMAGRO",
+      "VILLA LURO (N)"
+    ],
+    [
+      "EL CAMPITO",
+      "BPNA"
+    ]
+  ],
+  [
+    [
+      "SAENZ PEÑA",
+      "EL CAMPITO"
+    ],
+    [
+      "BPNA",
+      "EST. DE ALMAGRO"
+    ],
+    [
+      "VILLA LURO (N)",
+      "ARSENAL"
+    ],
+    [
+      "HURACAN",
+      "DEFENSORES (SL)"
+    ],
+    [
+      "NEWELLS",
+      "VERSAILLES"
+    ],
+    [
+      "AMIGOS (VL)",
+      "ARTIGUENSE"
+    ],
+    [
+      "IPA",
+      "HURLINGHAM"
+    ],
+    [
+      "VELEZ (M)",
+      "BRISTOL"
+    ]
+  ],
+  [
+    [
+      "VELEZ (M)",
+      "SAENZ PEÑA"
+    ],
+    [
+      "BRISTOL",
+      "IPA"
+    ],
+    [
+      "HURLINGHAM",
+      "AMIGOS (VL)"
+    ],
+    [
+      "ARTIGUENSE",
+      "NEWELLS"
+    ],
+    [
+      "VERSAILLES",
+      "HURACAN"
+    ],
+    [
+      "DEFENSORES (SL)",
+      "VILLA LURO (N)"
+    ],
+    [
+      "ARSENAL",
+      "BPNA"
+    ],
+    [
+      "EST. DE ALMAGRO",
+      "EL CAMPITO"
+    ]
+  ],
+  [
+    [
+      "SAENZ PEÑA",
+      "EST. DE ALMAGRO"
+    ],
+    [
+      "EL CAMPITO",
+      "ARSENAL"
+    ],
+    [
+      "BPNA",
+      "DEFENSORES (SL)"
+    ],
+    [
+      "VILLA LURO (N)",
+      "VERSAILLES"
+    ],
+    [
+      "HURACAN",
+      "ARTIGUENSE"
+    ],
+    [
+      "NEWELLS",
+      "HURLINGHAM"
+    ],
+    [
+      "AMIGOS (VL)",
+      "BRISTOL"
+    ],
+    [
+      "IPA",
+      "VELEZ (M)"
+    ]
+  ],
+  [
+    [
+      "IPA",
+      "SAENZ PEÑA"
+    ],
+    [
+      "VELEZ (M)",
+      "AMIGOS (VL)"
+    ],
+    [
+      "BRISTOL",
+      "NEWELLS"
+    ],
+    [
+      "HURLINGHAM",
+      "HURACAN"
+    ],
+    [
+      "ARTIGUENSE",
+      "VILLA LURO (N)"
+    ],
+    [
+      "VERSAILLES",
+      "BPNA"
+    ],
+    [
+      "DEFENSORES (SL)",
+      "EL CAMPITO"
+    ],
+    [
+      "ARSENAL",
+      "EST. DE ALMAGRO"
+    ]
+  ],
+  [
+    [
+      "SAENZ PEÑA",
+      "ARSENAL"
+    ],
+    [
+      "EST. DE ALMAGRO",
+      "DEFENSORES (SL)"
+    ],
+    [
+      "EL CAMPITO",
+      "VERSAILLES"
+    ],
+    [
+      "BPNA",
+      "ARTIGUENSE"
+    ],
+    [
+      "VILLA LURO (N)",
+      "HURLINGHAM"
+    ],
+    [
+      "HURACAN",
+      "BRISTOL"
+    ],
+    [
+      "NEWELLS",
+      "VELEZ (M)"
+    ],
+    [
+      "AMIGOS (VL)",
+      "IPA"
+    ]
+  ],
+  [
+    [
+      "AMIGOS (VL)",
+      "SAENZ PEÑA"
+    ],
+    [
+      "IPA",
+      "NEWELLS"
+    ],
+    [
+      "VELEZ (M)",
+      "HURACAN"
+    ],
+    [
+      "BRISTOL",
+      "VILLA LURO (N)"
+    ],
+    [
+      "HURLINGHAM",
+      "BPNA"
+    ],
+    [
+      "ARTIGUENSE",
+      "EL CAMPITO"
+    ],
+    [
+      "VERSAILLES",
+      "EST. DE ALMAGRO"
+    ],
+    [
+      "DEFENSORES (SL)",
+      "ARSENAL"
+    ]
+  ],
+  [
+    [
+      "SAENZ PEÑA",
+      "DEFENSORES (SL)"
+    ],
+    [
+      "ARSENAL",
+      "VERSAILLES"
+    ],
+    [
+      "EST. DE ALMAGRO",
+      "ARTIGUENSE"
+    ],
+    [
+      "EL CAMPITO",
+      "HURLINGHAM"
+    ],
+    [
+      "BPNA",
+      "BRISTOL"
+    ],
+    [
+      "VILLA LURO (N)",
+      "VELEZ (M)"
+    ],
+    [
+      "HURACAN",
+      "IPA"
+    ],
+    [
+      "NEWELLS",
+      "AMIGOS (VL)"
+    ]
+  ]
+]

@@ -15,6 +15,10 @@ export function isLibreTeam(name: string): boolean {
   return normalizeTeamKey(name) === "libre";
 }
 
+const CREST_KEY_ALIASES: Record<string, string> = {
+  "amigos (vl)": "amigos de villa luro",
+};
+
 /** Liga Honor A — PNG en repo (`public/escudos/honor-a/`). */
 const HONOR_A_LOCAL: Record<string, string> = {
   "17 de agosto": "/escudos/honor-a/17-de-agosto.png",
@@ -49,7 +53,8 @@ const CREST_URL_BY_KEY: Record<string, string> = {
 
 export function getTeamCrestUrl(teamName: string): string | undefined {
   if (isLibreTeam(teamName)) return undefined;
-  const k = normalizeTeamKey(teamName);
+  let k = normalizeTeamKey(teamName);
+  k = CREST_KEY_ALIASES[k] ?? k;
   const local = HONOR_A_LOCAL[k];
   if (local) return local;
   return CREST_URL_BY_KEY[k];
