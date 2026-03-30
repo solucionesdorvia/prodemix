@@ -1,5 +1,6 @@
 import type { TournamentCatalogueEntry } from "@/domain";
 
+import { buildJomaHonorAMatches } from "@/mocks/fixtures/joma-honor-a-apertura";
 import { mergeTournamentCatalogue } from "@/mocks/merge-ingestion";
 
 /**
@@ -24,6 +25,18 @@ export function getTournamentCatalogueEntryById(
 }
 
 const TOURNAMENT_CATALOGUE_FIXTURE: TournamentCatalogueEntry[] = [
+  {
+    id: "joma-honor-a-primera",
+    name: "Torneo Joma · Liga Honor A · Primera",
+    shortName: "Joma Honor A",
+    matches: buildJomaHonorAMatches("joma-honor-a-primera", "p"),
+  },
+  {
+    id: "joma-honor-a-tercera",
+    name: "Torneo Joma · Liga Honor A · Tercera",
+    shortName: "Joma Honor A",
+    matches: buildJomaHonorAMatches("joma-honor-a-tercera", "t"),
+  },
   {
     id: "afa-futsal-a",
     name: "AFA Futsal · Primera A",

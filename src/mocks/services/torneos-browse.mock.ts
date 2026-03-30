@@ -27,6 +27,30 @@ export const TORNEOS_CATEGORY_CHIPS: {
 
 const TORNEOS_BROWSE_FIXTURE: TorneoBrowseItem[] = [
   {
+    id: "joma-honor-a-primera",
+    name: "Torneo Joma · Liga Honor A · Primera",
+    subtitle: "Apertura 2026",
+    categoryId: "futsal",
+    categoryLabel: "Futsal",
+    region: "AFA · Liga Honor",
+    statusLabel: "En curso",
+    phaseLabel: "Fecha 1 · Apertura",
+    teamsCount: 17,
+    featured: true,
+  },
+  {
+    id: "joma-honor-a-tercera",
+    name: "Torneo Joma · Liga Honor A · Tercera",
+    subtitle: "Apertura 2026",
+    categoryId: "futsal",
+    categoryLabel: "Futsal",
+    region: "AFA · Liga Honor",
+    statusLabel: "En curso",
+    phaseLabel: "Fecha 1 · Apertura",
+    teamsCount: 17,
+    featured: true,
+  },
+  {
     id: "afa-futsal-a",
     name: "AFA Futsal · Primera A",
     subtitle: "Oficial · Apertura 2026",

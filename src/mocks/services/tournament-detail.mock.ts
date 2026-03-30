@@ -44,6 +44,22 @@ function buildStandingsFromTeams(teams: string[]): TournamentStandingRow[] {
 
 function activityForCatalogue(id: string): TournamentActivityNote[] {
   const notes: Record<string, TournamentActivityNote[]> = {
+    "joma-honor-a-primera": [
+      {
+        id: "a1",
+        title: "Liga Honor A · Primera",
+        detail: "Fixture Apertura 2026 cargado en ProdeMix.",
+        timeLabel: "Hoy",
+      },
+    ],
+    "joma-honor-a-tercera": [
+      {
+        id: "a1",
+        title: "Liga Honor A · Tercera",
+        detail: "Fixture Apertura 2026 cargado en ProdeMix.",
+        timeLabel: "Hoy",
+      },
+    ],
     "afa-futsal-a": [
       {
         id: "a1",

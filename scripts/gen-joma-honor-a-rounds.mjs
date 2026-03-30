@@ -1,0 +1,214 @@
+/**
+ * One-off generator for joma-honor-a-apertura-rounds.json — run: node scripts/gen-joma-honor-a-rounds.mjs
+ */
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const rounds = [
+  [
+    ["Amigos de Villa Luro", "Haedo Futsal"],
+    ["Banfield", "Independiente (C)"],
+    ["Boca Juniors", "Kimberley"],
+    ["Círculo General Belgrano", "Centro Español"],
+    ["17 de Agosto", "Ferro Carril Oeste"],
+    ["General San Martin", "Estrella Federal"],
+    ["Glorias", "Libre"],
+    ["Arquitectura", "Pacifico"],
+    ["Pinocho", "Platense"],
+  ],
+  [
+    ["Platense", "Amigos de Villa Luro"],
+    ["Pacifico", "Pinocho"],
+    ["Libre", "Arquitectura"],
+    ["Estrella Federal", "Glorias"],
+    ["Ferro Carril Oeste", "General San Martin"],
+    ["Centro Español", "17 de Agosto"],
+    ["Kimberley", "Círculo General Belgrano"],
+    ["Independiente (C)", "Boca Juniors"],
+    ["Haedo Futsal", "Banfield"],
+  ],
+  [
+    ["Amigos de Villa Luro", "Banfield"],
+    ["Boca Juniors", "Haedo Futsal"],
+    ["Círculo General Belgrano", "Independiente (C)"],
+    ["17 de Agosto", "Kimberley"],
+    ["General San Martin", "Centro Español"],
+    ["Glorias", "Ferro Carril Oeste"],
+    ["Arquitectura", "Estrella Federal"],
+    ["Pinocho", "Libre"],
+    ["Platense", "Pacifico"],
+  ],
+  [
+    ["Pacifico", "Amigos de Villa Luro"],
+    ["Libre", "Platense"],
+    ["Estrella Federal", "Pinocho"],
+    ["Ferro Carril Oeste", "Arquitectura"],
+    ["Centro Español", "Glorias"],
+    ["Kimberley", "General San Martin"],
+    ["Independiente (C)", "17 de Agosto"],
+    ["Haedo Futsal", "Círculo General Belgrano"],
+    ["Banfield", "Boca Juniors"],
+  ],
+  [
+    ["Amigos de Villa Luro", "Boca Juniors"],
+    ["Círculo General Belgrano", "Banfield"],
+    ["17 de Agosto", "Haedo Futsal"],
+    ["General San Martin", "Independiente (C)"],
+    ["Glorias", "Kimberley"],
+    ["Arquitectura", "Centro Español"],
+    ["Pinocho", "Ferro Carril Oeste"],
+    ["Platense", "Estrella Federal"],
+    ["Pacifico", "Libre"],
+  ],
+  [
+    ["Libre", "Amigos de Villa Luro"],
+    ["Estrella Federal", "Pacifico"],
+    ["Ferro Carril Oeste", "Platense"],
+    ["Centro Español", "Pinocho"],
+    ["Kimberley", "Arquitectura"],
+    ["Independiente (C)", "Glorias"],
+    ["Haedo Futsal", "General San Martin"],
+    ["Banfield", "17 de Agosto"],
+    ["Boca Juniors", "Círculo General Belgrano"],
+  ],
+  [
+    ["Amigos de Villa Luro", "Círculo General Belgrano"],
+    ["17 de Agosto", "Boca Juniors"],
+    ["General San Martin", "Banfield"],
+    ["Glorias", "Haedo Futsal"],
+    ["Arquitectura", "Independiente (C)"],
+    ["Pinocho", "Kimberley"],
+    ["Platense", "Centro Español"],
+    ["Pacifico", "Ferro Carril Oeste"],
+    ["Libre", "Estrella Federal"],
+  ],
+  [
+    ["Estrella Federal", "Amigos de Villa Luro"],
+    ["Ferro Carril Oeste", "Libre"],
+    ["Centro Español", "Pacifico"],
+    ["Kimberley", "Platense"],
+    ["Independiente (C)", "Pinocho"],
+    ["Haedo Futsal", "Arquitectura"],
+    ["Banfield", "Glorias"],
+    ["Boca Juniors", "General San Martin"],
+    ["Círculo General Belgrano", "17 de Agosto"],
+  ],
+  [
+    ["Amigos de Villa Luro", "17 de Agosto"],
+    ["General San Martin", "Círculo General Belgrano"],
+    ["Glorias", "Boca Juniors"],
+    ["Arquitectura", "Banfield"],
+    ["Pinocho", "Haedo Futsal"],
+    ["Platense", "Independiente (C)"],
+    ["Pacifico", "Kimberley"],
+    ["Libre", "Centro Español"],
+    ["Estrella Federal", "Ferro Carril Oeste"],
+  ],
+  [
+    ["Ferro Carril Oeste", "Amigos de Villa Luro"],
+    ["Centro Español", "Estrella Federal"],
+    ["Kimberley", "Libre"],
+    ["Independiente (C)", "Pacifico"],
+    ["Haedo Futsal", "Platense"],
+    ["Banfield", "Pinocho"],
+    ["Boca Juniors", "Arquitectura"],
+    ["Círculo General Belgrano", "Glorias"],
+    ["17 de Agosto", "General San Martin"],
+  ],
+  [
+    ["Amigos de Villa Luro", "General San Martin"],
+    ["Glorias", "17 de Agosto"],
+    ["Arquitectura", "Círculo General Belgrano"],
+    ["Pinocho", "Boca Juniors"],
+    ["Platense", "Banfield"],
+    ["Pacifico", "Haedo Futsal"],
+    ["Libre", "Independiente (C)"],
+    ["Estrella Federal", "Kimberley"],
+    ["Ferro Carril Oeste", "Centro Español"],
+  ],
+  [
+    ["Centro Español", "Amigos de Villa Luro"],
+    ["Kimberley", "Ferro Carril Oeste"],
+    ["Independiente (C)", "Estrella Federal"],
+    ["Haedo Futsal", "Libre"],
+    ["Banfield", "Pacifico"],
+    ["Boca Juniors", "Platense"],
+    ["Círculo General Belgrano", "Pinocho"],
+    ["17 de Agosto", "Arquitectura"],
+    ["General San Martin", "Glorias"],
+  ],
+  [
+    ["Amigos de Villa Luro", "Glorias"],
+    ["Arquitectura", "General San Martin"],
+    ["Pinocho", "17 de Agosto"],
+    ["Platense", "Círculo General Belgrano"],
+    ["Pacifico", "Boca Juniors"],
+    ["Libre", "Banfield"],
+    ["Estrella Federal", "Haedo Futsal"],
+    ["Ferro Carril Oeste", "Independiente (C)"],
+    ["Centro Español", "Kimberley"],
+  ],
+  [
+    ["Kimberley", "Amigos de Villa Luro"],
+    ["Independiente (C)", "Centro Español"],
+    ["Haedo Futsal", "Ferro Carril Oeste"],
+    ["Banfield", "Estrella Federal"],
+    ["Boca Juniors", "Libre"],
+    ["Círculo General Belgrano", "Pacifico"],
+    ["17 de Agosto", "Platense"],
+    ["General San Martin", "Pinocho"],
+    ["Glorias", "Arquitectura"],
+  ],
+  [
+    ["Amigos de Villa Luro", "Arquitectura"],
+    ["Pinocho", "Glorias"],
+    ["Platense", "General San Martin"],
+    ["Pacifico", "17 de Agosto"],
+    ["Libre", "Círculo General Belgrano"],
+    ["Estrella Federal", "Boca Juniors"],
+    ["Ferro Carril Oeste", "Banfield"],
+    ["Centro Español", "Haedo Futsal"],
+    ["Kimberley", "Independiente (C)"],
+  ],
+  [
+    ["Independiente (C)", "Amigos de Villa Luro"],
+    ["Haedo Futsal", "Kimberley"],
+    ["Banfield", "Centro Español"],
+    ["Boca Juniors", "Ferro Carril Oeste"],
+    ["Círculo General Belgrano", "Estrella Federal"],
+    ["17 de Agosto", "Libre"],
+    ["General San Martin", "Pacifico"],
+    ["Glorias", "Platense"],
+    ["Arquitectura", "Pinocho"],
+  ],
+  [
+    ["Amigos de Villa Luro", "Pinocho"],
+    ["Platense", "Arquitectura"],
+    ["Pacifico", "Glorias"],
+    ["Libre", "General San Martin"],
+    ["Estrella Federal", "17 de Agosto"],
+    ["Ferro Carril Oeste", "Círculo General Belgrano"],
+    ["Centro Español", "Boca Juniors"],
+    ["Kimberley", "Banfield"],
+    ["Independiente (C)", "Haedo Futsal"],
+  ],
+];
+
+let total = 0;
+for (const r of rounds) {
+  if (r.length !== 9) throw new Error(`Expected 9 matches, got ${r.length}`);
+  total += r.length;
+}
+if (total !== 153) throw new Error(`Expected 153 matches, got ${total}`);
+if (rounds.length !== 17) throw new Error(`Expected 17 fechas`);
+
+const outPath = path.join(
+  __dirname,
+  "../src/mocks/fixtures/joma-honor-a-apertura-rounds.json",
+);
+fs.mkdirSync(path.dirname(outPath), { recursive: true });
+fs.writeFileSync(outPath, JSON.stringify(rounds, null, 2) + "\n", "utf8");
+console.log("Wrote", outPath, "fechas:", rounds.length, "matches:", total);
