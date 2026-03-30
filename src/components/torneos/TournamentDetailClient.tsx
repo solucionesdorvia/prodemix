@@ -14,6 +14,7 @@ import {
 import Link from "next/link";
 import { useMemo } from "react";
 
+import { TeamCrest } from "@/components/team/TeamCrest";
 import {
   EmptyState,
   EmptyStateButtonLink,
@@ -194,10 +195,16 @@ export function TournamentDetailClient({
                 <p className="text-[10px] font-medium text-app-muted">
                   {formatMatchKickoffFull(m.startsAt)}
                 </p>
-                <p className="mt-1 text-[12px] font-semibold leading-snug text-app-text">
-                  {m.homeTeam}{" "}
-                  <span className="font-normal text-app-muted">vs</span>{" "}
-                  {m.awayTeam}
+                <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] font-semibold leading-snug text-app-text">
+                  <span className="inline-flex min-w-0 items-center gap-1.5">
+                    <TeamCrest teamName={m.homeTeam} size={26} />
+                    <span className="truncate">{m.homeTeam}</span>
+                  </span>
+                  <span className="font-normal text-app-muted">vs</span>
+                  <span className="inline-flex min-w-0 items-center gap-1.5">
+                    <span className="truncate">{m.awayTeam}</span>
+                    <TeamCrest teamName={m.awayTeam} size={26} />
+                  </span>
                 </p>
               </li>
             ))}
@@ -226,10 +233,16 @@ export function TournamentDetailClient({
                 className="flex items-center justify-between gap-2 rounded-[10px] border border-app-border bg-app-surface px-2.5 py-2 shadow-[0_1px_0_rgba(15,23,42,0.04)]"
               >
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-[12px] font-semibold leading-snug text-app-text">
-                    {r.homeTeam}{" "}
-                    <span className="font-normal text-app-muted">vs</span>{" "}
-                    {r.awayTeam}
+                  <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] font-semibold leading-snug text-app-text">
+                    <span className="inline-flex min-w-0 items-center gap-1.5">
+                      <TeamCrest teamName={r.homeTeam} size={26} />
+                      <span className="truncate">{r.homeTeam}</span>
+                    </span>
+                    <span className="font-normal text-app-muted">vs</span>
+                    <span className="inline-flex min-w-0 items-center gap-1.5">
+                      <span className="truncate">{r.awayTeam}</span>
+                      <TeamCrest teamName={r.awayTeam} size={26} />
+                    </span>
                   </p>
                 </div>
                 <p className="shrink-0 text-[13px] font-bold tabular-nums text-app-text">
@@ -268,8 +281,11 @@ export function TournamentDetailClient({
                   <span className="w-5 text-center text-[11px] font-bold tabular-nums text-app-muted">
                     {row.rank}
                   </span>
-                  <span className="min-w-0 flex-1 truncate text-[12px] font-semibold text-app-text">
-                    {row.team}
+                  <span className="flex min-w-0 flex-1 items-center gap-1.5">
+                    <TeamCrest teamName={row.team} size={22} />
+                    <span className="truncate text-[12px] font-semibold text-app-text">
+                      {row.team}
+                    </span>
                   </span>
                   <span className="text-[10px] tabular-nums text-app-muted">
                     PJ {row.pj}
@@ -301,9 +317,10 @@ export function TournamentDetailClient({
             {featuredTeams.map((t) => (
               <span
                 key={t}
-                className="inline-flex max-w-full truncate rounded-full border border-app-border bg-app-bg px-2 py-0.5 text-[10px] font-semibold text-app-text"
+                className="inline-flex max-w-full items-center gap-1 truncate rounded-full border border-app-border bg-app-bg py-0.5 pl-1 pr-2 text-[10px] font-semibold text-app-text"
               >
-                {t}
+                <TeamCrest teamName={t} size={20} />
+                <span className="truncate">{t}</span>
               </span>
             ))}
           </div>

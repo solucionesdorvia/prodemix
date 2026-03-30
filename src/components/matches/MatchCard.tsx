@@ -6,6 +6,7 @@ import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "re
 import type { Match, ScorePrediction } from "@/domain";
 import { formatGoalsInput, parseGoalsInput } from "@/lib/score-input";
 import { inferOutcome, outcomeLabelEs, type MatchOutcome } from "@/lib/scoring";
+import { TeamCrest } from "@/components/team/TeamCrest";
 import { formatMatchKickoffSplit } from "@/lib/datetime";
 import { cardSurface, statLabel } from "@/lib/ui-styles";
 import { cn } from "@/lib/utils";
@@ -175,21 +176,27 @@ export function MatchCard({
 
       <div className="px-2.5 pb-2 pt-2">
         <div className="grid grid-cols-2 gap-x-2 gap-y-0">
-          <div className="min-w-0">
-            <p className="truncate text-left text-[12px] font-semibold leading-tight text-app-text">
-              {match.homeTeam}
-            </p>
-            <p className="mt-0.5 text-left text-[10px] font-semibold text-app-muted">
-              Local
-            </p>
+          <div className="flex min-w-0 items-start gap-2">
+            <TeamCrest teamName={match.homeTeam} size={30} />
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-left text-[12px] font-semibold leading-tight text-app-text">
+                {match.homeTeam}
+              </p>
+              <p className="mt-0.5 text-left text-[10px] font-semibold text-app-muted">
+                Local
+              </p>
+            </div>
           </div>
-          <div className="min-w-0">
-            <p className="truncate text-right text-[12px] font-semibold leading-tight text-app-text">
-              {match.awayTeam}
-            </p>
-            <p className="mt-0.5 text-right text-[10px] font-semibold text-app-muted">
-              Visita
-            </p>
+          <div className="flex min-w-0 items-start justify-end gap-2">
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-right text-[12px] font-semibold leading-tight text-app-text">
+                {match.awayTeam}
+              </p>
+              <p className="mt-0.5 text-right text-[10px] font-semibold text-app-muted">
+                Visita
+              </p>
+            </div>
+            <TeamCrest teamName={match.awayTeam} size={30} />
           </div>
         </div>
 

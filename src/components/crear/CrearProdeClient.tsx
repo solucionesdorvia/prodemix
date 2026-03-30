@@ -20,6 +20,7 @@ import {
   useState,
 } from "react";
 
+import { TeamCrest } from "@/components/team/TeamCrest";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import type { Match, TorneoCategoryFilterId, TournamentCatalogueEntry } from "@/domain";
@@ -870,10 +871,16 @@ function MatchPickRow({
           ) : null}
         </span>
         <span className="min-w-0 flex-1">
-          <span className="block text-[12px] font-semibold leading-tight text-app-text">
-            {m.homeTeam}{" "}
-            <span className="font-normal text-app-muted">vs</span>{" "}
-            {m.awayTeam}
+          <span className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[12px] font-semibold leading-tight text-app-text">
+            <span className="inline-flex min-w-0 items-center gap-1">
+              <TeamCrest teamName={m.homeTeam} size={24} />
+              <span className="truncate">{m.homeTeam}</span>
+            </span>
+            <span className="font-normal text-app-muted">vs</span>
+            <span className="inline-flex min-w-0 items-center gap-1">
+              <span className="truncate">{m.awayTeam}</span>
+              <TeamCrest teamName={m.awayTeam} size={24} />
+            </span>
           </span>
           <span className="mt-0.5 block text-[10px] tabular-nums text-app-muted">
             {formatMatchKickoffFull(m.startsAt)}

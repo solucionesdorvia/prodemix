@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
+import { TeamCrest } from "@/components/team/TeamCrest";
 import type { Match, TorneoCategoryFilterId } from "@/domain";
 import { TORNEOS_CATEGORY_CHIPS } from "@/mocks/services/torneos-browse.mock";
 import {
@@ -622,10 +623,16 @@ export function MockIngestionClient() {
                           key={m.id}
                           className="flex flex-wrap items-center gap-2 rounded-md border border-app-border-subtle bg-app-bg/60 px-2 py-1.5"
                         >
-                          <span className="min-w-[120px] flex-1 text-[11px] font-medium text-app-text">
-                            {m.homeTeam}{" "}
-                            <span className="text-app-muted">vs</span>{" "}
-                            {m.awayTeam}
+                          <span className="flex min-w-[120px] flex-1 flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[11px] font-medium text-app-text">
+                            <span className="inline-flex items-center gap-1">
+                              <TeamCrest teamName={m.homeTeam} size={22} />
+                              {m.homeTeam}
+                            </span>
+                            <span className="text-app-muted">vs</span>
+                            <span className="inline-flex items-center gap-1">
+                              {m.awayTeam}
+                              <TeamCrest teamName={m.awayTeam} size={22} />
+                            </span>
                           </span>
                           <span className="font-mono text-[10px] text-app-muted">
                             {m.id}

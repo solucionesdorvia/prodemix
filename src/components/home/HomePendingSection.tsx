@@ -3,6 +3,7 @@
 import { ChevronRight, ClipboardList } from "lucide-react";
 import Link from "next/link";
 
+import { TeamCrest } from "@/components/team/TeamCrest";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { formatMatchKickoffPending } from "@/lib/datetime";
 import type { HomePendingMatch } from "@/state/selectors";
@@ -57,10 +58,16 @@ export function HomePendingSection({ items, className }: HomePendingSectionProps
                   <p className="truncate text-[10px] font-semibold uppercase tracking-wide text-app-primary">
                     {prodeName}
                   </p>
-                  <p className="truncate text-[13px] font-semibold leading-tight text-app-text">
-                    {match.homeTeam}{" "}
-                    <span className="font-normal text-app-muted">vs</span>{" "}
-                    {match.awayTeam}
+                  <p className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[13px] font-semibold leading-tight text-app-text">
+                    <span className="inline-flex items-center gap-1">
+                      <TeamCrest teamName={match.homeTeam} size={24} />
+                      <span className="truncate">{match.homeTeam}</span>
+                    </span>
+                    <span className="font-normal text-app-muted">vs</span>
+                    <span className="inline-flex items-center gap-1">
+                      <span className="truncate">{match.awayTeam}</span>
+                      <TeamCrest teamName={match.awayTeam} size={24} />
+                    </span>
                   </p>
                   <p className="mt-0.5 text-[10px] text-app-muted">
                     {formatMatchKickoffPending(match.startsAt)}
