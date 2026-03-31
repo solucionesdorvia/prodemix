@@ -22,6 +22,10 @@ type MatchCardProps = {
   onPredictionCommit?: (score: { home: number; away: number }) => void;
   /** When true, score cannot be edited (e.g. match finalized). */
   predictionLocked?: boolean;
+  /** Hide top tournament label row (e.g. on fecha pool screen where context is obvious). */
+  hideTournamentLabel?: boolean;
+  /** Slightly tighter padding for dense lists. */
+  compact?: boolean;
 };
 
 const STEP_MAX = 20;
@@ -40,8 +44,14 @@ function outcomePillClass(outcome: MatchOutcome): string {
 const stepperBtn =
   "inline-flex h-10 w-10 shrink-0 touch-manipulation items-center justify-center rounded-lg border border-app-border bg-app-surface text-app-text shadow-card transition active:scale-[0.96]";
 
+const stepperBtnCompact =
+  "inline-flex h-9 w-9 shrink-0 touch-manipulation items-center justify-center rounded-lg border border-app-border bg-app-surface text-app-text shadow-card transition active:scale-[0.96]";
+
 const scoreInputClass =
   "h-10 w-11 shrink-0 rounded-lg border border-app-border bg-app-surface text-center text-[15px] font-bold tabular-nums text-app-text shadow-card outline-none transition placeholder:text-app-muted/35 focus:border-app-primary focus:ring-2 focus:ring-app-primary/20";
+
+const scoreInputClassCompact =
+  "h-9 w-10 shrink-0 rounded-lg border border-app-border bg-app-surface text-center text-[14px] font-bold tabular-nums text-app-text shadow-card outline-none transition placeholder:text-app-muted/35 focus:border-app-primary focus:ring-2 focus:ring-app-primary/20";
 
 export function MatchCard({
   match,
@@ -51,6 +61,8 @@ export function MatchCard({
   pointsEarned = null,
   onPredictionCommit,
   predictionLocked = false,
+  hideTournamentLabel = false,
+  compact = false,
 }: MatchCardProps) {
   const baseId = useId();
   const homeFieldId = `${baseId}-home`;
@@ -146,14 +158,26 @@ export function MatchCard({
         className,
       )}
     >
-      <div className="border-b border-app-border-subtle bg-app-bg/60 px-2.5 py-1.5">
+      <div
+        className={cn(
+          "border-b border-app-border-subtle bg-app-bg/60 px-2.5 py-1.5",
+          hideTournamentLabel && "py-1.5",
+        )}
+      >
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0 flex-1">
-            <p className={cn(statLabel, "leading-snug")}>
-              {match.tournamentLabel ?? "—"}
-            </p>
+            {hideTournamentLabel ? null : (
+              <p className={cn(statLabel, "leading-snug")}>
+                {match.tournamentLabel ?? "—"}
+              </p>
+            )}
             {finalResult ? (
-              <p className="mt-1 text-[10px] font-medium leading-snug text-app-sport">
+              <p
+                className={cn(
+                  "text-[10px] font-medium leading-snug text-app-sport",
+                  !hideTournamentLabel && "mt-1",
+                )}
+              >
                 Final: {finalResult.home}-{finalResult.away}
                 {pointsEarned !== null && pointsEarned !== undefined ? (
                   <span className="ml-1 font-bold text-app-text">
@@ -174,10 +198,10 @@ export function MatchCard({
         </div>
       </div>
 
-      <div className="px-2.5 pb-2 pt-2">
+      <div className={cn("px-2.5 pb-2 pt-2", compact && "px-2 pb-1.5 pt-1.5")}>
         <div className="grid grid-cols-2 gap-x-2 gap-y-0">
           <div className="flex min-w-0 items-start gap-2">
-            <TeamCrest teamName={match.homeTeam} size={30} />
+            <TeamCrest teamName={match.homeTeam} size={compact ? 26 : 30} />
             <div className="min-w-0 flex-1">
               <p className="truncate text-left text-[12px] font-semibold leading-tight text-app-text">
                 {match.homeTeam}
@@ -196,13 +220,14 @@ export function MatchCard({
                 Visita
               </p>
             </div>
-            <TeamCrest teamName={match.awayTeam} size={30} />
+            <TeamCrest teamName={match.awayTeam} size={compact ? 26 : 30} />
           </div>
         </div>
 
         <div
           className={cn(
             "mt-2 grid grid-cols-2 gap-x-2",
+            compact && "mt-1.5",
             predictionLocked && "pointer-events-none opacity-60",
           )}
           role="group"
@@ -211,7 +236,7 @@ export function MatchCard({
           <div className="flex items-center gap-1">
             <button
               type="button"
-              className={stepperBtn}
+              className={compact ? stepperBtnCompact : stepperBtn}
               aria-label="Restar gol local"
               disabled={predictionLocked}
               onClick={() => bump("home", -1)}
@@ -231,13 +256,16 @@ export function MatchCard({
               value={homeStr}
               readOnly={predictionLocked}
               onChange={(e) => onHomeChange(e.target.value)}
-              className={cn(scoreInputClass, homeInvalid && "border-red-300")}
+              className={cn(
+                compact ? scoreInputClassCompact : scoreInputClass,
+                homeInvalid && "border-red-300",
+              )}
               maxLength={2}
               aria-invalid={homeInvalid}
             />
             <button
               type="button"
-              className={stepperBtn}
+              className={compact ? stepperBtnCompact : stepperBtn}
               aria-label="Sumar gol local"
               disabled={predictionLocked}
               onClick={() => bump("home", 1)}
@@ -248,7 +276,7 @@ export function MatchCard({
           <div className="flex items-center justify-end gap-1">
             <button
               type="button"
-              className={stepperBtn}
+              className={compact ? stepperBtnCompact : stepperBtn}
               aria-label="Restar gol visitante"
               disabled={predictionLocked}
               onClick={() => bump("away", -1)}
@@ -268,13 +296,16 @@ export function MatchCard({
               value={awayStr}
               readOnly={predictionLocked}
               onChange={(e) => onAwayChange(e.target.value)}
-              className={cn(scoreInputClass, awayInvalid && "border-red-300")}
+              className={cn(
+                compact ? scoreInputClassCompact : scoreInputClass,
+                awayInvalid && "border-red-300",
+              )}
               maxLength={2}
               aria-invalid={awayInvalid}
             />
             <button
               type="button"
-              className={stepperBtn}
+              className={compact ? stepperBtnCompact : stepperBtn}
               aria-label="Sumar gol visitante"
               disabled={predictionLocked}
               onClick={() => bump("away", 1)}

@@ -27,6 +27,7 @@ function buildMatchesFromRounds(
   const out: Match[] = [];
   for (let f = 0; f < rounds.length; f++) {
     const round = rounds[f]!;
+    const matchdayId = `${tournamentId}-md-${String(f + 1).padStart(2, "0")}`;
     for (let m = 0; m < round.length; m++) {
       const [home, away] = round[m]!;
       const fid = String(f + 1).padStart(2, "0");
@@ -34,6 +35,7 @@ function buildMatchesFromRounds(
       out.push({
         id: `cm-arg-${idPrefix}-f${fid}-m${mid}`,
         tournamentId,
+        matchdayId,
         homeTeam: home,
         awayTeam: away,
         startsAt: fechaStartsAt(f + 1, m, firstDayOfMonth),

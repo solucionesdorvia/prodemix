@@ -11,9 +11,13 @@ export interface MatchResult {
   finalizedAt?: string;
 }
 
+export type MatchPlayStatus = "scheduled" | "live" | "finished";
+
 export interface Match {
   id: MatchId;
   tournamentId: TournamentId;
+  /** Parent fecha / jornada. */
+  matchdayId?: string;
   homeTeam: string;
   awayTeam: string;
   /** ISO 8601 kickoff */
@@ -23,4 +27,5 @@ export interface Match {
   /** Filter chips on home (`all` + category ids) */
   tags?: string[];
   result?: MatchResult | null;
+  matchStatus?: MatchPlayStatus;
 }

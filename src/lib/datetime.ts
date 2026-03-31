@@ -57,3 +57,21 @@ export function formatDeadlineLabel(iso: string): string {
     minute: "2-digit",
   }).format(d);
 }
+
+/** Countdown-style label for pool close times (future ISO). */
+export function formatTimeUntilFuture(iso: string): string {
+  const end = new Date(iso).getTime();
+  const now = Date.now();
+  const diff = end - now;
+  if (diff <= 0) return "Cerrado";
+  const totalMin = Math.floor(diff / 60000);
+  const h = Math.floor(totalMin / 60);
+  const min = totalMin % 60;
+  if (h >= 72) {
+    return `Cierra ${formatDeadlineLabel(iso)}`;
+  }
+  if (h > 0) {
+    return `Cierra en ${h}h ${min}m`;
+  }
+  return `Cierra en ${totalMin}m`;
+}

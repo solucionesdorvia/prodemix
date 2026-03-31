@@ -3,6 +3,9 @@
  */
 export type TournamentId = string;
 
+/** Top division only in current product scope. */
+export type TournamentDivision = "primera";
+
 export type TournamentCategory =
   | "futsal"
   | "futbol-8"

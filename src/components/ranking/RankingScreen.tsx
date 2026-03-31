@@ -11,6 +11,10 @@ import {
 import { initialsFromDisplayName } from "@/lib/user-display";
 import { pageEyebrow, pageHeader, pageTitle } from "@/lib/ui-styles";
 import { cn } from "@/lib/utils";
+import {
+  formatPublicPoolLabel,
+  PRIMERA_PUBLIC_POOLS,
+} from "@/mocks/catalog/primera-catalog";
 import { getTournamentCatalogue } from "@/mocks/services/tournaments-catalogue.mock";
 import { persistScopeRanks } from "@/state/ranking-snapshot";
 import { buildRankingEntries } from "@/state/selectors";
@@ -19,15 +23,18 @@ import { useAppState } from "@/state/app-state";
 import { RankingDeltaBadge } from "./RankingDeltaBadge";
 import { RankingStatsLine } from "./RankingStatsLine";
 
+const DEFAULT_RANKING_TAB: RankingScope =
+  PRIMERA_PUBLIC_POOLS.some((p) => p.status !== "settled") ? "fecha" : "global";
+
 const TABS: {
   id: RankingScope;
   label: string;
   hint: string;
 }[] = [
+  { id: "fecha", label: "Fecha", hint: "Pool público" },
   { id: "global", label: "Global", hint: "Todos los partidos" },
-  { id: "friends", label: "Amigos", hint: "Tu círculo" },
-  { id: "liga", label: "Liga", hint: "Liga mix" },
   { id: "tournament", label: "Torneo", hint: "Por competición" },
+  { id: "friends", label: "Amigos", hint: "Tu círculo" },
 ];
 
 function Podium({
@@ -215,9 +222,23 @@ function RestRow({
 
 export function RankingScreen() {
   const { user, state, recordActivity } = useAppState();
-  const [tab, setTab] = useState<RankingScope>("global");
+  const [tab, setTab] = useState<RankingScope>(DEFAULT_RANKING_TAB);
   const catalogue = useMemo(() => getTournamentCatalogue(), []);
   const [tournamentId, setTournamentId] = useState<string | null>(null);
+  const [publicPoolId, setPublicPoolId] = useState<string | null>(null);
+
+  const poolOptions = useMemo(
+    () => PRIMERA_PUBLIC_POOLS.filter((p) => p.status !== "settled"),
+    [],
+  );
+
+  const resolvedPoolId = useMemo(() => {
+    if (tab !== "fecha" || poolOptions.length === 0) return null;
+    if (publicPoolId && poolOptions.some((p) => p.id === publicPoolId)) {
+      return publicPoolId;
+    }
+    return poolOptions[0]!.id;
+  }, [tab, poolOptions, publicPoolId]);
 
   const resolvedTournamentId = useMemo(() => {
     if (tab !== "tournament" || catalogue.length === 0) return null;
@@ -228,6 +249,15 @@ export function RankingScreen() {
   }, [tab, catalogue, tournamentId]);
 
   const rows = useMemo(() => {
+    if (tab === "fecha" && resolvedPoolId) {
+      return buildRankingEntries(
+        "fecha",
+        user.id,
+        user.displayName,
+        state,
+        { publicPoolId: resolvedPoolId },
+      );
+    }
     if (tab === "tournament") {
       const tid = resolvedTournamentId;
       if (!tid) return [];
@@ -240,14 +270,17 @@ export function RankingScreen() {
       );
     }
     return buildRankingEntries(tab, user.id, user.displayName, state);
-  }, [tab, resolvedTournamentId, user.id, user.displayName, state]);
+  }, [tab, resolvedTournamentId, resolvedPoolId, user.id, user.displayName, state]);
 
   const scopeKey = useMemo(() => {
     if (tab === "tournament" && resolvedTournamentId) {
       return `tournament:${resolvedTournamentId}`;
     }
+    if (tab === "fecha" && resolvedPoolId) {
+      return `pool:${resolvedPoolId}`;
+    }
     return tab;
-  }, [tab, resolvedTournamentId]);
+  }, [tab, resolvedTournamentId, resolvedPoolId]);
 
   const rankingScopeLabel = useMemo(() => {
     if (tab === "tournament" && resolvedTournamentId) {
@@ -256,10 +289,14 @@ export function RankingScreen() {
         "Torneo"
       );
     }
+    if (tab === "fecha" && resolvedPoolId) {
+      const p = poolOptions.find((x) => x.id === resolvedPoolId);
+      return p ? formatPublicPoolLabel(p) : "Fecha";
+    }
     if (tab === "global") return "Global";
     if (tab === "friends") return "Amigos";
-    return "Liga";
-  }, [tab, resolvedTournamentId, catalogue]);
+    return "Ranking";
+  }, [tab, resolvedTournamentId, resolvedPoolId, catalogue, poolOptions]);
 
   useEffect(() => {
     if (rows.length === 0) return;
@@ -291,7 +328,9 @@ export function RankingScreen() {
         <p className={pageEyebrow}>ProdeMix</p>
         <h1 className={cn(pageTitle, "mt-0.5")}>Ranking</h1>
         <p className="mt-1.5 text-[12px] leading-relaxed text-app-muted">
-          3 pts pleno · 1 pt resultado correcto · 0 si fallás el veredicto
+          Empezá por <strong className="font-semibold text-app-text">Fecha</strong>{" "}
+          para ver tu posición en un pool. Reglas: 3 pleno · 1 resultado · 0 si
+          falla el veredicto.
         </p>
       </header>
 
@@ -327,6 +366,28 @@ export function RankingScreen() {
         })}
       </div>
 
+      {tab === "fecha" && poolOptions.length > 0 && resolvedPoolId ? (
+        <label className="mt-2 block">
+          <span className="text-[10px] font-semibold uppercase tracking-wide text-app-muted">
+            Pool de la fecha
+          </span>
+          <select
+            value={resolvedPoolId}
+            onChange={(e) => setPublicPoolId(e.target.value)}
+            className="mt-1 w-full rounded-lg border border-app-border bg-app-surface px-2.5 py-2 text-[13px] font-semibold text-app-text shadow-[0_1px_0_rgba(15,23,42,0.04)] outline-none focus:border-app-primary focus:ring-2 focus:ring-app-primary/20"
+          >
+            {poolOptions.map((p) => (
+              <option key={p.id} value={p.id}>
+                {formatPublicPoolLabel(p)} ·{" "}
+                {p.type === "public_paid" ?
+                  `Entrada $${p.entryFeeArs.toLocaleString("es-AR")}`
+                : "Gratis"}
+              </option>
+            ))}
+          </select>
+        </label>
+      ) : null}
+
       {tab === "tournament" && catalogue.length > 0 && resolvedTournamentId ? (
         <label className="mt-2 block">
           <span className="text-[10px] font-semibold uppercase tracking-wide text-app-muted">
@@ -353,11 +414,11 @@ export function RankingScreen() {
           layout="horizontal"
           icon={Trophy}
           title="Todavía no hay tabla en esta vista"
-          description="Necesitamos partidos con resultado para ordenar puntos. Sumate a un prode, cargá pronósticos y volvé cuando haya marcadores cerrados."
+          description="Entrá a un pool por fecha, cargá marcadores y, cuando haya resultados en la demo, la tabla se completa. El ranking global usa todos tus pronósticos con resultado."
         >
-          <EmptyStateButtonLink href="/torneos">Explorar torneos</EmptyStateButtonLink>
+          <EmptyStateButtonLink href="/torneos">Torneos y fechas</EmptyStateButtonLink>
           <EmptyStateButtonLink href="/crear" variant="secondary">
-            Crear prode
+            Prode propio (opcional)
           </EmptyStateButtonLink>
         </EmptyState>
       ) : (
@@ -387,8 +448,9 @@ export function RankingScreen() {
           ) : null}
 
           <p className="mt-3 rounded-lg border border-dashed border-app-border bg-app-bg/80 px-2.5 py-2 text-[10px] leading-snug text-app-muted">
-            Solo cuentan partidos con resultado cargado. Las flechas comparan tu
-            posición con la última vez que abriste esta vista (demo local).
+            En <strong className="font-semibold text-app-text">Fecha</strong>{" "}
+            solo cuentan partidos de ese pool con resultado. Las flechas son vs.
+            tu última visita (demo local).
           </p>
         </>
       )}

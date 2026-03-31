@@ -5,7 +5,7 @@ import { TorneosScreen } from "@/components/torneos/TorneosScreen";
 export const metadata: Metadata = {
   title: "Torneos",
   description:
-    "Explorá futsal, fútbol 8, amateur, torneos barriales y ligas de clubes en Argentina.",
+    "Competiciones Primera por fecha. Elegí torneo, abrí la jornada y entrá al pool público.",
 };
 
 export default function TorneosPage() {

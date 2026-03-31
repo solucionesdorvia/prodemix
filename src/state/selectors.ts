@@ -13,6 +13,10 @@ import {
   getMatchIdsForTournament,
 } from "@/lib/catalogue-matches";
 import {
+  getMatchIdsForMatchday,
+  getPublicPoolById,
+} from "@/mocks/catalog/primera-catalog";
+import {
   getAllScoredMatchIds,
   getMockResultForMatch,
 } from "@/mocks/mock-match-results";
@@ -46,6 +50,21 @@ export function getPredictionsForProde(
   const prefix = `${userId}::${prodeId}::`;
   const out: Record<string, ScorePrediction> = {};
   for (const [k, v] of Object.entries(predictionMap)) {
+    if (!k.startsWith(prefix)) continue;
+    const matchId = k.split("::")[2];
+    if (matchId) out[matchId] = v;
+  }
+  return out;
+}
+
+export function getPredictionsForPublicPool(
+  userId: string,
+  poolId: string,
+  publicPoolPredictionMap: PersistedAppState["publicPoolPredictionMap"],
+): Record<string, ScorePrediction> {
+  const prefix = `${userId}::${poolId}::`;
+  const out: Record<string, ScorePrediction> = {};
+  for (const [k, v] of Object.entries(publicPoolPredictionMap)) {
     if (!k.startsWith(prefix)) continue;
     const matchId = k.split("::")[2];
     if (matchId) out[matchId] = v;
@@ -164,18 +183,25 @@ export function buildProdeRankingEntries(
   return mergeRankDeltas(mapped, `prode:${prode.id}`);
 }
 
-/** First stored prediction per match (user may only have one per match in MVP). */
+/**
+ * Union of predictions per match: pools públicos pisan pronósticos de prodes
+ * si comparten el mismo matchId.
+ */
 export function aggregateUserPredictionsByMatch(
   userId: string,
-  predictionMap: PersistedAppState["predictionMap"],
+  state: PersistedAppState,
 ): Record<string, ScorePrediction> {
   const out: Record<string, ScorePrediction> = {};
   const prefix = `${userId}::`;
-  for (const [k, v] of Object.entries(predictionMap)) {
+  for (const [k, v] of Object.entries(state.predictionMap)) {
     if (!k.startsWith(prefix)) continue;
     const matchId = k.split("::")[2];
-    if (!matchId || out[matchId]) continue;
-    out[matchId] = v;
+    if (matchId) out[matchId] = v;
+  }
+  for (const [k, v] of Object.entries(state.publicPoolPredictionMap)) {
+    if (!k.startsWith(prefix)) continue;
+    const matchId = k.split("::")[2];
+    if (matchId) out[matchId] = v;
   }
   return out;
 }
@@ -240,7 +266,73 @@ function playersForScope(
 
 export type BuildRankingOptions = {
   tournamentId?: string | null;
+  publicPoolId?: string | null;
 };
+
+export function buildPublicPoolRankingEntries(
+  poolId: string,
+  currentUserId: string,
+  currentUserDisplayName: string,
+  state: PersistedAppState,
+): RankingEntry[] {
+  const pool = getPublicPoolById(poolId);
+  if (!pool) return [];
+  const matchIds = getMatchIdsForMatchday(pool.tournamentId, pool.matchdayId);
+  const userPreds = getPredictionsForPublicPool(
+    currentUserId,
+    poolId,
+    state.publicPoolPredictionMap,
+  );
+  const userSliced = slicePredictionsToMatchIds(userPreds, matchIds);
+
+  const rows: PlayerRow[] = [
+    {
+      playerId: currentUserId,
+      displayName: currentUserDisplayName,
+      predictions: userSliced,
+    },
+    ...RANKING_BOTS.map((b) => ({
+      playerId: b.playerId,
+      displayName: b.displayName,
+      predictions: slicePredictionsToMatchIds(
+        b.predictions as Record<string, ScorePrediction | undefined>,
+        matchIds,
+      ),
+    })),
+  ];
+
+  const scored = rows.map((row) => {
+    const b = computePointsBreakdownForProde(row.predictions, matchIds);
+    return {
+      playerId: row.playerId,
+      displayName: row.displayName,
+      points: b.points,
+      exactScores: b.exactScores,
+      outcomeOnly: b.outcomeOnly,
+      predictionsOnScored: b.predictionsOnScored,
+    };
+  });
+
+  scored.sort((a, b) => {
+    if (b.points !== a.points) return b.points - a.points;
+    if (b.exactScores !== a.exactScores) return b.exactScores - a.exactScores;
+    return a.displayName.localeCompare(b.displayName, "es");
+  });
+
+  const mapped = scored.map((r, i) => ({
+    rank: i + 1,
+    playerId: r.playerId,
+    displayName: r.displayName,
+    points: r.points,
+    exactScores: r.exactScores,
+    outcomeOnly: r.outcomeOnly,
+    predictionsOnScored: r.predictionsOnScored,
+    streakDays: 0,
+    scope: "fecha" as const,
+  }));
+
+  return mergeRankDeltas(mapped, `pool:${poolId}`);
+}
 
 export function buildRankingEntries(
   scope: RankingScope,
@@ -249,10 +341,17 @@ export function buildRankingEntries(
   state: PersistedAppState,
   options?: BuildRankingOptions,
 ): RankingEntry[] {
-  const userPreds = aggregateUserPredictionsByMatch(
-    currentUserId,
-    state.predictionMap,
-  );
+  const publicPoolId = options?.publicPoolId ?? null;
+  if (scope === "fecha" && publicPoolId) {
+    return buildPublicPoolRankingEntries(
+      publicPoolId,
+      currentUserId,
+      currentUserDisplayName,
+      state,
+    );
+  }
+
+  const userPreds = aggregateUserPredictionsByMatch(currentUserId, state);
 
   const tournamentId = options?.tournamentId ?? null;
   const rows =
@@ -309,6 +408,8 @@ export function buildRankingEntries(
   const scopeKey =
     scope === "tournament" && tournamentId ?
       `tournament:${tournamentId}`
+    : scope === "fecha" && publicPoolId ?
+      `pool:${publicPoolId}`
     : scope;
 
   return mergeRankDeltas(mapped, scopeKey);
@@ -339,6 +440,15 @@ export function countPendingMarkers(
     for (const matchId of prode.matchIds) {
       const key = predictionStorageKey(currentUserId, prode.id, matchId);
       if (!state.predictionMap[key]) n += 1;
+    }
+  }
+  for (const poolId of state.joinedPublicPoolIds) {
+    const pool = getPublicPoolById(poolId);
+    if (!pool) continue;
+    const matchIds = getMatchIdsForMatchday(pool.tournamentId, pool.matchdayId);
+    for (const matchId of matchIds) {
+      const key = predictionStorageKey(currentUserId, poolId, matchId);
+      if (!state.publicPoolPredictionMap[key]) n += 1;
     }
   }
   return n;
@@ -422,10 +532,7 @@ export function buildHomeStats(
   currentUserDisplayName: string,
   state: PersistedAppState,
 ): HomeStatsSnapshot {
-  const preds = aggregateUserPredictionsByMatch(
-    currentUserId,
-    state.predictionMap,
-  );
+  const preds = aggregateUserPredictionsByMatch(currentUserId, state);
   const { points, exactScores } = computePointsBreakdown(preds);
   return {
     weekPoints: points,

@@ -19,7 +19,6 @@ export const MOCK_MATCH_RESULTS: Record<
   "cm-ba-2": { home: 1, away: 3 },
   "cm-zn-1": { home: 2, away: 0 },
   "cm-zn-2": { home: 1, away: 1 },
-  "cm-f8-1": { home: 4, away: 3 },
 };
 
 export function getMockResultForMatch(

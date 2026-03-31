@@ -10,6 +10,7 @@ import {
   filterTorneoBrowseItems,
   type TorneoStatusFilter,
 } from "@/lib/torneos-browse-filter";
+import { getTournamentCatalogue } from "@/mocks/services/tournaments-catalogue.mock";
 import {
   getTorneoBrowseItems,
   TORNEOS_CATEGORY_CHIPS,
@@ -38,6 +39,19 @@ export function TorneosScreen() {
   const allTorneos = useMemo(() => {
     void ingestionTick;
     return getTorneoBrowseItems();
+  }, [ingestionTick]);
+
+  const playFechaHrefByTournamentId = useMemo(() => {
+    void ingestionTick;
+    const out: Record<string, string> = {};
+    for (const t of getTournamentCatalogue()) {
+      const md =
+        t.matchdays.find((m) => m.status === "open") ?? t.matchdays[0];
+      if (md) {
+        out[t.id] = `/torneos/${encodeURIComponent(t.id)}/fechas/${encodeURIComponent(md.id)}`;
+      }
+    }
+    return out;
   }, [ingestionTick]);
 
   const regions = useMemo(
@@ -92,11 +106,12 @@ export function TorneosScreen() {
         <p className={pageEyebrow}>ProdeMix</p>
         <h1 className={cn(pageTitle, "mt-0.5")}>Torneos</h1>
         <p className="mt-1.5 text-[12px] leading-relaxed text-app-muted">
-          Futsal, fútbol 8, amateur, barrial y ligas de clubes de todo el país.
+          Solo Primera. Elegí un torneo, abrí la fecha y entrá al pool público de
+          esa jornada.
         </p>
       </header>
 
-      <div className="relative mt-3">
+      <div className="relative mt-4">
         <Search
           className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-app-muted"
           strokeWidth={2}
@@ -209,9 +224,9 @@ export function TorneosScreen() {
       </div>
 
       {featuredList.length > 0 ? (
-        <section className="mt-4 space-y-2">
+        <section className="mt-5 space-y-2">
           <h2 className="text-[13px] font-semibold tracking-tight text-app-text">
-            Destacados
+            Destacados · Primera
           </h2>
           <div className="-mx-0.5 flex snap-x snap-mandatory gap-2 overflow-x-auto pb-1 pl-0.5 pr-1 pt-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {featuredList.map((t) => (
@@ -224,6 +239,7 @@ export function TorneosScreen() {
                   following={followed.has(t.id)}
                   onToggleFollow={() => toggleFollow(t.id)}
                   variant="featured"
+                  playFechaHref={playFechaHrefByTournamentId[t.id] ?? null}
                 />
               </div>
             ))}
@@ -231,10 +247,10 @@ export function TorneosScreen() {
         </section>
       ) : null}
 
-      <section className="mt-4 space-y-2">
+      <section className="mt-5 space-y-2">
         <h2 className="flex flex-wrap items-baseline gap-x-1 text-[13px] font-semibold tracking-tight text-app-text">
           <span>
-            {featuredList.length > 0 ? "Más torneos" : "Explorar"}
+            {featuredList.length > 0 ? "Más competiciones" : "Explorar"}
           </span>
           <span className="font-normal text-[11px] text-app-muted">
             ({filtered.length})
@@ -265,6 +281,7 @@ export function TorneosScreen() {
                   torneo={t}
                   following={followed.has(t.id)}
                   onToggleFollow={() => toggleFollow(t.id)}
+                  playFechaHref={playFechaHrefByTournamentId[t.id] ?? null}
                 />
               </li>
             ))}

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChevronRight, MapPin } from "lucide-react";
+import { Calendar, ChevronRight, MapPin } from "lucide-react";
 
 import type { TorneoBrowseItem } from "@/domain";
 import { btnCompact, cardSurface } from "@/lib/ui-styles";
@@ -12,6 +12,8 @@ type TorneoCardProps = {
   following: boolean;
   onToggleFollow: () => void;
   variant?: "default" | "featured";
+  /** Pool público de la fecha abierta (producto principal). */
+  playFechaHref?: string | null;
 };
 
 export function TorneoCard({
@@ -19,6 +21,7 @@ export function TorneoCard({
   following,
   onToggleFollow,
   variant = "default",
+  playFechaHref,
 }: TorneoCardProps) {
   const teamsLine =
     torneo.teamsCount > 0
@@ -76,34 +79,49 @@ export function TorneoCard({
           <span className="text-app-border">·</span>
           <span className="tabular-nums">{teamsLine}</span>
         </div>
-        <p className="mt-1 text-[10px] font-medium text-app-sport">
+        <p className="mt-1 text-[10px] font-semibold leading-snug text-app-primary">
           {torneo.phaseLabel}
         </p>
 
-        <div className="mt-2.5 flex gap-2">
-          <button
-            type="button"
-            onClick={onToggleFollow}
-            className={cn(
-              btnCompact(),
-              "min-h-[40px] flex-1 border text-[12px]",
-              following
-                ? "border-app-primary bg-blue-50 text-app-primary"
-                : "border-app-border bg-app-bg text-app-text shadow-sm",
-            )}
-          >
-            {following ? "Siguiendo" : "Seguir"}
-          </button>
-          <Link
-            href={`/torneos/${encodeURIComponent(torneo.id)}`}
-            className={cn(
-              btnCompact(),
-              "min-h-[40px] flex-1 gap-0.5 bg-app-primary px-2 text-white shadow-sm hover:bg-blue-700",
-            )}
-          >
-            Ver
-            <ChevronRight className="h-3.5 w-3.5 opacity-90" strokeWidth={2} />
-          </Link>
+        <div className="mt-2.5 flex flex-col gap-2">
+          {playFechaHref ? (
+            <Link
+              href={playFechaHref}
+              className={cn(
+                btnCompact(),
+                "min-h-[40px] w-full justify-center gap-1 bg-app-primary px-2 text-[12px] font-semibold text-white shadow-sm hover:bg-blue-700",
+              )}
+            >
+              <Calendar className="h-3.5 w-3.5 opacity-95" strokeWidth={2} aria-hidden />
+              Jugar fecha · pool
+              <ChevronRight className="h-3.5 w-3.5 opacity-90" strokeWidth={2} />
+            </Link>
+          ) : null}
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={onToggleFollow}
+              className={cn(
+                btnCompact(),
+                "min-h-[40px] flex-1 border text-[12px]",
+                following
+                  ? "border-app-primary bg-blue-50 text-app-primary"
+                  : "border-app-border bg-app-bg text-app-text shadow-sm",
+              )}
+            >
+              {following ? "Siguiendo" : "Seguir"}
+            </button>
+            <Link
+              href={`/torneos/${encodeURIComponent(torneo.id)}`}
+              className={cn(
+                btnCompact(),
+                "min-h-[40px] flex-1 gap-0.5 border border-app-border bg-app-surface px-2 text-[12px] text-app-text shadow-sm hover:bg-app-bg",
+              )}
+            >
+              Torneo
+              <ChevronRight className="h-3.5 w-3.5 opacity-90" strokeWidth={2} />
+            </Link>
+          </div>
         </div>
       </div>
     </article>

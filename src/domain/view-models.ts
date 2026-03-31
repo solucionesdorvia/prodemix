@@ -4,6 +4,9 @@
  */
 
 import type { Match } from "./match";
+import type { Matchday } from "./matchday";
+import type { PublicPool } from "./public-pool";
+import type { TournamentDivision } from "./tournament";
 
 /** Home dashboard quick stats */
 export interface HomeStatsSnapshot {
@@ -60,11 +63,13 @@ export interface TorneoBrowseItem {
   featured: boolean;
 }
 
-/** Crear prode: tournament block with embedded matches from catalogue */
+/** Crear prode / API: tournament with fechas + flat matches (matches include matchdayId). */
 export interface TournamentCatalogueEntry {
   id: string;
   name: string;
   shortName: string;
+  division: TournamentDivision;
+  matchdays: Matchday[];
   matches: Match[];
 }
 
@@ -111,6 +116,10 @@ export interface TournamentDetailView {
   browse: TorneoBrowseItem;
   /** Usually same as `browse.phaseLabel` — current round / fecha. */
   jornadaLabel: string;
+  /** Fechas del torneo (hub). */
+  matchdays: Matchday[];
+  /** Pool público a resaltar (primera fecha abierta). */
+  featuredPublicPool: PublicPool | null;
   stats: TournamentDetailStats;
   nextMatches: TournamentMatchRow[];
   recentResults: TournamentResultRow[];

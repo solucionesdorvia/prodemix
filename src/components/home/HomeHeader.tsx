@@ -8,23 +8,29 @@ type HomeHeaderProps = {
   userName: string;
   activityUnreadCount?: number;
   className?: string;
+  /** Product line under the title — fecha-first positioning. */
+  tagline?: string;
 };
 
 export function HomeHeader({
   userName,
   activityUnreadCount = 0,
   className,
+  tagline = "Primera · pools por fecha",
 }: HomeHeaderProps) {
   return (
     <header
       className={cn(
-        "flex items-center justify-between gap-3 border-b border-app-border-subtle pb-2.5",
+        "flex items-center justify-between gap-3 border-b border-app-border-subtle pb-3",
         className,
       )}
     >
       <div className="min-w-0">
         <p className={pageEyebrow}>ProdeMix</p>
         <h1 className={cn("truncate", pageTitle)}>Hola, {userName}</h1>
+        <p className="mt-1 text-[11px] font-medium leading-snug text-app-muted">
+          {tagline}
+        </p>
       </div>
       <div className="flex shrink-0 items-center gap-2">
         <Link

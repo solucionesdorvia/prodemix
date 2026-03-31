@@ -12,6 +12,9 @@ import {
   getTorneoBrowseItems,
 } from "@/mocks/services/torneos-browse.mock";
 import {
+  getPublicPoolForMatchday,
+} from "@/mocks/catalog/primera-catalog";
+import {
   getTournamentCatalogueEntryById,
 } from "@/mocks/services/tournaments-catalogue.mock";
 
@@ -48,14 +51,6 @@ function activityForCatalogue(id: string): TournamentActivityNote[] {
       {
         id: "a1",
         title: "Liga Honor A · Primera",
-        detail: "Fixture Apertura 2026 cargado en ProdeMix.",
-        timeLabel: "Hoy",
-      },
-    ],
-    "joma-honor-a-tercera": [
-      {
-        id: "a1",
-        title: "Liga Honor A · Tercera",
         detail: "Fixture Apertura 2026 cargado en ProdeMix.",
         timeLabel: "Hoy",
       },
@@ -98,11 +93,11 @@ function activityForCatalogue(id: string): TournamentActivityNote[] {
         timeLabel: "Hace 3 h",
       },
     ],
-    "copa-zn-f2": [
+    "copa-zn-primera": [
       {
         id: "a1",
-        title: "Cuartos en marcha",
-        detail: "Se definen cruces de zona norte.",
+        title: "Copa Zona Norte · Primera",
+        detail: "Fase regular · fechas con pool público.",
         timeLabel: "Mar",
       },
     ],
@@ -112,14 +107,6 @@ function activityForCatalogue(id: string): TournamentActivityNote[] {
         title: "Serie Oro",
         detail: "Se ajustó el calendario por lluvia.",
         timeLabel: "Ayer",
-      },
-    ],
-    "f8-pilar": [
-      {
-        id: "a1",
-        title: "Inscripciones",
-        detail: "Cupos limitados para la Copa Invierno.",
-        timeLabel: "Hace 2 d",
       },
     ],
   };
@@ -172,9 +159,18 @@ function buildFromCatalogue(browse: TorneoBrowseItem): TournamentDetailView {
   const played = recent.length;
   const upcoming = next.length;
 
+  const openMd =
+    cat.matchdays.find((d) => d.status === "open") ?? cat.matchdays[0] ?? null;
+  const featuredPool =
+    openMd ?
+      getPublicPoolForMatchday(cat.id, openMd.id) ?? null
+    : null;
+
   return {
     browse,
-    jornadaLabel: browse.phaseLabel,
+    jornadaLabel: openMd?.name ?? browse.phaseLabel,
+    matchdays: cat.matchdays,
+    featuredPublicPool: featuredPool,
     stats: {
       totalMatches: total,
       playedMatches: played,
@@ -246,6 +242,8 @@ function buildSynthetic(browse: TorneoBrowseItem): TournamentDetailView {
   return {
     browse,
     jornadaLabel: browse.phaseLabel,
+    matchdays: [],
+    featuredPublicPool: null,
     stats: {
       totalMatches: total,
       playedMatches: played,

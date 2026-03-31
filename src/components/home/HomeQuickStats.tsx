@@ -47,7 +47,7 @@ export function HomeQuickStats({ stats, className }: HomeQuickStatsProps) {
             {stats.exactScores}
           </p>
         </Cell>
-        <Cell label="Rank" className="px-0.5">
+        <Cell label="Global" className="px-0.5">
           <Link
             href="/ranking"
             className="inline-flex items-center justify-center gap-0.5 rounded-md py-0.5 text-[14px] font-bold tabular-nums text-app-primary transition hover:bg-blue-50/80 active:scale-[0.98]"

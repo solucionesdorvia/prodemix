@@ -11,6 +11,7 @@ import {
   X,
 } from "lucide-react";
 import type { FormEvent } from "react";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   useCallback,
@@ -261,11 +262,27 @@ export function CrearProdeClient() {
     <div className="pb-2">
       <header className={pageHeader}>
         <p className={pageEyebrow}>ProdeMix</p>
-        <h1 className={cn(pageTitle, "mt-0.5")}>Crear prode</h1>
+        <h1 className={cn(pageTitle, "mt-0.5")}>Prode propio</h1>
         <p className="mt-1.5 text-[12px] leading-relaxed text-app-muted">
-          Al sumar un torneo, entran todos sus partidos. Podés afinar después.
+          Combiná torneos y partidos para tu grupo. El foco principal de la app
+          son los{" "}
+          <Link href="/torneos" className="font-semibold text-app-primary hover:underline">
+            pools públicos por fecha
+          </Link>
+          .
         </p>
       </header>
+
+      <div className="mt-3 rounded-lg border border-app-border bg-app-bg/80 px-3 py-2.5">
+        <p className="text-[11px] leading-snug text-app-muted">
+          <span className="font-semibold text-app-text">
+            Buscás pozo y ranking:
+          </span>{" "}
+          en Torneos abrís una fecha y un pool público. Esto es{" "}
+          <span className="font-medium text-app-text">opcional</span> para
+          grupos privados.
+        </p>
+      </div>
 
       <section className={cn("mt-4 px-2.5 py-2.5", cardSurface)}>
         <p className="text-[10px] font-bold uppercase tracking-wide text-app-muted">

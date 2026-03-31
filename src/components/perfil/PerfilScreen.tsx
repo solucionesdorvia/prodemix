@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ChevronRight, Settings2, Star, Trophy } from "lucide-react";
 import { useMemo } from "react";
 
+import type { PublicPool } from "@/domain";
 import {
   EmptyState,
   EmptyStateButtonLink,
@@ -12,6 +13,10 @@ import { useIngestionTick } from "@/hooks/useIngestionTick";
 import { pageEyebrow, pageHeader, pageTitle, statLabel } from "@/lib/ui-styles";
 import { initialsFromDisplayName } from "@/lib/user-display";
 import { cn } from "@/lib/utils";
+import {
+  formatPublicPoolLabel,
+  getPublicPoolById,
+} from "@/mocks/catalog/primera-catalog";
 import { getTorneoBrowseItems } from "@/mocks/services/torneos-browse.mock";
 import {
   aggregateUserPredictionsByMatch,
@@ -47,13 +52,10 @@ export function PerfilScreen() {
   const owned = useOwnedProdes();
 
   const { totalPoints, exactHits } = useMemo(() => {
-    const preds = aggregateUserPredictionsByMatch(
-      user.id,
-      state.predictionMap,
-    );
+    const preds = aggregateUserPredictionsByMatch(user.id, state);
     const { points, exactScores } = computePointsBreakdown(preds);
     return { totalPoints: points, exactHits: exactScores };
-  }, [user.id, state.predictionMap]);
+  }, [user.id, state]);
 
   const followedLabels = useMemo(() => {
     void ingestionTick;
@@ -64,11 +66,20 @@ export function PerfilScreen() {
       .filter((x): x is NonNullable<typeof x> => Boolean(x));
   }, [state.followedTournamentIds, ingestionTick]);
 
+  const joinedPools = useMemo((): PublicPool[] => {
+    return state.joinedPublicPoolIds
+      .map((id) => getPublicPoolById(id))
+      .filter((p): p is PublicPool => Boolean(p));
+  }, [state.joinedPublicPoolIds]);
+
   return (
     <div className="pb-2">
       <header className={pageHeader}>
         <p className={pageEyebrow}>ProdeMix</p>
         <h1 className={cn(pageTitle, "mt-0.5")}>Perfil</h1>
+        <p className="mt-1 text-[11px] font-medium leading-snug text-app-muted">
+          Primera · pools por fecha · prodes opcionales
+        </p>
       </header>
 
       <section className="mt-4 flex gap-3">
@@ -107,11 +118,60 @@ export function PerfilScreen() {
             sub="marcadores exactos"
           />
           <StatCell
-            label="Prodes"
-            value={owned.length}
-            sub="activos"
+            label="Fechas"
+            value={joinedPools.length}
+            sub="pools públicos"
           />
         </div>
+        <p className="mt-2 text-[10px] leading-snug text-app-muted">
+          Prodes propios activos:{" "}
+          <Link href="/crear" className="font-semibold text-app-primary hover:underline">
+            {owned.length}
+          </Link>
+        </p>
+      </section>
+
+      <section className="mt-3 space-y-1.5">
+        <div className="flex items-baseline justify-between gap-2">
+          <h3 className="text-[11px] font-semibold uppercase tracking-wide text-app-muted">
+            Pools por fecha
+          </h3>
+          <Link
+            href="/torneos"
+            className="text-[11px] font-semibold text-app-primary hover:underline"
+          >
+            Explorar
+          </Link>
+        </div>
+        {joinedPools.length === 0 ? (
+          <p className="rounded-lg border border-dashed border-app-border bg-app-bg/70 px-3 py-2.5 text-[11px] leading-snug text-app-muted">
+            Todavía no entraste a ningún pool público. Elegí una fecha en{" "}
+            <Link href="/torneos" className="font-semibold text-app-primary">
+              Torneos
+            </Link>
+            .
+          </p>
+        ) : (
+          <ul className="space-y-1.5">
+            {joinedPools.map((p) => (
+              <li key={p.id}>
+                <Link
+                  href={`/torneos/${encodeURIComponent(p.tournamentId)}/fechas/${encodeURIComponent(p.matchdayId)}`}
+                  className="flex items-center justify-between gap-2 rounded-lg border border-app-border bg-app-surface px-2.5 py-2 text-left shadow-[0_1px_0_rgba(15,23,42,0.03)] transition hover:bg-app-bg active:scale-[0.995]"
+                >
+                  <span className="min-w-0 truncate text-[12px] font-semibold text-app-text">
+                    {formatPublicPoolLabel(p)}
+                  </span>
+                  <ChevronRight
+                    className="h-4 w-4 shrink-0 text-app-muted"
+                    strokeWidth={2}
+                    aria-hidden
+                  />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
 
       <section className="mt-3 space-y-1.5">
@@ -170,7 +230,7 @@ export function PerfilScreen() {
                 Ver ranking
               </span>
               <span className="mt-0.5 block text-[10px] text-app-muted">
-                Global, amigos y liga
+                Global, fecha y torneo
               </span>
             </span>
           </span>

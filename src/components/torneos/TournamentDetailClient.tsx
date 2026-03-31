@@ -22,7 +22,12 @@ import {
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { useIngestionTick } from "@/hooks/useIngestionTick";
 import { formatMatchKickoffFull } from "@/lib/datetime";
-import { btnCompact, cardSurface, statLabel } from "@/lib/ui-styles";
+import {
+  btnCompact,
+  btnPrimaryFull,
+  cardSurface,
+  statLabel,
+} from "@/lib/ui-styles";
 import { getTournamentDetailById } from "@/mocks/services/tournament-detail.mock";
 import { useAppState } from "@/state/app-state";
 import { cn } from "@/lib/utils";
@@ -69,8 +74,23 @@ export function TournamentDetailClient({
     );
   }
 
-  const { browse, jornadaLabel, stats, nextMatches, recentResults, standingsPreview, featuredTeams, activityNotes } =
-    detail;
+  const {
+    browse,
+    jornadaLabel,
+    matchdays,
+    featuredPublicPool,
+    stats,
+    nextMatches,
+    recentResults,
+    standingsPreview,
+    featuredTeams,
+    activityNotes,
+  } = detail;
+
+  const playFechaHref =
+    featuredPublicPool ?
+      `/torneos/${encodeURIComponent(tournamentId)}/fechas/${encodeURIComponent(featuredPublicPool.matchdayId)}`
+    : null;
   const teamsLine =
     browse.teamsCount > 0
       ? `${browse.teamsCount} equipos`
@@ -80,12 +100,13 @@ export function TournamentDetailClient({
     <div className="pb-2">
       <Link
         href="/torneos"
-        className="mb-2 inline-flex items-center gap-1 text-[12px] font-semibold text-app-primary hover:underline"
+        className="mb-1 inline-flex items-center gap-1 text-[12px] font-semibold text-app-primary hover:underline"
       >
         <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2} aria-hidden />
         Torneos
       </Link>
 
+      <div className="space-y-5">
       <article
         className={cn(
           "overflow-hidden border-l-[3px]",
@@ -156,35 +177,74 @@ export function TournamentDetailClient({
           </div>
         </div>
 
-        <div className="flex gap-2 p-2.5">
-          <button
-            type="button"
-            onClick={() => toggleFollowTournament(tournamentId)}
-            className={cn(
-              btnCompact(),
-              "min-h-[40px] flex-1 border text-[12px]",
-              following
-                ? "border-app-primary bg-blue-50 text-app-primary"
-                : "border-app-border bg-app-bg text-app-text shadow-sm",
-            )}
-          >
-            {following ? "Siguiendo" : "Seguir"}
-          </button>
-          <Link
-            href={`/crear?torneo=${encodeURIComponent(tournamentId)}`}
-            className={cn(
-              btnCompact(),
-              "min-h-[40px] flex-[1.15] gap-0.5 bg-app-primary px-2 text-white shadow-sm hover:bg-blue-700",
-            )}
-          >
-            Usar en prode
-            <ChevronRight className="h-3.5 w-3.5 opacity-90" strokeWidth={2} />
-          </Link>
+        <div className="flex flex-col gap-2 p-2.5">
+          {playFechaHref ? (
+            <Link href={playFechaHref} className={btnPrimaryFull()}>
+              Jugar fecha · pool
+              <ChevronRight className="h-4 w-4 shrink-0" strokeWidth={2.25} aria-hidden />
+            </Link>
+          ) : null}
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => toggleFollowTournament(tournamentId)}
+              className={cn(
+                btnCompact(),
+                "min-h-[40px] flex-1 border text-[12px]",
+                following
+                  ? "border-app-primary bg-blue-50 text-app-primary"
+                  : "border-app-border bg-app-bg text-app-text shadow-sm",
+              )}
+            >
+              {following ? "Siguiendo" : "Seguir"}
+            </button>
+            <Link
+              href={`/crear?torneo=${encodeURIComponent(tournamentId)}`}
+              className={cn(
+                btnCompact(),
+                "min-h-[40px] flex-1 gap-0.5 border border-app-border bg-app-bg px-2 text-[12px] text-app-text shadow-sm",
+              )}
+              title="Prode privado o mixto"
+            >
+              Prode propio
+              <ChevronRight className="h-3.5 w-3.5 opacity-90" strokeWidth={2} />
+            </Link>
+          </div>
         </div>
       </article>
 
+      {matchdays.length > 0 ? (
+        <section className="space-y-1.5">
+          <div>
+            <SectionHeader title="Fechas" />
+            <p className="mt-0.5 text-[10px] leading-snug text-app-muted">
+              Cada jornada tiene pool público: tocá para entrar y pronosticar.
+            </p>
+          </div>
+          <ul className="space-y-1">
+            {matchdays.slice(0, 12).map((md) => (
+              <li key={md.id}>
+                <Link
+                  href={`/torneos/${encodeURIComponent(tournamentId)}/fechas/${encodeURIComponent(md.id)}`}
+                  className="flex items-center gap-2 rounded-[10px] border border-app-border bg-app-surface px-2.5 py-2 text-[12px] font-semibold text-app-text shadow-[0_1px_0_rgba(15,23,42,0.04)] active:bg-app-bg"
+                >
+                  <span className="min-w-0 flex-1 truncate">{md.name}</span>
+                  <span className="shrink-0 rounded-md bg-app-bg px-1.5 py-0.5 text-[9px] font-bold uppercase text-app-muted">
+                    {md.status === "open" ? "Abierta"
+                    : md.status === "upcoming" ? "Próxima"
+                    : md.status === "closed" ? "En juego"
+                    : "Finalizada"}
+                  </span>
+                  <ChevronRight className="h-3.5 w-3.5 shrink-0 text-app-muted" strokeWidth={2} />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
       {nextMatches.length > 0 ? (
-        <section className="mt-3 space-y-1.5">
+        <section className="space-y-1.5">
           <SectionHeader title="Próximos partidos" />
           <ul className="space-y-1.5">
             {nextMatches.map((m) => (
@@ -211,7 +271,7 @@ export function TournamentDetailClient({
           </ul>
         </section>
       ) : (
-        <section className="mt-3 space-y-1.5">
+        <section className="space-y-1.5">
           <SectionHeader title="Próximos partidos" />
           <EmptyState
             variant="minimal"
@@ -224,7 +284,7 @@ export function TournamentDetailClient({
       )}
 
       {recentResults.length > 0 ? (
-        <section className="mt-3 space-y-1.5">
+        <section className="space-y-1.5">
           <SectionHeader title="Últimos resultados" />
           <ul className="space-y-1.5">
             {recentResults.map((r) => (
@@ -253,7 +313,7 @@ export function TournamentDetailClient({
           </ul>
         </section>
       ) : (
-        <section className="mt-3 space-y-1.5">
+        <section className="space-y-1.5">
           <SectionHeader title="Últimos resultados" />
           <EmptyState
             variant="minimal"
@@ -266,7 +326,7 @@ export function TournamentDetailClient({
       )}
 
       {standingsPreview.length > 0 ? (
-        <section className="mt-3 space-y-1.5">
+        <section className="space-y-1.5">
           <SectionHeader
             title="Tabla"
             action={<span className="text-app-muted">Top {standingsPreview.length}</span>}
@@ -304,7 +364,7 @@ export function TournamentDetailClient({
       ) : null}
 
       {featuredTeams.length > 0 ? (
-        <section className="mt-3 space-y-1.5">
+        <section className="space-y-1.5">
           <SectionHeader
             title={
               <span className="inline-flex items-center gap-1">
@@ -328,7 +388,7 @@ export function TournamentDetailClient({
       ) : null}
 
       {activityNotes.length > 0 ? (
-        <section className="mt-3 space-y-1.5">
+        <section className="space-y-1.5">
           <SectionHeader
             title={
               <span className="inline-flex items-center gap-1">
@@ -359,6 +419,7 @@ export function TournamentDetailClient({
           </ul>
         </section>
       ) : null}
+      </div>
     </div>
   );
 }

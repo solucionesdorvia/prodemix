@@ -6,7 +6,6 @@ import { useMemo } from "react";
 import {
   BarChart3,
   Home,
-  PlusCircle,
   Trophy,
   UserRound,
 } from "lucide-react";
@@ -18,7 +17,6 @@ import { useAppState } from "@/state/app-state";
 const NAV = [
   { href: "/", label: "Inicio", Icon: Home },
   { href: "/torneos", label: "Torneos", Icon: Trophy },
-  { href: "/crear", label: "Crear", Icon: PlusCircle },
   { href: "/ranking", label: "Ranking", Icon: BarChart3 },
   { href: "/perfil", label: "Perfil", Icon: UserRound },
 ] as const;

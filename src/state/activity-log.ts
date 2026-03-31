@@ -1,5 +1,9 @@
 import type { ActivityKind } from "@/domain";
 import { findCatalogueMatchById } from "@/lib/catalogue-matches";
+import {
+  getMatchIdsForMatchday,
+  getPublicPoolById,
+} from "@/mocks/catalog/primera-catalog";
 import { getMockResultForMatch } from "@/mocks/mock-match-results";
 import { pointsForPrediction } from "@/lib/scoring";
 
@@ -58,6 +62,49 @@ export function computePointActivityEntries(
         pts === 3 ?
           `${label} · +3 pts (marcador exacto)`
         : `${label} · +1 pt (resultado)`;
+
+      out.push({
+        dedupeKey,
+        entry: {
+          id: newActivityId(),
+          title,
+          detail,
+          timeLabel: formatActivityTimeLabel(createdAt),
+          kind: "points" as ActivityKind,
+          createdAt,
+        },
+      });
+    }
+  }
+
+  for (const poolId of state.joinedPublicPoolIds) {
+    const pool = getPublicPoolById(poolId);
+    if (!pool) continue;
+    const matchIds = getMatchIdsForMatchday(pool.tournamentId, pool.matchdayId);
+    for (const matchId of matchIds) {
+      if (out.length >= MAX_POINT_EVENTS_PER_SYNC) return out;
+      const dedupeKey = `pts:pool:${poolId}:${matchId}`;
+      if (dedupe.has(dedupeKey)) continue;
+
+      const pred =
+        state.publicPoolPredictionMap[
+          predictionStorageKey(userId, poolId, matchId)
+        ];
+      const res = getMockResultForMatch(matchId);
+      if (!pred || !res) continue;
+
+      const pts = pointsForPrediction(pred, res);
+      if (pts === 0) continue;
+
+      const m = findCatalogueMatchById(matchId);
+      const label =
+        m ? `${m.homeTeam} vs ${m.awayTeam}` : "Partido";
+      const createdAt = new Date().toISOString();
+      const title = pts === 3 ? "Pleno (pool)" : "Puntos (pool)";
+      const detail =
+        pts === 3 ?
+          `${label} · +3 pts · pool público`
+        : `${label} · +1 pt · pool público`;
 
       out.push({
         dedupeKey,

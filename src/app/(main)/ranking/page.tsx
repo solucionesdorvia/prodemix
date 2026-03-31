@@ -5,7 +5,7 @@ import { RankingScreen } from "@/components/ranking/RankingScreen";
 export const metadata: Metadata = {
   title: "Ranking",
   description:
-    "Ranking global, entre amigos y por liga. Plenos y resultados con puntos claros.",
+    "Ranking por fecha (pool público), global, torneo y amigos. 3 pts pleno · 1 pt resultado.",
 };
 
 export default function RankingPage() {

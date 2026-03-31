@@ -3,7 +3,13 @@
  */
 export type RankingTrend = "up" | "down" | "same";
 
-export type RankingScope = "global" | "friends" | "liga" | "tournament";
+export type RankingScope =
+  | "global"
+  | "friends"
+  | "liga"
+  | "tournament"
+  /** Leaderboard for one public pool / fecha. */
+  | "fecha";
 
 export interface RankingEntry {
   rank: number;

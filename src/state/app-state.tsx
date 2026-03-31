@@ -22,6 +22,7 @@ import {
 import { collectInviteCodes, generateInviteCode } from "./invite-code";
 import { loadPersistedState, savePersistedState } from "./persistence";
 import { predictionStorageKey } from "./selectors";
+import type { PublicPoolPredictionMap } from "./types";
 import {
   DEFAULT_APP_STATE,
   type ActivityLogEntry,
@@ -63,6 +64,12 @@ type AppStateValue = {
   createProde: (input: CreateProdeInput) => string;
   setPrediction: (
     prodeId: string,
+    matchId: string,
+    score: ScorePrediction | null,
+  ) => void;
+  joinPublicPool: (poolId: string) => void;
+  setPublicPoolPrediction: (
+    poolId: string,
     matchId: string,
     score: ScorePrediction | null,
   ) => void;
@@ -271,6 +278,51 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     [user.id],
   );
 
+  const joinPublicPool = useCallback((poolId: string) => {
+    setState((s) => {
+      if (s.joinedPublicPoolIds.includes(poolId)) return s;
+      return {
+        ...s,
+        joinedPublicPoolIds: [...s.joinedPublicPoolIds, poolId],
+      };
+    });
+  }, []);
+
+  const setPublicPoolPrediction = useCallback(
+    (poolId: string, matchId: string, score: ScorePrediction | null) => {
+      const key = predictionStorageKey(user.id, poolId, matchId);
+      setState((s) => {
+        const nextMap: PublicPoolPredictionMap = {
+          ...s.publicPoolPredictionMap,
+        };
+        if (score === null) delete nextMap[key];
+        else nextMap[key] = score;
+
+        const m = findCatalogueMatchById(matchId);
+        const label =
+          m ? `${m.homeTeam} vs ${m.awayTeam}` : "Partido";
+        const createdAt = new Date().toISOString();
+        const activity =
+          score !== null ?
+            [
+              {
+                id: newActivityId(),
+                title: "Pronóstico guardado",
+                detail: `${label} · ${score.home}-${score.away} · Pool público`,
+                timeLabel: formatActivityTimeLabel(createdAt),
+                kind: "prediction" as const,
+                createdAt,
+              },
+              ...s.activity,
+            ].slice(0, 25)
+          : s.activity;
+
+        return { ...s, publicPoolPredictionMap: nextMap, activity };
+      });
+    },
+    [user.id],
+  );
+
   const value = useMemo(
     () => ({
       hydrated,
@@ -279,6 +331,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       toggleFollowTournament,
       createProde,
       setPrediction,
+      joinPublicPool,
+      setPublicPoolPrediction,
       recordActivity,
       markActivitySeen,
       completeOnboarding,
@@ -290,6 +344,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       toggleFollowTournament,
       createProde,
       setPrediction,
+      joinPublicPool,
+      setPublicPoolPrediction,
       recordActivity,
       markActivitySeen,
       completeOnboarding,

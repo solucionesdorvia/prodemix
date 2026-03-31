@@ -18,18 +18,14 @@ function fechaStartsAt(fecha: number, slot: number): string {
   return `${y}-${mo}-${day}T${String(h).padStart(2, "0")}:${String(min).padStart(2, "0")}:00-03:00`;
 }
 
-/**
- * Fixture Liga Honor A (Apertura): mismos cruces para Primera y Tercera en esta demo.
- */
-export function buildJomaHonorAMatches(
-  tournamentId: string,
-  idPrefix: "p" | "t",
-): Match[] {
-  const prefix = idPrefix === "p" ? "cm-joma-p" : "cm-joma-t";
+/** Fixture Liga Honor A (Apertura) — Primera. */
+export function buildJomaHonorAMatches(tournamentId: string): Match[] {
+  const prefix = "cm-joma-p";
   const out: Match[] = [];
   const data = rounds as [string, string][][];
   for (let f = 0; f < data.length; f++) {
     const round = data[f]!;
+    const matchdayId = `${tournamentId}-md-${String(f + 1).padStart(2, "0")}`;
     for (let m = 0; m < round.length; m++) {
       const [home, away] = round[m]!;
       const fid = String(f + 1).padStart(2, "0");
@@ -37,6 +33,7 @@ export function buildJomaHonorAMatches(
       out.push({
         id: `${prefix}-f${fid}-m${mid}`,
         tournamentId,
+        matchdayId,
         homeTeam: home,
         awayTeam: away,
         startsAt: fechaStartsAt(f + 1, m),

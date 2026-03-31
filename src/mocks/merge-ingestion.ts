@@ -25,14 +25,17 @@ function toBrowseItem(r: IngestedTournamentRecord): TorneoBrowseItem {
 }
 
 function toCatalogueEntry(r: IngestedTournamentRecord): TournamentCatalogueEntry {
+  const matches = r.matches.map((m) => ({
+    ...m,
+    tournamentId: r.id,
+  }));
   return {
     id: r.id,
     name: r.name,
     shortName: r.shortName,
-    matches: r.matches.map((m) => ({
-      ...m,
-      tournamentId: r.id,
-    })),
+    division: "primera",
+    matchdays: [],
+    matches,
   };
 }
 

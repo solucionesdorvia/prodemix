@@ -4,9 +4,9 @@ import { Suspense } from "react";
 import { CrearProdeClient } from "@/components/crear/CrearProdeClient";
 
 export const metadata: Metadata = {
-  title: "Crear",
+  title: "Prode propio",
   description:
-    "Armá un prode combinando partidos de diferentes torneos y ligas.",
+    "Creá un prode privado o mixto (opcional). Los pools públicos por fecha están en Torneos.",
 };
 
 export default function CrearPage() {

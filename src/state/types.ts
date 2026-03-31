@@ -24,6 +24,12 @@ export interface ActivityLogEntry {
   createdAt: string;
 }
 
+/** Key: `${userId}::${publicPoolId}::${matchId}` — mismo formato que prodes. */
+export type PublicPoolPredictionMap = Record<
+  string,
+  { home: number; away: number }
+>;
+
 export interface PersistedAppState {
   /**
    * When set, first-run onboarding is not shown again.
@@ -37,6 +43,9 @@ export interface PersistedAppState {
    * Same match in two prodes uses distinct keys.
    */
   predictionMap: Record<string, { home: number; away: number }>;
+  /** Pools públicos de fecha en los que el usuario entró (demo local). */
+  joinedPublicPoolIds: string[];
+  publicPoolPredictionMap: PublicPoolPredictionMap;
   activity: ActivityLogEntry[];
   /** Dedupe keys for one-off generated notifications (e.g. pts:prodeId:matchId). */
   activityDedupeKeys: string[];
@@ -49,6 +58,8 @@ export const DEFAULT_APP_STATE: PersistedAppState = {
   followedTournamentIds: [],
   prodes: [],
   predictionMap: {},
+  joinedPublicPoolIds: [],
+  publicPoolPredictionMap: {},
   activity: [],
   activityDedupeKeys: [],
   activityLastSeenAt: null,

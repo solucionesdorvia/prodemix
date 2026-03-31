@@ -58,6 +58,15 @@ function mergeWithDefaults(partial: PersistedAppState): PersistedAppState {
       partial.predictionMap && typeof partial.predictionMap === "object" ?
         partial.predictionMap
       : {},
+    joinedPublicPoolIds:
+      Array.isArray(partial.joinedPublicPoolIds) ?
+        partial.joinedPublicPoolIds
+      : [],
+    publicPoolPredictionMap:
+      partial.publicPoolPredictionMap &&
+      typeof partial.publicPoolPredictionMap === "object" ?
+        partial.publicPoolPredictionMap
+      : {},
     activity: Array.isArray(partial.activity) ? partial.activity : [],
     activityDedupeKeys:
       Array.isArray(partial.activityDedupeKeys) ?
