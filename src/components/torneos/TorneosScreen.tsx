@@ -226,8 +226,11 @@ export function TorneosScreen() {
       {featuredList.length > 0 ? (
         <section className="mt-5 space-y-2">
           <h2 className="text-[13px] font-semibold tracking-tight text-app-text">
-            Destacados · Primera
+            Premio · AFA Futsal
           </h2>
+          <p className="text-[11px] leading-snug text-app-muted">
+            Primera A, B y C con pool público y pozo por fecha.
+          </p>
           <div className="-mx-0.5 flex snap-x snap-mandatory gap-2 overflow-x-auto pb-1 pl-0.5 pr-1 pt-0.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {featuredList.map((t) => (
               <div

@@ -8,10 +8,10 @@ export function getHomeUpcomingMatches(): Match[] {
 const HOME_UPCOMING_MATCHES_FIXTURE: Match[] = [
   {
     id: "m1",
-    tournamentId: "tournament-afa-futsal-a",
+    tournamentId: "afa-premio-a",
     homeTeam: "Boca Juniors",
     awayTeam: "Racing Club",
-    tournamentLabel: "AFA Futsal · Primera A",
+    tournamentLabel: "AFA Futsal · Primera A · Premio",
     startsAt: "2026-03-30T19:30:00-03:00",
     tags: ["all", "futsal"],
   },

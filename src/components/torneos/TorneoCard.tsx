@@ -39,13 +39,20 @@ export function TorneoCard({
     >
       <div className={cn("px-2.5 py-2", variant === "featured" && "py-2.5")}>
         <div className="flex items-start justify-between gap-2">
-          <span
-            className={cn(
-              "inline-flex shrink-0 rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide ring-1",
-              pillByCategory(torneo.categoryId),
-            )}
-          >
-            {torneo.categoryLabel}
+          <span className="flex flex-wrap items-center gap-1">
+            <span
+              className={cn(
+                "inline-flex shrink-0 rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide ring-1",
+                pillByCategory(torneo.categoryId),
+              )}
+            >
+              {torneo.categoryLabel}
+            </span>
+            {torneo.promoBadge ? (
+              <span className="inline-flex shrink-0 rounded-full bg-amber-500/15 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-amber-700 ring-1 ring-amber-500/35 dark:text-amber-200">
+                {torneo.promoBadge}
+              </span>
+            ) : null}
           </span>
           <span
             className={cn(

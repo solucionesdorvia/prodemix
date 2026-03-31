@@ -1,0 +1,3307 @@
+{
+  "sourceUrl": "https://parenlapelotafutsal.com.ar/primeraB/primera",
+  "firestoreProject": "parenlapelotafutsal-4a110",
+  "collection": "fixtures-2026-primera-b",
+  "division": "primera-b",
+  "season": "2026",
+  "rounds": [
+    {
+      "fecha": 1,
+      "documentId": "fecha-1-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-1-1-primera",
+          "homeTeam": "Nva. Chicago",
+          "awayTeam": "Chacarita",
+          "homeScore": 4,
+          "awayScore": 4,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-1-2-primera",
+          "homeTeam": "Gimnasia LP",
+          "awayTeam": "Banfield",
+          "homeScore": 2,
+          "awayScore": 1,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-1-3-primera",
+          "homeTeam": "Metalurgico",
+          "awayTeam": "Arsenal",
+          "homeScore": 3,
+          "awayScore": 2,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-1-4-primera",
+          "homeTeam": "SECLA",
+          "awayTeam": "Velez Sarsfield",
+          "homeScore": 3,
+          "awayScore": 5,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-1-5-primera",
+          "homeTeam": "Franja de Oro",
+          "awayTeam": "Platense",
+          "homeScore": 2,
+          "awayScore": 3,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-1-6-primera",
+          "homeTeam": "Atlanta",
+          "awayTeam": "Villa La Ñata",
+          "homeScore": 11,
+          "awayScore": 4,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-1-7-primera",
+          "homeTeam": "Mirinaque",
+          "awayTeam": "Country",
+          "homeScore": 4,
+          "awayScore": 2,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-1-8-primera",
+          "homeTeam": "Pacifico",
+          "awayTeam": "Argentinos Jrs",
+          "homeScore": 2,
+          "awayScore": 2,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-1-9-primera",
+          "homeTeam": "Nueva Estrella",
+          "awayTeam": "Alvear",
+          "homeScore": 4,
+          "awayScore": 1,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 2,
+      "documentId": "fecha-2-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-2-1-primera",
+          "homeTeam": "Nueva Estrella",
+          "awayTeam": "Nva. Chicago",
+          "homeScore": 2,
+          "awayScore": 2,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-2-2-primera",
+          "homeTeam": "Alvear",
+          "awayTeam": "Pacifico",
+          "homeScore": 3,
+          "awayScore": 4,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-2-3-primera",
+          "homeTeam": "Argentinos Jrs",
+          "awayTeam": "Mirinaque",
+          "homeScore": 5,
+          "awayScore": 1,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-2-4-primera",
+          "homeTeam": "Country",
+          "awayTeam": "Atlanta",
+          "homeScore": 5,
+          "awayScore": 4,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-2-5-primera",
+          "homeTeam": "Villa La Ñata",
+          "awayTeam": "Franja de Oro",
+          "homeScore": 6,
+          "awayScore": 3,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-2-6-primera",
+          "homeTeam": "Platense",
+          "awayTeam": "SECLA",
+          "homeScore": 3,
+          "awayScore": 5,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-2-7-primera",
+          "homeTeam": "Velez Sarsfield",
+          "awayTeam": "Metalurgico",
+          "homeScore": 5,
+          "awayScore": 4,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-2-8-primera",
+          "homeTeam": "Arsenal",
+          "awayTeam": "Gimnasia LP",
+          "homeScore": 2,
+          "awayScore": 1,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-2-9-primera",
+          "homeTeam": "Banfield",
+          "awayTeam": "Chacarita",
+          "homeScore": 2,
+          "awayScore": 1,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 3,
+      "documentId": "fecha-3-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-3-1773329884586-0-primera",
+          "homeTeam": "Nva. Chicago",
+          "awayTeam": "Banfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-3-1773329884586-1-primera",
+          "homeTeam": "Chacarita",
+          "awayTeam": "Arsenal",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-3-1773329884586-2-primera",
+          "homeTeam": "Gimnasia LP.",
+          "awayTeam": "Velez Sarsfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-3-1773329884586-3-primera",
+          "homeTeam": "Metalurgico",
+          "awayTeam": "Platense",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-3-1773329884586-4-primera",
+          "homeTeam": "SECLA",
+          "awayTeam": "Villa La Ñata",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-3-1773329884586-5-primera",
+          "homeTeam": "Franja de Oro",
+          "awayTeam": "Country",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-3-1773329884586-6-primera",
+          "homeTeam": "Atlanta",
+          "awayTeam": "Argentinos Jrs",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-3-1773329884586-7-primera",
+          "homeTeam": "Mirinaque",
+          "awayTeam": "Alvear",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-3-1773329884586-8-primera",
+          "homeTeam": "Pacifico",
+          "awayTeam": "Nueva Estrella",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 4,
+      "documentId": "fecha-4-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-4-1773329903858-0-primera",
+          "homeTeam": "Pacifico",
+          "awayTeam": "Nva. Chicago",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-4-1773329903858-1-primera",
+          "homeTeam": "Nueva Estrella",
+          "awayTeam": "Mirinaque",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-4-1773329903858-2-primera",
+          "homeTeam": "Alvear",
+          "awayTeam": "Atlanta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-4-1773329903858-3-primera",
+          "homeTeam": "Argentinos Jrs",
+          "awayTeam": "Franja de Oro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-4-1773329903858-4-primera",
+          "homeTeam": "Country",
+          "awayTeam": "SECLA",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-4-1773329903858-5-primera",
+          "homeTeam": "Villa La Ñata",
+          "awayTeam": "Metalurgico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-4-1773329903858-6-primera",
+          "homeTeam": "Platense",
+          "awayTeam": "Gimnasia LP.",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-4-1773329903858-7-primera",
+          "homeTeam": "Velez Sarsfield",
+          "awayTeam": "Chacarita",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-4-1773329903858-8-primera",
+          "homeTeam": "Arsenal",
+          "awayTeam": "Banfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 5,
+      "documentId": "fecha-5-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-5-1773329922214-0-primera",
+          "homeTeam": "Nva. Chicago",
+          "awayTeam": "Arsenal",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-5-1773329922214-1-primera",
+          "homeTeam": "Banfield",
+          "awayTeam": "Velez Sarsfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-5-1773329922214-2-primera",
+          "homeTeam": "Chacarita",
+          "awayTeam": "Platense",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-5-1773329922214-3-primera",
+          "homeTeam": "Gimnasia LP.",
+          "awayTeam": "Villa La Ñata",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-5-1773329922214-4-primera",
+          "homeTeam": "Metalurgico",
+          "awayTeam": "Country",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-5-1773329922214-5-primera",
+          "homeTeam": "SECLA",
+          "awayTeam": "Argentinos Jrs",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-5-1773329922214-6-primera",
+          "homeTeam": "Franja de Oro",
+          "awayTeam": "Alvear",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-5-1773329922214-7-primera",
+          "homeTeam": "Atlanta",
+          "awayTeam": "Nueva Estrella",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-5-1773329922214-8-primera",
+          "homeTeam": "Mirinaque",
+          "awayTeam": "Pacifico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 6,
+      "documentId": "fecha-6-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-6-1773329945317-0-primera",
+          "homeTeam": "Mirinaque",
+          "awayTeam": "Nva. Chicago",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-6-1773329945317-1-primera",
+          "homeTeam": "Pacifico",
+          "awayTeam": "Atlanta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-6-1773329945317-2-primera",
+          "homeTeam": "Nueva Estrella",
+          "awayTeam": "Franja de Oro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-6-1773329945317-3-primera",
+          "homeTeam": "Alvear",
+          "awayTeam": "SECLA",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-6-1773329945317-4-primera",
+          "homeTeam": "Argentinos Jrs",
+          "awayTeam": "Metalurgico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-6-1773329945317-5-primera",
+          "homeTeam": "Country",
+          "awayTeam": "Gimnasia LP.",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-6-1773329945317-6-primera",
+          "homeTeam": "Villa La Ñata",
+          "awayTeam": "Chacarita",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-6-1773329945317-7-primera",
+          "homeTeam": "Platense",
+          "awayTeam": "Banfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-6-1773329945317-8-primera",
+          "homeTeam": "Velez Sarsfield",
+          "awayTeam": "Arsenal",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 7,
+      "documentId": "fecha-7-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-7-1773329961303-0-primera",
+          "homeTeam": "Nva. Chicago",
+          "awayTeam": "Velez Sarsfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-7-1773329961303-1-primera",
+          "homeTeam": "Arsenal",
+          "awayTeam": "Platense",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-7-1773329961303-2-primera",
+          "homeTeam": "Banfield",
+          "awayTeam": "Villa La Ñata",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-7-1773329961303-3-primera",
+          "homeTeam": "Chacarita",
+          "awayTeam": "Country",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-7-1773329961303-4-primera",
+          "homeTeam": "Gimnasia LP.",
+          "awayTeam": "Argentinos Jrs",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-7-1773329961303-5-primera",
+          "homeTeam": "Metalurgico",
+          "awayTeam": "Alvear",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-7-1773329961303-6-primera",
+          "homeTeam": "SECLA",
+          "awayTeam": "Nueva Estrella",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-7-1773329961303-7-primera",
+          "homeTeam": "Franja de Oro",
+          "awayTeam": "Pacifico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-7-1773329961303-8-primera",
+          "homeTeam": "Atlanta",
+          "awayTeam": "Mirinaque",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 8,
+      "documentId": "fecha-8-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-8-1773329981305-0-primera",
+          "homeTeam": "Atlanta",
+          "awayTeam": "Nva. Chicago",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-8-1773329981305-1-primera",
+          "homeTeam": "Mirinaque",
+          "awayTeam": "Franja de Oro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-8-1773329981305-2-primera",
+          "homeTeam": "Pacifico",
+          "awayTeam": "SECLA",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-8-1773329981305-3-primera",
+          "homeTeam": "Nueva Estrella",
+          "awayTeam": "Metalurgico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-8-1773329981305-4-primera",
+          "homeTeam": "Alvear",
+          "awayTeam": "Gimnasia LP.",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-8-1773329981305-5-primera",
+          "homeTeam": "Argentinos Jrs",
+          "awayTeam": "Chacarita",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-8-1773329981305-6-primera",
+          "homeTeam": "Country",
+          "awayTeam": "Banfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-8-1773329981305-7-primera",
+          "homeTeam": "Villa La Ñata",
+          "awayTeam": "Arsenal",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-8-1773329981305-8-primera",
+          "homeTeam": "Platense",
+          "awayTeam": "Velez Sarsfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 9,
+      "documentId": "fecha-9-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-9-1773330056973-0-primera",
+          "homeTeam": "Nva. Chicago",
+          "awayTeam": "Platense",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-9-1773330056973-1-primera",
+          "homeTeam": "Velez Sarsfield",
+          "awayTeam": "Villa La Ñata",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-9-1773330056973-2-primera",
+          "homeTeam": "Arsenal",
+          "awayTeam": "Country",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-9-1773330056973-3-primera",
+          "homeTeam": "Banfield",
+          "awayTeam": "Argentinos Jrs",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-9-1773330056973-4-primera",
+          "homeTeam": "Chacarita",
+          "awayTeam": "Alvear",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-9-1773330056973-5-primera",
+          "homeTeam": "Gimnasia LP.",
+          "awayTeam": "Nueva Estrella",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-9-1773330056973-6-primera",
+          "homeTeam": "Metalurgico",
+          "awayTeam": "Pacifico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-9-1773330056973-7-primera",
+          "homeTeam": "SECLA",
+          "awayTeam": "Mirinaque",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-9-1773330056973-8-primera",
+          "homeTeam": "Franja de Oro",
+          "awayTeam": "Atlanta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 10,
+      "documentId": "fecha-10-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-10-1773330072121-0-primera",
+          "homeTeam": "Franja de Oro",
+          "awayTeam": "Nva. Chicago",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-10-1773330072121-1-primera",
+          "homeTeam": "Atlanta",
+          "awayTeam": "SECLA",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-10-1773330072121-2-primera",
+          "homeTeam": "Mirinaque",
+          "awayTeam": "Metalurgico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-10-1773330072121-3-primera",
+          "homeTeam": "Pacifico",
+          "awayTeam": "Gimnasia LP.",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-10-1773330072121-4-primera",
+          "homeTeam": "Nueva Estrella",
+          "awayTeam": "Chacarita",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-10-1773330072121-5-primera",
+          "homeTeam": "Alvear",
+          "awayTeam": "Banfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-10-1773330072121-6-primera",
+          "homeTeam": "Argentinos Jrs",
+          "awayTeam": "Arsenal",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-10-1773330072121-7-primera",
+          "homeTeam": "Country",
+          "awayTeam": "Velez Sarsfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-10-1773330072121-8-primera",
+          "homeTeam": "Villa La Ñata",
+          "awayTeam": "Platense",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 11,
+      "documentId": "fecha-11-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-11-1773330087422-0-primera",
+          "homeTeam": "Nva. Chicago",
+          "awayTeam": "Villa La Ñata",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-11-1773330087422-1-primera",
+          "homeTeam": "Platense",
+          "awayTeam": "Country",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-11-1773330087422-2-primera",
+          "homeTeam": "Velez Sarsfield",
+          "awayTeam": "Argentinos Jrs",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-11-1773330087422-3-primera",
+          "homeTeam": "Arsenal",
+          "awayTeam": "Alvear",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-11-1773330087422-4-primera",
+          "homeTeam": "Banfield",
+          "awayTeam": "Nueva Estrella",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-11-1773330087422-5-primera",
+          "homeTeam": "Chacarita",
+          "awayTeam": "Pacifico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-11-1773330087422-6-primera",
+          "homeTeam": "Gimnasia LP.",
+          "awayTeam": "Mirinaque",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-11-1773330087422-7-primera",
+          "homeTeam": "Metalurgico",
+          "awayTeam": "Atlanta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-11-1773330087422-8-primera",
+          "homeTeam": "SECLA",
+          "awayTeam": "Franja de Oro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 12,
+      "documentId": "fecha-12-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-12-1773330104241-0-primera",
+          "homeTeam": "SECLA",
+          "awayTeam": "Nva. Chicago",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-12-1773330104241-1-primera",
+          "homeTeam": "Franja de Oro",
+          "awayTeam": "Metalurgico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-12-1773330104241-2-primera",
+          "homeTeam": "Atlanta",
+          "awayTeam": "Gimnasia LP.",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-12-1773330104241-3-primera",
+          "homeTeam": "Mirinaque",
+          "awayTeam": "Chacarita",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-12-1773330104241-4-primera",
+          "homeTeam": "Pacifico",
+          "awayTeam": "Banfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-12-1773330104241-5-primera",
+          "homeTeam": "Nueva Estrella",
+          "awayTeam": "Arsenal",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-12-1773330104241-6-primera",
+          "homeTeam": "Alvear",
+          "awayTeam": "Velez Sarsfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-12-1773330104241-7-primera",
+          "homeTeam": "Argentinos Jrs",
+          "awayTeam": "Platense",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-12-1773330104241-8-primera",
+          "homeTeam": "Country",
+          "awayTeam": "Villa La Ñata",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 13,
+      "documentId": "fecha-13-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-13-1773330117784-0-primera",
+          "homeTeam": "Nva. Chicago",
+          "awayTeam": "Country",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-13-1773330117784-1-primera",
+          "homeTeam": "Villa La Ñata",
+          "awayTeam": "Argentinos Jrs",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-13-1773330117784-2-primera",
+          "homeTeam": "Platense",
+          "awayTeam": "Alvear",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-13-1773330117784-3-primera",
+          "homeTeam": "Velez Sarsfield",
+          "awayTeam": "Nueva Estrella",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-13-1773330117784-4-primera",
+          "homeTeam": "Arsenal",
+          "awayTeam": "Pacifico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-13-1773330117784-5-primera",
+          "homeTeam": "Banfield",
+          "awayTeam": "Mirinaque",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-13-1773330117784-6-primera",
+          "homeTeam": "Chacarita",
+          "awayTeam": "Atlanta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-13-1773330117784-7-primera",
+          "homeTeam": "Gimnasia LP.",
+          "awayTeam": "Franja de Oro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-13-1773330117784-8-primera",
+          "homeTeam": "Metalurgico",
+          "awayTeam": "SECLA",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 14,
+      "documentId": "fecha-14-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-14-1773330139102-0-primera",
+          "homeTeam": "Metalurgico",
+          "awayTeam": "Nva. Chicago",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-14-1773330139102-1-primera",
+          "homeTeam": "SECLA",
+          "awayTeam": "Gimnasia LP.",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-14-1773330139102-2-primera",
+          "homeTeam": "Franja de Oro",
+          "awayTeam": "Chacarita",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-14-1773330139102-3-primera",
+          "homeTeam": "Atlanta",
+          "awayTeam": "Banfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-14-1773330139102-4-primera",
+          "homeTeam": "Mirinaque",
+          "awayTeam": "Arsenal",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-14-1773330139102-5-primera",
+          "homeTeam": "Pacifico",
+          "awayTeam": "Velez Sarsfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-14-1773330139102-6-primera",
+          "homeTeam": "Nueva Estrella",
+          "awayTeam": "Platense",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-14-1773330139102-7-primera",
+          "homeTeam": "Alvear",
+          "awayTeam": "Villa La Ñata",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-14-1773330139102-8-primera",
+          "homeTeam": "Argentinos Jrs",
+          "awayTeam": "Country",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 15,
+      "documentId": "fecha-15-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-15-1773330157490-0-primera",
+          "homeTeam": "Nva. Chicago",
+          "awayTeam": "Argentinos Jrs",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-15-1773330157491-1-primera",
+          "homeTeam": "Country",
+          "awayTeam": "Alvear",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-15-1773330157491-2-primera",
+          "homeTeam": "Villa La Ñata",
+          "awayTeam": "Nueva Estrella",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-15-1773330157491-3-primera",
+          "homeTeam": "Platense",
+          "awayTeam": "Pacifico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-15-1773330157491-4-primera",
+          "homeTeam": "Velez Sarsfield",
+          "awayTeam": "Mirinaque",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-15-1773330157491-5-primera",
+          "homeTeam": "Arsenal",
+          "awayTeam": "Atlanta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-15-1773330157491-6-primera",
+          "homeTeam": "Banfield",
+          "awayTeam": "Franja de Oro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-15-1773330157491-7-primera",
+          "homeTeam": "Chacarita",
+          "awayTeam": "SECLA",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-15-1773330157491-8-primera",
+          "homeTeam": "Gimnasia LP.",
+          "awayTeam": "Metalurgico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 16,
+      "documentId": "fecha-16-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-16-1773330175575-0-primera",
+          "homeTeam": "Gimnasia LP.",
+          "awayTeam": "Nva. Chicago",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-16-1773330175575-1-primera",
+          "homeTeam": "Metalurgico",
+          "awayTeam": "Chacarita",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-16-1773330175575-2-primera",
+          "homeTeam": "SECLA",
+          "awayTeam": "Banfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-16-1773330175575-3-primera",
+          "homeTeam": "Franja de Oro",
+          "awayTeam": "Arsenal",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-16-1773330175575-4-primera",
+          "homeTeam": "Atlanta",
+          "awayTeam": "Velez Sarsfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-16-1773330175575-5-primera",
+          "homeTeam": "Mirinaque",
+          "awayTeam": "Platense",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-16-1773330175575-6-primera",
+          "homeTeam": "Pacifico",
+          "awayTeam": "Villa La Ñata",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-16-1773330175575-7-primera",
+          "homeTeam": "Nueva Estrella",
+          "awayTeam": "Country",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-16-1773330175575-8-primera",
+          "homeTeam": "Alvear",
+          "awayTeam": "Argentinos Jrs",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 17,
+      "documentId": "fecha-17-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-17-1773330199002-0-primera",
+          "homeTeam": "Nva. Chicago",
+          "awayTeam": "Alvear",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-17-1773330199002-1-primera",
+          "homeTeam": "Argentinos Jrs",
+          "awayTeam": "Nueva Estrella",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-17-1773330199002-2-primera",
+          "homeTeam": "Country",
+          "awayTeam": "Pacifico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-17-1773330199002-3-primera",
+          "homeTeam": "Villa La Ñata",
+          "awayTeam": "Mirinaque",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-17-1773330199002-4-primera",
+          "homeTeam": "Platense",
+          "awayTeam": "Atlanta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-17-1773330199002-5-primera",
+          "homeTeam": "Velez Sarsfield",
+          "awayTeam": "Franja de Oro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-17-1773330199002-6-primera",
+          "homeTeam": "Arsenal",
+          "awayTeam": "SECLA",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-17-1773330199002-7-primera",
+          "homeTeam": "Banfield",
+          "awayTeam": "Metalurgico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-17-1773330199002-8-primera",
+          "homeTeam": "Chacarita",
+          "awayTeam": "Gimnasia LP.",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 18,
+      "documentId": "fecha-18-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-18-1-primera",
+          "homeTeam": "Chacarita",
+          "awayTeam": "Nva. Chicago",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-18-2-primera",
+          "homeTeam": "Banfield",
+          "awayTeam": "Gimnasia LP",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-18-3-primera",
+          "homeTeam": "Arsenal",
+          "awayTeam": "Metalurgico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-18-4-primera",
+          "homeTeam": "Velez Sarsfield",
+          "awayTeam": "SECLA",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-18-5-primera",
+          "homeTeam": "Platense",
+          "awayTeam": "Franja de Oro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-18-6-primera",
+          "homeTeam": "Villa La Ñata",
+          "awayTeam": "Atlanta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-18-7-primera",
+          "homeTeam": "Country",
+          "awayTeam": "Mirinaque",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-18-8-primera",
+          "homeTeam": "Argentinos Jrs",
+          "awayTeam": "Pacifico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-18-9-primera",
+          "homeTeam": "Alvear",
+          "awayTeam": "Nueva Estrella",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 19,
+      "documentId": "fecha-19-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-19-1-primera",
+          "homeTeam": "Nva. Chicago",
+          "awayTeam": "Nueva Estrella",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-19-2-primera",
+          "homeTeam": "Pacifico",
+          "awayTeam": "Alvear",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-19-3-primera",
+          "homeTeam": "Mirinaque",
+          "awayTeam": "Argentinos Jrs",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-19-4-primera",
+          "homeTeam": "Atlanta",
+          "awayTeam": "Country",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-19-5-primera",
+          "homeTeam": "Franja de Oro",
+          "awayTeam": "Villa La Ñata",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-19-6-primera",
+          "homeTeam": "SECLA",
+          "awayTeam": "Platense",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-19-7-primera",
+          "homeTeam": "Metalurgico",
+          "awayTeam": "Velez Sarsfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-19-8-primera",
+          "homeTeam": "Gimnasia LP",
+          "awayTeam": "Arsenal",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-19-9-primera",
+          "homeTeam": "Chacarita",
+          "awayTeam": "Banfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 20,
+      "documentId": "fecha-20-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-20-1773329884586-0-primera",
+          "homeTeam": "Banfield",
+          "awayTeam": "Nva. Chicago",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-20-1773329884586-1-primera",
+          "homeTeam": "Arsenal",
+          "awayTeam": "Chacarita",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-20-1773329884586-2-primera",
+          "homeTeam": "Velez Sarsfield",
+          "awayTeam": "Gimnasia LP.",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-20-1773329884586-3-primera",
+          "homeTeam": "Platense",
+          "awayTeam": "Metalurgico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-20-1773329884586-4-primera",
+          "homeTeam": "Villa La Ñata",
+          "awayTeam": "SECLA",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-20-1773329884586-5-primera",
+          "homeTeam": "Country",
+          "awayTeam": "Franja de Oro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-20-1773329884586-6-primera",
+          "homeTeam": "Argentinos Jrs",
+          "awayTeam": "Atlanta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-20-1773329884586-7-primera",
+          "homeTeam": "Alvear",
+          "awayTeam": "Mirinaque",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-20-1773329884586-8-primera",
+          "homeTeam": "Nueva Estrella",
+          "awayTeam": "Pacifico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 21,
+      "documentId": "fecha-21-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-21-1773329903858-0-primera",
+          "homeTeam": "Nva. Chicago",
+          "awayTeam": "Pacifico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-21-1773329903858-1-primera",
+          "homeTeam": "Mirinaque",
+          "awayTeam": "Nueva Estrella",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-21-1773329903858-2-primera",
+          "homeTeam": "Atlanta",
+          "awayTeam": "Alvear",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-21-1773329903858-3-primera",
+          "homeTeam": "Franja de Oro",
+          "awayTeam": "Argentinos Jrs",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-21-1773329903858-4-primera",
+          "homeTeam": "SECLA",
+          "awayTeam": "Country",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-21-1773329903858-5-primera",
+          "homeTeam": "Metalurgico",
+          "awayTeam": "Villa La Ñata",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-21-1773329903858-6-primera",
+          "homeTeam": "Gimnasia LP.",
+          "awayTeam": "Platense",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-21-1773329903858-7-primera",
+          "homeTeam": "Chacarita",
+          "awayTeam": "Velez Sarsfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-21-1773329903858-8-primera",
+          "homeTeam": "Banfield",
+          "awayTeam": "Arsenal",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 22,
+      "documentId": "fecha-22-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-22-1773329922214-0-primera",
+          "homeTeam": "Arsenal",
+          "awayTeam": "Nva. Chicago",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-22-1773329922214-1-primera",
+          "homeTeam": "Velez Sarsfield",
+          "awayTeam": "Banfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-22-1773329922214-2-primera",
+          "homeTeam": "Platense",
+          "awayTeam": "Chacarita",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-22-1773329922214-3-primera",
+          "homeTeam": "Villa La Ñata",
+          "awayTeam": "Gimnasia LP.",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-22-1773329922214-4-primera",
+          "homeTeam": "Country",
+          "awayTeam": "Metalurgico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-22-1773329922214-5-primera",
+          "homeTeam": "Argentinos Jrs",
+          "awayTeam": "SECLA",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-22-1773329922214-6-primera",
+          "homeTeam": "Alvear",
+          "awayTeam": "Franja de Oro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-22-1773329922214-7-primera",
+          "homeTeam": "Nueva Estrella",
+          "awayTeam": "Atlanta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-22-1773329922214-8-primera",
+          "homeTeam": "Pacifico",
+          "awayTeam": "Mirinaque",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 23,
+      "documentId": "fecha-23-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-23-1773329945317-0-primera",
+          "homeTeam": "Nva. Chicago",
+          "awayTeam": "Mirinaque",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-23-1773329945317-1-primera",
+          "homeTeam": "Atlanta",
+          "awayTeam": "Pacifico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-23-1773329945317-2-primera",
+          "homeTeam": "Franja de Oro",
+          "awayTeam": "Nueva Estrella",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-23-1773329945317-3-primera",
+          "homeTeam": "SECLA",
+          "awayTeam": "Alvear",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-23-1773329945317-4-primera",
+          "homeTeam": "Metalurgico",
+          "awayTeam": "Argentinos Jrs",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-23-1773329945317-5-primera",
+          "homeTeam": "Gimnasia LP.",
+          "awayTeam": "Country",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-23-1773329945317-6-primera",
+          "homeTeam": "Chacarita",
+          "awayTeam": "Villa La Ñata",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-23-1773329945317-7-primera",
+          "homeTeam": "Banfield",
+          "awayTeam": "Platense",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-23-1773329945317-8-primera",
+          "homeTeam": "Arsenal",
+          "awayTeam": "Velez Sarsfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 24,
+      "documentId": "fecha-24-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-24-1773329961303-0-primera",
+          "homeTeam": "Velez Sarsfield",
+          "awayTeam": "Nva. Chicago",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-24-1773329961303-1-primera",
+          "homeTeam": "Platense",
+          "awayTeam": "Arsenal",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-24-1773329961303-2-primera",
+          "homeTeam": "Villa La Ñata",
+          "awayTeam": "Banfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-24-1773329961303-3-primera",
+          "homeTeam": "Country",
+          "awayTeam": "Chacarita",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-24-1773329961303-4-primera",
+          "homeTeam": "Argentinos Jrs",
+          "awayTeam": "Gimnasia LP.",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-24-1773329961303-5-primera",
+          "homeTeam": "Alvear",
+          "awayTeam": "Metalurgico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-24-1773329961303-6-primera",
+          "homeTeam": "Nueva Estrella",
+          "awayTeam": "SECLA",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-24-1773329961303-7-primera",
+          "homeTeam": "Pacifico",
+          "awayTeam": "Franja de Oro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-24-1773329961303-8-primera",
+          "homeTeam": "Mirinaque",
+          "awayTeam": "Atlanta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 25,
+      "documentId": "fecha-25-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-25-1773329981305-0-primera",
+          "homeTeam": "Nva. Chicago",
+          "awayTeam": "Atlanta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-25-1773329981305-1-primera",
+          "homeTeam": "Franja de Oro",
+          "awayTeam": "Mirinaque",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-25-1773329981305-2-primera",
+          "homeTeam": "SECLA",
+          "awayTeam": "Pacifico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-25-1773329981305-3-primera",
+          "homeTeam": "Metalurgico",
+          "awayTeam": "Nueva Estrella",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-25-1773329981305-4-primera",
+          "homeTeam": "Gimnasia LP.",
+          "awayTeam": "Alvear",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-25-1773329981305-5-primera",
+          "homeTeam": "Chacarita",
+          "awayTeam": "Argentinos Jrs",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-25-1773329981305-6-primera",
+          "homeTeam": "Banfield",
+          "awayTeam": "Country",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-25-1773329981305-7-primera",
+          "homeTeam": "Arsenal",
+          "awayTeam": "Villa La Ñata",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-25-1773329981305-8-primera",
+          "homeTeam": "Velez Sarsfield",
+          "awayTeam": "Platense",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 26,
+      "documentId": "fecha-26-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-26-1773330056973-0-primera",
+          "homeTeam": "Platense",
+          "awayTeam": "Nva. Chicago",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-26-1773330056973-1-primera",
+          "homeTeam": "Villa La Ñata",
+          "awayTeam": "Velez Sarsfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-26-1773330056973-2-primera",
+          "homeTeam": "Country",
+          "awayTeam": "Arsenal",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-26-1773330056973-3-primera",
+          "homeTeam": "Argentinos Jrs",
+          "awayTeam": "Banfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-26-1773330056973-4-primera",
+          "homeTeam": "Alvear",
+          "awayTeam": "Chacarita",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-26-1773330056973-5-primera",
+          "homeTeam": "Nueva Estrella",
+          "awayTeam": "Gimnasia LP.",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-26-1773330056973-6-primera",
+          "homeTeam": "Pacifico",
+          "awayTeam": "Metalurgico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-26-1773330056973-7-primera",
+          "homeTeam": "Mirinaque",
+          "awayTeam": "SECLA",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-26-1773330056973-8-primera",
+          "homeTeam": "Atlanta",
+          "awayTeam": "Franja de Oro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 27,
+      "documentId": "fecha-27-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-27-1773330072121-0-primera",
+          "homeTeam": "Nva. Chicago",
+          "awayTeam": "Franja de Oro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-27-1773330072121-1-primera",
+          "homeTeam": "SECLA",
+          "awayTeam": "Atlanta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-27-1773330072121-2-primera",
+          "homeTeam": "Metalurgico",
+          "awayTeam": "Mirinaque",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-27-1773330072121-3-primera",
+          "homeTeam": "Gimnasia LP.",
+          "awayTeam": "Pacifico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-27-1773330072121-4-primera",
+          "homeTeam": "Chacarita",
+          "awayTeam": "Nueva Estrella",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-27-1773330072121-5-primera",
+          "homeTeam": "Banfield",
+          "awayTeam": "Alvear",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-27-1773330072121-6-primera",
+          "homeTeam": "Arsenal",
+          "awayTeam": "Argentinos Jrs",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-27-1773330072121-7-primera",
+          "homeTeam": "Velez Sarsfield",
+          "awayTeam": "Country",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-27-1773330072121-8-primera",
+          "homeTeam": "Platense",
+          "awayTeam": "Villa La Ñata",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 28,
+      "documentId": "fecha-28-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-28-1773330087422-0-primera",
+          "homeTeam": "Villa La Ñata",
+          "awayTeam": "Nva. Chicago",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-28-1773330087422-1-primera",
+          "homeTeam": "Country",
+          "awayTeam": "Platense",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-28-1773330087422-2-primera",
+          "homeTeam": "Argentinos Jrs",
+          "awayTeam": "Velez Sarsfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-28-1773330087422-3-primera",
+          "homeTeam": "Alvear",
+          "awayTeam": "Arsenal",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-28-1773330087422-4-primera",
+          "homeTeam": "Nueva Estrella",
+          "awayTeam": "Banfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-28-1773330087422-5-primera",
+          "homeTeam": "Pacifico",
+          "awayTeam": "Chacarita",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-28-1773330087422-6-primera",
+          "homeTeam": "Mirinaque",
+          "awayTeam": "Gimnasia LP.",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-28-1773330087422-7-primera",
+          "homeTeam": "Atlanta",
+          "awayTeam": "Metalurgico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-28-1773330087422-8-primera",
+          "homeTeam": "Franja de Oro",
+          "awayTeam": "SECLA",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 29,
+      "documentId": "fecha-29-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-29-1773330104241-0-primera",
+          "homeTeam": "Nva. Chicago",
+          "awayTeam": "SECLA",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-29-1773330104241-1-primera",
+          "homeTeam": "Metalurgico",
+          "awayTeam": "Franja de Oro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-29-1773330104241-2-primera",
+          "homeTeam": "Gimnasia LP.",
+          "awayTeam": "Atlanta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-29-1773330104241-3-primera",
+          "homeTeam": "Chacarita",
+          "awayTeam": "Mirinaque",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-29-1773330104241-4-primera",
+          "homeTeam": "Banfield",
+          "awayTeam": "Pacifico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-29-1773330104241-5-primera",
+          "homeTeam": "Arsenal",
+          "awayTeam": "Nueva Estrella",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-29-1773330104241-6-primera",
+          "homeTeam": "Velez Sarsfield",
+          "awayTeam": "Alvear",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-29-1773330104241-7-primera",
+          "homeTeam": "Platense",
+          "awayTeam": "Argentinos Jrs",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-29-1773330104241-8-primera",
+          "homeTeam": "Villa La Ñata",
+          "awayTeam": "Country",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 30,
+      "documentId": "fecha-30-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-30-1773330117784-0-primera",
+          "homeTeam": "Country",
+          "awayTeam": "Nva. Chicago",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-30-1773330117784-1-primera",
+          "homeTeam": "Argentinos Jrs",
+          "awayTeam": "Villa La Ñata",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-30-1773330117784-2-primera",
+          "homeTeam": "Alvear",
+          "awayTeam": "Platense",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-30-1773330117784-3-primera",
+          "homeTeam": "Nueva Estrella",
+          "awayTeam": "Velez Sarsfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-30-1773330117784-4-primera",
+          "homeTeam": "Pacifico",
+          "awayTeam": "Arsenal",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-30-1773330117784-5-primera",
+          "homeTeam": "Mirinaque",
+          "awayTeam": "Banfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-30-1773330117784-6-primera",
+          "homeTeam": "Atlanta",
+          "awayTeam": "Chacarita",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-30-1773330117784-7-primera",
+          "homeTeam": "Franja de Oro",
+          "awayTeam": "Gimnasia LP.",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-30-1773330117784-8-primera",
+          "homeTeam": "SECLA",
+          "awayTeam": "Metalurgico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 31,
+      "documentId": "fecha-31-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-31-1773330139102-0-primera",
+          "homeTeam": "Nva. Chicago",
+          "awayTeam": "Metalurgico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-31-1773330139102-1-primera",
+          "homeTeam": "Gimnasia LP.",
+          "awayTeam": "SECLA",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-31-1773330139102-2-primera",
+          "homeTeam": "Chacarita",
+          "awayTeam": "Franja de Oro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-31-1773330139102-3-primera",
+          "homeTeam": "Banfield",
+          "awayTeam": "Atlanta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-31-1773330139102-4-primera",
+          "homeTeam": "Arsenal",
+          "awayTeam": "Mirinaque",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-31-1773330139102-5-primera",
+          "homeTeam": "Velez Sarsfield",
+          "awayTeam": "Pacifico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-31-1773330139102-6-primera",
+          "homeTeam": "Platense",
+          "awayTeam": "Nueva Estrella",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-31-1773330139102-7-primera",
+          "homeTeam": "Villa La Ñata",
+          "awayTeam": "Alvear",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-31-1773330139102-8-primera",
+          "homeTeam": "Country",
+          "awayTeam": "Argentinos Jrs",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 32,
+      "documentId": "fecha-32-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-32-1773330157490-0-primera",
+          "homeTeam": "Argentinos Jrs",
+          "awayTeam": "Nva. Chicago",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-32-1773330157491-1-primera",
+          "homeTeam": "Alvear",
+          "awayTeam": "Country",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-32-1773330157491-2-primera",
+          "homeTeam": "Nueva Estrella",
+          "awayTeam": "Villa La Ñata",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-32-1773330157491-3-primera",
+          "homeTeam": "Pacifico",
+          "awayTeam": "Platense",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-32-1773330157491-4-primera",
+          "homeTeam": "Mirinaque",
+          "awayTeam": "Velez Sarsfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-32-1773330157491-5-primera",
+          "homeTeam": "Atlanta",
+          "awayTeam": "Arsenal",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-32-1773330157491-6-primera",
+          "homeTeam": "Franja de Oro",
+          "awayTeam": "Banfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-32-1773330157491-7-primera",
+          "homeTeam": "SECLA",
+          "awayTeam": "Chacarita",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-32-1773330157491-8-primera",
+          "homeTeam": "Metalurgico",
+          "awayTeam": "Gimnasia LP.",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 33,
+      "documentId": "fecha-33-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-33-1773330175575-0-primera",
+          "homeTeam": "Nva. Chicago",
+          "awayTeam": "Gimnasia LP.",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-33-1773330175575-1-primera",
+          "homeTeam": "Chacarita",
+          "awayTeam": "Metalurgico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-33-1773330175575-2-primera",
+          "homeTeam": "Banfield",
+          "awayTeam": "SECLA",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-33-1773330175575-3-primera",
+          "homeTeam": "Arsenal",
+          "awayTeam": "Franja de Oro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-33-1773330175575-4-primera",
+          "homeTeam": "Velez Sarsfield",
+          "awayTeam": "Atlanta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-33-1773330175575-5-primera",
+          "homeTeam": "Platense",
+          "awayTeam": "Mirinaque",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-33-1773330175575-6-primera",
+          "homeTeam": "Villa La Ñata",
+          "awayTeam": "Pacifico",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-33-1773330175575-7-primera",
+          "homeTeam": "Country",
+          "awayTeam": "Nueva Estrella",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-33-1773330175575-8-primera",
+          "homeTeam": "Argentinos Jrs",
+          "awayTeam": "Alvear",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 34,
+      "documentId": "fecha-34-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-34-1773330199002-0-primera",
+          "homeTeam": "Alvear",
+          "awayTeam": "Nva. Chicago",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-34-1773330199002-1-primera",
+          "homeTeam": "Nueva Estrella",
+          "awayTeam": "Argentinos Jrs",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-34-1773330199002-2-primera",
+          "homeTeam": "Pacifico",
+          "awayTeam": "Country",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-34-1773330199002-3-primera",
+          "homeTeam": "Mirinaque",
+          "awayTeam": "Villa La Ñata",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-34-1773330199002-4-primera",
+          "homeTeam": "Atlanta",
+          "awayTeam": "Platense",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-34-1773330199002-5-primera",
+          "homeTeam": "Franja de Oro",
+          "awayTeam": "Velez Sarsfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-34-1773330199002-6-primera",
+          "homeTeam": "SECLA",
+          "awayTeam": "Arsenal",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-34-1773330199002-7-primera",
+          "homeTeam": "Metalurgico",
+          "awayTeam": "Banfield",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-34-1773330199002-8-primera",
+          "homeTeam": "Gimnasia LP.",
+          "awayTeam": "Chacarita",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    }
+  ]
+}

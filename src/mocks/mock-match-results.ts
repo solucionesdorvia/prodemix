@@ -10,9 +10,6 @@ export const MOCK_MATCH_RESULTS: Record<
   MatchId,
   { home: number; away: number }
 > = {
-  "cm-afa-1": { home: 2, away: 1 },
-  "cm-afa-2": { home: 1, away: 1 },
-  "cm-afa-3": { home: 0, away: 2 },
   "cm-nu-1": { home: 3, away: 2 },
   "cm-nu-2": { home: 1, away: 0 },
   "cm-ba-1": { home: 2, away: 2 },

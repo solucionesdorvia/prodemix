@@ -1,5 +1,7 @@
+import { AFA_FUTSAL_ESCUDOS } from "./afa-futsal-crests";
+
 /**
- * Escudos: Honor A locales, Argenliga A (`public/escudos/argenliga-a`), Wikimedia.
+ * Escudos: AFA Futsal (Primera A/B/C), Honor A locales, Argenliga A, Wikimedia.
  * Libre = sin imagen (fecha libre).
  */
 
@@ -17,6 +19,13 @@ export function isLibreTeam(name: string): boolean {
 
 const CREST_KEY_ALIASES: Record<string, string> = {
   "amigos (vl)": "amigos de villa luro",
+  /** Argenliga usa `newells` sin apóstrofo. */
+  "newell's": "newells",
+  /** Paren La Pelota / tablas abreviadas. */
+  "juv tapiales": "juventud tapiales",
+  "dep moron": "deportivo moron",
+  "dep merlo": "deportivo merlo",
+  "nva. chicago": "nueva chicago",
 };
 
 /** Liga Honor A — PNG en repo (`public/escudos/honor-a/`). */
@@ -69,25 +78,15 @@ const ARGENLIGA_LOCAL: Record<string, string> = {
   "villa luro (n)": "/escudos/argenliga-a/2025/152_villa-luro-norte.png",
 };
 
-/** Otros torneos / equipos no cargados en honor-a (Commons). */
-const CREST_URL_BY_KEY: Record<string, string> = {
-  "racing club":
-    "https://upload.wikimedia.org/wikipedia/commons/e/e2/Escudo_del_Racing_Club_de_Avellaneda.svg",
-  "river plate":
-    "https://upload.wikimedia.org/wikipedia/commons/2/21/Escudo_del_Club_Atl%C3%A9tico_River_Plate_%281998-2006%29.svg",
-  "san lorenzo":
-    "https://upload.wikimedia.org/wikipedia/commons/7/77/Escudo_del_Club_Atl%C3%A9tico_San_Lorenzo_de_Almagro.svg",
-};
-
 export function getTeamCrestUrl(teamName: string): string | undefined {
   if (isLibreTeam(teamName)) return undefined;
   let k = normalizeTeamKey(teamName);
   k = CREST_KEY_ALIASES[k] ?? k;
+  const afa = AFA_FUTSAL_ESCUDOS[k];
+  if (afa) return afa;
   const honor = HONOR_A_LOCAL[k];
   if (honor) return honor;
-  const argenliga = ARGENLIGA_LOCAL[k];
-  if (argenliga) return argenliga;
-  return CREST_URL_BY_KEY[k];
+  return ARGENLIGA_LOCAL[k];
 }
 
 const SKIP_WORD = /^(de|del|y|la|las|los|el)$/i;

@@ -71,18 +71,28 @@ function activityForCatalogue(id: string): TournamentActivityNote[] {
         timeLabel: "Hoy",
       },
     ],
-    "afa-futsal-a": [
+    "afa-premio-a": [
       {
         id: "a1",
-        title: "Fixture publicado",
-        detail: "Horarios confirmados para la fecha 10.",
-        timeLabel: "Hace 1 d",
+        title: "Pozo · Primera A",
+        detail: "Pool público con premio en efectivo por fecha.",
+        timeLabel: "Hoy",
       },
+    ],
+    "afa-premio-b": [
       {
-        id: "a2",
-        title: "Clásico en agenda",
-        detail: "Boca vs Racing con horario central.",
-        timeLabel: "Lun",
+        id: "a1",
+        title: "Pozo · Primera B",
+        detail: "Fixture 34 fechas · pozo por jornada.",
+        timeLabel: "Hoy",
+      },
+    ],
+    "afa-premio-c": [
+      {
+        id: "a1",
+        title: "Pozo · Primera C",
+        detail: "Competencia nacional · premio por fecha.",
+        timeLabel: "Hoy",
       },
     ],
     "liga-nunez-cl": [

@@ -1,0 +1,3307 @@
+{
+  "sourceUrl": "https://parenlapelotafutsal.com.ar/primeraA/primera",
+  "firestoreProject": "parenlapelotafutsal-4a110",
+  "collection": "fixtures-2026-primera-a",
+  "division": "primera-a",
+  "season": "2026",
+  "rounds": [
+    {
+      "fecha": 1,
+      "documentId": "fecha-1-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-1-1773176667897-0-primera",
+          "homeTeam": "San Lorenzo",
+          "awayTeam": "Racing",
+          "homeScore": 1,
+          "awayScore": 2,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-1-1773176667897-1-primera",
+          "homeTeam": "Ferro",
+          "awayTeam": "Boca",
+          "homeScore": 1,
+          "awayScore": 4,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-1-1773176667897-2-primera",
+          "homeTeam": "17 de Agosto",
+          "awayTeam": "Independiente",
+          "homeScore": 2,
+          "awayScore": 1,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-1-1773176667897-3-primera",
+          "homeTeam": "America del Sud",
+          "awayTeam": "River",
+          "homeScore": 4,
+          "awayScore": 3,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-1-1773176667897-4-primera",
+          "homeTeam": "J. Newbery",
+          "awayTeam": "Estrella de Boedo",
+          "homeScore": 2,
+          "awayScore": 4,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-1-1773176667897-5-primera",
+          "homeTeam": "Hebraica",
+          "awayTeam": "Pinocho",
+          "homeScore": 3,
+          "awayScore": 3,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-1-1773176667897-6-primera",
+          "homeTeam": "Barracas Ctral",
+          "awayTeam": "Glorias de Tigre",
+          "homeScore": 8,
+          "awayScore": 1,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-1-1773176667897-7-primera",
+          "homeTeam": "Newells",
+          "awayTeam": "Camioneros",
+          "homeScore": 3,
+          "awayScore": 3,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-1-1773176667897-8-primera",
+          "homeTeam": "Kimberley",
+          "awayTeam": "Est Porteño",
+          "homeScore": 2,
+          "awayScore": 4,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 2,
+      "documentId": "fecha-2-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-2-1773176931037-0-primera",
+          "homeTeam": "Kimberley",
+          "awayTeam": "San Lorenzo",
+          "homeScore": 5,
+          "awayScore": 2,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-2-1773176931037-1-primera",
+          "homeTeam": "Est Porteño",
+          "awayTeam": "Newells",
+          "homeScore": 3,
+          "awayScore": 1,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-2-1773176931037-2-primera",
+          "homeTeam": "Camioneros",
+          "awayTeam": "Barracas Ctral",
+          "homeScore": 1,
+          "awayScore": 4,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-2-1773176931037-3-primera",
+          "homeTeam": "Glorias de Tigre",
+          "awayTeam": "Hebraica",
+          "homeScore": 1,
+          "awayScore": 2,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-2-1773176931037-4-primera",
+          "homeTeam": "Pinocho",
+          "awayTeam": "J. Newbery",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "susp",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-2-1773176931037-5-primera",
+          "homeTeam": "Estrella de Boedo",
+          "awayTeam": "America del Sud",
+          "homeScore": 3,
+          "awayScore": 3,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-2-1773176931037-6-primera",
+          "homeTeam": "River",
+          "awayTeam": "17 de Agosto",
+          "homeScore": 0,
+          "awayScore": 3,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-2-1773176931037-7-primera",
+          "homeTeam": "Independiente",
+          "awayTeam": "Ferro",
+          "homeScore": 5,
+          "awayScore": 1,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-2-1773176931037-8-primera",
+          "homeTeam": "Boca",
+          "awayTeam": "Racing",
+          "homeScore": 3,
+          "awayScore": 2,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 3,
+      "documentId": "fecha-3-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-3-1773176748597-0-primera",
+          "homeTeam": "San Lorenzo",
+          "awayTeam": "Boca",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-3-1773176748597-1-primera",
+          "homeTeam": "Racing",
+          "awayTeam": "Independiente",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-3-1773176748597-2-primera",
+          "homeTeam": "Ferro",
+          "awayTeam": "River",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-3-1773176748597-3-primera",
+          "homeTeam": "17 de Agosto",
+          "awayTeam": "Estrella de Boedo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-3-1773176748597-4-primera",
+          "homeTeam": "America del Sud",
+          "awayTeam": "Pinocho",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-3-1773176748597-5-primera",
+          "homeTeam": "J. Newbery",
+          "awayTeam": "Glorias de Tigre",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-3-1773176748597-6-primera",
+          "homeTeam": "Hebraica",
+          "awayTeam": "Camioneros",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-3-1773176748597-7-primera",
+          "homeTeam": "Barracas Ctral",
+          "awayTeam": "Est Porteño",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-3-1773176748597-8-primera",
+          "homeTeam": "Newells",
+          "awayTeam": "Kimberley",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 4,
+      "documentId": "fecha-4-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-4-1773176949437-0-primera",
+          "homeTeam": "Newells",
+          "awayTeam": "San Lorenzo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-4-1773176949437-1-primera",
+          "homeTeam": "Kimberley",
+          "awayTeam": "Barracas Ctral",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-4-1773176949437-2-primera",
+          "homeTeam": "Est Porteño",
+          "awayTeam": "Hebraica",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-4-1773176949437-3-primera",
+          "homeTeam": "Camioneros",
+          "awayTeam": "J. Newbery",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-4-1773176949437-4-primera",
+          "homeTeam": "Glorias de Tigre",
+          "awayTeam": "America del Sud",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-4-1773176949437-5-primera",
+          "homeTeam": "Pinocho",
+          "awayTeam": "17 de Agosto",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-4-1773176949437-6-primera",
+          "homeTeam": "Estrella de Boedo",
+          "awayTeam": "Ferro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-4-1773176949437-7-primera",
+          "homeTeam": "River",
+          "awayTeam": "Racing",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-4-1773176949437-8-primera",
+          "homeTeam": "Independiente",
+          "awayTeam": "Boca",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 5,
+      "documentId": "fecha-5-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-5-1773176774159-0-primera",
+          "homeTeam": "San Lorenzo",
+          "awayTeam": "Independiente",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-5-1773176774159-1-primera",
+          "homeTeam": "Boca",
+          "awayTeam": "River",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-5-1773176774159-2-primera",
+          "homeTeam": "Racing",
+          "awayTeam": "Estrella de Boedo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-5-1773176774159-3-primera",
+          "homeTeam": "Ferro",
+          "awayTeam": "Pinocho",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-5-1773176774159-4-primera",
+          "homeTeam": "17 de Agosto",
+          "awayTeam": "Glorias de Tigre",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-5-1773176774159-5-primera",
+          "homeTeam": "America del Sud",
+          "awayTeam": "Camioneros",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-5-1773176774159-6-primera",
+          "homeTeam": "J. Newbery",
+          "awayTeam": "Est Porteño",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-5-1773176774159-7-primera",
+          "homeTeam": "Hebraica",
+          "awayTeam": "Kimberley",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-5-1773176774159-8-primera",
+          "homeTeam": "Barracas Ctral",
+          "awayTeam": "Newells",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 6,
+      "documentId": "fecha-6-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-6-1773176968944-0-primera",
+          "homeTeam": "Barracas Ctral",
+          "awayTeam": "San Lorenzo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-6-1773176968944-1-primera",
+          "homeTeam": "Newells",
+          "awayTeam": "Hebraica",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-6-1773176968944-2-primera",
+          "homeTeam": "Kimberley",
+          "awayTeam": "J. Newbery",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-6-1773176968944-3-primera",
+          "homeTeam": "Est Porteño",
+          "awayTeam": "America del Sud",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-6-1773176968944-4-primera",
+          "homeTeam": "Camioneros",
+          "awayTeam": "17 de Agosto",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-6-1773176968944-5-primera",
+          "homeTeam": "Glorias de Tigre",
+          "awayTeam": "Ferro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-6-1773176968944-6-primera",
+          "homeTeam": "Pinocho",
+          "awayTeam": "Racing",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-6-1773176968944-7-primera",
+          "homeTeam": "Estrella de Boedo",
+          "awayTeam": "Boca",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-6-1773176968944-8-primera",
+          "homeTeam": "River",
+          "awayTeam": "Independiente",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 7,
+      "documentId": "fecha-7-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-7-1773176800526-0-primera",
+          "homeTeam": "San Lorenzo",
+          "awayTeam": "River",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-7-1773176800526-1-primera",
+          "homeTeam": "Independiente",
+          "awayTeam": "Estrella de Boedo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-7-1773176800526-2-primera",
+          "homeTeam": "Boca",
+          "awayTeam": "Pinocho",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-7-1773176800526-3-primera",
+          "homeTeam": "Racing",
+          "awayTeam": "Glorias de Tigre",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-7-1773176800526-4-primera",
+          "homeTeam": "Ferro",
+          "awayTeam": "Camioneros",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-7-1773176800526-5-primera",
+          "homeTeam": "17 de Agosto",
+          "awayTeam": "Est Porteño",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-7-1773176800526-6-primera",
+          "homeTeam": "America del Sud",
+          "awayTeam": "Kimberley",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-7-1773176800526-7-primera",
+          "homeTeam": "J. Newbery",
+          "awayTeam": "Newells",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-7-1773176800526-8-primera",
+          "homeTeam": "Hebraica",
+          "awayTeam": "Barracas Ctral",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 8,
+      "documentId": "fecha-8-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-8-1773176984164-0-primera",
+          "homeTeam": "Hebraica",
+          "awayTeam": "San Lorenzo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-8-1773176984164-1-primera",
+          "homeTeam": "Barracas Ctral",
+          "awayTeam": "J. Newbery",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-8-1773176984164-2-primera",
+          "homeTeam": "Newells",
+          "awayTeam": "America del Sud",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-8-1773176984164-3-primera",
+          "homeTeam": "Kimberley",
+          "awayTeam": "17 de Agosto",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-8-1773176984164-4-primera",
+          "homeTeam": "Est Porteño",
+          "awayTeam": "Ferro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-8-1773176984164-5-primera",
+          "homeTeam": "Camioneros",
+          "awayTeam": "Racing",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-8-1773176984164-6-primera",
+          "homeTeam": "Glorias de Tigre",
+          "awayTeam": "Boca",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-8-1773176984164-7-primera",
+          "homeTeam": "Pinocho",
+          "awayTeam": "Independiente",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-8-1773176984164-8-primera",
+          "homeTeam": "Estrella de Boedo",
+          "awayTeam": "River",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 9,
+      "documentId": "fecha-9-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-9-1773176814187-0-primera",
+          "homeTeam": "San Lorenzo",
+          "awayTeam": "Estrella de Boedo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-9-1773176814187-1-primera",
+          "homeTeam": "River",
+          "awayTeam": "Pinocho",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-9-1773176814187-2-primera",
+          "homeTeam": "Independiente",
+          "awayTeam": "Glorias de Tigre",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-9-1773176814187-3-primera",
+          "homeTeam": "Boca",
+          "awayTeam": "Camioneros",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-9-1773176814187-4-primera",
+          "homeTeam": "Racing",
+          "awayTeam": "Est Porteño",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-9-1773176814187-5-primera",
+          "homeTeam": "Ferro",
+          "awayTeam": "Kimberley",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-9-1773176814187-6-primera",
+          "homeTeam": "17 de Agosto",
+          "awayTeam": "Newells",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-9-1773176814187-7-primera",
+          "homeTeam": "America del Sud",
+          "awayTeam": "Barracas Ctral",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-9-1773176814187-8-primera",
+          "homeTeam": "J. Newbery",
+          "awayTeam": "Hebraica",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 10,
+      "documentId": "fecha-10-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-10-1773176994180-0-primera",
+          "homeTeam": "J. Newbery",
+          "awayTeam": "San Lorenzo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-10-1773176994180-1-primera",
+          "homeTeam": "Hebraica",
+          "awayTeam": "America del Sud",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-10-1773176994180-2-primera",
+          "homeTeam": "Barracas Ctral",
+          "awayTeam": "17 de Agosto",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-10-1773176994180-3-primera",
+          "homeTeam": "Newells",
+          "awayTeam": "Ferro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-10-1773176994180-4-primera",
+          "homeTeam": "Kimberley",
+          "awayTeam": "Racing",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-10-1773176994180-5-primera",
+          "homeTeam": "Est Porteño",
+          "awayTeam": "Boca",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-10-1773176994180-6-primera",
+          "homeTeam": "Camioneros",
+          "awayTeam": "Independiente",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-10-1773176994180-7-primera",
+          "homeTeam": "Glorias de Tigre",
+          "awayTeam": "River",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-10-1773176994180-8-primera",
+          "homeTeam": "Pinocho",
+          "awayTeam": "Estrella de Boedo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 11,
+      "documentId": "fecha-11-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-11-1773176843590-0-primera",
+          "homeTeam": "San Lorenzo",
+          "awayTeam": "Pinocho",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-11-1773176843590-1-primera",
+          "homeTeam": "Estrella de Boedo",
+          "awayTeam": "Glorias de Tigre",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-11-1773176843590-2-primera",
+          "homeTeam": "River",
+          "awayTeam": "Camioneros",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-11-1773176843590-3-primera",
+          "homeTeam": "Independiente",
+          "awayTeam": "Est Porteño",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-11-1773176843590-4-primera",
+          "homeTeam": "Boca",
+          "awayTeam": "Kimberley",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-11-1773176843590-5-primera",
+          "homeTeam": "Racing",
+          "awayTeam": "Newells",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-11-1773176843590-6-primera",
+          "homeTeam": "Ferro",
+          "awayTeam": "Barracas Ctral",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-11-1773176843590-7-primera",
+          "homeTeam": "17 de Agosto",
+          "awayTeam": "Hebraica",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-11-1773176843590-8-primera",
+          "homeTeam": "America del Sud",
+          "awayTeam": "J. Newbery",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 12,
+      "documentId": "fecha-12-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-12-1773177003440-0-primera",
+          "homeTeam": "America del Sud",
+          "awayTeam": "San Lorenzo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-12-1773177003440-1-primera",
+          "homeTeam": "J. Newbery",
+          "awayTeam": "17 de Agosto",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-12-1773177003440-2-primera",
+          "homeTeam": "Hebraica",
+          "awayTeam": "Ferro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-12-1773177003440-3-primera",
+          "homeTeam": "Barracas Ctral",
+          "awayTeam": "Racing",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-12-1773177003440-4-primera",
+          "homeTeam": "Newells",
+          "awayTeam": "Boca",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-12-1773177003440-5-primera",
+          "homeTeam": "Kimberley",
+          "awayTeam": "Independiente",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-12-1773177003440-6-primera",
+          "homeTeam": "Est Porteño",
+          "awayTeam": "River",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-12-1773177003440-7-primera",
+          "homeTeam": "Camioneros",
+          "awayTeam": "Estrella de Boedo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-12-1773177003440-8-primera",
+          "homeTeam": "Glorias de Tigre",
+          "awayTeam": "Pinocho",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 13,
+      "documentId": "fecha-13-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-13-1773176860849-0-primera",
+          "homeTeam": "San Lorenzo",
+          "awayTeam": "Glorias de Tigre",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-13-1773176860849-1-primera",
+          "homeTeam": "Pinocho",
+          "awayTeam": "Camioneros",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-13-1773176860849-2-primera",
+          "homeTeam": "Estrella de Boedo",
+          "awayTeam": "Est Porteño",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-13-1773176860849-3-primera",
+          "homeTeam": "River",
+          "awayTeam": "Kimberley",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-13-1773176860849-4-primera",
+          "homeTeam": "Independiente",
+          "awayTeam": "Newells",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-13-1773176860849-5-primera",
+          "homeTeam": "Boca",
+          "awayTeam": "Barracas Ctral",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-13-1773176860849-6-primera",
+          "homeTeam": "Racing",
+          "awayTeam": "Hebraica",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-13-1773176860849-7-primera",
+          "homeTeam": "Ferro",
+          "awayTeam": "J. Newbery",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-13-1773176860849-8-primera",
+          "homeTeam": "17 de Agosto",
+          "awayTeam": "America del Sud",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 14,
+      "documentId": "fecha-14-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-14-1773177014038-0-primera",
+          "homeTeam": "17 de Agosto",
+          "awayTeam": "San Lorenzo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-14-1773177014038-1-primera",
+          "homeTeam": "America del Sud",
+          "awayTeam": "Ferro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-14-1773177014038-2-primera",
+          "homeTeam": "J. Newbery",
+          "awayTeam": "Racing",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-14-1773177014038-3-primera",
+          "homeTeam": "Hebraica",
+          "awayTeam": "Boca",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-14-1773177014038-4-primera",
+          "homeTeam": "Barracas Ctral",
+          "awayTeam": "Independiente",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-14-1773177014038-5-primera",
+          "homeTeam": "Newells",
+          "awayTeam": "River",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-14-1773177014038-6-primera",
+          "homeTeam": "Kimberley",
+          "awayTeam": "Estrella de Boedo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-14-1773177014038-7-primera",
+          "homeTeam": "Est Porteño",
+          "awayTeam": "Pinocho",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-14-1773177014038-8-primera",
+          "homeTeam": "Camioneros",
+          "awayTeam": "Glorias de Tigre",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 15,
+      "documentId": "fecha-15-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-15-1773176880287-0-primera",
+          "homeTeam": "San Lorenzo",
+          "awayTeam": "Camioneros",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-15-1773176880287-1-primera",
+          "homeTeam": "Glorias de Tigre",
+          "awayTeam": "Est Porteño",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-15-1773176880287-2-primera",
+          "homeTeam": "Pinocho",
+          "awayTeam": "Kimberley",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-15-1773176880287-3-primera",
+          "homeTeam": "Estrella de Boedo",
+          "awayTeam": "Newells",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-15-1773176880287-4-primera",
+          "homeTeam": "River",
+          "awayTeam": "Barracas Ctral",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-15-1773176880287-5-primera",
+          "homeTeam": "Independiente",
+          "awayTeam": "Hebraica",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-15-1773176880287-6-primera",
+          "homeTeam": "Boca",
+          "awayTeam": "J. Newbery",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-15-1773176880287-7-primera",
+          "homeTeam": "Racing",
+          "awayTeam": "America del Sud",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-15-1773176880287-8-primera",
+          "homeTeam": "Ferro",
+          "awayTeam": "17 de Agosto",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 16,
+      "documentId": "fecha-16-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-16-1773177026621-0-primera",
+          "homeTeam": "Ferro",
+          "awayTeam": "San Lorenzo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-16-1773177026621-1-primera",
+          "homeTeam": "17 de Agosto",
+          "awayTeam": "Racing",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-16-1773177026621-2-primera",
+          "homeTeam": "America del Sud",
+          "awayTeam": "Boca",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-16-1773177026621-3-primera",
+          "homeTeam": "J. Newbery",
+          "awayTeam": "Independiente",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-16-1773177026621-4-primera",
+          "homeTeam": "Hebraica",
+          "awayTeam": "River",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-16-1773177026621-5-primera",
+          "homeTeam": "Barracas Ctral",
+          "awayTeam": "Estrella de Boedo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-16-1773177026621-6-primera",
+          "homeTeam": "Newells",
+          "awayTeam": "Pinocho",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-16-1773177026621-7-primera",
+          "homeTeam": "Kimberley",
+          "awayTeam": "Glorias de Tigre",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-16-1773177026621-8-primera",
+          "homeTeam": "Est Porteño",
+          "awayTeam": "Camioneros",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 17,
+      "documentId": "fecha-17-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-17-1773176894090-0-primera",
+          "homeTeam": "San Lorenzo",
+          "awayTeam": "Est Porteño",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-17-1773176894090-1-primera",
+          "homeTeam": "Camioneros",
+          "awayTeam": "Kimberley",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-17-1773176894090-2-primera",
+          "homeTeam": "Glorias de Tigre",
+          "awayTeam": "Newells",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-17-1773176894090-3-primera",
+          "homeTeam": "Pinocho",
+          "awayTeam": "Barracas Ctral",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-17-1773176894090-4-primera",
+          "homeTeam": "Estrella de Boedo",
+          "awayTeam": "Hebraica",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-17-1773176894090-5-primera",
+          "homeTeam": "River",
+          "awayTeam": "J. Newbery",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-17-1773176894090-6-primera",
+          "homeTeam": "Independiente",
+          "awayTeam": "America del Sud",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-17-1773176894090-7-primera",
+          "homeTeam": "Boca",
+          "awayTeam": "17 de Agosto",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-17-1773176894090-8-primera",
+          "homeTeam": "Racing",
+          "awayTeam": "Ferro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 18,
+      "documentId": "fecha-18-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-18-1773176667897-0-primera",
+          "homeTeam": "Racing",
+          "awayTeam": "San Lorenzo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-18-1773176667897-1-primera",
+          "homeTeam": "Boca",
+          "awayTeam": "Ferro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-18-1773176667897-2-primera",
+          "homeTeam": "Independiente",
+          "awayTeam": "17 de Agosto",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-18-1773176667897-3-primera",
+          "homeTeam": "River",
+          "awayTeam": "America del Sud",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-18-1773176667897-4-primera",
+          "homeTeam": "Estrella de Boedo",
+          "awayTeam": "J. Newbery",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-18-1773176667897-5-primera",
+          "homeTeam": "Pinocho",
+          "awayTeam": "Hebraica",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-18-1773176667897-6-primera",
+          "homeTeam": "Glorias de Tigre",
+          "awayTeam": "Barracas Ctral",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-18-1773176667897-7-primera",
+          "homeTeam": "Camioneros",
+          "awayTeam": "Newells",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-18-1773176667897-8-primera",
+          "homeTeam": "Est Porteño",
+          "awayTeam": "Kimberley",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 19,
+      "documentId": "fecha-19-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-19-1773176931037-0-primera",
+          "homeTeam": "San Lorenzo",
+          "awayTeam": "Kimberley",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-19-1773176931037-1-primera",
+          "homeTeam": "Newells",
+          "awayTeam": "Est Porteño",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-19-1773176931037-2-primera",
+          "homeTeam": "Barracas Ctral",
+          "awayTeam": "Camioneros",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-19-1773176931037-3-primera",
+          "homeTeam": "Hebraica",
+          "awayTeam": "Glorias de Tigre",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-19-1773176931037-4-primera",
+          "homeTeam": "J. Newbery",
+          "awayTeam": "Pinocho",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-19-1773176931037-5-primera",
+          "homeTeam": "America del Sud",
+          "awayTeam": "Estrella de Boedo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-19-1773176931037-6-primera",
+          "homeTeam": "17 de Agosto",
+          "awayTeam": "River",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-19-1773176931037-7-primera",
+          "homeTeam": "Ferro",
+          "awayTeam": "Independiente",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-19-1773176931037-8-primera",
+          "homeTeam": "Racing",
+          "awayTeam": "Boca",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 20,
+      "documentId": "fecha-20-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-20-1773176748597-0-primera",
+          "homeTeam": "Boca",
+          "awayTeam": "San Lorenzo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-20-1773176748597-1-primera",
+          "homeTeam": "Independiente",
+          "awayTeam": "Racing",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-20-1773176748597-2-primera",
+          "homeTeam": "River",
+          "awayTeam": "Ferro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-20-1773176748597-3-primera",
+          "homeTeam": "Estrella de Boedo",
+          "awayTeam": "17 de Agosto",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-20-1773176748597-4-primera",
+          "homeTeam": "Pinocho",
+          "awayTeam": "America del Sud",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-20-1773176748597-5-primera",
+          "homeTeam": "Glorias de Tigre",
+          "awayTeam": "J. Newbery",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-20-1773176748597-6-primera",
+          "homeTeam": "Camioneros",
+          "awayTeam": "Hebraica",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-20-1773176748597-7-primera",
+          "homeTeam": "Est Porteño",
+          "awayTeam": "Barracas Ctral",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-20-1773176748597-8-primera",
+          "homeTeam": "Kimberley",
+          "awayTeam": "Newells",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 21,
+      "documentId": "fecha-21-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-21-1773176949437-0-primera",
+          "homeTeam": "San Lorenzo",
+          "awayTeam": "Newells",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-21-1773176949437-1-primera",
+          "homeTeam": "Barracas Ctral",
+          "awayTeam": "Kimberley",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-21-1773176949437-2-primera",
+          "homeTeam": "Hebraica",
+          "awayTeam": "Est Porteño",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-21-1773176949437-3-primera",
+          "homeTeam": "J. Newbery",
+          "awayTeam": "Camioneros",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-21-1773176949437-4-primera",
+          "homeTeam": "America del Sud",
+          "awayTeam": "Glorias de Tigre",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-21-1773176949437-5-primera",
+          "homeTeam": "17 de Agosto",
+          "awayTeam": "Pinocho",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-21-1773176949437-6-primera",
+          "homeTeam": "Ferro",
+          "awayTeam": "Estrella de Boedo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-21-1773176949437-7-primera",
+          "homeTeam": "Racing",
+          "awayTeam": "River",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-21-1773176949437-8-primera",
+          "homeTeam": "Boca",
+          "awayTeam": "Independiente",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 22,
+      "documentId": "fecha-22-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-22-1773176774159-0-primera",
+          "homeTeam": "Independiente",
+          "awayTeam": "San Lorenzo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-22-1773176774159-1-primera",
+          "homeTeam": "River",
+          "awayTeam": "Boca",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-22-1773176774159-2-primera",
+          "homeTeam": "Estrella de Boedo",
+          "awayTeam": "Racing",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-22-1773176774159-3-primera",
+          "homeTeam": "Pinocho",
+          "awayTeam": "Ferro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-22-1773176774159-4-primera",
+          "homeTeam": "Glorias de Tigre",
+          "awayTeam": "17 de Agosto",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-22-1773176774159-5-primera",
+          "homeTeam": "Camioneros",
+          "awayTeam": "America del Sud",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-22-1773176774159-6-primera",
+          "homeTeam": "Est Porteño",
+          "awayTeam": "J. Newbery",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-22-1773176774159-7-primera",
+          "homeTeam": "Kimberley",
+          "awayTeam": "Hebraica",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-22-1773176774159-8-primera",
+          "homeTeam": "Newells",
+          "awayTeam": "Barracas Ctral",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 23,
+      "documentId": "fecha-23-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-23-1773176968944-0-primera",
+          "homeTeam": "San Lorenzo",
+          "awayTeam": "Barracas Ctral",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-23-1773176968944-1-primera",
+          "homeTeam": "Hebraica",
+          "awayTeam": "Newells",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-23-1773176968944-2-primera",
+          "homeTeam": "J. Newbery",
+          "awayTeam": "Kimberley",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-23-1773176968944-3-primera",
+          "homeTeam": "America del Sud",
+          "awayTeam": "Est Porteño",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-23-1773176968944-4-primera",
+          "homeTeam": "17 de Agosto",
+          "awayTeam": "Camioneros",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-23-1773176968944-5-primera",
+          "homeTeam": "Ferro",
+          "awayTeam": "Glorias de Tigre",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-23-1773176968944-6-primera",
+          "homeTeam": "Racing",
+          "awayTeam": "Pinocho",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-23-1773176968944-7-primera",
+          "homeTeam": "Boca",
+          "awayTeam": "Estrella de Boedo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-23-1773176968944-8-primera",
+          "homeTeam": "Independiente",
+          "awayTeam": "River",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 24,
+      "documentId": "fecha-24-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-24-1773176800526-0-primera",
+          "homeTeam": "River",
+          "awayTeam": "San Lorenzo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-24-1773176800526-1-primera",
+          "homeTeam": "Estrella de Boedo",
+          "awayTeam": "Independiente",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-24-1773176800526-2-primera",
+          "homeTeam": "Pinocho",
+          "awayTeam": "Boca",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-24-1773176800526-3-primera",
+          "homeTeam": "Glorias de Tigre",
+          "awayTeam": "Racing",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-24-1773176800526-4-primera",
+          "homeTeam": "Camioneros",
+          "awayTeam": "Ferro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-24-1773176800526-5-primera",
+          "homeTeam": "Est Porteño",
+          "awayTeam": "17 de Agosto",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-24-1773176800526-6-primera",
+          "homeTeam": "Kimberley",
+          "awayTeam": "America del Sud",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-24-1773176800526-7-primera",
+          "homeTeam": "Newells",
+          "awayTeam": "J. Newbery",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-24-1773176800526-8-primera",
+          "homeTeam": "Barracas Ctral",
+          "awayTeam": "Hebraica",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 25,
+      "documentId": "fecha-25-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-25-1773176984164-0-primera",
+          "homeTeam": "San Lorenzo",
+          "awayTeam": "Hebraica",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-25-1773176984164-1-primera",
+          "homeTeam": "J. Newbery",
+          "awayTeam": "Barracas Ctral",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-25-1773176984164-2-primera",
+          "homeTeam": "America del Sud",
+          "awayTeam": "Newells",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-25-1773176984164-3-primera",
+          "homeTeam": "17 de Agosto",
+          "awayTeam": "Kimberley",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-25-1773176984164-4-primera",
+          "homeTeam": "Ferro",
+          "awayTeam": "Est Porteño",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-25-1773176984164-5-primera",
+          "homeTeam": "Racing",
+          "awayTeam": "Camioneros",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-25-1773176984164-6-primera",
+          "homeTeam": "Boca",
+          "awayTeam": "Glorias de Tigre",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-25-1773176984164-7-primera",
+          "homeTeam": "Independiente",
+          "awayTeam": "Pinocho",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-25-1773176984164-8-primera",
+          "homeTeam": "River",
+          "awayTeam": "Estrella de Boedo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 26,
+      "documentId": "fecha-26-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-26-1773176814187-0-primera",
+          "homeTeam": "Estrella de Boedo",
+          "awayTeam": "San Lorenzo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-26-1773176814187-1-primera",
+          "homeTeam": "Pinocho",
+          "awayTeam": "River",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-26-1773176814187-2-primera",
+          "homeTeam": "Glorias de Tigre",
+          "awayTeam": "Independiente",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-26-1773176814187-3-primera",
+          "homeTeam": "Camioneros",
+          "awayTeam": "Boca",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-26-1773176814187-4-primera",
+          "homeTeam": "Est Porteño",
+          "awayTeam": "Racing",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-26-1773176814187-5-primera",
+          "homeTeam": "Kimberley",
+          "awayTeam": "Ferro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-26-1773176814187-6-primera",
+          "homeTeam": "Newells",
+          "awayTeam": "17 de Agosto",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-26-1773176814187-7-primera",
+          "homeTeam": "Barracas Ctral",
+          "awayTeam": "America del Sud",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-26-1773176814187-8-primera",
+          "homeTeam": "Hebraica",
+          "awayTeam": "J. Newbery",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 27,
+      "documentId": "fecha-27-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-27-1773176994180-0-primera",
+          "homeTeam": "San Lorenzo",
+          "awayTeam": "J. Newbery",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-27-1773176994180-1-primera",
+          "homeTeam": "America del Sud",
+          "awayTeam": "Hebraica",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-27-1773176994180-2-primera",
+          "homeTeam": "17 de Agosto",
+          "awayTeam": "Barracas Ctral",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-27-1773176994180-3-primera",
+          "homeTeam": "Ferro",
+          "awayTeam": "Newells",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-27-1773176994180-4-primera",
+          "homeTeam": "Racing",
+          "awayTeam": "Kimberley",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-27-1773176994180-5-primera",
+          "homeTeam": "Boca",
+          "awayTeam": "Est Porteño",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-27-1773176994180-6-primera",
+          "homeTeam": "Independiente",
+          "awayTeam": "Camioneros",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-27-1773176994180-7-primera",
+          "homeTeam": "River",
+          "awayTeam": "Glorias de Tigre",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-27-1773176994180-8-primera",
+          "homeTeam": "Estrella de Boedo",
+          "awayTeam": "Pinocho",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 28,
+      "documentId": "fecha-28-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-28-1773176843590-0-primera",
+          "homeTeam": "Pinocho",
+          "awayTeam": "San Lorenzo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-28-1773176843590-1-primera",
+          "homeTeam": "Glorias de Tigre",
+          "awayTeam": "Estrella de Boedo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-28-1773176843590-2-primera",
+          "homeTeam": "Camioneros",
+          "awayTeam": "River",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-28-1773176843590-3-primera",
+          "homeTeam": "Est Porteño",
+          "awayTeam": "Independiente",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-28-1773176843590-4-primera",
+          "homeTeam": "Kimberley",
+          "awayTeam": "Boca",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-28-1773176843590-5-primera",
+          "homeTeam": "Newells",
+          "awayTeam": "Racing",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-28-1773176843590-6-primera",
+          "homeTeam": "Barracas Ctral",
+          "awayTeam": "Ferro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-28-1773176843590-7-primera",
+          "homeTeam": "Hebraica",
+          "awayTeam": "17 de Agosto",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-28-1773176843590-8-primera",
+          "homeTeam": "J. Newbery",
+          "awayTeam": "America del Sud",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 29,
+      "documentId": "fecha-29-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-29-1773177003440-0-primera",
+          "homeTeam": "San Lorenzo",
+          "awayTeam": "America del Sud",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-29-1773177003440-1-primera",
+          "homeTeam": "17 de Agosto",
+          "awayTeam": "J. Newbery",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-29-1773177003440-2-primera",
+          "homeTeam": "Ferro",
+          "awayTeam": "Hebraica",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-29-1773177003440-3-primera",
+          "homeTeam": "Racing",
+          "awayTeam": "Barracas Ctral",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-29-1773177003440-4-primera",
+          "homeTeam": "Boca",
+          "awayTeam": "Newells",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-29-1773177003440-5-primera",
+          "homeTeam": "Independiente",
+          "awayTeam": "Kimberley",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-29-1773177003440-6-primera",
+          "homeTeam": "River",
+          "awayTeam": "Est Porteño",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-29-1773177003440-7-primera",
+          "homeTeam": "Estrella de Boedo",
+          "awayTeam": "Camioneros",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-29-1773177003440-8-primera",
+          "homeTeam": "Pinocho",
+          "awayTeam": "Glorias de Tigre",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 30,
+      "documentId": "fecha-30-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-30-1773176860849-0-primera",
+          "homeTeam": "Glorias de Tigre",
+          "awayTeam": "San Lorenzo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-30-1773176860849-1-primera",
+          "homeTeam": "Camioneros",
+          "awayTeam": "Pinocho",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-30-1773176860849-2-primera",
+          "homeTeam": "Est Porteño",
+          "awayTeam": "Estrella de Boedo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-30-1773176860849-3-primera",
+          "homeTeam": "Kimberley",
+          "awayTeam": "River",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-30-1773176860849-4-primera",
+          "homeTeam": "Newells",
+          "awayTeam": "Independiente",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-30-1773176860849-5-primera",
+          "homeTeam": "Barracas Ctral",
+          "awayTeam": "Boca",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-30-1773176860849-6-primera",
+          "homeTeam": "Hebraica",
+          "awayTeam": "Racing",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-30-1773176860849-7-primera",
+          "homeTeam": "J. Newbery",
+          "awayTeam": "Ferro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-30-1773176860849-8-primera",
+          "homeTeam": "America del Sud",
+          "awayTeam": "17 de Agosto",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 31,
+      "documentId": "fecha-31-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-31-1773177014038-0-primera",
+          "homeTeam": "San Lorenzo",
+          "awayTeam": "17 de Agosto",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-31-1773177014038-1-primera",
+          "homeTeam": "Ferro",
+          "awayTeam": "America del Sud",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-31-1773177014038-2-primera",
+          "homeTeam": "Racing",
+          "awayTeam": "J. Newbery",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-31-1773177014038-3-primera",
+          "homeTeam": "Boca",
+          "awayTeam": "Hebraica",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-31-1773177014038-4-primera",
+          "homeTeam": "Independiente",
+          "awayTeam": "Barracas Ctral",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-31-1773177014038-5-primera",
+          "homeTeam": "River",
+          "awayTeam": "Newells",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-31-1773177014038-6-primera",
+          "homeTeam": "Estrella de Boedo",
+          "awayTeam": "Kimberley",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-31-1773177014038-7-primera",
+          "homeTeam": "Pinocho",
+          "awayTeam": "Est Porteño",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-31-1773177014038-8-primera",
+          "homeTeam": "Glorias de Tigre",
+          "awayTeam": "Camioneros",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 32,
+      "documentId": "fecha-32-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-32-1773176880287-0-primera",
+          "homeTeam": "Camioneros",
+          "awayTeam": "San Lorenzo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-32-1773176880287-1-primera",
+          "homeTeam": "Est Porteño",
+          "awayTeam": "Glorias de Tigre",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-32-1773176880287-2-primera",
+          "homeTeam": "Kimberley",
+          "awayTeam": "Pinocho",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-32-1773176880287-3-primera",
+          "homeTeam": "Newells",
+          "awayTeam": "Estrella de Boedo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-32-1773176880287-4-primera",
+          "homeTeam": "Barracas Ctral",
+          "awayTeam": "River",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-32-1773176880287-5-primera",
+          "homeTeam": "Hebraica",
+          "awayTeam": "Independiente",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-32-1773176880287-6-primera",
+          "homeTeam": "J. Newbery",
+          "awayTeam": "Boca",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-32-1773176880287-7-primera",
+          "homeTeam": "America del Sud",
+          "awayTeam": "Racing",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-32-1773176880287-8-primera",
+          "homeTeam": "17 de Agosto",
+          "awayTeam": "Ferro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 33,
+      "documentId": "fecha-33-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-33-1773177026621-0-primera",
+          "homeTeam": "San Lorenzo",
+          "awayTeam": "Ferro",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-33-1773177026621-1-primera",
+          "homeTeam": "Racing",
+          "awayTeam": "17 de Agosto",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-33-1773177026621-2-primera",
+          "homeTeam": "Boca",
+          "awayTeam": "America del Sud",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-33-1773177026621-3-primera",
+          "homeTeam": "Independiente",
+          "awayTeam": "J. Newbery",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-33-1773177026621-4-primera",
+          "homeTeam": "River",
+          "awayTeam": "Hebraica",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-33-1773177026621-5-primera",
+          "homeTeam": "Estrella de Boedo",
+          "awayTeam": "Barracas Ctral",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-33-1773177026621-6-primera",
+          "homeTeam": "Pinocho",
+          "awayTeam": "Newells",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-33-1773177026621-7-primera",
+          "homeTeam": "Glorias de Tigre",
+          "awayTeam": "Kimberley",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-33-1773177026621-8-primera",
+          "homeTeam": "Camioneros",
+          "awayTeam": "Est Porteño",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 34,
+      "documentId": "fecha-34-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-34-1773176894090-0-primera",
+          "homeTeam": "Est Porteño",
+          "awayTeam": "San Lorenzo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-34-1773176894090-1-primera",
+          "homeTeam": "Kimberley",
+          "awayTeam": "Camioneros",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-34-1773176894090-2-primera",
+          "homeTeam": "Newells",
+          "awayTeam": "Glorias de Tigre",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-34-1773176894090-3-primera",
+          "homeTeam": "Barracas Ctral",
+          "awayTeam": "Pinocho",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-34-1773176894090-4-primera",
+          "homeTeam": "Hebraica",
+          "awayTeam": "Estrella de Boedo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-34-1773176894090-5-primera",
+          "homeTeam": "J. Newbery",
+          "awayTeam": "River",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-34-1773176894090-6-primera",
+          "homeTeam": "America del Sud",
+          "awayTeam": "Independiente",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-34-1773176894090-7-primera",
+          "homeTeam": "17 de Agosto",
+          "awayTeam": "Boca",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-34-1773176894090-8-primera",
+          "homeTeam": "Ferro",
+          "awayTeam": "Racing",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    }
+  ]
+}

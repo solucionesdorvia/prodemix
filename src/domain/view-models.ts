@@ -61,6 +61,8 @@ export interface TorneoBrowseItem {
   phaseLabel: string;
   teamsCount: number;
   featured: boolean;
+  /** Chip opcional (ej. torneos con premio en pozo). */
+  promoBadge?: string;
 }
 
 /** Crear prode / API: tournament with fechas + flat matches (matches include matchdayId). */

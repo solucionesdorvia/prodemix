@@ -8,6 +8,7 @@ import type {
 
 import { buildArgenligaZona1Matches, buildArgenligaZona2Matches } from "@/mocks/fixtures/argenliga";
 import { buildJomaHonorAMatches } from "@/mocks/fixtures/joma-honor-a-apertura";
+import { buildPlaPremioMatches } from "@/mocks/fixtures/plp-afa-premio";
 
 import { deriveMatchdaysFromMatches } from "./matchdays";
 import { buildPublicPoolsForMatchdays } from "./public-pools";
@@ -30,37 +31,9 @@ function entry(
   };
 }
 
-/** AFA Futsal — Primera (demo fixture). */
-function afaMatches(): Match[] {
-  const tid = "afa-futsal-a";
-  const md = `${tid}-md-01`;
-  return [
-    {
-      id: "cm-afa-1",
-      tournamentId: tid,
-      matchdayId: md,
-      homeTeam: "Boca Juniors",
-      awayTeam: "Racing Club",
-      startsAt: "2026-03-30T19:30:00-03:00",
-    },
-    {
-      id: "cm-afa-2",
-      tournamentId: tid,
-      matchdayId: md,
-      homeTeam: "San Lorenzo",
-      awayTeam: "River Plate",
-      startsAt: "2026-03-30T21:15:00-03:00",
-    },
-    {
-      id: "cm-afa-3",
-      tournamentId: tid,
-      matchdayId: md,
-      homeTeam: "Estrella de Boedo",
-      awayTeam: "Kimberley",
-      startsAt: "2026-04-01T20:00:00-03:00",
-    },
-  ];
-}
+const AFA_PREMIO_A = "afa-premio-a";
+const AFA_PREMIO_B = "afa-premio-b";
+const AFA_PREMIO_C = "afa-premio-c";
 
 function ligaNunezMatches(): Match[] {
   const tid = "liga-nunez-cl";
@@ -137,6 +110,33 @@ const ARG2 = "argenliga-zona-2";
 
 export const PRIMERA_TOURNAMENT_CATALOGUE: TournamentCatalogueEntry[] = [
   entry({
+    id: AFA_PREMIO_A,
+    name: "AFA Futsal · Primera A · Premio",
+    shortName: "Premio · A",
+    matches: labelMatches(
+      buildPlaPremioMatches("a", AFA_PREMIO_A),
+      "AFA Futsal · Primera A · Premio",
+    ),
+  }),
+  entry({
+    id: AFA_PREMIO_B,
+    name: "AFA Futsal · Primera B · Premio",
+    shortName: "Premio · B",
+    matches: labelMatches(
+      buildPlaPremioMatches("b", AFA_PREMIO_B),
+      "AFA Futsal · Primera B · Premio",
+    ),
+  }),
+  entry({
+    id: AFA_PREMIO_C,
+    name: "AFA Futsal · Primera C · Premio",
+    shortName: "Premio · C",
+    matches: labelMatches(
+      buildPlaPremioMatches("c", AFA_PREMIO_C),
+      "AFA Futsal · Primera C · Premio",
+    ),
+  }),
+  entry({
     id: JOMA_ID,
     name: "Torneo Joma · Liga Honor A · Primera",
     shortName: "Joma Honor A",
@@ -162,12 +162,6 @@ export const PRIMERA_TOURNAMENT_CATALOGUE: TournamentCatalogueEntry[] = [
       buildArgenligaZona2Matches(ARG2),
       "Argenliga · Zona 2",
     ),
-  }),
-  entry({
-    id: "afa-futsal-a",
-    name: "AFA Futsal · Primera",
-    shortName: "AFA Futsal",
-    matches: labelMatches(afaMatches(), "AFA Futsal · Primera"),
   }),
   entry({
     id: "liga-nunez-cl",
@@ -197,11 +191,7 @@ export const PRIMERA_PUBLIC_POOLS: PublicPool[] =
 function categoryForTournament(
   id: string,
 ): { categoryId: Exclude<TorneoCategoryFilterId, "todos">; categoryLabel: string } {
-  if (
-    id === JOMA_ID ||
-    id.startsWith("argenliga-") ||
-    id === "afa-futsal-a"
-  ) {
+  if (id === JOMA_ID || id.startsWith("argenliga-") || id.startsWith("afa-premio-")) {
     return { categoryId: "futsal", categoryLabel: "Futsal" };
   }
   if (id === "liga-nunez-cl") {
@@ -228,27 +218,27 @@ function browseItemFromEntry(t: TournamentCatalogueEntry): TorneoBrowseItem {
     t.matchdays.find((m) => m.status === "open") ?? t.matchdays[0];
   const currentLabel = open?.name ?? "Fecha";
   const played = t.matches.filter((m) => m.matchdayId === open?.id).length;
+  const premio = t.id.startsWith("afa-premio-");
   return {
     id: t.id,
     name: t.name,
-    subtitle: `Primera · ${currentLabel}`,
+    subtitle: premio
+      ? `Primera · ${currentLabel} · Premio en efectivo`
+      : `Primera · ${currentLabel}`,
     categoryId,
     categoryLabel,
     region:
-      t.id === JOMA_ID ? "AFA · Liga Honor"
+      premio ? "AFA · Nacional"
+      : t.id === JOMA_ID ? "AFA · Liga Honor"
       : t.id.startsWith("argenliga-") ? "AMBA · Argenliga"
-      : t.id === "afa-futsal-a" ? "Nacional"
       : t.id === "liga-nunez-cl" ? "CABA · Núñez"
       : t.id === "barrial-caba-cab" ? "CABA · Caballito"
       : "GBA · Zona Norte",
     statusLabel: "En curso",
     phaseLabel: `${currentLabel} · ${played} partidos`,
     teamsCount: uniqueTeams(t.matches),
-    featured:
-      t.id === JOMA_ID ||
-      t.id === "afa-futsal-a" ||
-      t.id === ARG1 ||
-      t.id === ARG2,
+    featured: premio,
+    promoBadge: premio ? "Premio" : undefined,
   };
 }
 

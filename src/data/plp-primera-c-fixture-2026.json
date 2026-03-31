@@ -1,0 +1,3307 @@
+{
+  "sourceUrl": "https://parenlapelotafutsal.com.ar/primeraC/primera",
+  "firestoreProject": "parenlapelotafutsal-4a110",
+  "collection": "fixtures-2026-primera-c",
+  "division": "primera-c",
+  "season": "2026",
+  "rounds": [
+    {
+      "fecha": 1,
+      "documentId": "fecha-1-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-1-1-primera",
+          "homeTeam": "Dep Moron",
+          "awayTeam": "Rosario Central",
+          "homeScore": 2,
+          "awayScore": 0,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-1-2-primera",
+          "homeTeam": "Excursionistas",
+          "awayTeam": "CIDECO",
+          "homeScore": 2,
+          "awayScore": 3,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-1-3-primera",
+          "homeTeam": "Libertadores",
+          "awayTeam": "Villa Malcolm",
+          "homeScore": 5,
+          "awayScore": 0,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-1-4-primera",
+          "homeTeam": "Estrella Maldonado",
+          "awayTeam": "Villa Heredia",
+          "homeScore": 6,
+          "awayScore": 4,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-1-5-primera",
+          "homeTeam": "Juv Tapiales",
+          "awayTeam": "UNLAM",
+          "homeScore": 4,
+          "awayScore": 1,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-1-6-primera",
+          "homeTeam": "Dep Merlo",
+          "awayTeam": "El Talar",
+          "homeScore": 2,
+          "awayScore": 3,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-1-7-primera",
+          "homeTeam": "Almafuerte",
+          "awayTeam": "GEVS",
+          "homeScore": 3,
+          "awayScore": 3,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-1-8-primera",
+          "homeTeam": "Asturiano",
+          "awayTeam": "25 de Mayo",
+          "homeScore": 4,
+          "awayScore": 2,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-1-9-primera",
+          "homeTeam": "Primera Junta",
+          "awayTeam": "Villa Modelo",
+          "homeScore": 1,
+          "awayScore": 2,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 2,
+      "documentId": "fecha-2-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-2-1-primera",
+          "homeTeam": "Asturiano",
+          "awayTeam": "Primera Junta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-2-2-primera",
+          "homeTeam": "25 de Mayo",
+          "awayTeam": "Estrella Maldonado",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-2-3-primera",
+          "homeTeam": "Villa Heredia",
+          "awayTeam": "Juv Tapiales",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-2-4-primera",
+          "homeTeam": "UNLAM",
+          "awayTeam": "Libertadores",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-2-5-primera",
+          "homeTeam": "Villa Malcolm",
+          "awayTeam": "Almafuerte",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-2-6-primera",
+          "homeTeam": "GEVS",
+          "awayTeam": "Excursionistas",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-2-7-primera",
+          "homeTeam": "CIDECO",
+          "awayTeam": "Dep Moron",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-2-8-primera",
+          "homeTeam": "Rosario Central",
+          "awayTeam": "Dep Merlo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-2-9-primera",
+          "homeTeam": "El Talar",
+          "awayTeam": "Villa Modelo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 3,
+      "documentId": "fecha-3-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-3-1-primera",
+          "homeTeam": "Primera Junta",
+          "awayTeam": "El Talar",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-3-2-primera",
+          "homeTeam": "Villa Modelo",
+          "awayTeam": "Rosario Central",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-3-3-primera",
+          "homeTeam": "Dep Merlo",
+          "awayTeam": "CIDECO",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-3-4-primera",
+          "homeTeam": "Dep Moron",
+          "awayTeam": "GEVS",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-3-5-primera",
+          "homeTeam": "Excursionistas",
+          "awayTeam": "Villa Malcolm",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-3-6-primera",
+          "homeTeam": "Almafuerte",
+          "awayTeam": "UNLAM",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-3-7-primera",
+          "homeTeam": "Libertadores",
+          "awayTeam": "Villa Heredia",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-3-8-primera",
+          "homeTeam": "Juv Tapiales",
+          "awayTeam": "25 de Mayo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-3-9-primera",
+          "homeTeam": "Estrella Maldonado",
+          "awayTeam": "Asturiano",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 4,
+      "documentId": "fecha-4-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-4-1-primera",
+          "homeTeam": "Estrella Maldonado",
+          "awayTeam": "Primera Junta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-4-2-primera",
+          "homeTeam": "Asturiano",
+          "awayTeam": "Juv Tapiales",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-4-3-primera",
+          "homeTeam": "25 de Mayo",
+          "awayTeam": "Libertadores",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-4-4-primera",
+          "homeTeam": "Villa Heredia",
+          "awayTeam": "Almafuerte",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-4-5-primera",
+          "homeTeam": "UNLAM",
+          "awayTeam": "Excursionistas",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-4-6-primera",
+          "homeTeam": "Villa Malcolm",
+          "awayTeam": "Dep Moron",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-4-7-primera",
+          "homeTeam": "GEVS",
+          "awayTeam": "Dep Merlo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-4-8-primera",
+          "homeTeam": "CIDECO",
+          "awayTeam": "Villa Modelo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-4-9-primera",
+          "homeTeam": "Rosario Central",
+          "awayTeam": "El Talar",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 5,
+      "documentId": "fecha-5-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-5-1-primera",
+          "homeTeam": "Primera Junta",
+          "awayTeam": "Rosario Central",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-5-2-primera",
+          "homeTeam": "El Talar",
+          "awayTeam": "CIDECO",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-5-3-primera",
+          "homeTeam": "Villa Modelo",
+          "awayTeam": "GEVS",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-5-4-primera",
+          "homeTeam": "Dep Merlo",
+          "awayTeam": "Villa Malcolm",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-5-5-primera",
+          "homeTeam": "Dep Moron",
+          "awayTeam": "UNLAM",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-5-6-primera",
+          "homeTeam": "Excursionistas",
+          "awayTeam": "Villa Heredia",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-5-7-primera",
+          "homeTeam": "Almafuerte",
+          "awayTeam": "25 de Mayo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-5-8-primera",
+          "homeTeam": "Libertadores",
+          "awayTeam": "Asturiano",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-5-9-primera",
+          "homeTeam": "Juv Tapiales",
+          "awayTeam": "Estrella Maldonado",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 6,
+      "documentId": "fecha-6-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-6-1-primera",
+          "homeTeam": "Juv Tapiales",
+          "awayTeam": "Primera Junta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-6-2-primera",
+          "homeTeam": "Estrella Maldonado",
+          "awayTeam": "Libertadores",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-6-3-primera",
+          "homeTeam": "Asturiano",
+          "awayTeam": "Almafuerte",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-6-4-primera",
+          "homeTeam": "25 de Mayo",
+          "awayTeam": "Excursionistas",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-6-5-primera",
+          "homeTeam": "Villa Heredia",
+          "awayTeam": "Dep Moron",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-6-6-primera",
+          "homeTeam": "UNLAM",
+          "awayTeam": "Dep Merlo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-6-7-primera",
+          "homeTeam": "Villa Malcolm",
+          "awayTeam": "Villa Modelo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-6-8-primera",
+          "homeTeam": "GEVS",
+          "awayTeam": "El Talar",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-6-9-primera",
+          "homeTeam": "CIDECO",
+          "awayTeam": "Rosario Central",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 7,
+      "documentId": "fecha-7-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-7-1-primera",
+          "homeTeam": "Primera Junta",
+          "awayTeam": "CIDECO",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-7-2-primera",
+          "homeTeam": "Rosario Central",
+          "awayTeam": "GEVS",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-7-3-primera",
+          "homeTeam": "El Talar",
+          "awayTeam": "Villa Malcolm",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-7-4-primera",
+          "homeTeam": "Villa Modelo",
+          "awayTeam": "UNLAM",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-7-5-primera",
+          "homeTeam": "Dep Merlo",
+          "awayTeam": "Villa Heredia",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-7-6-primera",
+          "homeTeam": "Dep Moron",
+          "awayTeam": "25 de Mayo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-7-7-primera",
+          "homeTeam": "Excursionistas",
+          "awayTeam": "Asturiano",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-7-8-primera",
+          "homeTeam": "Almafuerte",
+          "awayTeam": "Estrella Maldonado",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-7-9-primera",
+          "homeTeam": "Libertadores",
+          "awayTeam": "Juv Tapiales",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 8,
+      "documentId": "fecha-8-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-8-1-primera",
+          "homeTeam": "Libertadores",
+          "awayTeam": "Primera Junta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-8-2-primera",
+          "homeTeam": "Juv Tapiales",
+          "awayTeam": "Almafuerte",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-8-3-primera",
+          "homeTeam": "Estrella Maldonado",
+          "awayTeam": "Excursionistas",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-8-4-primera",
+          "homeTeam": "Asturiano",
+          "awayTeam": "Dep Moron",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-8-5-primera",
+          "homeTeam": "25 de Mayo",
+          "awayTeam": "Dep Merlo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-8-6-primera",
+          "homeTeam": "Villa Heredia",
+          "awayTeam": "Villa Modelo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-8-7-primera",
+          "homeTeam": "UNLAM",
+          "awayTeam": "El Talar",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-8-8-primera",
+          "homeTeam": "Villa Malcolm",
+          "awayTeam": "Rosario Central",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-8-9-primera",
+          "homeTeam": "GEVS",
+          "awayTeam": "CIDECO",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 9,
+      "documentId": "fecha-9-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-9-1-primera",
+          "homeTeam": "Primera Junta",
+          "awayTeam": "GEVS",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-9-2-primera",
+          "homeTeam": "CIDECO",
+          "awayTeam": "Villa Malcolm",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-9-3-primera",
+          "homeTeam": "Rosario Central",
+          "awayTeam": "UNLAM",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-9-4-primera",
+          "homeTeam": "El Talar",
+          "awayTeam": "Villa Heredia",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-9-5-primera",
+          "homeTeam": "Villa Modelo",
+          "awayTeam": "25 de Mayo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-9-6-primera",
+          "homeTeam": "Dep Merlo",
+          "awayTeam": "Asturiano",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-9-7-primera",
+          "homeTeam": "Dep Moron",
+          "awayTeam": "Estrella Maldonado",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-9-8-primera",
+          "homeTeam": "Excursionistas",
+          "awayTeam": "Juv Tapiales",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-9-9-primera",
+          "homeTeam": "Almafuerte",
+          "awayTeam": "Libertadores",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 10,
+      "documentId": "fecha-10-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-10-1-primera",
+          "homeTeam": "Almafuerte",
+          "awayTeam": "Primera Junta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-10-2-primera",
+          "homeTeam": "Libertadores",
+          "awayTeam": "Excursionistas",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-10-3-primera",
+          "homeTeam": "Juv Tapiales",
+          "awayTeam": "Dep Moron",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-10-4-primera",
+          "homeTeam": "Estrella Maldonado",
+          "awayTeam": "Dep Merlo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-10-5-primera",
+          "homeTeam": "Asturiano",
+          "awayTeam": "Villa Modelo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-10-6-primera",
+          "homeTeam": "25 de Mayo",
+          "awayTeam": "El Talar",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-10-7-primera",
+          "homeTeam": "Villa Heredia",
+          "awayTeam": "Rosario Central",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-10-8-primera",
+          "homeTeam": "UNLAM",
+          "awayTeam": "CIDECO",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-10-9-primera",
+          "homeTeam": "Villa Malcolm",
+          "awayTeam": "GEVS",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 11,
+      "documentId": "fecha-11-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-11-1-primera",
+          "homeTeam": "Primera Junta",
+          "awayTeam": "Villa Malcolm",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-11-2-primera",
+          "homeTeam": "GEVS",
+          "awayTeam": "UNLAM",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-11-3-primera",
+          "homeTeam": "CIDECO",
+          "awayTeam": "Villa Heredia",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-11-4-primera",
+          "homeTeam": "Rosario Central",
+          "awayTeam": "25 de Mayo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-11-5-primera",
+          "homeTeam": "El Talar",
+          "awayTeam": "Asturiano",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-11-6-primera",
+          "homeTeam": "Villa Modelo",
+          "awayTeam": "Estrella Maldonado",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-11-7-primera",
+          "homeTeam": "Dep Merlo",
+          "awayTeam": "Juv Tapiales",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-11-8-primera",
+          "homeTeam": "Dep Moron",
+          "awayTeam": "Libertadores",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-11-9-primera",
+          "homeTeam": "Excursionistas",
+          "awayTeam": "Almafuerte",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 12,
+      "documentId": "fecha-12-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-12-1-primera",
+          "homeTeam": "Excursionistas",
+          "awayTeam": "Primera Junta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-12-2-primera",
+          "homeTeam": "Almafuerte",
+          "awayTeam": "Dep Moron",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-12-3-primera",
+          "homeTeam": "Libertadores",
+          "awayTeam": "Dep Merlo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-12-4-primera",
+          "homeTeam": "Juv Tapiales",
+          "awayTeam": "Villa Modelo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-12-5-primera",
+          "homeTeam": "Estrella Maldonado",
+          "awayTeam": "El Talar",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-12-6-primera",
+          "homeTeam": "Asturiano",
+          "awayTeam": "Rosario Central",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-12-7-primera",
+          "homeTeam": "25 de Mayo",
+          "awayTeam": "CIDECO",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-12-8-primera",
+          "homeTeam": "Villa Heredia",
+          "awayTeam": "GEVS",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-12-9-primera",
+          "homeTeam": "UNLAM",
+          "awayTeam": "Villa Malcolm",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 13,
+      "documentId": "fecha-13-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-13-1-primera",
+          "homeTeam": "Primera Junta",
+          "awayTeam": "UNLAM",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-13-2-primera",
+          "homeTeam": "Villa Malcolm",
+          "awayTeam": "Villa Heredia",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-13-3-primera",
+          "homeTeam": "GEVS",
+          "awayTeam": "25 de Mayo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-13-4-primera",
+          "homeTeam": "CIDECO",
+          "awayTeam": "Asturiano",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-13-5-primera",
+          "homeTeam": "Rosario Central",
+          "awayTeam": "Estrella Maldonado",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-13-6-primera",
+          "homeTeam": "El Talar",
+          "awayTeam": "Juv Tapiales",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-13-7-primera",
+          "homeTeam": "Villa Modelo",
+          "awayTeam": "Libertadores",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-13-8-primera",
+          "homeTeam": "Dep Merlo",
+          "awayTeam": "Almafuerte",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-13-9-primera",
+          "homeTeam": "Dep Moron",
+          "awayTeam": "Excursionistas",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 14,
+      "documentId": "fecha-14-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-14-1-primera",
+          "homeTeam": "Dep Moron",
+          "awayTeam": "Primera Junta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-14-2-primera",
+          "homeTeam": "Excursionistas",
+          "awayTeam": "Dep Merlo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-14-3-primera",
+          "homeTeam": "Almafuerte",
+          "awayTeam": "Villa Modelo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-14-4-primera",
+          "homeTeam": "Libertadores",
+          "awayTeam": "El Talar",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-14-5-primera",
+          "homeTeam": "Juv Tapiales",
+          "awayTeam": "Rosario Central",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-14-6-primera",
+          "homeTeam": "Estrella Maldonado",
+          "awayTeam": "CIDECO",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-14-7-primera",
+          "homeTeam": "Asturiano",
+          "awayTeam": "GEVS",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-14-8-primera",
+          "homeTeam": "25 de Mayo",
+          "awayTeam": "Villa Malcolm",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-14-9-primera",
+          "homeTeam": "Villa Heredia",
+          "awayTeam": "UNLAM",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 15,
+      "documentId": "fecha-15-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-15-1-primera",
+          "homeTeam": "Primera Junta",
+          "awayTeam": "Villa Heredia",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-15-2-primera",
+          "homeTeam": "UNLAM",
+          "awayTeam": "25 de Mayo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-15-3-primera",
+          "homeTeam": "Villa Malcolm",
+          "awayTeam": "Asturiano",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-15-4-primera",
+          "homeTeam": "GEVS",
+          "awayTeam": "Estrella Maldonado",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-15-5-primera",
+          "homeTeam": "CIDECO",
+          "awayTeam": "Juv Tapiales",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-15-6-primera",
+          "homeTeam": "Rosario Central",
+          "awayTeam": "Libertadores",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-15-7-primera",
+          "homeTeam": "El Talar",
+          "awayTeam": "Almafuerte",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-15-8-primera",
+          "homeTeam": "Villa Modelo",
+          "awayTeam": "Excursionistas",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-15-9-primera",
+          "homeTeam": "Dep Merlo",
+          "awayTeam": "Dep Moron",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 16,
+      "documentId": "fecha-16-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-16-1-primera",
+          "homeTeam": "Dep Merlo",
+          "awayTeam": "Primera Junta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-16-2-primera",
+          "homeTeam": "Dep Moron",
+          "awayTeam": "Villa Modelo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-16-3-primera",
+          "homeTeam": "Excursionistas",
+          "awayTeam": "El Talar",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-16-4-primera",
+          "homeTeam": "Almafuerte",
+          "awayTeam": "Rosario Central",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-16-5-primera",
+          "homeTeam": "Libertadores",
+          "awayTeam": "CIDECO",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-16-6-primera",
+          "homeTeam": "Juv Tapiales",
+          "awayTeam": "GEVS",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-16-7-primera",
+          "homeTeam": "Estrella Maldonado",
+          "awayTeam": "Villa Malcolm",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-16-8-primera",
+          "homeTeam": "Asturiano",
+          "awayTeam": "UNLAM",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-16-9-primera",
+          "homeTeam": "25 de Mayo",
+          "awayTeam": "Villa Heredia",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 17,
+      "documentId": "fecha-17-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-17-1-primera",
+          "homeTeam": "Primera Junta",
+          "awayTeam": "25 de Mayo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-17-2-primera",
+          "homeTeam": "Villa Heredia",
+          "awayTeam": "Asturiano",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-17-3-primera",
+          "homeTeam": "UNLAM",
+          "awayTeam": "Estrella Maldonado",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-17-4-primera",
+          "homeTeam": "Villa Malcolm",
+          "awayTeam": "Juv Tapiales",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-17-5-primera",
+          "homeTeam": "GEVS",
+          "awayTeam": "Libertadores",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-17-6-primera",
+          "homeTeam": "CIDECO",
+          "awayTeam": "Almafuerte",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-17-7-primera",
+          "homeTeam": "Rosario Central",
+          "awayTeam": "Excursionistas",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-17-8-primera",
+          "homeTeam": "El Talar",
+          "awayTeam": "Dep Moron",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-17-9-primera",
+          "homeTeam": "Villa Modelo",
+          "awayTeam": "Dep Merlo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 18,
+      "documentId": "fecha-18-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-18-1-primera",
+          "homeTeam": "Rosario Central",
+          "awayTeam": "Dep Moron",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-18-2-primera",
+          "homeTeam": "CIDECO",
+          "awayTeam": "Excursionistas",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-18-3-primera",
+          "homeTeam": "Villa Malcolm",
+          "awayTeam": "Libertadores",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-18-4-primera",
+          "homeTeam": "Villa Heredia",
+          "awayTeam": "Estrella Maldonado",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-18-5-primera",
+          "homeTeam": "UNLAM",
+          "awayTeam": "Juv Tapiales",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-18-6-primera",
+          "homeTeam": "El Talar",
+          "awayTeam": "Dep Merlo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-18-7-primera",
+          "homeTeam": "GEVS",
+          "awayTeam": "Almafuerte",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-18-8-primera",
+          "homeTeam": "25 de Mayo",
+          "awayTeam": "Asturiano",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-18-9-primera",
+          "homeTeam": "Villa Modelo",
+          "awayTeam": "Primera Junta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 19,
+      "documentId": "fecha-19-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-19-1-primera",
+          "homeTeam": "Primera Junta",
+          "awayTeam": "Asturiano",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-19-2-primera",
+          "homeTeam": "Estrella Maldonado",
+          "awayTeam": "25 de Mayo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-19-3-primera",
+          "homeTeam": "Juv Tapiales",
+          "awayTeam": "Villa Heredia",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-19-4-primera",
+          "homeTeam": "Libertadores",
+          "awayTeam": "UNLAM",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-19-5-primera",
+          "homeTeam": "Almafuerte",
+          "awayTeam": "Villa Malcolm",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-19-6-primera",
+          "homeTeam": "Excursionistas",
+          "awayTeam": "GEVS",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-19-7-primera",
+          "homeTeam": "Dep Moron",
+          "awayTeam": "CIDECO",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-19-8-primera",
+          "homeTeam": "Dep Merlo",
+          "awayTeam": "Rosario Central",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-19-9-primera",
+          "homeTeam": "Villa Modelo",
+          "awayTeam": "El Talar",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 20,
+      "documentId": "fecha-20-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-20-1-primera",
+          "homeTeam": "El Talar",
+          "awayTeam": "Primera Junta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-20-2-primera",
+          "homeTeam": "Rosario Central",
+          "awayTeam": "Villa Modelo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-20-3-primera",
+          "homeTeam": "CIDECO",
+          "awayTeam": "Dep Merlo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-20-4-primera",
+          "homeTeam": "GEVS",
+          "awayTeam": "Dep Moron",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-20-5-primera",
+          "homeTeam": "Villa Malcolm",
+          "awayTeam": "Excursionistas",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-20-6-primera",
+          "homeTeam": "UNLAM",
+          "awayTeam": "Almafuerte",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-20-7-primera",
+          "homeTeam": "Villa Heredia",
+          "awayTeam": "Libertadores",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-20-8-primera",
+          "homeTeam": "25 de Mayo",
+          "awayTeam": "Juv Tapiales",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-20-9-primera",
+          "homeTeam": "Asturiano",
+          "awayTeam": "Estrella Maldonado",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 21,
+      "documentId": "fecha-21-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-21-1-primera",
+          "homeTeam": "Primera Junta",
+          "awayTeam": "Estrella Maldonado",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-21-2-primera",
+          "homeTeam": "Juv Tapiales",
+          "awayTeam": "Asturiano",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-21-3-primera",
+          "homeTeam": "Libertadores",
+          "awayTeam": "25 de Mayo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-21-4-primera",
+          "homeTeam": "Almafuerte",
+          "awayTeam": "Villa Heredia",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-21-5-primera",
+          "homeTeam": "Excursionistas",
+          "awayTeam": "UNLAM",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-21-6-primera",
+          "homeTeam": "Dep Moron",
+          "awayTeam": "Villa Malcolm",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-21-7-primera",
+          "homeTeam": "Dep Merlo",
+          "awayTeam": "GEVS",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-21-8-primera",
+          "homeTeam": "Villa Modelo",
+          "awayTeam": "CIDECO",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-21-9-primera",
+          "homeTeam": "El Talar",
+          "awayTeam": "Rosario Central",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 22,
+      "documentId": "fecha-22-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-22-1-primera",
+          "homeTeam": "Rosario Central",
+          "awayTeam": "Primera Junta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-22-2-primera",
+          "homeTeam": "CIDECO",
+          "awayTeam": "El Talar",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-22-3-primera",
+          "homeTeam": "GEVS",
+          "awayTeam": "Villa Modelo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-22-4-primera",
+          "homeTeam": "Villa Malcolm",
+          "awayTeam": "Dep Merlo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-22-5-primera",
+          "homeTeam": "UNLAM",
+          "awayTeam": "Dep Moron",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-22-6-primera",
+          "homeTeam": "Villa Heredia",
+          "awayTeam": "Excursionistas",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-22-7-primera",
+          "homeTeam": "25 de Mayo",
+          "awayTeam": "Almafuerte",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-22-8-primera",
+          "homeTeam": "Asturiano",
+          "awayTeam": "Libertadores",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-22-9-primera",
+          "homeTeam": "Estrella Maldonado",
+          "awayTeam": "Juv Tapiales",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 23,
+      "documentId": "fecha-23-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-23-1-primera",
+          "homeTeam": "Primera Junta",
+          "awayTeam": "Juv Tapiales",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-23-2-primera",
+          "homeTeam": "Libertadores",
+          "awayTeam": "Estrella Maldonado",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-23-3-primera",
+          "homeTeam": "Almafuerte",
+          "awayTeam": "Asturiano",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-23-4-primera",
+          "homeTeam": "Excursionistas",
+          "awayTeam": "25 de Mayo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-23-5-primera",
+          "homeTeam": "Dep Moron",
+          "awayTeam": "Villa Heredia",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-23-6-primera",
+          "homeTeam": "Dep Merlo",
+          "awayTeam": "UNLAM",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-23-7-primera",
+          "homeTeam": "Villa Modelo",
+          "awayTeam": "Villa Malcolm",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-23-8-primera",
+          "homeTeam": "El Talar",
+          "awayTeam": "GEVS",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-23-9-primera",
+          "homeTeam": "Rosario Central",
+          "awayTeam": "CIDECO",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 24,
+      "documentId": "fecha-24-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-24-1-primera",
+          "homeTeam": "CIDECO",
+          "awayTeam": "Primera Junta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-24-2-primera",
+          "homeTeam": "GEVS",
+          "awayTeam": "Rosario Central",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-24-3-primera",
+          "homeTeam": "Villa Malcolm",
+          "awayTeam": "El Talar",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-24-4-primera",
+          "homeTeam": "UNLAM",
+          "awayTeam": "Villa Modelo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-24-5-primera",
+          "homeTeam": "Villa Heredia",
+          "awayTeam": "Dep Merlo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-24-6-primera",
+          "homeTeam": "25 de Mayo",
+          "awayTeam": "Dep Moron",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-24-7-primera",
+          "homeTeam": "Asturiano",
+          "awayTeam": "Excursionistas",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-24-8-primera",
+          "homeTeam": "Estrella Maldonado",
+          "awayTeam": "Almafuerte",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-24-9-primera",
+          "homeTeam": "Juv Tapiales",
+          "awayTeam": "Libertadores",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 25,
+      "documentId": "fecha-25-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-25-1-primera",
+          "homeTeam": "Primera Junta",
+          "awayTeam": "Libertadores",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-25-2-primera",
+          "homeTeam": "Almafuerte",
+          "awayTeam": "Juv Tapiales",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-25-3-primera",
+          "homeTeam": "Excursionistas",
+          "awayTeam": "Estrella Maldonado",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-25-4-primera",
+          "homeTeam": "Dep Moron",
+          "awayTeam": "Asturiano",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-25-5-primera",
+          "homeTeam": "Dep Merlo",
+          "awayTeam": "25 de Mayo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-25-6-primera",
+          "homeTeam": "Villa Modelo",
+          "awayTeam": "Villa Heredia",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-25-7-primera",
+          "homeTeam": "El Talar",
+          "awayTeam": "UNLAM",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-25-8-primera",
+          "homeTeam": "Rosario Central",
+          "awayTeam": "Villa Malcolm",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-25-9-primera",
+          "homeTeam": "CIDECO",
+          "awayTeam": "GEVS",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 26,
+      "documentId": "fecha-26-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-26-1-primera",
+          "homeTeam": "GEVS",
+          "awayTeam": "Primera Junta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-26-2-primera",
+          "homeTeam": "Villa Malcolm",
+          "awayTeam": "CIDECO",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-26-3-primera",
+          "homeTeam": "UNLAM",
+          "awayTeam": "Rosario Central",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-26-4-primera",
+          "homeTeam": "Villa Heredia",
+          "awayTeam": "El Talar",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-26-5-primera",
+          "homeTeam": "25 de Mayo",
+          "awayTeam": "Villa Modelo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-26-6-primera",
+          "homeTeam": "Asturiano",
+          "awayTeam": "Dep Merlo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-26-7-primera",
+          "homeTeam": "Estrella Maldonado",
+          "awayTeam": "Dep Moron",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-26-8-primera",
+          "homeTeam": "Juv Tapiales",
+          "awayTeam": "Excursionistas",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-26-9-primera",
+          "homeTeam": "Libertadores",
+          "awayTeam": "Almafuerte",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 27,
+      "documentId": "fecha-27-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-27-1-primera",
+          "homeTeam": "Primera Junta",
+          "awayTeam": "Almafuerte",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-27-2-primera",
+          "homeTeam": "Excursionistas",
+          "awayTeam": "Libertadores",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-27-3-primera",
+          "homeTeam": "Dep Moron",
+          "awayTeam": "Juv Tapiales",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-27-4-primera",
+          "homeTeam": "Dep Merlo",
+          "awayTeam": "Estrella Maldonado",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-27-5-primera",
+          "homeTeam": "Villa Modelo",
+          "awayTeam": "Asturiano",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-27-6-primera",
+          "homeTeam": "El Talar",
+          "awayTeam": "25 de Mayo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-27-7-primera",
+          "homeTeam": "Rosario Central",
+          "awayTeam": "Villa Heredia",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-27-8-primera",
+          "homeTeam": "CIDECO",
+          "awayTeam": "UNLAM",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-27-9-primera",
+          "homeTeam": "GEVS",
+          "awayTeam": "Villa Malcolm",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 28,
+      "documentId": "fecha-28-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-28-1-primera",
+          "homeTeam": "Villa Malcolm",
+          "awayTeam": "Primera Junta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-28-2-primera",
+          "homeTeam": "UNLAM",
+          "awayTeam": "GEVS",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-28-3-primera",
+          "homeTeam": "Villa Heredia",
+          "awayTeam": "CIDECO",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-28-4-primera",
+          "homeTeam": "25 de Mayo",
+          "awayTeam": "Rosario Central",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-28-5-primera",
+          "homeTeam": "Asturiano",
+          "awayTeam": "El Talar",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-28-6-primera",
+          "homeTeam": "Estrella Maldonado",
+          "awayTeam": "Villa Modelo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-28-7-primera",
+          "homeTeam": "Juv Tapiales",
+          "awayTeam": "Dep Merlo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-28-8-primera",
+          "homeTeam": "Libertadores",
+          "awayTeam": "Dep Moron",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-28-9-primera",
+          "homeTeam": "Almafuerte",
+          "awayTeam": "Excursionistas",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 29,
+      "documentId": "fecha-29-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-29-1-primera",
+          "homeTeam": "Primera Junta",
+          "awayTeam": "Excursionistas",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-29-2-primera",
+          "homeTeam": "Dep Moron",
+          "awayTeam": "Almafuerte",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-29-3-primera",
+          "homeTeam": "Dep Merlo",
+          "awayTeam": "Libertadores",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-29-4-primera",
+          "homeTeam": "Villa Modelo",
+          "awayTeam": "Juv Tapiales",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-29-5-primera",
+          "homeTeam": "El Talar",
+          "awayTeam": "Estrella Maldonado",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-29-6-primera",
+          "homeTeam": "Rosario Central",
+          "awayTeam": "Asturiano",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-29-7-primera",
+          "homeTeam": "CIDECO",
+          "awayTeam": "25 de Mayo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-29-8-primera",
+          "homeTeam": "GEVS",
+          "awayTeam": "Villa Heredia",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-29-9-primera",
+          "homeTeam": "Villa Malcolm",
+          "awayTeam": "UNLAM",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 30,
+      "documentId": "fecha-30-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-30-1-primera",
+          "homeTeam": "UNLAM",
+          "awayTeam": "Primera Junta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-30-2-primera",
+          "homeTeam": "Villa Heredia",
+          "awayTeam": "Villa Malcolm",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-30-3-primera",
+          "homeTeam": "25 de Mayo",
+          "awayTeam": "GEVS",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-30-4-primera",
+          "homeTeam": "Asturiano",
+          "awayTeam": "CIDECO",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-30-5-primera",
+          "homeTeam": "Estrella Maldonado",
+          "awayTeam": "Rosario Central",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-30-6-primera",
+          "homeTeam": "Juv Tapiales",
+          "awayTeam": "El Talar",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-30-7-primera",
+          "homeTeam": "Libertadores",
+          "awayTeam": "Villa Modelo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-30-8-primera",
+          "homeTeam": "Almafuerte",
+          "awayTeam": "Dep Merlo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-30-9-primera",
+          "homeTeam": "Excursionistas",
+          "awayTeam": "Dep Moron",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 31,
+      "documentId": "fecha-31-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-31-1-primera",
+          "homeTeam": "Primera Junta",
+          "awayTeam": "Dep Moron",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-31-2-primera",
+          "homeTeam": "Dep Merlo",
+          "awayTeam": "Excursionistas",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-31-3-primera",
+          "homeTeam": "Villa Modelo",
+          "awayTeam": "Almafuerte",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-31-4-primera",
+          "homeTeam": "El Talar",
+          "awayTeam": "Libertadores",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-31-5-primera",
+          "homeTeam": "Rosario Central",
+          "awayTeam": "Juv Tapiales",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-31-6-primera",
+          "homeTeam": "CIDECO",
+          "awayTeam": "Estrella Maldonado",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-31-7-primera",
+          "homeTeam": "GEVS",
+          "awayTeam": "Asturiano",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-31-8-primera",
+          "homeTeam": "Villa Malcolm",
+          "awayTeam": "25 de Mayo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-31-9-primera",
+          "homeTeam": "UNLAM",
+          "awayTeam": "Villa Heredia",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 32,
+      "documentId": "fecha-32-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-32-1-primera",
+          "homeTeam": "Villa Heredia",
+          "awayTeam": "Primera Junta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-32-2-primera",
+          "homeTeam": "25 de Mayo",
+          "awayTeam": "UNLAM",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-32-3-primera",
+          "homeTeam": "Asturiano",
+          "awayTeam": "Villa Malcolm",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-32-4-primera",
+          "homeTeam": "Estrella Maldonado",
+          "awayTeam": "GEVS",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-32-5-primera",
+          "homeTeam": "Juv Tapiales",
+          "awayTeam": "CIDECO",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-32-6-primera",
+          "homeTeam": "Libertadores",
+          "awayTeam": "Rosario Central",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-32-7-primera",
+          "homeTeam": "Almafuerte",
+          "awayTeam": "El Talar",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-32-8-primera",
+          "homeTeam": "Excursionistas",
+          "awayTeam": "Villa Modelo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-32-9-primera",
+          "homeTeam": "Dep Moron",
+          "awayTeam": "Dep Merlo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 33,
+      "documentId": "fecha-33-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-33-1-primera",
+          "homeTeam": "Primera Junta",
+          "awayTeam": "Dep Merlo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-33-2-primera",
+          "homeTeam": "Villa Modelo",
+          "awayTeam": "Dep Moron",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-33-3-primera",
+          "homeTeam": "El Talar",
+          "awayTeam": "Excursionistas",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-33-4-primera",
+          "homeTeam": "Rosario Central",
+          "awayTeam": "Almafuerte",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-33-5-primera",
+          "homeTeam": "CIDECO",
+          "awayTeam": "Libertadores",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-33-6-primera",
+          "homeTeam": "GEVS",
+          "awayTeam": "Juv Tapiales",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-33-7-primera",
+          "homeTeam": "Villa Malcolm",
+          "awayTeam": "Estrella Maldonado",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-33-8-primera",
+          "homeTeam": "UNLAM",
+          "awayTeam": "Asturiano",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-33-9-primera",
+          "homeTeam": "Villa Heredia",
+          "awayTeam": "25 de Mayo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    },
+    {
+      "fecha": 34,
+      "documentId": "fecha-34-primera",
+      "category": "primera",
+      "matches": [
+        {
+          "id": "match-34-1-primera",
+          "homeTeam": "25 de Mayo",
+          "awayTeam": "Primera Junta",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-34-2-primera",
+          "homeTeam": "Asturiano",
+          "awayTeam": "Villa Heredia",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-34-3-primera",
+          "homeTeam": "Estrella Maldonado",
+          "awayTeam": "UNLAM",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-34-4-primera",
+          "homeTeam": "Juv Tapiales",
+          "awayTeam": "Villa Malcolm",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-34-5-primera",
+          "homeTeam": "Libertadores",
+          "awayTeam": "GEVS",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-34-6-primera",
+          "homeTeam": "Almafuerte",
+          "awayTeam": "CIDECO",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-34-7-primera",
+          "homeTeam": "Excursionistas",
+          "awayTeam": "Rosario Central",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-34-8-primera",
+          "homeTeam": "Dep Moron",
+          "awayTeam": "El Talar",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        },
+        {
+          "id": "match-34-9-primera",
+          "homeTeam": "Dep Merlo",
+          "awayTeam": "Villa Modelo",
+          "homeScore": null,
+          "awayScore": null,
+          "status": "vs",
+          "date": null,
+          "venue": null
+        }
+      ]
+    }
+  ]
+}
