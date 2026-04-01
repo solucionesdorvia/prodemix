@@ -3,7 +3,8 @@
 # start:prod ignora .env.local para que siempre use esa URL en el servidor.
 
 [build]
-builder = "nixpacks"
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
 
 [deploy]
 startCommand = "npm run start:prod"

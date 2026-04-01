@@ -1,5 +1,0 @@
-# Nixpacks / Railway: Prisma 7 requiere Node 20.19+, 22.12+ o 24+.
-# https://www.prisma.io/docs/orm/more/upgrade-guides/upgrading-versions
-
-[variables]
-NODE_VERSION = "22.12.0"
