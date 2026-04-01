@@ -6,8 +6,6 @@ import type {
   TournamentCatalogueEntry,
 } from "@/domain";
 
-import { buildArgenligaZona1Matches, buildArgenligaZona2Matches } from "@/mocks/fixtures/argenliga";
-import { buildJomaHonorAMatches } from "@/mocks/fixtures/joma-honor-a-apertura";
 import { buildPlaPremioMatches } from "@/mocks/fixtures/plp-afa-premio";
 
 import { deriveMatchdaysFromMatches } from "./matchdays";
@@ -35,10 +33,6 @@ const AFA_PREMIO_A = "afa-premio-a";
 const AFA_PREMIO_B = "afa-premio-b";
 const AFA_PREMIO_C = "afa-premio-c";
 
-const JOMA_ID = "joma-honor-a-primera";
-const ARG1 = "argenliga-zona-1";
-const ARG2 = "argenliga-zona-2";
-
 export const PRIMERA_TOURNAMENT_CATALOGUE: TournamentCatalogueEntry[] = [
   entry({
     id: AFA_PREMIO_A,
@@ -65,33 +59,6 @@ export const PRIMERA_TOURNAMENT_CATALOGUE: TournamentCatalogueEntry[] = [
     matches: labelMatches(
       buildPlaPremioMatches("c", AFA_PREMIO_C),
       "AFA Futsal · Primera C · Premio",
-    ),
-  }),
-  entry({
-    id: JOMA_ID,
-    name: "Torneo Joma · Liga Honor A · Primera",
-    shortName: "Joma Honor A",
-    matches: labelMatches(
-      buildJomaHonorAMatches(JOMA_ID),
-      "Torneo Joma · Liga Honor A · Primera",
-    ),
-  }),
-  entry({
-    id: ARG1,
-    name: "Argenliga · Zona 1 · Primera",
-    shortName: "Argenliga Z1",
-    matches: labelMatches(
-      buildArgenligaZona1Matches(ARG1),
-      "Argenliga · Zona 1",
-    ),
-  }),
-  entry({
-    id: ARG2,
-    name: "Argenliga · Zona 2 · Primera",
-    shortName: "Argenliga Z2",
-    matches: labelMatches(
-      buildArgenligaZona2Matches(ARG2),
-      "Argenliga · Zona 2",
     ),
   }),
 ];
@@ -132,11 +99,7 @@ function browseItemFromEntry(t: TournamentCatalogueEntry): TorneoBrowseItem {
       : `Primera · ${currentLabel}`,
     categoryId,
     categoryLabel,
-    region:
-      premio ? "AFA · Nacional"
-      : t.id === JOMA_ID ? "AFA · Liga Honor"
-      : t.id.startsWith("argenliga-") ? "AMBA · Argenliga"
-      : "Futsal",
+    region: premio ? "AFA · Nacional" : "Futsal",
     statusLabel: "En curso",
     phaseLabel: `${currentLabel} · ${played} partidos`,
     teamsCount: uniqueTeams(t.matches),

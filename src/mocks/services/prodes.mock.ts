@@ -14,9 +14,9 @@ const PRODE_SUMMARIES_FIXTURE: ProdeSummary[] = [
   },
   {
     id: "p2",
-    name: "Joma Honor A",
-    matchCount: 4,
-    nextDeadline: "Hoy · 21:00",
-    progressLabel: "2/4 marcadores",
+    name: "Premio B · fecha 3",
+    matchCount: 9,
+    nextDeadline: "Sáb · 20:00",
+    progressLabel: "3/9 marcadores",
   },
 ];

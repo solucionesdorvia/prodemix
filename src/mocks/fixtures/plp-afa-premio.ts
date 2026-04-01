@@ -2,8 +2,8 @@ import type { Match } from "@/domain";
 
 /**
  * Horarios reales: `src/data/afa-premio-kickoffs-2026.json` (clave `afa-premio-*-m{fecha}-{slot}`, ISO con offset AR).
- * Primera A, B y C · fecha 3 (abr 2026): horarios alineados a [Segundo Palo](https://www.segundopalo.com) (orden cronológico en el JSON).
- * Calendario general: Primera A y B desde fecha 3; Primera C desde fecha 2.
+ * Primera A y B · fecha 3 (abr 2026); Primera C · fecha 2 (mismo fin de semana): horarios [Segundo Palo](https://www.segundopalo.com).
+ * Calendario: Primera A y B desde fecha 3; Primera C desde fecha 2.
  */
 import afaKickoffs from "@/data/afa-premio-kickoffs-2026.json";
 import { getNextSaturday14BuenosAires } from "@/lib/next-saturday-ar";

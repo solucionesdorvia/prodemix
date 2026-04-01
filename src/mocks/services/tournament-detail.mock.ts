@@ -47,30 +47,6 @@ function buildStandingsFromTeams(teams: string[]): TournamentStandingRow[] {
 
 function activityForCatalogue(id: string): TournamentActivityNote[] {
   const notes: Record<string, TournamentActivityNote[]> = {
-    "joma-honor-a-primera": [
-      {
-        id: "a1",
-        title: "Liga Honor A · Primera",
-        detail: "Fixture Apertura 2026 cargado en ProdeMix.",
-        timeLabel: "Hoy",
-      },
-    ],
-    "argenliga-zona-1": [
-      {
-        id: "a1",
-        title: "Argenliga Zona 1",
-        detail: "Fixture según planilla oficial (16 equipos).",
-        timeLabel: "Hoy",
-      },
-    ],
-    "argenliga-zona-2": [
-      {
-        id: "a1",
-        title: "Argenliga Zona 2",
-        detail: "Fixture oficial · 15 fechas · 16 equipos.",
-        timeLabel: "Hoy",
-      },
-    ],
     "afa-premio-a": [
       {
         id: "a1",

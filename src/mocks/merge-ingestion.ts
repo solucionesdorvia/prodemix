@@ -39,21 +39,32 @@ function toCatalogueEntry(r: IngestedTournamentRecord): TournamentCatalogueEntry
   };
 }
 
-/** Ingested tournaments first, then static fixture. */
+/** AFA Premio en código: no se pisan con ingestión (evita duplicados y catálogo roto). */
+function staticCatalogueIds(ids: { id: string }[]): Set<string> {
+  return new Set(ids.map((x) => x.id));
+}
+
+/** Torneos estáticos primero; ingestión solo para IDs que no existan. */
 export function mergeTorneoBrowseItems(
   staticItems: TorneoBrowseItem[],
 ): TorneoBrowseItem[] {
   const ing = loadIngestionStorage();
-  const extra = ing.tournaments.map(toBrowseItem);
-  return [...extra, ...staticItems];
+  const taken = staticCatalogueIds(staticItems);
+  const extra = ing.tournaments
+    .filter((r) => !taken.has(r.id))
+    .map(toBrowseItem);
+  return [...staticItems, ...extra];
 }
 
 export function mergeTournamentCatalogue(
   staticEntries: TournamentCatalogueEntry[],
 ): TournamentCatalogueEntry[] {
   const ing = loadIngestionStorage();
-  const extra = ing.tournaments.map(toCatalogueEntry);
-  return [...extra, ...staticEntries];
+  const taken = staticCatalogueIds(staticEntries);
+  const extra = ing.tournaments
+    .filter((r) => !taken.has(r.id))
+    .map(toCatalogueEntry);
+  return [...staticEntries, ...extra];
 }
 
 export function findIngestedTournament(
