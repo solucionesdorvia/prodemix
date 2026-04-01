@@ -1,0 +1,9 @@
+# Railway — https://docs.railway.com/reference/config-as-code
+# Variables: DATABASE_URL = connection string de Neon (misma que en .env local).
+# start:prod ignora .env.local para que siempre use esa URL en el servidor.
+
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "npm run start:prod"

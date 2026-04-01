@@ -127,6 +127,18 @@ export function MatchCard({
   const bump = (side: "home" | "away", delta: number) => {
     if (predictionLocked) return;
     const raw = side === "home" ? homeStr : awayStr;
+    const empty = raw.trim() === "";
+
+    /** Sin valor aún: el primer + debe mostrar 0 (no 1). El − no cambia nada. */
+    if (empty) {
+      if (delta > 0) {
+        const s = formatGoalsInput(0);
+        if (side === "home") setHomeStr(s);
+        else setAwayStr(s);
+      }
+      return;
+    }
+
     const cur = parseGoalsInput(raw) ?? 0;
     const next = Math.min(STEP_MAX, Math.max(0, cur + delta));
     const s = formatGoalsInput(next);

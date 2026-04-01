@@ -1,0 +1,158 @@
+// ProdeMix — core domain (PostgreSQL)
+// Predictions: HOME | DRAW | AWAY (1X2). Points: +3 correct, 0 wrong.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  avatar    String?
+  createdAt DateTime @default(now())
+
+  createdProdes     Prode[]              @relation("ProdeCreator")
+  prodeParticipants ProdeParticipant[]
+  predictions       Prediction[]
+  scores            Score[]
+}
+
+model Tournament {
+  id        String   @id @default(cuid())
+  name      String
+  /// e.g. "A", "B", "C", "Barrial"
+  category  String?
+  /// e.g. "futsal", "futbol_8"
+  sport     String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  teams   Team[]
+  matches Match[]
+}
+
+model Team {
+  id           String     @id @default(cuid())
+  name         String
+  tournamentId String
+  tournament   Tournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+
+  homeMatches Match[] @relation("HomeTeam")
+  awayMatches Match[] @relation("AwayTeam")
+
+  @@index([tournamentId])
+}
+
+model Match {
+  id           String     @id @default(cuid())
+  tournamentId String
+  tournament   Tournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+
+  homeTeamId String
+  awayTeamId String
+  homeTeam   Team @relation("HomeTeam", fields: [homeTeamId], references: [id], onDelete: Restrict)
+  awayTeam   Team @relation("AwayTeam", fields: [awayTeamId], references: [id], onDelete: Restrict)
+
+  matchDate DateTime
+  status    MatchStatus @default(scheduled)
+  homeScore Int?
+  awayScore Int?
+
+  prodeMatches ProdeMatch[]
+  predictions  Prediction[]
+
+  @@index([tournamentId])
+  @@index([matchDate])
+}
+
+enum MatchStatus {
+  scheduled
+  finished
+}
+
+model Prode {
+  id        String   @id @default(cuid())
+  name      String
+  isPublic  Boolean  @default(true)
+  /// Entry in minor units (e.g. centavos) — 0 = free
+  entryPrice Int     @default(0)
+  prizePool  Int?
+  createdAt DateTime @default(now())
+
+  createdByUserId String
+  creator         User   @relation("ProdeCreator", fields: [createdByUserId], references: [id], onDelete: Restrict)
+
+  prodeMatches   ProdeMatch[]
+  predictions    Prediction[]
+  scores         Score[]
+  participants   ProdeParticipant[]
+}
+
+model ProdeMatch {
+  id      String @id @default(cuid())
+  prodeId String
+  matchId String
+
+  prode Prode @relation(fields: [prodeId], references: [id], onDelete: Cascade)
+  match Match @relation(fields: [matchId], references: [id], onDelete: Cascade)
+
+  @@unique([prodeId, matchId])
+  @@index([prodeId])
+  @@index([matchId])
+}
+
+model ProdeParticipant {
+  id       String   @id @default(cuid())
+  prodeId  String
+  userId   String
+  joinedAt DateTime @default(now())
+
+  prode Prode @relation(fields: [prodeId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([prodeId, userId])
+  @@index([prodeId])
+}
+
+model Prediction {
+  id          String             @id @default(cuid())
+  userId      String
+  prodeId     String
+  matchId     String
+  prediction  PredictionOutcome
+  createdAt   DateTime           @default(now())
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  prode Prode @relation(fields: [prodeId], references: [id], onDelete: Cascade)
+  match Match @relation(fields: [matchId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, prodeId, matchId])
+  @@index([prodeId])
+  @@index([userId, prodeId])
+}
+
+enum PredictionOutcome {
+  HOME
+  DRAW
+  AWAY
+}
+
+/// Aggregate points per user per prode (recomputed when results change)
+model Score {
+  id     String @id @default(cuid())
+  userId String
+  prodeId String
+  points Int    @default(0)
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  prode Prode @relation(fields: [prodeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, prodeId])
+  @@index([prodeId])
+}
