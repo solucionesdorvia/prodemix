@@ -21,12 +21,12 @@ const STEPS = [
   {
     title: "Pronosticá y sumá puntos",
     body:
-      "Marcá local, empate o visitante antes del cierre. Los aciertos suman en el ranking global y por prode.",
+      "Cargá el marcador exacto (goles de cada equipo) antes del cierre. Plenos y puntos parciales suman en el ranking.",
   },
   {
     title: "Competí en el ranking",
     body:
-      "Sumás puntos con tus aciertos y competís con tu gente y en el ranking general. Nada de humo: solo resultados.",
+      "Sumás puntos con tus aciertos y competís en el ranking general. Nada de humo: solo goles y tablas.",
   },
 ] as const;
 

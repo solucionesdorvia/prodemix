@@ -1,6 +1,20 @@
+import { normalizeScorePrediction } from "@/domain/prediction";
+
 import { generateInviteCode } from "./invite-code";
 import type { PersistedAppState, StoredProde } from "./types";
 import { DEFAULT_APP_STATE } from "./types";
+
+function migrateScoreMap(
+  raw: Record<string, unknown> | undefined,
+): PersistedAppState["predictionMap"] {
+  if (!raw || typeof raw !== "object") return {};
+  const out: PersistedAppState["predictionMap"] = {};
+  for (const [k, v] of Object.entries(raw)) {
+    const n = normalizeScorePrediction(v);
+    if (n) out[k] = n;
+  }
+  return out;
+}
 
 const STORAGE_KEY = "prodemix:v1:app";
 
@@ -54,19 +68,16 @@ function mergeWithDefaults(partial: PersistedAppState): PersistedAppState {
         partial.followedTournamentIds
       : [],
     prodes,
-    predictionMap:
-      partial.predictionMap && typeof partial.predictionMap === "object" ?
-        partial.predictionMap
-      : {},
+    predictionMap: migrateScoreMap(
+      partial.predictionMap as Record<string, unknown> | undefined,
+    ),
     joinedPublicPoolIds:
       Array.isArray(partial.joinedPublicPoolIds) ?
         partial.joinedPublicPoolIds
       : [],
-    publicPoolPredictionMap:
-      partial.publicPoolPredictionMap &&
-      typeof partial.publicPoolPredictionMap === "object" ?
-        partial.publicPoolPredictionMap
-      : {},
+    publicPoolPredictionMap: migrateScoreMap(
+      partial.publicPoolPredictionMap as Record<string, unknown> | undefined,
+    ),
     activity: Array.isArray(partial.activity) ? partial.activity : [],
     activityDedupeKeys:
       Array.isArray(partial.activityDedupeKeys) ?

@@ -1,5 +1,4 @@
-import type { ActivityKind } from "@/domain";
-import type { ProdeVisibility } from "@/domain";
+import type { ActivityKind, ProdeVisibility, ScorePrediction } from "@/domain";
 
 /** Prode as stored locally (owner + included tournaments/matches). */
 export interface StoredProde {
@@ -25,10 +24,7 @@ export interface ActivityLogEntry {
 }
 
 /** Key: `${userId}::${publicPoolId}::${matchId}` — mismo formato que prodes. */
-export type PublicPoolPredictionMap = Record<
-  string,
-  { home: number; away: number }
->;
+export type PublicPoolPredictionMap = Record<string, ScorePrediction>;
 
 export interface PersistedAppState {
   /**
@@ -42,7 +38,7 @@ export interface PersistedAppState {
    * Predictions: key `${userId}::${prodeId}::${matchId}` → exact score.
    * Same match in two prodes uses distinct keys.
    */
-  predictionMap: Record<string, { home: number; away: number }>;
+  predictionMap: Record<string, ScorePrediction>;
   /** Pools públicos de fecha en los que el usuario entró (demo local). */
   joinedPublicPoolIds: string[];
   publicPoolPredictionMap: PublicPoolPredictionMap;

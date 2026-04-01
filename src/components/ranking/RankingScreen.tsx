@@ -327,7 +327,7 @@ export function RankingScreen() {
         <p className="mt-1.5 text-[12px] leading-relaxed text-app-muted">
           <strong className="font-semibold text-app-text">Global</strong> suma todos
           tus pronósticos. <strong className="font-semibold text-app-text">Por prode</strong>{" "}
-          filtra por competencia oficial. 3 pts pleno · 1 pt resultado.
+          filtra por competencia oficial. 3 pts pleno · 1 pt sin pleno (ganador o empate).
         </p>
       </header>
 
@@ -411,7 +411,7 @@ export function RankingScreen() {
           layout="horizontal"
           icon={Trophy}
           title="Todavía no hay tabla en esta vista"
-          description="Entrá a un pool por fecha, cargá marcadores y, cuando haya resultados en la demo, la tabla se completa. El ranking global usa todos tus pronósticos con resultado."
+          description="Entrá a un pool por fecha, cargá el marcador de cada partido y, cuando haya resultados en la demo, la tabla se completa. El ranking global usa todos tus pronósticos sobre partidos ya jugados."
         >
           <EmptyStateButtonLink href="/prodes">Ver prodes oficiales</EmptyStateButtonLink>
         </EmptyState>
@@ -443,7 +443,7 @@ export function RankingScreen() {
 
           <p className="mt-3 rounded-lg border border-dashed border-app-border bg-app-bg/80 px-2.5 py-2 text-[10px] leading-snug text-app-muted">
             En <strong className="font-semibold text-app-text">Fecha</strong>{" "}
-            solo cuentan partidos de ese pool con resultado. Las flechas son vs.
+            solo cuentan partidos de ese pool ya finalizados. Las flechas son vs.
             tu última visita (demo local).
           </p>
         </>

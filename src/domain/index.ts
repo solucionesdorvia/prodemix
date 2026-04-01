@@ -10,6 +10,10 @@ export type { Match, MatchId, MatchPlayStatus, MatchResult } from "./match";
 export type { Prode, ProdeId, ProdeSummary, ProdeVisibility } from "./prode";
 export type { ProdeMatch } from "./prode-match";
 export type { Prediction, PredictionId, ScorePrediction } from "./prediction";
+export {
+  formatScorePredictionLine,
+  normalizeScorePrediction,
+} from "./prediction";
 export type { RankingEntry, RankingScope, RankingTrend } from "./ranking";
 export type {
   ActivityEntry,

@@ -2,13 +2,23 @@
 
 import { OfficialProdeCard } from "@/components/prodes/OfficialProdeCard";
 import { pageEyebrow, pageHeader, pageTitle } from "@/lib/ui-styles";
-import { getOfficialProdesList } from "@/mocks/official-prodes.mock";
+import {
+  getOfficialProdesElite,
+  getOfficialProdesGratis,
+} from "@/mocks/official-prodes.mock";
 import { cn } from "@/lib/utils";
 
+function sectionTitleClass(): string {
+  return cn(
+    "text-[11px] font-extrabold uppercase tracking-[0.08em] text-app-muted",
+  );
+}
+
 export function OfficialProdesClient() {
-  const all = getOfficialProdesList();
-  const featured = all.find((p) => p.featured) ?? all[0];
-  const rest = all.filter((p) => p.id !== featured?.id);
+  const gratis = getOfficialProdesGratis();
+  const eliteAll = getOfficialProdesElite();
+  const eliteFeatured = eliteAll.find((p) => p.featured) ?? eliteAll[0];
+  const eliteRest = eliteAll.filter((p) => p.id !== eliteFeatured?.id);
 
   return (
     <div className="pb-3">
@@ -16,30 +26,38 @@ export function OfficialProdesClient() {
         <p className={pageEyebrow}>Competencias oficiales</p>
         <h1 className={cn(pageTitle, "mt-0.5")}>Prodes</h1>
         <p className="mt-1.5 text-[12px] font-medium leading-snug text-app-text">
-          Pozos en efectivo, cierres por fecha y ranking en vivo.{" "}
+          Qué podés jugar y qué ganás.{" "}
           <span className="text-app-muted">
-            Entrá antes del cierre y competí con el resto.
+            Entrá antes del cierre y sumate a la tabla.
           </span>
         </p>
       </header>
 
-      {featured ?
-        <section className="mt-4">
-          <OfficialProdeCard prode={featured} variant="featured" />
-        </section>
-      : null}
-
-      <section className="mt-5">
-        <p className="text-[10px] font-extrabold uppercase tracking-wider text-app-muted">
-          Más competencias
-        </p>
-        <ul className="mt-2.5 space-y-2.5">
-          {rest.map((p) => (
+      <section className="mt-5 space-y-2.5">
+        <h2 className={sectionTitleClass()}>Prodes Gratis</h2>
+        <ul className="space-y-2.5">
+          {gratis.map((p) => (
             <li key={p.id}>
               <OfficialProdeCard prode={p} variant="compact" />
             </li>
           ))}
         </ul>
+      </section>
+
+      <section className="mt-7 space-y-3">
+        <h2 className={sectionTitleClass()}>Prode Élite</h2>
+        {eliteFeatured ?
+          <OfficialProdeCard prode={eliteFeatured} variant="featured" />
+        : null}
+        {eliteRest.length > 0 ?
+          <ul className="space-y-2.5">
+            {eliteRest.map((p) => (
+              <li key={p.id}>
+                <OfficialProdeCard prode={p} variant="compact" />
+              </li>
+            ))}
+          </ul>
+        : null}
       </section>
     </div>
   );

@@ -110,7 +110,7 @@ export function PerfilScreen() {
           <StatCell
             label="Pts totales"
             value={totalPoints}
-            sub="vs resultados demo"
+            sub="vs tabla demo"
           />
           <StatCell
             label="Plenos"

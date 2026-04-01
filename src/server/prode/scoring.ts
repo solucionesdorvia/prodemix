@@ -1,6 +1,6 @@
 import type { PredictionOutcome } from "@/generated/prisma/client";
 
-/** 1X2 outcome from final scores. */
+/** Maps a final scoreline to legacy enum (DB/API hasta migrar a marcador exacto). */
 export function outcomeFromScores(homeScore: number, awayScore: number): PredictionOutcome {
   if (homeScore > awayScore) return "HOME";
   if (homeScore < awayScore) return "AWAY";

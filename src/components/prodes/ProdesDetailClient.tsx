@@ -88,7 +88,7 @@ export function ProdesDetailClient({ prodeId }: ProdesDetailClientProps) {
       return {
         points: 0,
         exactScores: 0,
-        outcomeOnly: 0,
+        partialHits: 0,
         predictionsOnScored: 0,
       };
     }
@@ -275,9 +275,9 @@ export function ProdesDetailClient({ prodeId }: ProdesDetailClientProps) {
             </p>
           </div>
           <div className="bg-app-surface px-1.5 py-2 text-center">
-            <p className={statLabel}>Resultado</p>
+            <p className={statLabel}>Sin pleno</p>
             <p className="mt-0.5 text-[17px] font-bold tabular-nums text-app-text">
-              {breakdown.outcomeOnly}
+              {breakdown.partialHits}
             </p>
           </div>
           <div className="bg-app-surface px-1.5 py-2 text-center">
@@ -291,7 +291,8 @@ export function ProdesDetailClient({ prodeId }: ProdesDetailClientProps) {
           </div>
         </div>
         <p className="mt-1.5 text-[10px] leading-snug text-app-muted">
-          3 pts pleno · 1 pt resultado · solo partidos con marcador cargado.
+          3 pts marcador exacto · 1 pt si acertás ganador o empate (sin pleno) ·
+          solo partidos con resultado cargado.
         </p>
       </section>
 
@@ -364,7 +365,7 @@ export function ProdesDetailClient({ prodeId }: ProdesDetailClientProps) {
             layout="horizontal"
             icon={Trophy}
             title="Todavía no hay tabla en este prode"
-            description="Cuando haya partidos con resultado y pronósticos, se ordenan los puntos."
+            description="Cuando haya partidos finalizados y pronósticos con marcador, se ordenan los puntos."
           />
         )}
       </section>
@@ -428,7 +429,6 @@ export function ProdesDetailClient({ prodeId }: ProdesDetailClientProps) {
                   ) : null}
                   <MatchCard
                     match={match}
-                    predictionMode={isOfficial ? "outcome" : "score"}
                     initialScore={stored ?? null}
                     finalResult={finalResult ?? null}
                     pointsEarned={pointsEarned}

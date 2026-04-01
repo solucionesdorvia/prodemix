@@ -1,6 +1,7 @@
 "use client";
 
 import type { ActivityKind, ProdeVisibility, ScorePrediction } from "@/domain";
+import { formatScorePredictionLine } from "@/domain/prediction";
 import {
   createContext,
   useCallback,
@@ -253,7 +254,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
               {
                 id: newActivityId(),
                 title: "Pronóstico guardado",
-                detail: `${label} · ${score.home}-${score.away} · ${prodeName}`,
+                detail: `${label} · ${formatScorePredictionLine(score)} · ${prodeName}`,
                 timeLabel: formatActivityTimeLabel(createdAt),
                 kind: "prediction" as const,
                 createdAt,
@@ -308,7 +309,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
               {
                 id: newActivityId(),
                 title: "Pronóstico guardado",
-                detail: `${label} · ${score.home}-${score.away} · Pool público`,
+                detail: `${label} · ${formatScorePredictionLine(score)} · Pool público`,
                 timeLabel: formatActivityTimeLabel(createdAt),
                 kind: "prediction" as const,
                 createdAt,

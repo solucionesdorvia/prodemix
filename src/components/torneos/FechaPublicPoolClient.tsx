@@ -263,7 +263,7 @@ export function FechaPublicPoolClient({
             </h1>
             <p className="mt-1.5 max-w-[20rem] text-[12px] leading-snug text-white/70">
               Pronosticá el marcador exacto de cada partido. 3 pts pleno · 1 pt
-              resultado correcto.
+              si acertás ganador o empate sin pleno.
             </p>
           </div>
         </div>

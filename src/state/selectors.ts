@@ -87,7 +87,7 @@ function slicePredictionsToMatchIds(
 export type RankingScoreBreakdown = {
   points: number;
   exactScores: number;
-  outcomeOnly: number;
+  partialHits: number;
   predictionsOnScored: number;
 };
 
@@ -98,7 +98,7 @@ export function computeRankingScoreBreakdown(
 ): RankingScoreBreakdown {
   let points = 0;
   let exactScores = 0;
-  let outcomeOnly = 0;
+  let partialHits = 0;
   let predictionsOnScored = 0;
   for (const matchId of matchIds) {
     const actual = getMockResultForMatch(matchId);
@@ -108,9 +108,9 @@ export function computeRankingScoreBreakdown(
     const p = pointsForPrediction(pred, actual);
     points += p;
     if (p === 3) exactScores += 1;
-    else if (p === 1) outcomeOnly += 1;
+    else if (p === 1) partialHits += 1;
   }
-  return { points, exactScores, outcomeOnly, predictionsOnScored };
+  return { points, exactScores, partialHits, predictionsOnScored };
 }
 
 /** Points only for matches in this prode (intersection with mock results). */
@@ -158,7 +158,7 @@ export function buildProdeRankingEntries(
       displayName: row.displayName,
       points: b.points,
       exactScores: b.exactScores,
-      outcomeOnly: b.outcomeOnly,
+      partialHits: b.partialHits,
       predictionsOnScored: b.predictionsOnScored,
     };
   });
@@ -175,7 +175,7 @@ export function buildProdeRankingEntries(
     displayName: r.displayName,
     points: r.points,
     exactScores: r.exactScores,
-    outcomeOnly: r.outcomeOnly,
+    partialHits: r.partialHits,
     predictionsOnScored: r.predictionsOnScored,
     streakDays: 0,
   }));
@@ -308,7 +308,7 @@ export function buildPublicPoolRankingEntries(
       displayName: row.displayName,
       points: b.points,
       exactScores: b.exactScores,
-      outcomeOnly: b.outcomeOnly,
+      partialHits: b.partialHits,
       predictionsOnScored: b.predictionsOnScored,
     };
   });
@@ -325,7 +325,7 @@ export function buildPublicPoolRankingEntries(
     displayName: r.displayName,
     points: r.points,
     exactScores: r.exactScores,
-    outcomeOnly: r.outcomeOnly,
+    partialHits: r.partialHits,
     predictionsOnScored: r.predictionsOnScored,
     streakDays: 0,
     scope: "fecha" as const,
@@ -382,7 +382,7 @@ export function buildRankingEntries(
       displayName: row.displayName,
       points: b.points,
       exactScores: b.exactScores,
-      outcomeOnly: b.outcomeOnly,
+      partialHits: b.partialHits,
       predictionsOnScored: b.predictionsOnScored,
     };
   });
@@ -399,7 +399,7 @@ export function buildRankingEntries(
     displayName: r.displayName,
     points: r.points,
     exactScores: r.exactScores,
-    outcomeOnly: r.outcomeOnly,
+    partialHits: r.partialHits,
     predictionsOnScored: r.predictionsOnScored,
     streakDays: 0,
     scope,

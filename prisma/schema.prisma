@@ -1,5 +1,6 @@
 // ProdeMix — core domain (PostgreSQL)
-// Predictions: HOME | DRAW | AWAY (1X2). Points: +3 correct, 0 wrong.
+// Producto: pronósticos por marcador exacto. Este esquema aún guarda PredictionOutcome (legacy API);
+// migración futura: predictedHomeGoals / predictedAwayGoals por fila.
 
 generator client {
   provider = "prisma-client"
@@ -125,6 +126,7 @@ model Prediction {
   userId      String
   prodeId     String
   matchId     String
+  /// Legacy: HOME | DRAW | AWAY. Reemplazar por goles predichos al alinear API con el cliente.
   prediction  PredictionOutcome
   createdAt   DateTime           @default(now())
 

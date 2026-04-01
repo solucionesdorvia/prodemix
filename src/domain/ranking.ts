@@ -16,10 +16,10 @@ export interface RankingEntry {
   playerId: string;
   displayName: string;
   points: number;
-  /** Full exact-score hits (3 pts each under current rules) */
+  /** Marcador exacto (3 pts cada uno con las reglas actuales) */
   exactScores: number;
-  /** Outcome-only hits (1 pt each) */
-  outcomeOnly: number;
+  /** Acertaste ganador o empate pero no el marcador exacto (1 pt cada uno) */
+  partialHits: number;
   /**
    * Pronósticos sobre partidos ya jugados (con resultado) en este scope.
    */
