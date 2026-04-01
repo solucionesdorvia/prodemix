@@ -10,7 +10,6 @@ export type TournamentCategory =
   | "futsal"
   | "futbol-8"
   | "amateur"
-  | "barrial"
   | "club-local";
 
 export type TournamentStatus =

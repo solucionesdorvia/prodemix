@@ -47,7 +47,6 @@ export type TorneoCategoryFilterId =
   | "futsal"
   | "futbol-8"
   | "amateur"
-  | "barrial"
   | "club-local";
 
 export interface TorneoBrowseItem {

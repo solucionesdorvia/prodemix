@@ -10,8 +10,6 @@ export function accentByCategory(
       return "border-l-sky-500";
     case "amateur":
       return "border-l-amber-500";
-    case "barrial":
-      return "border-l-violet-500";
     case "club-local":
       return "border-l-blue-600";
     default:
@@ -29,8 +27,6 @@ export function pillByCategory(
       return "bg-sky-50 text-sky-950 ring-sky-200/80";
     case "amateur":
       return "bg-amber-50 text-amber-950 ring-amber-200/80";
-    case "barrial":
-      return "bg-violet-50 text-violet-950 ring-violet-200/80";
     case "club-local":
       return "bg-blue-50 text-blue-950 ring-blue-200/80";
     default:

@@ -18,11 +18,12 @@ export type OfficialProdeListItem = {
   status: OfficialProdeStatus;
   prizeArs: number;
   participants: number;
-  /** Texto tipo "Hoy · 21:00" */
-  deadlineLabel: string;
+  /** Cierre de pronósticos (ISO), alineado al matchday del catálogo */
   closesAt: string;
   /** Destacado en hub (solo uno) */
   featured: boolean;
+  /** Mostrar chip opcional de escasez (mock) */
+  scarcityHint: boolean;
 };
 
 const PLATFORM_IDS = [
@@ -57,7 +58,8 @@ function buildList(): OfficialProdeListItem[] {
     const md = t.matchdays[0];
     const seed = hashSeed(tid);
     const participants = 180 + (seed % 400);
-    const prizeArs = 100_000;
+    const featured = tid === "afa-premio-a";
+    const prizeArs = featured ? 100_000 : 28_000 + (seed % 6) * 11_000;
     const status: OfficialProdeStatus =
       md.status === "open"
         ? "open"
@@ -66,8 +68,6 @@ function buildList(): OfficialProdeListItem[] {
           : md.status === "completed"
             ? "finished"
             : "open";
-    const closesAt =
-      t.matches[0]?.startsAt ?? new Date(Date.now() + 86400000).toISOString();
     const id = `official-${tid}-f1`;
     const tname = DISPLAY_NAME[tid] ?? t.shortName;
     out.push({
@@ -79,9 +79,9 @@ function buildList(): OfficialProdeListItem[] {
       status,
       prizeArs,
       participants,
-      deadlineLabel: "Cierra · próx. horario",
-      closesAt,
-      featured: tid === "afa-premio-a",
+      closesAt: md.closesAt,
+      featured,
+      scarcityHint: seed % 5 === 0 || seed % 5 === 2,
     });
   }
   return out;

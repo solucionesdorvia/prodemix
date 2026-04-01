@@ -11,17 +11,17 @@ const STEPS = [
   {
     title: "Bienvení a ProdeMix",
     body:
-      "Ligas, torneos barriales y tu grupo en un solo lugar. Seguí lo que te importa, armá prodes y medí quién la tiene más clara.",
+      "Futsal en Argentina: competencias oficiales, pronósticos y ranking en un solo lugar. Entrá, jugá y medí quién la tiene más clara.",
   },
   {
-    title: "Seguí torneos",
+    title: "Competencias oficiales",
     body:
-      "En Torneos elegí los que querés tener cerca. Sin ruido: solo aparecen en tu inicio cuando vos querés.",
+      "En Prodes ves las competencias disponibles: AFA, Joma Honor, Argenliga y más. Elegí la fecha y cargá tus pronósticos.",
   },
   {
-    title: "Creá prodes y cargá el resultado",
+    title: "Pronosticá y sumá puntos",
     body:
-      "Sumá partidos al prode, invitá con código y pronosticá el marcador exacto. Ahí se define la pelea.",
+      "Marcá local, empate o visitante antes del cierre. Los aciertos suman en el ranking global y por prode.",
   },
   {
     title: "Competí en el ranking",

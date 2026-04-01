@@ -95,30 +95,6 @@ function activityForCatalogue(id: string): TournamentActivityNote[] {
         timeLabel: "Hoy",
       },
     ],
-    "liga-nunez-cl": [
-      {
-        id: "a1",
-        title: "Núñez vs Colegiales",
-        detail: "Partido clave por la punta del Clausura.",
-        timeLabel: "Hace 3 h",
-      },
-    ],
-    "copa-zn-primera": [
-      {
-        id: "a1",
-        title: "Copa Zona Norte · Primera",
-        detail: "Fase regular · fechas con pool público.",
-        timeLabel: "Mar",
-      },
-    ],
-    "barrial-caba-cab": [
-      {
-        id: "a1",
-        title: "Serie Oro",
-        detail: "Se ajustó el calendario por lluvia.",
-        timeLabel: "Ayer",
-      },
-    ],
   };
   return notes[id] ?? [
     {
