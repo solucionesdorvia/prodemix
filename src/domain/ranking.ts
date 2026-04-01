@@ -16,10 +16,10 @@ export interface RankingEntry {
   playerId: string;
   displayName: string;
   points: number;
-  /** Marcador exacto (3 pts cada uno con las reglas actuales) */
+  /** Plenos (marcador exacto, 3 pts c/u). */
   exactScores: number;
-  /** Acertaste ganador o empate pero no el marcador exacto (1 pt cada uno) */
-  partialHits: number;
+  /** Aciertos de signo sin pleno (1 pt c/u). */
+  signHits: number;
   /**
    * Pronósticos sobre partidos ya jugados (con resultado) en este scope.
    */

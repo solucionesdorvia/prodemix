@@ -35,6 +35,75 @@ const AFA_PREMIO_A = "afa-premio-a";
 const AFA_PREMIO_B = "afa-premio-b";
 const AFA_PREMIO_C = "afa-premio-c";
 
+function ligaNunezMatches(): Match[] {
+  const tid = "liga-nunez-cl";
+  const md1 = `${tid}-md-01`;
+  return [
+    {
+      id: "cm-nu-1",
+      tournamentId: tid,
+      matchdayId: md1,
+      homeTeam: "Deportivo Núñez",
+      awayTeam: "Atlético Colegiales",
+      startsAt: "2026-03-30T21:00:00-03:00",
+    },
+    {
+      id: "cm-nu-2",
+      tournamentId: tid,
+      matchdayId: md1,
+      homeTeam: "Universitario La Plata",
+      awayTeam: "Náutico Hacoaj",
+      startsAt: "2026-04-02T19:45:00-03:00",
+    },
+  ];
+}
+
+function barrialMatches(): Match[] {
+  const tid = "barrial-caba-cab";
+  const md = `${tid}-md-01`;
+  return [
+    {
+      id: "cm-ba-1",
+      tournamentId: tid,
+      matchdayId: md,
+      homeTeam: "Unión Caballito",
+      awayTeam: "San Lorenzo del Barrio",
+      startsAt: "2026-03-31T20:15:00-03:00",
+    },
+    {
+      id: "cm-ba-2",
+      tournamentId: tid,
+      matchdayId: md,
+      homeTeam: "Parque Chacabuco",
+      awayTeam: "All Boys del Sur",
+      startsAt: "2026-04-02T21:30:00-03:00",
+    },
+  ];
+}
+
+function copaZnMatches(): Match[] {
+  const tid = "copa-zn-primera";
+  const md = `${tid}-md-01`;
+  return [
+    {
+      id: "cm-zn-1",
+      tournamentId: tid,
+      matchdayId: md,
+      homeTeam: "Villa Martelli FC",
+      awayTeam: "Tigre Norte",
+      startsAt: "2026-04-01T18:45:00-03:00",
+    },
+    {
+      id: "cm-zn-2",
+      tournamentId: tid,
+      matchdayId: md,
+      homeTeam: "Defensores de Vicente López",
+      awayTeam: "Central Ballester",
+      startsAt: "2026-04-03T16:00:00-03:00",
+    },
+  ];
+}
+
 const JOMA_ID = "joma-honor-a-primera";
 const ARG1 = "argenliga-zona-1";
 const ARG2 = "argenliga-zona-2";
@@ -94,6 +163,24 @@ export const PRIMERA_TOURNAMENT_CATALOGUE: TournamentCatalogueEntry[] = [
       "Argenliga · Zona 2",
     ),
   }),
+  entry({
+    id: "liga-nunez-cl",
+    name: "Liga Núñez · Primera",
+    shortName: "Liga Núñez",
+    matches: labelMatches(ligaNunezMatches(), "Liga Núñez · Primera"),
+  }),
+  entry({
+    id: "barrial-caba-cab",
+    name: "Torneo Barrial Caballito · Primera",
+    shortName: "Barrial Caballito",
+    matches: labelMatches(barrialMatches(), "Torneo Barrial Caballito · Primera"),
+  }),
+  entry({
+    id: "copa-zn-primera",
+    name: "Copa Zona Norte · Primera",
+    shortName: "Copa Zona Norte",
+    matches: labelMatches(copaZnMatches(), "Copa Zona Norte · Primera"),
+  }),
 ];
 
 export const PRIMERA_PUBLIC_POOLS: PublicPool[] =
@@ -106,6 +193,12 @@ function categoryForTournament(
 ): { categoryId: Exclude<TorneoCategoryFilterId, "todos">; categoryLabel: string } {
   if (id === JOMA_ID || id.startsWith("argenliga-") || id.startsWith("afa-premio-")) {
     return { categoryId: "futsal", categoryLabel: "Futsal" };
+  }
+  if (id === "liga-nunez-cl") {
+    return { categoryId: "club-local", categoryLabel: "Clubes" };
+  }
+  if (id === "barrial-caba-cab") {
+    return { categoryId: "barrial", categoryLabel: "Barrial" };
   }
   return { categoryId: "amateur", categoryLabel: "Amateur" };
 }
@@ -138,7 +231,9 @@ function browseItemFromEntry(t: TournamentCatalogueEntry): TorneoBrowseItem {
       premio ? "AFA · Nacional"
       : t.id === JOMA_ID ? "AFA · Liga Honor"
       : t.id.startsWith("argenliga-") ? "AMBA · Argenliga"
-      : "Argentina",
+      : t.id === "liga-nunez-cl" ? "CABA · Núñez"
+      : t.id === "barrial-caba-cab" ? "CABA · Caballito"
+      : "GBA · Zona Norte",
     statusLabel: "En curso",
     phaseLabel: `${currentLabel} · ${played} partidos`,
     teamsCount: uniqueTeams(t.matches),

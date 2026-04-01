@@ -5,7 +5,7 @@ import { HomePageClient } from "@/components/home/HomePageClient";
 export const metadata: Metadata = {
   title: "Inicio",
   description:
-    "ProdeMix · Futsal Argentina. Prodes oficiales, marcador exacto y ranking.",
+    "ProdeMix · Primera. Pools públicos por fecha: pronosticá marcadores y competí por ranking.",
 };
 
 export default function HomePage() {

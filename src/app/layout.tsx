@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     template: "%s · ProdeMix",
   },
   description:
-    "Pronósticos de futsal en Argentina: prodes oficiales, fechas AFA, Joma Honor y Argenliga. Competí en el ranking.",
+    "Plataforma de pronósticos deportivos: torneos locales, futsal, ligas barriales y prodes combinados.",
   applicationName: "ProdeMix",
 };
 

@@ -61,7 +61,7 @@ export function computePointActivityEntries(
       const detail =
         pts === 3 ?
           `${label} · +3 pts (marcador exacto)`
-        : `${label} · +1 pt (sin pleno, ganador OK)`;
+        : `${label} · +1 pt (resultado)`;
 
       out.push({
         dedupeKey,
@@ -104,7 +104,7 @@ export function computePointActivityEntries(
       const detail =
         pts === 3 ?
           `${label} · +3 pts · pool público`
-        : `${label} · +1 pt sin pleno · pool público`;
+        : `${label} · +1 pt · pool público`;
 
       out.push({
         dedupeKey,

@@ -1,22 +1,16 @@
-import { normalizeScorePrediction } from "@/domain/prediction";
-
 import { generateInviteCode } from "./invite-code";
 import type { PersistedAppState, StoredProde } from "./types";
 import { DEFAULT_APP_STATE } from "./types";
 
-function migrateScoreMap(
-  raw: Record<string, unknown> | undefined,
-): PersistedAppState["predictionMap"] {
-  if (!raw || typeof raw !== "object") return {};
-  const out: PersistedAppState["predictionMap"] = {};
-  for (const [k, v] of Object.entries(raw)) {
-    const n = normalizeScorePrediction(v);
-    if (n) out[k] = n;
-  }
-  return out;
-}
-
 const STORAGE_KEY = "prodemix:v1:app";
+/** Copia de respaldo si el JSON principal se corrompe o falla al leer. */
+const BACKUP_KEY = "prodemix:v1:app:backup";
+
+export type PersistFailureReason = "quota" | "unknown";
+
+export type PersistResult =
+  | { ok: true }
+  | { ok: false; reason: PersistFailureReason };
 
 function safeParse(raw: string | null): PersistedAppState | null {
   if (!raw) return null;
@@ -68,16 +62,19 @@ function mergeWithDefaults(partial: PersistedAppState): PersistedAppState {
         partial.followedTournamentIds
       : [],
     prodes,
-    predictionMap: migrateScoreMap(
-      partial.predictionMap as Record<string, unknown> | undefined,
-    ),
+    predictionMap:
+      partial.predictionMap && typeof partial.predictionMap === "object" ?
+        partial.predictionMap
+      : {},
     joinedPublicPoolIds:
       Array.isArray(partial.joinedPublicPoolIds) ?
         partial.joinedPublicPoolIds
       : [],
-    publicPoolPredictionMap: migrateScoreMap(
-      partial.publicPoolPredictionMap as Record<string, unknown> | undefined,
-    ),
+    publicPoolPredictionMap:
+      partial.publicPoolPredictionMap &&
+      typeof partial.publicPoolPredictionMap === "object" ?
+        partial.publicPoolPredictionMap
+      : {},
     activity: Array.isArray(partial.activity) ? partial.activity : [],
     activityDedupeKeys:
       Array.isArray(partial.activityDedupeKeys) ?
@@ -92,16 +89,37 @@ function mergeWithDefaults(partial: PersistedAppState): PersistedAppState {
 
 export function loadPersistedState(): PersistedAppState {
   if (typeof window === "undefined") return DEFAULT_APP_STATE;
-  const parsed = safeParse(localStorage.getItem(STORAGE_KEY));
-  if (!parsed) return DEFAULT_APP_STATE;
-  return mergeWithDefaults(parsed);
+  const main = safeParse(localStorage.getItem(STORAGE_KEY));
+  if (main) return mergeWithDefaults(main);
+  const backup = safeParse(localStorage.getItem(BACKUP_KEY));
+  if (backup) return mergeWithDefaults(backup);
+  return DEFAULT_APP_STATE;
 }
 
-export function savePersistedState(state: PersistedAppState): void {
-  if (typeof window === "undefined") return;
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  } catch {
-    /* quota / private mode */
+/**
+ * Persistencia atómica por clave: un solo `setItem` con el estado completo
+ * (no hay guardados parciales de pronósticos).
+ * Reintenta una vez ante fallos intermitentes del motor de almacenamiento.
+ */
+export function savePersistedState(state: PersistedAppState): PersistResult {
+  if (typeof window === "undefined") return { ok: true };
+  const serialized = JSON.stringify(state);
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      localStorage.setItem(STORAGE_KEY, serialized);
+      try {
+        localStorage.setItem(BACKUP_KEY, serialized);
+      } catch {
+        /* backup opcional */
+      }
+      return { ok: true };
+    } catch (e) {
+      if (attempt === 0) continue;
+      if (e instanceof DOMException && e.name === "QuotaExceededError") {
+        return { ok: false, reason: "quota" };
+      }
+      return { ok: false, reason: "unknown" };
+    }
   }
+  return { ok: false, reason: "unknown" };
 }

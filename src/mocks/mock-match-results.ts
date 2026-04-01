@@ -1,5 +1,9 @@
 import type { MatchId } from "@/domain";
 
+import {
+  getAdminResultForMatch,
+  getAllAdminResultMatchIds,
+} from "@/state/admin-prode-storage";
 import { loadIngestionResultsOverlay } from "@/state/ingestion-storage";
 
 /**
@@ -25,6 +29,8 @@ export function getMockResultForMatch(
     const overlay = loadIngestionResultsOverlay();
     const ing = overlay[matchId];
     if (ing) return ing;
+    const admin = getAdminResultForMatch(matchId);
+    if (admin) return admin;
   }
   return MOCK_MATCH_RESULTS[matchId];
 }
@@ -33,5 +39,11 @@ export function getAllScoredMatchIds(): string[] {
   const base = Object.keys(MOCK_MATCH_RESULTS);
   if (typeof window === "undefined") return base;
   const overlay = loadIngestionResultsOverlay();
-  return [...new Set([...base, ...Object.keys(overlay)])];
+  return [
+    ...new Set([
+      ...base,
+      ...Object.keys(overlay),
+      ...getAllAdminResultMatchIds(),
+    ]),
+  ];
 }

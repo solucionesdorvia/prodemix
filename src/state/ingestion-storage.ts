@@ -1,7 +1,9 @@
 import type { IngestionStorage } from "./ingestion-types";
 import { DEFAULT_INGESTION } from "./ingestion-types";
 
-const STORAGE_KEY = "prodemix:v1:ingestion";
+export const INGESTION_STORAGE_KEY = "prodemix:v1:ingestion";
+
+const STORAGE_KEY = INGESTION_STORAGE_KEY;
 
 export const INGESTION_UPDATED_EVENT = "prodemix-ingestion-updated";
 

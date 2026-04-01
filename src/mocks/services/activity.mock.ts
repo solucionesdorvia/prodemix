@@ -7,15 +7,15 @@ export function getRecentActivity(): ActivityEntry[] {
 const ACTIVITY_FIXTURE: ActivityEntry[] = [
   {
     id: "a1",
-    title: "Pleno: 2-1 en Primera A",
-    detail: "3 pts · AFA Futsal · Premio",
+    title: "Pleno: 2-1 en Liga Núñez",
+    detail: "3 pts · Deportivo Núñez vs Colegiales",
     timeLabel: "Hace 2 h",
     kind: "prediction",
   },
   {
     id: "a2",
-    title: 'Te uniste al prode "Premio A · Fecha 1"',
-    detail: "Competencia oficial · 128 participantes",
+    title: 'Te uniste al prode "Zona Norte"',
+    detail: "Copa Zona Norte · pool activo",
     timeLabel: "Ayer",
     kind: "prode",
   },

@@ -16,10 +16,10 @@ export function HomeFollowedStrip({ items, className }: HomeFollowedStripProps) 
   return (
     <section className={cn("space-y-1.5", className)}>
       <SectionHeader
-        title="Competencias que seguís"
+        title="Torneos que seguís"
         action={
-          <Link href="/prodes" className="font-semibold hover:underline">
-            Ver todas
+          <Link href="/torneos" className="font-semibold hover:underline">
+            Ver todos
           </Link>
         }
       />
@@ -28,10 +28,10 @@ export function HomeFollowedStrip({ items, className }: HomeFollowedStripProps) 
           variant="soft"
           layout="stack"
           icon={Star}
-          title="Todavía no seguís competencias"
-          description="Marcá las que te interesan y las vas a ver acá y en el inicio."
+          title="Todavía no seguís torneos"
+          description="Marcá los que te interesan y los vas a ver acá y en el inicio."
         >
-          <EmptyStateButtonLink href="/prodes">Ver prodes oficiales</EmptyStateButtonLink>
+          <EmptyStateButtonLink href="/torneos">Explorar torneos</EmptyStateButtonLink>
         </EmptyState>
       ) : (
         <div className="flex flex-wrap gap-1.5">

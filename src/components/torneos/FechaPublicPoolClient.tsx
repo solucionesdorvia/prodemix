@@ -7,17 +7,18 @@ import {
   Sparkles,
   Target,
   Trophy,
-  Users,
 } from "lucide-react";
 import Link from "next/link";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import type { Match } from "@/domain";
+import { useCatalogueRevision } from "@/components/app/CatalogueRefreshContext";
 import { MatchCard } from "@/components/matches/MatchCard";
 import { EmptyState } from "@/components/ui/EmptyState";
 import {
   formatMatchKickoffFull,
   formatTimeUntilFuture,
+  isPredictionDeadlineOpen,
 } from "@/lib/datetime";
 import { getPublicPoolForMatchday } from "@/mocks/catalog/primera-catalog";
 import { getTournamentCatalogueEntryById } from "@/mocks/services/tournaments-catalogue.mock";
@@ -122,6 +123,7 @@ export function FechaPublicPoolClient({
   fechaId,
 }: FechaPublicPoolClientProps) {
   const { user, state, joinPublicPool, setPublicPoolPrediction } = useAppState();
+  const catRev = useCatalogueRevision();
 
   const cat = useMemo(
     () => getTournamentCatalogueEntryById(tournamentId),
@@ -155,6 +157,7 @@ export function FechaPublicPoolClient({
   }, [pool, user.id, state.publicPoolPredictionMap]);
 
   const rankingPreview = useMemo(() => {
+    void catRev;
     if (!pool) return [];
     return buildPublicPoolRankingEntries(
       pool.id,
@@ -162,7 +165,7 @@ export function FechaPublicPoolClient({
       user.displayName,
       state,
     ).slice(0, 5);
-  }, [pool, user.id, user.displayName, state]);
+  }, [pool, user.id, user.displayName, state, catRev]);
 
   const pendingCount = useMemo(() => {
     if (!pool) return 0;
@@ -181,6 +184,7 @@ export function FechaPublicPoolClient({
     : 0;
 
   const meRank = useMemo(() => {
+    void catRev;
     if (!pool) return null;
     const rows = buildPublicPoolRankingEntries(
       pool.id,
@@ -189,7 +193,14 @@ export function FechaPublicPoolClient({
       state,
     );
     return rows.find((r) => r.playerId === user.id) ?? null;
-  }, [pool, user.id, user.displayName, state]);
+  }, [pool, user.id, user.displayName, state, catRev]);
+
+  const [kickoffClock, setKickoffClock] = useState(0);
+  useEffect(() => {
+    const id = window.setInterval(() => setKickoffClock((c) => c + 1), 20_000);
+    return () => window.clearInterval(id);
+  }, []);
+  void kickoffClock;
 
   if (!cat || !matchday || !pool) {
     return (
@@ -263,13 +274,13 @@ export function FechaPublicPoolClient({
             </h1>
             <p className="mt-1.5 max-w-[20rem] text-[12px] leading-snug text-white/70">
               Pronosticá el marcador exacto de cada partido. 3 pts pleno · 1 pt
-              si acertás ganador o empate sin pleno.
+              resultado correcto.
             </p>
           </div>
         </div>
 
         {/* Prize + stats strip */}
-        <div className="relative mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+        <div className="relative mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3">
           <div className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-2 backdrop-blur-sm">
             <p className="text-[9px] font-bold uppercase tracking-wide text-white/55">
               {paid ? "Inscripción" : "Acceso"}
@@ -288,16 +299,7 @@ export function FechaPublicPoolClient({
           </div>
           <div className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-2 backdrop-blur-sm">
             <p className="text-[9px] font-bold uppercase tracking-wide text-white/55">
-              Competidores
-            </p>
-            <p className="mt-0.5 flex items-baseline gap-1 text-[15px] font-bold tabular-nums text-white">
-              <Users className="h-3.5 w-3.5 opacity-70" strokeWidth={2} />
-              {pool.participantsCount}
-            </p>
-          </div>
-          <div className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-2 backdrop-blur-sm">
-            <p className="text-[9px] font-bold uppercase tracking-wide text-white/55">
-              Tiempo
+              Cierre
             </p>
             <p className="mt-1 flex items-start gap-1 text-[11px] font-semibold leading-tight text-white/95">
               <Clock className="mt-0.5 h-3.5 w-3.5 shrink-0 text-white/60" strokeWidth={2} />
@@ -417,7 +419,8 @@ export function FechaPublicPoolClient({
           {matches.map((m, idx) => {
             const res = getMockResultForMatch(m.id);
             const pred = userPreds[m.id];
-            const locked = !!res || predictionsFrozen;
+            const locked =
+              !!res || predictionsFrozen || !isPredictionDeadlineOpen(m.startsAt);
             let pts: 0 | 1 | 3 | null = null;
             if (res && pred) {
               pts = pointsForPrediction(pred, res);

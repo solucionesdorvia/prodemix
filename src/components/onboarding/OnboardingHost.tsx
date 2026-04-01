@@ -11,22 +11,22 @@ const STEPS = [
   {
     title: "Bienvení a ProdeMix",
     body:
-      "Futsal en Argentina: competencias oficiales, pronósticos y ranking en un solo lugar. Entrá, jugá y medí quién la tiene más clara.",
+      "Ligas, torneos barriales y tu grupo en un solo lugar. Seguí lo que te importa, armá prodes y medí quién la tiene más clara.",
   },
   {
-    title: "Competencias oficiales",
+    title: "Seguí torneos",
     body:
-      "En Prodes ves las competencias disponibles: AFA, Joma Honor, Argenliga y más. Elegí la fecha y cargá tus pronósticos.",
+      "En Torneos elegí los que querés tener cerca. Sin ruido: solo aparecen en tu inicio cuando vos querés.",
   },
   {
-    title: "Pronosticá y sumá puntos",
+    title: "Creá prodes y cargá el resultado",
     body:
-      "Cargá el marcador exacto (goles de cada equipo) antes del cierre. Plenos y puntos parciales suman en el ranking.",
+      "Sumá partidos al prode, invitá con código y pronosticá el marcador exacto. Ahí se define la pelea.",
   },
   {
     title: "Competí en el ranking",
     body:
-      "Sumás puntos con tus aciertos y competís en el ranking general. Nada de humo: solo goles y tablas.",
+      "Sumás puntos con tus aciertos y competís con tu gente y en el ranking general. Nada de humo: solo resultados.",
   },
 ] as const;
 
@@ -144,18 +144,18 @@ export function OnboardingHost() {
                 </p>
                 <button
                   type="button"
-                  onClick={() => finishAndGo("/prodes")}
+                  onClick={() => finishAndGo("/torneos")}
                   className="flex h-11 w-full items-center justify-center gap-1.5 rounded-xl bg-app-primary text-[13px] font-semibold text-white shadow-[0_1px_0_rgba(15,23,42,0.08)] transition hover:bg-blue-700 active:scale-[0.99]"
                 >
-                  Ver prodes oficiales
+                  Ver torneos
                   <ChevronRight className="h-4 w-4" strokeWidth={2} />
                 </button>
                 <button
                   type="button"
-                  onClick={() => finishAndGo("/")}
+                  onClick={() => finishAndGo("/crear")}
                   className="flex h-10 w-full items-center justify-center rounded-xl border border-app-border bg-app-bg text-[13px] font-semibold text-app-text transition hover:bg-app-surface active:scale-[0.99]"
                 >
-                  Ir al inicio
+                  Crear un prode
                 </button>
                 <button
                   type="button"

@@ -1,9 +1,4 @@
-import type { ScorePrediction } from "@/domain/prediction";
-
-/**
- * Internal band for comparing two scorelines (who’s ahead / draw).
- * Used only for partial-credit scoring, not for 1X2 UI.
- */
+/** Inferred match outcome from a scoreline. */
 export type MatchOutcome = "home" | "draw" | "away";
 
 export function inferOutcome(homeGoals: number, awayGoals: number): MatchOutcome {
@@ -12,26 +7,50 @@ export function inferOutcome(homeGoals: number, awayGoals: number): MatchOutcome
   return "draw";
 }
 
+type ScoreLine = { home: number; away: number };
+
+/** Marcador exacto (pleno). */
+export function isExactScoreHit(predicted: ScoreLine, actual: ScoreLine): boolean {
+  return predicted.home === actual.home && predicted.away === actual.away;
+}
+
 /**
- * ProdeMix scoring (frontend + mock results, marcador exacto):
- * - 3 pts: pleno (marcador predicho = resultado final)
- * - 1 pt: ganador o empate acertado, pero no el marcador exacto
- * - 0 pts: resto
- *
- * Ej. resultado real 2-1: 2-1 → 3; 1-0 / 3-2 → 1; 1-1 / 0-2 → 0.
- * Ej. resultado 1-1: 1-1 → 3; 0-0 / 2-2 → 1; 1-0 → 0.
+ * Acierto de signo: no es pleno, pero local / empate / visita coincide con el resultado.
  */
-export function pointsForPrediction(
-  predicted: ScorePrediction,
-  actual: { home: number; away: number },
+export function isCorrectSignHit(predicted: ScoreLine, actual: ScoreLine): boolean {
+  if (isExactScoreHit(predicted, actual)) return false;
+  return (
+    inferOutcome(predicted.home, predicted.away) ===
+    inferOutcome(actual.home, actual.away)
+  );
+}
+
+/**
+ * Puntos por un partido:
+ * - Pleno: 3
+ * - Acierto de signo: 1
+ * - Error: 0
+ */
+export function pointsForSinglePrediction(
+  predicted: ScoreLine,
+  actual: ScoreLine,
 ): 0 | 1 | 3 {
-  const ph = predicted.predictedHomeScore;
-  const pa = predicted.predictedAwayScore;
-  if (ph === actual.home && pa === actual.away) {
-    return 3;
-  }
-  if (inferOutcome(ph, pa) === inferOutcome(actual.home, actual.away)) {
-    return 1;
-  }
+  if (isExactScoreHit(predicted, actual)) return 3;
+  if (isCorrectSignHit(predicted, actual)) return 1;
   return 0;
+}
+
+/** @alias pointsForSinglePrediction */
+export const pointsForPrediction = pointsForSinglePrediction;
+
+/** Short labels for UI (match cards, summaries). */
+export function outcomeLabelEs(outcome: MatchOutcome): string {
+  switch (outcome) {
+    case "home":
+      return "Gana local";
+    case "away":
+      return "Gana visitante";
+    default:
+      return "Empate";
+  }
 }

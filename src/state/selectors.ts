@@ -22,6 +22,11 @@ import {
 } from "@/mocks/mock-match-results";
 import { RANKING_BOTS, type RankingBot } from "@/mocks/ranking-bots";
 import { getTournamentCatalogueEntryById } from "@/mocks/services/tournaments-catalogue.mock";
+import {
+  compareRankingSortScalars,
+  lastPredictionSavedAtMsInScope,
+  withSyntheticSavedAtForPredictions,
+} from "@/lib/ranking-tiebreak";
 import { pointsForPrediction } from "@/lib/scoring";
 
 import { mergeRankDeltas } from "./ranking-snapshot";
@@ -87,18 +92,25 @@ function slicePredictionsToMatchIds(
 export type RankingScoreBreakdown = {
   points: number;
   exactScores: number;
-  partialHits: number;
+  /** Aciertos de signo (1 pt c/u), sin contar plenos. */
+  signHits: number;
   predictionsOnScored: number;
+  /** Desempate: min(savedAt) en el scope — ASC gana (primera marca más temprana). */
+  lastPredictionSavedAtMs: number;
 };
 
-/** Points and stats for a fixed set of matches (only those with a result count). */
+/**
+ * Puntos y stats por usuario para un set de partidos.
+ * Solo cuenta partidos con resultado (`getMockResultForMatch`) y pronóstico.
+ * Puntos: pleno 3 · signo 1 · error 0. Orden tabla: ver `compareRankingSortScalars`.
+ */
 export function computeRankingScoreBreakdown(
   predictions: Record<string, ScorePrediction | undefined>,
   matchIds: string[],
 ): RankingScoreBreakdown {
   let points = 0;
   let exactScores = 0;
-  let partialHits = 0;
+  let signHits = 0;
   let predictionsOnScored = 0;
   for (const matchId of matchIds) {
     const actual = getMockResultForMatch(matchId);
@@ -108,9 +120,19 @@ export function computeRankingScoreBreakdown(
     const p = pointsForPrediction(pred, actual);
     points += p;
     if (p === 3) exactScores += 1;
-    else if (p === 1) partialHits += 1;
+    else if (p === 1) signHits += 1;
   }
-  return { points, exactScores, partialHits, predictionsOnScored };
+  const lastPredictionSavedAtMs = lastPredictionSavedAtMsInScope(
+    predictions,
+    matchIds,
+  );
+  return {
+    points,
+    exactScores,
+    signHits,
+    predictionsOnScored,
+    lastPredictionSavedAtMs,
+  };
 }
 
 /** Points only for matches in this prode (intersection with mock results). */
@@ -139,14 +161,20 @@ export function buildProdeRankingEntries(
     {
       playerId: currentUserId,
       displayName: currentUserDisplayName,
-      predictions: userSliced,
+      predictions: withSyntheticSavedAtForPredictions(
+        currentUserId,
+        userSliced,
+      ),
     },
     ...RANKING_BOTS.map((b) => ({
       playerId: b.playerId,
       displayName: b.displayName,
-      predictions: slicePredictionsToMatchIds(
-        b.predictions as Record<string, ScorePrediction | undefined>,
-        matchIds,
+      predictions: withSyntheticSavedAtForPredictions(
+        b.playerId,
+        slicePredictionsToMatchIds(
+          b.predictions as Record<string, ScorePrediction | undefined>,
+          matchIds,
+        ),
       ),
     })),
   ];
@@ -158,16 +186,30 @@ export function buildProdeRankingEntries(
       displayName: row.displayName,
       points: b.points,
       exactScores: b.exactScores,
-      partialHits: b.partialHits,
+      signHits: b.signHits,
       predictionsOnScored: b.predictionsOnScored,
+      lastPredictionSavedAtMs: b.lastPredictionSavedAtMs,
     };
   });
 
-  scored.sort((a, b) => {
-    if (b.points !== a.points) return b.points - a.points;
-    if (b.exactScores !== a.exactScores) return b.exactScores - a.exactScores;
-    return a.displayName.localeCompare(b.displayName, "es");
-  });
+  scored.sort((a, b) =>
+    compareRankingSortScalars(
+      {
+        points: a.points,
+        exactScores: a.exactScores,
+        signHits: a.signHits,
+        lastPredictionSavedAtMs: a.lastPredictionSavedAtMs,
+        displayName: a.displayName,
+      },
+      {
+        points: b.points,
+        exactScores: b.exactScores,
+        signHits: b.signHits,
+        lastPredictionSavedAtMs: b.lastPredictionSavedAtMs,
+        displayName: b.displayName,
+      },
+    ),
+  );
 
   const mapped = scored.map((r, i) => ({
     rank: i + 1,
@@ -175,7 +217,7 @@ export function buildProdeRankingEntries(
     displayName: r.displayName,
     points: r.points,
     exactScores: r.exactScores,
-    partialHits: r.partialHits,
+    signHits: r.signHits,
     predictionsOnScored: r.predictionsOnScored,
     streakDays: 0,
   }));
@@ -289,14 +331,20 @@ export function buildPublicPoolRankingEntries(
     {
       playerId: currentUserId,
       displayName: currentUserDisplayName,
-      predictions: userSliced,
+      predictions: withSyntheticSavedAtForPredictions(
+        currentUserId,
+        userSliced,
+      ),
     },
     ...RANKING_BOTS.map((b) => ({
       playerId: b.playerId,
       displayName: b.displayName,
-      predictions: slicePredictionsToMatchIds(
-        b.predictions as Record<string, ScorePrediction | undefined>,
-        matchIds,
+      predictions: withSyntheticSavedAtForPredictions(
+        b.playerId,
+        slicePredictionsToMatchIds(
+          b.predictions as Record<string, ScorePrediction | undefined>,
+          matchIds,
+        ),
       ),
     })),
   ];
@@ -308,16 +356,30 @@ export function buildPublicPoolRankingEntries(
       displayName: row.displayName,
       points: b.points,
       exactScores: b.exactScores,
-      partialHits: b.partialHits,
+      signHits: b.signHits,
       predictionsOnScored: b.predictionsOnScored,
+      lastPredictionSavedAtMs: b.lastPredictionSavedAtMs,
     };
   });
 
-  scored.sort((a, b) => {
-    if (b.points !== a.points) return b.points - a.points;
-    if (b.exactScores !== a.exactScores) return b.exactScores - a.exactScores;
-    return a.displayName.localeCompare(b.displayName, "es");
-  });
+  scored.sort((a, b) =>
+    compareRankingSortScalars(
+      {
+        points: a.points,
+        exactScores: a.exactScores,
+        signHits: a.signHits,
+        lastPredictionSavedAtMs: a.lastPredictionSavedAtMs,
+        displayName: a.displayName,
+      },
+      {
+        points: b.points,
+        exactScores: b.exactScores,
+        signHits: b.signHits,
+        lastPredictionSavedAtMs: b.lastPredictionSavedAtMs,
+        displayName: b.displayName,
+      },
+    ),
+  );
 
   const mapped = scored.map((r, i) => ({
     rank: i + 1,
@@ -325,7 +387,7 @@ export function buildPublicPoolRankingEntries(
     displayName: r.displayName,
     points: r.points,
     exactScores: r.exactScores,
-    partialHits: r.partialHits,
+    signHits: r.signHits,
     predictionsOnScored: r.predictionsOnScored,
     streakDays: 0,
     scope: "fecha" as const,
@@ -375,23 +437,45 @@ export function buildRankingEntries(
       getMatchIdsForTournament(tournamentId)
     : getAllScoredMatchIds();
 
-  const scored = rows.map((row) => {
+  const rowsWithSeeds = rows.map((row) => ({
+    ...row,
+    predictions: withSyntheticSavedAtForPredictions(
+      row.playerId,
+      row.predictions,
+    ),
+  }));
+
+  const scored = rowsWithSeeds.map((row) => {
     const b = computeRankingScoreBreakdown(row.predictions, matchIdsForScoring);
     return {
       playerId: row.playerId,
       displayName: row.displayName,
       points: b.points,
       exactScores: b.exactScores,
-      partialHits: b.partialHits,
+      signHits: b.signHits,
       predictionsOnScored: b.predictionsOnScored,
+      lastPredictionSavedAtMs: b.lastPredictionSavedAtMs,
     };
   });
 
-  scored.sort((a, b) => {
-    if (b.points !== a.points) return b.points - a.points;
-    if (b.exactScores !== a.exactScores) return b.exactScores - a.exactScores;
-    return a.displayName.localeCompare(b.displayName, "es");
-  });
+  scored.sort((a, b) =>
+    compareRankingSortScalars(
+      {
+        points: a.points,
+        exactScores: a.exactScores,
+        signHits: a.signHits,
+        lastPredictionSavedAtMs: a.lastPredictionSavedAtMs,
+        displayName: a.displayName,
+      },
+      {
+        points: b.points,
+        exactScores: b.exactScores,
+        signHits: b.signHits,
+        lastPredictionSavedAtMs: b.lastPredictionSavedAtMs,
+        displayName: b.displayName,
+      },
+    ),
+  );
 
   const mapped = scored.map((r, i) => ({
     rank: i + 1,
@@ -399,7 +483,7 @@ export function buildRankingEntries(
     displayName: r.displayName,
     points: r.points,
     exactScores: r.exactScores,
-    partialHits: r.partialHits,
+    signHits: r.signHits,
     predictionsOnScored: r.predictionsOnScored,
     streakDays: 0,
     scope,

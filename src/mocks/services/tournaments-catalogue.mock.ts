@@ -1,5 +1,6 @@
 import type { TournamentCatalogueEntry } from "@/domain";
 
+import { mergeAdminProdeCatalogue } from "@/mocks/merge-admin-prodes";
 import { PRIMERA_TOURNAMENT_CATALOGUE } from "@/mocks/catalog/primera-catalog";
 import { mergeTournamentCatalogue } from "@/mocks/merge-ingestion";
 
@@ -9,8 +10,8 @@ import { mergeTournamentCatalogue } from "@/mocks/merge-ingestion";
  */
 export function getTournamentCatalogue(): TournamentCatalogueEntry[] {
   const base = [...TOURNAMENT_CATALOGUE_FIXTURE];
-  if (typeof window === "undefined") return base;
-  return mergeTournamentCatalogue(base);
+  if (typeof window === "undefined") return mergeAdminProdeCatalogue(base);
+  return mergeAdminProdeCatalogue(mergeTournamentCatalogue(base));
 }
 
 export function getTournamentCatalogueStatic(): TournamentCatalogueEntry[] {

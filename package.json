@@ -2,26 +2,11 @@
   "name": "prodemix",
   "version": "0.1.0",
   "private": true,
-  "engines": {
-    "node": ">=22.12.0"
-  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "start:prod": "PRODEMIX_SKIP_ENV_LOCAL=1 prisma migrate deploy && next start",
-    "lint": "eslint",
-    "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate deploy",
-    "db:migrate:dev": "prisma migrate dev",
-    "db:push": "prisma db push",
-    "db:seed": "tsx prisma/seed.ts",
-    "db:setup": "node scripts/db-setup.mjs",
-    "db:neon": "PRODEMIX_SKIP_ENV_LOCAL=1 npx prisma migrate deploy && PRODEMIX_SKIP_ENV_LOCAL=1 npx prisma db seed",
-    "postinstall": "prisma generate"
-  },
-  "prisma": {
-    "seed": "tsx prisma/seed.ts"
+    "lint": "eslint"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.6.0",
@@ -30,7 +15,6 @@
     "lucide-react": "^1.7.0",
     "next": "16.2.1",
     "pg": "^8.20.0",
-    "prisma": "^7.6.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "tailwind-merge": "^3.5.0"
@@ -44,6 +28,7 @@
     "dotenv": "^17.3.1",
     "eslint": "^9",
     "eslint-config-next": "16.2.1",
+    "prisma": "^7.6.0",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^5"

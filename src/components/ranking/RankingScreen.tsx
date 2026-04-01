@@ -4,6 +4,7 @@ import { Trophy } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
 import type { RankingEntry, RankingScope } from "@/domain";
+import { useCatalogueRevision } from "@/components/app/CatalogueRefreshContext";
 import {
   EmptyState,
   EmptyStateButtonLink,
@@ -23,15 +24,18 @@ import { useAppState } from "@/state/app-state";
 import { RankingDeltaBadge } from "./RankingDeltaBadge";
 import { RankingStatsLine } from "./RankingStatsLine";
 
-const DEFAULT_RANKING_TAB: RankingScope = "global";
+const DEFAULT_RANKING_TAB: RankingScope =
+  PRIMERA_PUBLIC_POOLS.some((p) => p.status !== "settled") ? "fecha" : "global";
 
 const TABS: {
   id: RankingScope;
   label: string;
   hint: string;
 }[] = [
-  { id: "global", label: "Global", hint: "Todos los pronósticos" },
-  { id: "fecha", label: "Por prode", hint: "Por competencia" },
+  { id: "fecha", label: "Fecha", hint: "Pool público" },
+  { id: "global", label: "Global", hint: "Todos los partidos" },
+  { id: "tournament", label: "Torneo", hint: "Por competición" },
+  { id: "friends", label: "Amigos", hint: "Tu círculo" },
 ];
 
 function Podium({
@@ -219,8 +223,12 @@ function RestRow({
 
 export function RankingScreen() {
   const { user, state, recordActivity } = useAppState();
+  const catRev = useCatalogueRevision();
   const [tab, setTab] = useState<RankingScope>(DEFAULT_RANKING_TAB);
-  const catalogue = useMemo(() => getTournamentCatalogue(), []);
+  const catalogue = useMemo(() => {
+    void catRev;
+    return getTournamentCatalogue();
+  }, [catRev]);
   const [tournamentId, setTournamentId] = useState<string | null>(null);
   const [publicPoolId, setPublicPoolId] = useState<string | null>(null);
 
@@ -246,6 +254,7 @@ export function RankingScreen() {
   }, [tab, catalogue, tournamentId]);
 
   const rows = useMemo(() => {
+    void catRev;
     if (tab === "fecha" && resolvedPoolId) {
       return buildRankingEntries(
         "fecha",
@@ -267,7 +276,7 @@ export function RankingScreen() {
       );
     }
     return buildRankingEntries(tab, user.id, user.displayName, state);
-  }, [tab, resolvedTournamentId, resolvedPoolId, user.id, user.displayName, state]);
+  }, [tab, resolvedTournamentId, resolvedPoolId, user.id, user.displayName, state, catRev]);
 
   const scopeKey = useMemo(() => {
     if (tab === "tournament" && resolvedTournamentId) {
@@ -325,9 +334,9 @@ export function RankingScreen() {
         <p className={pageEyebrow}>ProdeMix</p>
         <h1 className={cn(pageTitle, "mt-0.5")}>Ranking</h1>
         <p className="mt-1.5 text-[12px] leading-relaxed text-app-muted">
-          <strong className="font-semibold text-app-text">Global</strong> suma todos
-          tus pronósticos. <strong className="font-semibold text-app-text">Por prode</strong>{" "}
-          filtra por competencia oficial. 3 pts pleno · 1 pt sin pleno (ganador o empate).
+          Empezá por <strong className="font-semibold text-app-text">Fecha</strong>{" "}
+          para ver tu posición en un pool. Reglas: 3 pleno · 1 resultado · 0 si
+          falla el veredicto.
         </p>
       </header>
 
@@ -411,9 +420,12 @@ export function RankingScreen() {
           layout="horizontal"
           icon={Trophy}
           title="Todavía no hay tabla en esta vista"
-          description="Entrá a un pool por fecha, cargá el marcador de cada partido y, cuando haya resultados en la demo, la tabla se completa. El ranking global usa todos tus pronósticos sobre partidos ya jugados."
+          description="Entrá a un pool por fecha, cargá marcadores y, cuando haya resultados en la demo, la tabla se completa. El ranking global usa todos tus pronósticos con resultado."
         >
-          <EmptyStateButtonLink href="/prodes">Ver prodes oficiales</EmptyStateButtonLink>
+          <EmptyStateButtonLink href="/torneos">Torneos y fechas</EmptyStateButtonLink>
+          <EmptyStateButtonLink href="/crear" variant="secondary">
+            Prode propio (opcional)
+          </EmptyStateButtonLink>
         </EmptyState>
       ) : (
         <>
@@ -443,7 +455,7 @@ export function RankingScreen() {
 
           <p className="mt-3 rounded-lg border border-dashed border-app-border bg-app-bg/80 px-2.5 py-2 text-[10px] leading-snug text-app-muted">
             En <strong className="font-semibold text-app-text">Fecha</strong>{" "}
-            solo cuentan partidos de ese pool ya finalizados. Las flechas son vs.
+            solo cuentan partidos de ese pool con resultado. Las flechas son vs.
             tu última visita (demo local).
           </p>
         </>

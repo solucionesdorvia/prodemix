@@ -1,9 +1,11 @@
 "use client";
 
-import { Check, Minus, Plus } from "lucide-react";
-import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import { Minus, Plus } from "lucide-react";
+import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
 
 import type { Match, ScorePrediction } from "@/domain";
+import { formatGoalsInput, parseGoalsInput } from "@/lib/score-input";
+import { inferOutcome, outcomeLabelEs, type MatchOutcome } from "@/lib/scoring";
 import { TeamCrest } from "@/components/team/TeamCrest";
 import { formatMatchKickoffSplit } from "@/lib/datetime";
 import { cardSurface, statLabel } from "@/lib/ui-styles";
@@ -13,108 +15,43 @@ type MatchCardProps = {
   match: Match;
   initialScore?: ScorePrediction | null;
   className?: string;
+  /** Mock final score — when set, shows result + points. */
   finalResult?: { home: number; away: number } | null;
   pointsEarned?: 0 | 1 | 3 | null;
-  onPredictionCommit?: (score: ScorePrediction) => void;
+  /** Called when both goals are valid (persists prediction in MVP). */
+  onPredictionCommit?: (score: { home: number; away: number }) => void;
+  /** When true, score cannot be edited (e.g. match finalized). */
   predictionLocked?: boolean;
+  /** Hide top tournament label row (e.g. on fecha pool screen where context is obvious). */
   hideTournamentLabel?: boolean;
+  /** Slightly tighter padding for dense lists. */
   compact?: boolean;
 };
 
 const STEP_MAX = 20;
 
-/** Bump goals; only call onInteraction when value actually changes. */
-function clampGoals(n: number): number {
-  return Math.min(STEP_MAX, Math.max(0, n));
+function outcomePillClass(outcome: MatchOutcome): string {
+  switch (outcome) {
+    case "home":
+      return "border-emerald-200/90 bg-emerald-50 text-emerald-950";
+    case "away":
+      return "border-sky-200/90 bg-sky-50 text-sky-950";
+    default:
+      return "border-slate-200/90 bg-slate-100 text-slate-900";
+  }
 }
 
-type ScoreRailProps = {
-  value: number;
-  onDelta: (d: number) => void;
-  disabled: boolean;
-  compact: boolean;
-  labelMinus: string;
-  labelPlus: string;
-  /** Pulse key for micro-feedback when value changes */
-  bumpKey: number;
-  /** Softer color before the user has interacted (0-0 preview). */
-  muted: boolean;
-};
+const stepperBtn =
+  "inline-flex h-10 w-10 shrink-0 touch-manipulation items-center justify-center rounded-lg border border-app-border bg-app-surface text-app-text shadow-card transition active:scale-[0.96]";
 
-function ScoreRail({
-  value,
-  onDelta,
-  disabled,
-  compact,
-  labelMinus,
-  labelPlus,
-  bumpKey,
-  muted,
-}: ScoreRailProps) {
-  const atMin = value <= 0;
-  const atMax = value >= STEP_MAX;
+const stepperBtnCompact =
+  "inline-flex h-9 w-9 shrink-0 touch-manipulation items-center justify-center rounded-lg border border-app-border bg-app-surface text-app-text shadow-card transition active:scale-[0.96]";
 
-  const btn =
-    "touch-manipulation select-none rounded-2xl border font-semibold transition will-change-transform active:scale-[0.94] active:transition-none disabled:pointer-events-none disabled:opacity-35";
-  const btnSize = compact ? "h-12 w-12 min-h-[48px] min-w-[48px]" : "h-[52px] w-[52px] min-h-[52px] min-w-[52px]";
-  const minusCls = cn(
-    btn,
-    btnSize,
-    "border-slate-200/95 bg-gradient-to-b from-white to-slate-50/90 text-slate-700 shadow-[0_2px_0_rgba(15,23,42,0.06),0_1px_2px_rgba(15,23,42,0.06)]",
-    !disabled && !atMin && "hover:border-slate-300 active:from-slate-50 active:to-slate-100",
-  );
-  const plusCls = cn(
-    btn,
-    btnSize,
-    "border-blue-200/90 bg-gradient-to-b from-blue-50 to-white text-app-primary shadow-[0_2px_0_rgba(37,99,235,0.12),0_1px_2px_rgba(37,99,235,0.08)]",
-    !disabled && !atMax && "hover:border-blue-300 active:from-blue-100/80 active:to-blue-50",
-  );
+const scoreInputClass =
+  "h-10 w-11 shrink-0 rounded-lg border border-app-border bg-app-surface text-center text-[15px] font-bold tabular-nums text-app-text shadow-card outline-none transition placeholder:text-app-muted/35 focus:border-app-primary focus:ring-2 focus:ring-app-primary/20";
 
-  const digit = compact ? "text-[28px] leading-none" : "text-[32px] leading-none";
-
-  return (
-    <div className="flex items-center justify-center gap-1.5 sm:gap-2">
-      <button
-        type="button"
-        className={minusCls}
-        aria-label={labelMinus}
-        disabled={disabled || atMin}
-        onClick={() => onDelta(-1)}
-      >
-        <Minus className="mx-auto h-[18px] w-[18px]" strokeWidth={2.5} aria-hidden />
-      </button>
-
-      <div
-        className={cn(
-          "flex min-h-[52px] min-w-[56px] items-center justify-center rounded-2xl border border-app-border/80 bg-white px-3 shadow-[inset_0_2px_6px_rgba(15,23,42,0.05),0_1px_0_rgba(255,255,255,0.9)]",
-          compact && "min-h-[48px] min-w-[52px] px-2.5",
-        )}
-      >
-        <span
-          key={bumpKey}
-          className={cn(
-            digit,
-            "match-score-digit-pop tabular-nums tracking-tight transition-colors duration-150",
-            muted ? "text-app-muted" : "text-app-text",
-          )}
-          aria-live="polite"
-        >
-          {value}
-        </span>
-      </div>
-
-      <button
-        type="button"
-        className={plusCls}
-        aria-label={labelPlus}
-        disabled={disabled || atMax}
-        onClick={() => onDelta(1)}
-      >
-        <Plus className="mx-auto h-[18px] w-[18px]" strokeWidth={2.5} aria-hidden />
-      </button>
-    </div>
-  );
-}
+const scoreInputClassCompact =
+  "h-9 w-10 shrink-0 rounded-lg border border-app-border bg-app-surface text-center text-[14px] font-bold tabular-nums text-app-text shadow-card outline-none transition placeholder:text-app-muted/35 focus:border-app-primary focus:ring-2 focus:ring-app-primary/20";
 
 export function MatchCard({
   match,
@@ -127,96 +64,106 @@ export function MatchCard({
   hideTournamentLabel = false,
   compact = false,
 }: MatchCardProps) {
-  const groupId = useId();
-  const lastCommitSig = useRef<string | null>(
-    initialScore ?
-      `${initialScore.predictedHomeScore}-${initialScore.predictedAwayScore}`
-    : null,
-  );
+  const baseId = useId();
+  const homeFieldId = `${baseId}-home`;
+  const awayFieldId = `${baseId}-away`;
+  const lastCommitSig = useRef<string | null>(null);
   const onCommitRef = useRef(onPredictionCommit);
 
   useLayoutEffect(() => {
     onCommitRef.current = onPredictionCommit;
   }, [onPredictionCommit]);
 
-  const [home, setHome] = useState(() => initialScore?.predictedHomeScore ?? 0);
-  const [away, setAway] = useState(() => initialScore?.predictedAwayScore ?? 0);
-  /** User adjusted scores (avoid committing silent 0-0 on first paint). */
-  const [touched, setTouched] = useState(() => initialScore != null);
-  const [bumpHome, setBumpHome] = useState(0);
-  const [bumpAway, setBumpAway] = useState(0);
+  const [homeStr, setHomeStr] = useState(() =>
+    initialScore ? formatGoalsInput(initialScore.home) : "",
+  );
+  const [awayStr, setAwayStr] = useState(() =>
+    initialScore ? formatGoalsInput(initialScore.away) : "",
+  );
 
   useEffect(() => {
     queueMicrotask(() => {
       if (initialScore) {
-        const h = initialScore.predictedHomeScore;
-        const a = initialScore.predictedAwayScore;
-        setHome(h);
-        setAway(a);
-        setTouched(true);
-        lastCommitSig.current = `${h}-${a}`;
+        setHomeStr(formatGoalsInput(initialScore.home));
+        setAwayStr(formatGoalsInput(initialScore.away));
       } else {
-        setHome(0);
-        setAway(0);
-        setTouched(false);
-        lastCommitSig.current = null;
+        setHomeStr("");
+        setAwayStr("");
       }
+      lastCommitSig.current = null;
     });
   }, [initialScore, match.id]);
+
+  const homeGoals = useMemo(() => parseGoalsInput(homeStr), [homeStr]);
+  const awayGoals = useMemo(() => parseGoalsInput(awayStr), [awayStr]);
 
   useEffect(() => {
     if (predictionLocked) return;
     if (!onCommitRef.current) return;
-    if (!touched) return;
-    const sig = `${home}-${away}`;
+    if (homeGoals === null || awayGoals === null) return;
+    const sig = `${homeGoals}-${awayGoals}`;
     if (lastCommitSig.current === sig) return;
     lastCommitSig.current = sig;
-    onCommitRef.current({
-      predictedHomeScore: home,
-      predictedAwayScore: away,
-    });
-  }, [home, away, touched, predictionLocked]);
+    onCommitRef.current({ home: homeGoals, away: awayGoals });
+  }, [homeGoals, awayGoals, predictionLocked]);
 
-  const adjustHome = (d: number) => {
-    if (predictionLocked) return;
-    setTouched(true);
-    setHome((h) => {
-      const n = clampGoals(h + d);
-      if (n !== h) setBumpHome((k) => k + 1);
-      return n;
-    });
-  };
+  const complete = homeGoals !== null && awayGoals !== null;
 
-  const adjustAway = (d: number) => {
-    if (predictionLocked) return;
-    setTouched(true);
-    setAway((a) => {
-      const n = clampGoals(a + d);
-      if (n !== a) setBumpAway((k) => k + 1);
-      return n;
-    });
-  };
+  const outcome = useMemo(() => {
+    if (!complete || homeGoals === null || awayGoals === null) return null;
+    return inferOutcome(homeGoals, awayGoals);
+  }, [awayGoals, complete, homeGoals]);
 
-  const hasPrediction = touched;
-  const isStaleZero =
-    !initialScore && !touched && home === 0 && away === 0;
+  const outcomeLabel = outcome ? outcomeLabelEs(outcome) : null;
+
+  const emptyHint = useMemo(() => {
+    if (predictionLocked) {
+      if (finalResult) return "Partido cerrado · marcador fijado";
+      return "Plazo cerrado · solo lectura";
+    }
+    if (homeStr === "" && awayStr === "") return "Elegí goles o usá + / −";
+    return "Completá ambos equipos";
+  }, [awayStr, finalResult, homeStr, predictionLocked]);
 
   const { date, time } = formatMatchKickoffSplit(match.startsAt);
+
+  const bump = (side: "home" | "away", delta: number) => {
+    if (predictionLocked) return;
+    const raw = side === "home" ? homeStr : awayStr;
+    const cur = parseGoalsInput(raw) ?? 0;
+    const next = Math.min(STEP_MAX, Math.max(0, cur + delta));
+    const s = formatGoalsInput(next);
+    if (side === "home") setHomeStr(s);
+    else setAwayStr(s);
+  };
+
+  const onHomeChange = (v: string) => {
+    if (predictionLocked) return;
+    setHomeStr(v.replace(/\D/g, "").slice(0, 2));
+  };
+
+  const onAwayChange = (v: string) => {
+    if (predictionLocked) return;
+    setAwayStr(v.replace(/\D/g, "").slice(0, 2));
+  };
+
+  const homeInvalid = homeStr !== "" && homeGoals === null;
+  const awayInvalid = awayStr !== "" && awayGoals === null;
 
   return (
     <article
       className={cn(
         cardSurface,
-        "overflow-hidden transition-[box-shadow,border-color] duration-200",
-        hasPrediction && !predictionLocked
-          ? "border-app-primary/35 shadow-[0_8px_28px_-12px_rgba(37,99,235,0.28)] ring-1 ring-app-primary/15"
-          : "border-app-border shadow-card",
+        "transition-colors",
+        complete
+          ? "border-app-primary/35 ring-1 ring-app-primary/15"
+          : "border-app-border",
         className,
       )}
     >
       <div
         className={cn(
-          "border-b border-app-border-subtle bg-gradient-to-r from-app-bg/80 via-white to-app-bg/80 px-2.5 py-1.5",
+          "border-b border-app-border-subtle bg-app-bg/60 px-2.5 py-1.5",
           hideTournamentLabel && "py-1.5",
         )}
       >
@@ -254,97 +201,142 @@ export function MatchCard({
         </div>
       </div>
 
-      <div
-        className={cn(
-          "px-2.5 pb-2.5 pt-2",
-          compact && "px-2 pb-2 pt-1.5",
-          predictionLocked && "pointer-events-none opacity-[0.72]",
-        )}
-        role="group"
-        aria-labelledby={`${groupId}-heading`}
-      >
-        <p id={`${groupId}-heading`} className="sr-only">
-          Pronóstico de marcador para {match.homeTeam} contra {match.awayTeam}
-        </p>
-
-        {/* Home */}
-        <div className="flex items-center gap-2">
-          <TeamCrest teamName={match.homeTeam} size={compact ? 30 : 34} />
-          <p className="min-w-0 flex-1 truncate text-left text-[13px] font-bold leading-tight text-app-text">
-            {match.homeTeam}
-          </p>
+      <div className={cn("px-2.5 pb-2 pt-2", compact && "px-2 pb-1.5 pt-1.5")}>
+        <div className="grid grid-cols-2 gap-x-2 gap-y-0">
+          <div className="flex min-w-0 items-start gap-2">
+            <TeamCrest teamName={match.homeTeam} size={compact ? 26 : 30} />
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-left text-[12px] font-semibold leading-tight text-app-text">
+                {match.homeTeam}
+              </p>
+              <p className="mt-0.5 text-left text-[10px] font-semibold text-app-muted">
+                Local
+              </p>
+            </div>
+          </div>
+          <div className="flex min-w-0 items-start justify-end gap-2">
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-right text-[12px] font-semibold leading-tight text-app-text">
+                {match.awayTeam}
+              </p>
+              <p className="mt-0.5 text-right text-[10px] font-semibold text-app-muted">
+                Visita
+              </p>
+            </div>
+            <TeamCrest teamName={match.awayTeam} size={compact ? 26 : 30} />
+          </div>
         </div>
 
-        <div className="mt-2">
-          <ScoreRail
-            value={home}
-            onDelta={adjustHome}
-            disabled={!!predictionLocked}
-            compact={compact}
-            labelMinus={`Un gol menos para ${match.homeTeam}`}
-            labelPlus={`Un gol más para ${match.homeTeam}`}
-            bumpKey={bumpHome}
-            muted={!touched}
-          />
+        <div
+          className={cn(
+            "mt-2 grid grid-cols-2 gap-x-2",
+            compact && "mt-1.5",
+            predictionLocked && "pointer-events-none opacity-60",
+          )}
+          role="group"
+          aria-label="Marcador predicho"
+        >
+          <div className="flex items-center gap-1">
+            <button
+              type="button"
+              className={compact ? stepperBtnCompact : stepperBtn}
+              aria-label="Restar gol local"
+              disabled={predictionLocked}
+              onClick={() => bump("home", -1)}
+            >
+              <Minus className="h-4 w-4" strokeWidth={2} aria-hidden />
+            </button>
+            <label htmlFor={homeFieldId} className="sr-only">
+              Goles de {match.homeTeam}
+            </label>
+            <input
+              id={homeFieldId}
+              type="text"
+              inputMode="numeric"
+              autoComplete="off"
+              name={`score-home-${match.id}`}
+              placeholder="0"
+              value={homeStr}
+              readOnly={predictionLocked}
+              onChange={(e) => onHomeChange(e.target.value)}
+              className={cn(
+                compact ? scoreInputClassCompact : scoreInputClass,
+                homeInvalid && "border-red-300",
+              )}
+              maxLength={2}
+              aria-invalid={homeInvalid}
+            />
+            <button
+              type="button"
+              className={compact ? stepperBtnCompact : stepperBtn}
+              aria-label="Sumar gol local"
+              disabled={predictionLocked}
+              onClick={() => bump("home", 1)}
+            >
+              <Plus className="h-4 w-4" strokeWidth={2} aria-hidden />
+            </button>
+          </div>
+          <div className="flex items-center justify-end gap-1">
+            <button
+              type="button"
+              className={compact ? stepperBtnCompact : stepperBtn}
+              aria-label="Restar gol visitante"
+              disabled={predictionLocked}
+              onClick={() => bump("away", -1)}
+            >
+              <Minus className="h-4 w-4" strokeWidth={2} aria-hidden />
+            </button>
+            <label htmlFor={awayFieldId} className="sr-only">
+              Goles de {match.awayTeam}
+            </label>
+            <input
+              id={awayFieldId}
+              type="text"
+              inputMode="numeric"
+              autoComplete="off"
+              name={`score-away-${match.id}`}
+              placeholder="0"
+              value={awayStr}
+              readOnly={predictionLocked}
+              onChange={(e) => onAwayChange(e.target.value)}
+              className={cn(
+                compact ? scoreInputClassCompact : scoreInputClass,
+                awayInvalid && "border-red-300",
+              )}
+              maxLength={2}
+              aria-invalid={awayInvalid}
+            />
+            <button
+              type="button"
+              className={compact ? stepperBtnCompact : stepperBtn}
+              aria-label="Sumar gol visitante"
+              disabled={predictionLocked}
+              onClick={() => bump("away", 1)}
+            >
+              <Plus className="h-4 w-4" strokeWidth={2} aria-hidden />
+            </button>
+          </div>
         </div>
 
-        <div className="my-2 flex items-center justify-center gap-2">
-          <span className="h-px flex-1 bg-gradient-to-r from-transparent via-app-border to-transparent" />
-          <span
-            className={cn(
-              "rounded-full bg-app-bg px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-[0.2em] text-app-muted",
-              isStaleZero && "opacity-80",
-            )}
-          >
-            vs
-          </span>
-          <span className="h-px flex-1 bg-gradient-to-r from-transparent via-app-border to-transparent" />
-        </div>
-
-        <div className="mb-2">
-          <ScoreRail
-            value={away}
-            onDelta={adjustAway}
-            disabled={!!predictionLocked}
-            compact={compact}
-            labelMinus={`Un gol menos para ${match.awayTeam}`}
-            labelPlus={`Un gol más para ${match.awayTeam}`}
-            bumpKey={bumpAway}
-            muted={!touched}
-          />
-        </div>
-
-        <div className="flex items-center justify-end gap-2">
-          <p className="min-w-0 flex-1 truncate text-right text-[13px] font-bold leading-tight text-app-text">
-            {match.awayTeam}
-          </p>
-          <TeamCrest teamName={match.awayTeam} size={compact ? 30 : 34} />
-        </div>
-
-        <div className="mt-2.5 flex min-h-[36px] items-center justify-center">
-          {predictionLocked ?
-            <p className="text-center text-[11px] font-medium text-app-muted">
-              Marcador cerrado
-            </p>
-          : hasPrediction ?
+        <div className="mt-2 flex justify-center">
+          {complete && outcome !== null && outcomeLabel ? (
             <div
               className={cn(
-                "inline-flex max-w-full items-center gap-2 rounded-full border border-emerald-200/90 bg-gradient-to-r from-emerald-50 to-white px-3 py-1.5 text-[12px] font-bold text-emerald-950 shadow-sm",
+                "inline-flex max-w-full items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold leading-tight",
+                outcomePillClass(outcome),
               )}
             >
-              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/15">
-                <Check className="h-3.5 w-3.5" strokeWidth={2.75} aria-hidden />
+              <span className="tabular-nums">
+                {homeGoals}-{awayGoals}
               </span>
-              <span className="tabular-nums tracking-tight">
-                {home} — {away}
+              <span className="opacity-50" aria-hidden>
+                ·
               </span>
-              <span className="text-[10px] font-extrabold uppercase tracking-[0.12em] text-emerald-800/90">
-                Listo
-              </span>
+              <span>{outcomeLabel}</span>
             </div>
-          : (
+          ) : (
             <p className="text-center text-[11px] font-medium leading-snug text-app-muted">
-              Tocá + / − para cargar tu marcador
+              {emptyHint}
             </p>
           )}
         </div>

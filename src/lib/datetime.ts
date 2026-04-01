@@ -58,6 +58,19 @@ export function formatDeadlineLabel(iso: string): string {
   }).format(d);
 }
 
+/**
+ * `true` si todavía se puede editar el pronóstico (antes del kickoff).
+ * Tras el horario de inicio, solo lectura hasta que exista resultado mock.
+ */
+export function isPredictionDeadlineOpen(
+  matchStartsAtIso: string,
+  nowMs = Date.now(),
+): boolean {
+  const t = Date.parse(matchStartsAtIso);
+  if (Number.isNaN(t)) return false;
+  return nowMs < t;
+}
+
 /** Countdown-style label for pool close times (future ISO). */
 export function formatTimeUntilFuture(iso: string): string {
   const end = new Date(iso).getTime();
