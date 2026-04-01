@@ -1,6 +1,6 @@
 "use client";
 
-import { Copy, Share2, Sparkles } from "lucide-react";
+import { Copy, Link2, Share2 } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { cn } from "@/lib/utils";
@@ -23,7 +23,7 @@ export function ProdeInviteShare({
 
   const shareText = useMemo(
     () =>
-      `Sumate al prode «${prodeName}» en ProdeMix\nCódigo: ${inviteCode}\n${prodeUrl}`,
+      `Prode: ${prodeName}\nCódigo: ${inviteCode}\n${prodeUrl}`,
     [prodeName, inviteCode, prodeUrl],
   );
 
@@ -66,23 +66,23 @@ export function ProdeInviteShare({
   return (
     <section
       className={cn(
-        "rounded-[10px] border border-app-primary/25 bg-blue-50/50 px-2.5 py-2 shadow-[0_1px_0_rgba(15,23,42,0.04)]",
+        "rounded-lg border border-app-border bg-app-surface px-2.5 py-2 shadow-[0_1px_0_rgba(15,23,42,0.04)]",
         className,
       )}
-      aria-label="Invitar al prode"
+      aria-label="Invitación al prode"
     >
       <div className="flex items-center gap-1.5">
-        <Sparkles
-          className="h-3.5 w-3.5 shrink-0 text-app-primary"
+        <Link2
+          className="h-3.5 w-3.5 shrink-0 text-app-muted"
           strokeWidth={2}
           aria-hidden
         />
-        <p className="text-[10px] font-bold uppercase tracking-wide text-app-muted">
-          Invitá y compartí
+        <p className="text-[10px] font-medium uppercase tracking-wide text-app-muted">
+          Invitación
         </p>
       </div>
       <p className="mt-0.5 text-[11px] leading-snug text-app-muted">
-        Pasá el código para que entren al mismo prode (demo local).
+        Mismo código para todos los integrantes (demo local).
       </p>
 
       <div className="mt-2 rounded-lg border border-app-border bg-app-surface px-2 py-1.5 text-center">

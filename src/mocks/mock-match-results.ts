@@ -14,12 +14,13 @@ export const MOCK_MATCH_RESULTS: Record<
   MatchId,
   { home: number; away: number }
 > = {
-  "cm-nu-1": { home: 3, away: 2 },
-  "cm-nu-2": { home: 1, away: 0 },
-  "cm-ba-1": { home: 2, away: 2 },
-  "cm-ba-2": { home: 1, away: 3 },
-  "cm-zn-1": { home: 2, away: 0 },
-  "cm-zn-2": { home: 1, away: 1 },
+  /** Primera A · fecha 1 (coincide con fixture PLP). */
+  "afa-premio-a-m1-0": { home: 1, away: 2 },
+  "afa-premio-a-m1-1": { home: 1, away: 4 },
+  "afa-premio-a-m1-2": { home: 2, away: 1 },
+  "afa-premio-a-m1-3": { home: 4, away: 3 },
+  "afa-premio-a-m1-4": { home: 2, away: 4 },
+  "afa-premio-a-m1-5": { home: 3, away: 3 },
 };
 
 export function getMockResultForMatch(

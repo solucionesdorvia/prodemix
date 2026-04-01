@@ -204,9 +204,8 @@ export function ProdesDetailClient({ prodeId }: ProdesDetailClientProps) {
           {userRank !== null ? (
             <>
               <span className="text-app-border">·</span>
-              <span className="inline-flex items-center gap-0.5 text-app-sport">
-                <Trophy className="h-3 w-3" strokeWidth={2} aria-hidden />
-                Tu puesto: #{userRank}
+              <span className="text-app-text">
+                Posición: <span className="font-semibold tabular-nums">{userRank}</span>
               </span>
             </>
           ) : null}

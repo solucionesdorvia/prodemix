@@ -42,13 +42,7 @@ export interface ActivityEntry {
 }
 
 /** Torneos browse / marketing cards */
-export type TorneoCategoryFilterId =
-  | "todos"
-  | "futsal"
-  | "futbol-8"
-  | "amateur"
-  | "barrial"
-  | "club-local";
+export type TorneoCategoryFilterId = "todos" | "futsal";
 
 export interface TorneoBrowseItem {
   id: string;

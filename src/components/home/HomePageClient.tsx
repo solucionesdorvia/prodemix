@@ -17,7 +17,7 @@ import { HomeQuickStats } from "@/components/home/HomeQuickStats";
 import { MisProdesSection } from "@/components/prodes/MisProdesSection";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { formatTimeUntilFuture } from "@/lib/datetime";
+import { formatPoolCloseLabel } from "@/lib/datetime";
 import { getRecentActivity } from "@/mocks/services/activity.mock";
 import { useIngestionTick } from "@/hooks/useIngestionTick";
 import type { PersistedAppState } from "@/state/types";
@@ -147,10 +147,10 @@ export function HomePageClient() {
       {heroPool && heroPoolHref ? (
         <section className="space-y-2">
           <SectionHeader
-            title="Pool destacado"
+            title="Fecha abierta"
             action={
               <Link href="/torneos" className="font-semibold hover:underline">
-                Más fechas
+                Torneos
               </Link>
             }
           />
@@ -158,45 +158,43 @@ export function HomePageClient() {
             href={heroPoolHref}
             className={cn(
               cardSurface,
-              "block overflow-hidden transition hover:ring-1 hover:ring-app-primary/25 active:scale-[0.995]",
+              "block overflow-hidden transition hover:border-app-muted active:scale-[0.995]",
             )}
           >
-            <div className="border-b border-app-border-subtle bg-gradient-to-br from-blue-50/90 to-app-surface px-3 py-2.5">
-              <p className="text-[10px] font-bold uppercase tracking-wide text-app-primary">
-                Jugá por pozo · Primera
-              </p>
-              <p className="mt-1 text-[15px] font-bold leading-tight text-app-text">
+            <div className="border-b border-app-border-subtle px-3 py-2.5">
+              <p className="text-[15px] font-semibold leading-snug text-app-text">
                 {formatPublicPoolLabel(heroPool)}
               </p>
-              <div className="mt-2 flex flex-wrap items-baseline gap-x-4 gap-y-1 text-[11px]">
-                {heroPool.type === "public_paid" ? (
-                  <span className="font-semibold text-app-text">
-                    Inscripción ${formatArs(heroPool.entryFeeArs)}
-                  </span>
-                ) : (
-                  <span className="font-semibold text-app-text">Gratis</span>
-                )}
-                {heroPool.prizePoolArs > 0 ? (
-                  <span className="inline-flex items-center gap-1 font-semibold text-slate-800">
-                    <Banknote className="h-3.5 w-3.5" strokeWidth={2} aria-hidden />
-                    Pozo ${formatArs(heroPool.prizePoolArs)}
-                  </span>
+              <dl className="mt-2 space-y-1 text-[11px] text-app-text">
+                <div className="flex justify-between gap-2">
+                  <dt className="text-app-muted">Premio</dt>
+                  <dd className="font-medium tabular-nums">
+                    {heroPool.prizePoolArs > 0 ?
+                      `$${formatArs(heroPool.prizePoolArs)}`
+                    : "—"}
+                  </dd>
+                </div>
+                {heroPool.type === "public_paid" && heroPool.entryFeeArs > 0 ? (
+                  <div className="flex justify-between gap-2">
+                    <dt className="text-app-muted">Ingreso</dt>
+                    <dd className="font-medium tabular-nums">
+                      ${formatArs(heroPool.entryFeeArs)}
+                    </dd>
+                  </div>
                 ) : null}
-              </div>
-              <p className="mt-2 text-[10px] font-medium leading-snug text-app-muted">
-                <span className="font-semibold text-app-text">
-                  {formatTimeUntilFuture(heroPool.closesAt)}
-                </span>
-                <span className="text-app-border"> · </span>
-                Premios top {heroPool.payoutTopN}
-              </p>
+                <div className="flex justify-between gap-2">
+                  <dt className="text-app-muted">Cierre</dt>
+                  <dd className="font-medium">{formatPoolCloseLabel(heroPool.closesAt)}</dd>
+                </div>
+              </dl>
             </div>
-            <div className="flex items-center justify-between gap-2 px-3 py-2.5">
-              <span className="text-[12px] font-semibold text-app-text">
-                Unirte y cargar marcadores
+            <div className="flex items-center justify-between gap-2 px-3 py-2">
+              <span className="inline-flex items-center gap-1 text-[11px] text-app-muted">
+                <Banknote className="h-3.5 w-3.5 shrink-0" strokeWidth={2} aria-hidden />
+                Reparto top {heroPool.payoutTopN}
               </span>
-              <span className={cn(btnPrimaryFull(), "w-auto px-3 py-2 text-[12px]")}>
-                Entrar al pool
+              <span className={cn(btnPrimaryFull(), "w-auto px-3 py-1.5 text-[12px]")}>
+                Jugar
                 <ArrowRight className="h-4 w-4 shrink-0" strokeWidth={2.25} aria-hidden />
               </span>
             </div>
@@ -226,7 +224,7 @@ export function HomePageClient() {
                       {formatPublicPoolLabel(p)}
                     </p>
                     <p className="mt-0.5 text-[10px] text-app-muted">
-                      {formatTimeUntilFuture(p.closesAt)}
+                      {formatPoolCloseLabel(p.closesAt)}
                       {p.prizePoolArs > 0 ?
                         ` · Pozo $${formatArs(p.prizePoolArs)}`
                       : null}
@@ -257,8 +255,8 @@ export function HomePageClient() {
         />
         {joinedPools.length === 0 ? (
           <p className="rounded-lg border border-dashed border-app-border bg-app-bg/70 px-3 py-2.5 text-[11px] leading-snug text-app-muted">
-            Unite a un pool público desde un torneo o el destacado arriba. Tus
-            pronósticos y el pozo quedan acá.
+            Elegí una fecha en Torneos y uníte al pool. Tus pronósticos quedan
+            listados acá.
           </p>
         ) : (
           <ul className="space-y-1.5">
@@ -306,16 +304,16 @@ export function HomePageClient() {
           layout="horizontal"
           icon={Target}
           eyebrow="Pronósticos"
-          title="Todavía no cargaste ningún marcador"
+          title="Sin pronósticos cargados"
           description={
             <>
-              Entrá a un{" "}
+              Desde{" "}
               <Link href="/torneos" className="font-semibold text-app-primary">
-                pool por fecha
+                Torneos
               </Link>{" "}
-              o a un{" "}
-              <Link href="/perfil">prode propio</Link>, cargá marcadores exactos
-              y sumá puntos.
+              o un{" "}
+              <Link href="/perfil">prode propio</Link>: marcador exacto por
+              partido.
             </>
           }
         />
@@ -357,7 +355,7 @@ export function HomePageClient() {
               variant="minimal"
               layout="stack"
               title="Sin movimientos todavía"
-              description="Pools, prodes propios y ranking: cuando pase algo en la demo, aparece acá."
+              description="Movimientos de pools, prodes y ranking en esta cuenta."
             />
           ) : (
             <div className={cn("overflow-hidden", cardSurface)}>
@@ -380,15 +378,12 @@ export function HomePageClient() {
 
         <p className="border-t border-app-border-subtle pt-4 text-center text-[11px] text-app-muted">
           <Link href="/torneos" className="font-semibold text-app-primary hover:underline">
-            Explorar torneos
+            Torneos
           </Link>
           <span className="text-app-border"> · </span>
           <Link href="/crear" className="font-semibold text-app-muted hover:text-app-text hover:underline">
-            Prode propio
+            Prode privado
           </Link>
-          <span className="block pt-0.5 text-[10px] font-normal text-app-muted/90">
-            Secundario · grupos privados
-          </span>
         </p>
       </div>
     </>

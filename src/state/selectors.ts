@@ -607,7 +607,7 @@ export function buildProdeSummary(
     name: prode.name,
     matchCount: n,
     nextDeadline: earliest ? formatDeadlineLabel(earliest) : "—",
-    progressLabel: `${n - pending}/${n} marcadores`,
+    progressLabel: `Marcadores ${n - pending}/${n}`,
   };
 }
 

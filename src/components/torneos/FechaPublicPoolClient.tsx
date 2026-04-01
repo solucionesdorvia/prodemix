@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  ArrowLeft,
-  Award,
-  Clock,
-  Sparkles,
-  Target,
-  Trophy,
-} from "lucide-react";
+import { ArrowLeft, Award, Clock, Target, Trophy } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
@@ -17,7 +10,7 @@ import { MatchCard } from "@/components/matches/MatchCard";
 import { EmptyState } from "@/components/ui/EmptyState";
 import {
   formatMatchKickoffFull,
-  formatTimeUntilFuture,
+  formatPoolCloseLabel,
   isPredictionDeadlineOpen,
 } from "@/lib/datetime";
 import { getPublicPoolForMatchday } from "@/mocks/catalog/primera-catalog";
@@ -57,7 +50,7 @@ function PayoutBars({
   const max = Math.max(...percents.slice(0, topN), 1);
   return (
     <div className="space-y-2">
-      <p className={statLabel}>Distribución entre los mejores</p>
+      <p className={statLabel}>Reparto previsto</p>
       <ul className="space-y-1.5">
         {percents.slice(0, topN).map((pct, i) => (
           <li key={i} className="flex items-center gap-2">
@@ -94,12 +87,12 @@ function StatusPill({
       className: "border-slate-200 bg-slate-50 text-slate-700",
     },
     open: {
-      label: "Predicciones abiertas",
-      className: "border-emerald-200/90 bg-emerald-50/95 text-emerald-950",
+      label: "Abierto",
+      className: "border-slate-200 bg-slate-50 text-slate-800",
     },
     closed: {
-      label: "Cierre de pronósticos",
-      className: "border-amber-200/90 bg-amber-50/95 text-amber-950",
+      label: "Cerrado",
+      className: "border-slate-200 bg-slate-100 text-slate-800",
     },
     completed: {
       label: "Fecha disputada",
@@ -164,7 +157,7 @@ export function FechaPublicPoolClient({
       user.id,
       user.displayName,
       state,
-    ).slice(0, 5);
+    ).slice(0, 10);
   }, [pool, user.id, user.displayName, state, catRev]);
 
   const pendingCount = useMemo(() => {
@@ -240,91 +233,66 @@ export function FechaPublicPoolClient({
         Volver a {cat.shortName}
       </Link>
 
-      {/* Hero: identity + skill framing */}
-      <header
-        className={cn(
-          "relative overflow-hidden rounded-[12px] border border-slate-200/90",
-          "bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800",
-          "px-3.5 pb-3.5 pt-3.5 text-white shadow-[0_8px_30px_rgba(15,23,42,0.12)]",
-        )}
-      >
-        <div
-          className="pointer-events-none absolute -right-8 -top-10 h-32 w-32 rounded-full bg-blue-500/15 blur-2xl"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute -bottom-6 left-1/4 h-24 w-40 rounded-full bg-white/5 blur-xl"
-          aria-hidden
-        />
-
-        <div className="relative flex flex-wrap items-start justify-between gap-2">
+      <header className="rounded-lg border border-app-border bg-app-surface px-3 py-3">
+        <div className="flex flex-wrap items-start justify-between gap-2">
           <div className="min-w-0 flex-1">
             <p className="flex flex-wrap items-center gap-1.5">
-              <span className="inline-flex items-center gap-1 rounded-full bg-white/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white/85">
-                <Sparkles className="h-3 w-3 text-amber-200/90" strokeWidth={2} />
-                Pool competitivo
-              </span>
               <StatusPill status={matchday.status} />
             </p>
-            <p className={cn(pageEyebrow, "mt-2 text-[10px] text-white/55")}>
+            <p className={cn(pageEyebrow, "mt-2 text-[10px] text-app-muted")}>
               {cat.name}
             </p>
-            <h1 className="mt-0.5 text-[22px] font-bold leading-[1.15] tracking-tight text-white">
+            <h1 className="mt-0.5 text-[18px] font-semibold leading-tight text-app-text">
               {matchday.name}
             </h1>
-            <p className="mt-1.5 max-w-[20rem] text-[12px] leading-snug text-white/70">
-              Pronosticá el marcador exacto de cada partido. 3 pts pleno · 1 pt
-              resultado correcto.
+            <p className="mt-1.5 max-w-[22rem] text-[11px] leading-snug text-app-muted">
+              Marcador exacto por partido. Pleno 3 pts · acierto de signo 1 pt.
             </p>
           </div>
         </div>
 
-        {/* Prize + stats strip */}
-        <div className="relative mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3">
-          <div className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-2 backdrop-blur-sm">
-            <p className="text-[9px] font-bold uppercase tracking-wide text-white/55">
-              {paid ? "Inscripción" : "Acceso"}
+        <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3">
+          <div className="rounded-md border border-app-border-subtle bg-app-bg/60 px-2.5 py-2">
+            <p className="text-[9px] font-medium uppercase tracking-wide text-app-muted">
+              {paid ? "Ingreso" : "Acceso"}
             </p>
-            <p className="mt-0.5 text-[15px] font-bold tabular-nums text-white">
+            <p className="mt-0.5 text-[14px] font-semibold tabular-nums text-app-text">
               {paid ? `$${formatArs(pool.entryFeeArs)}` : "Gratis"}
             </p>
           </div>
-          <div className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-2 backdrop-blur-sm">
-            <p className="text-[9px] font-bold uppercase tracking-wide text-white/55">
-              {paid ? "Premios acumulados" : "En juego"}
+          <div className="rounded-md border border-app-border-subtle bg-app-bg/60 px-2.5 py-2">
+            <p className="text-[9px] font-medium uppercase tracking-wide text-app-muted">
+              Premio
             </p>
-            <p className="mt-0.5 text-[15px] font-bold tabular-nums text-amber-100">
-              {paid ? `$${formatArs(pool.prizePoolArs)}` : "Ranking"}
+            <p className="mt-0.5 text-[14px] font-semibold tabular-nums text-app-text">
+              {paid ? `$${formatArs(pool.prizePoolArs)}` : "—"}
             </p>
           </div>
-          <div className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-2 backdrop-blur-sm">
-            <p className="text-[9px] font-bold uppercase tracking-wide text-white/55">
+          <div className="rounded-md border border-app-border-subtle bg-app-bg/60 px-2.5 py-2">
+            <p className="text-[9px] font-medium uppercase tracking-wide text-app-muted">
               Cierre
             </p>
-            <p className="mt-1 flex items-start gap-1 text-[11px] font-semibold leading-tight text-white/95">
-              <Clock className="mt-0.5 h-3.5 w-3.5 shrink-0 text-white/60" strokeWidth={2} />
-              {formatTimeUntilFuture(pool.closesAt)}
+            <p className="mt-1 flex items-start gap-1 text-[11px] font-medium leading-tight text-app-text">
+              <Clock className="mt-0.5 h-3.5 w-3.5 shrink-0 text-app-muted" strokeWidth={2} />
+              {formatPoolCloseLabel(pool.closesAt)}
             </p>
           </div>
         </div>
       </header>
 
-      {/* Conversion CTA — full width, above fold */}
       {!joined && poolAcceptsEntries ? (
         <div className="mt-3">
           <button
             type="button"
-            className={cn(
-              btnPrimaryFull(),
-              "min-h-[48px] text-[14px] shadow-[0_4px_14px_rgba(37,99,235,0.35)]",
-            )}
+            className={cn(btnPrimaryFull(), "min-h-[44px] text-[14px]")}
             onClick={() => joinPublicPool(pool.id)}
           >
             <Target className="h-4 w-4 shrink-0 opacity-95" strokeWidth={2} />
-            Entrar al pool y cargar pronósticos
+            Jugar
           </button>
           <p className="mt-2 text-center text-[10px] leading-snug text-app-muted">
-            Unite para guardar marcadores y figurar en el ranking de esta fecha.
+            Al unirte podés cargar pronósticos y ver tu posición en el ranking
+            de la fecha.
           </p>
         </div>
       ) : null}
@@ -333,8 +301,8 @@ export function FechaPublicPoolClient({
         <div className="mt-3 rounded-[10px] border border-app-border bg-app-surface px-3 py-2.5 text-center">
           <p className="text-[12px] font-semibold text-app-text">
             {pool.status === "closed" ?
-              "Las predicciones para este pool están cerradas."
-            : "Este pool ya fue liquidado."}
+              "Cierre de pronósticos: no se aceptan más marcadores."
+            : "Pool liquidado."}
           </p>
           <p className="mt-1 text-[10px] text-app-muted">
             Podés ver partidos y el ranking de referencia.
@@ -383,15 +351,14 @@ export function FechaPublicPoolClient({
         ) : (
           <div className="border-b border-app-border-subtle px-3 py-2.5">
             <p className="text-[11px] leading-snug text-app-muted">
-              <span className="font-semibold text-app-text">Pool gratuito.</span>{" "}
-              Competís por puntos y posición en el ranking de esta fecha.
+              Pool sin premio en efectivo: ranking por puntos en esta fecha.
             </p>
           </div>
         )}
         <div className="flex flex-wrap gap-x-3 gap-y-1 px-3 py-2 text-[10px] text-app-muted">
           <span className="inline-flex items-center gap-1">
             <Award className="h-3.5 w-3.5 text-app-muted" strokeWidth={2} />
-            Top {pool.payoutTopN} {paid ? "al reparto" : "del ranking"}
+            Mejores {pool.payoutTopN} {paid ? "según reparto" : "posiciones"}
           </span>
           <span className="text-app-border">·</span>
           <span>Cierre pronósticos: {formatMatchKickoffFull(pool.closesAt)}</span>
@@ -405,13 +372,13 @@ export function FechaPublicPoolClient({
             <h2 className="text-[13px] font-bold leading-none tracking-tight text-app-text">
               Partidos de la fecha
             </h2>
-            <p className="mt-1 text-[10px] font-medium text-app-muted">
-              Marcador exacto · el veredicto se infiere solo
+            <p className="mt-1 text-[10px] text-app-muted">
+              Marcador exacto; el resultado define puntos.
             </p>
           </div>
           {!joined ? (
-            <span className="shrink-0 rounded-md bg-slate-100 px-2 py-1 text-[9px] font-bold uppercase tracking-wide text-slate-600">
-              Vista previa
+            <span className="shrink-0 rounded-md border border-app-border bg-app-bg px-2 py-1 text-[9px] font-medium uppercase tracking-wide text-app-muted">
+              Solo lectura
             </span>
           ) : null}
         </div>
@@ -461,22 +428,22 @@ export function FechaPublicPoolClient({
       {rankingPreview.length > 0 ? (
         <section className="mt-5 space-y-2">
           <div className="flex items-center justify-between gap-2">
-            <h2 className="inline-flex items-center gap-1.5 text-[13px] font-bold tracking-tight text-app-text">
-              <Trophy className="h-4 w-4 text-amber-600" strokeWidth={2} />
-              Ranking · esta fecha
+            <h2 className="inline-flex items-center gap-1.5 text-[13px] font-semibold tracking-tight text-app-text">
+              <Trophy className="h-4 w-4 text-app-muted" strokeWidth={2} />
+              Ranking (top 10)
             </h2>
             {meRank ? (
-              <span className="text-[11px] font-semibold text-app-muted">
-                Vos:{" "}
-                <span className="font-bold text-app-text">{meRank.rank}°</span>{" "}
-                · {meRank.points} pts
+              <span className="text-[11px] font-medium text-app-muted">
+                Tu posición:{" "}
+                <span className="font-semibold text-app-text">{meRank.rank}</span>
+                <span className="text-app-border"> · </span>
+                {meRank.points} pts
               </span>
             ) : null}
           </div>
           {!joined ? (
             <p className="text-[10px] leading-snug text-app-muted">
-              Vista previa con datos demo. Entrá al pool para fijar tu lugar con
-              tus pronósticos.
+              Datos de referencia. Unite al pool para registrar pronósticos.
             </p>
           ) : null}
           <ul
@@ -496,15 +463,7 @@ export function FechaPublicPoolClient({
                 )}
               >
                 <span className="flex min-w-0 items-center gap-2">
-                  <span
-                    className={cn(
-                      "flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-[11px] font-bold tabular-nums",
-                      r.rank === 1 && "bg-amber-100 text-amber-950",
-                      r.rank === 2 && "bg-slate-200/90 text-slate-800",
-                      r.rank === 3 && "bg-orange-100 text-orange-950",
-                      r.rank > 3 && "bg-app-bg text-app-muted",
-                    )}
-                  >
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-app-bg text-[11px] font-semibold tabular-nums text-app-muted">
                     {r.rank}
                   </span>
                   <span className="min-w-0 truncate font-semibold text-app-text">
@@ -531,7 +490,7 @@ export function FechaPublicPoolClient({
             href="/ranking"
             className="block text-center text-[11px] font-semibold text-app-primary hover:underline"
           >
-            Ver ranking completo
+            Ver ranking
           </Link>
         </section>
       ) : null}

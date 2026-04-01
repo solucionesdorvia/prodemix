@@ -9,24 +9,24 @@ import { cn } from "@/lib/utils";
 
 const STEPS = [
   {
-    title: "Bienvení a ProdeMix",
+    title: "ProdeMix",
     body:
-      "Ligas, torneos barriales y tu grupo en un solo lugar. Seguí lo que te importa, armá prodes y medí quién la tiene más clara.",
+      "Pronósticos de futsal: torneos oficiales, pools por fecha y prodes privados. Una cuenta para cargar marcadores y ver puntos.",
   },
   {
-    title: "Seguí torneos",
+    title: "Torneos",
     body:
-      "En Torneos elegí los que querés tener cerca. Sin ruido: solo aparecen en tu inicio cuando vos querés.",
+      "En Torneos elegís competiciones y fechas. Podés seguir las que uses en el inicio.",
   },
   {
-    title: "Creá prodes y cargá el resultado",
+    title: "Prodes",
     body:
-      "Sumá partidos al prode, invitá con código y pronosticá el marcador exacto. Ahí se define la pelea.",
+      "Armás un grupo con código, sumás partidos y cargás el marcador exacto antes del horario de cada uno.",
   },
   {
-    title: "Competí en el ranking",
+    title: "Ranking",
     body:
-      "Sumás puntos con tus aciertos y competís con tu gente y en el ranking general. Nada de humo: solo resultados.",
+      "Los puntos salen de los resultados reales. Tabla por fecha, global o torneo; desempates según reglas del prode.",
   },
 ] as const;
 

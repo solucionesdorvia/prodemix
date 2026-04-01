@@ -9,7 +9,6 @@ import {
   EmptyState,
   EmptyStateButtonLink,
 } from "@/components/ui/EmptyState";
-import { initialsFromDisplayName } from "@/lib/user-display";
 import { pageEyebrow, pageHeader, pageTitle } from "@/lib/ui-styles";
 import { cn } from "@/lib/utils";
 import {
@@ -21,208 +20,57 @@ import { persistScopeRanks } from "@/state/ranking-snapshot";
 import { buildRankingEntries } from "@/state/selectors";
 import { useAppState } from "@/state/app-state";
 
-import { RankingDeltaBadge } from "./RankingDeltaBadge";
-import { RankingStatsLine } from "./RankingStatsLine";
-
 const DEFAULT_RANKING_TAB: RankingScope =
   PRIMERA_PUBLIC_POOLS.some((p) => p.status !== "settled") ? "fecha" : "global";
 
-const TABS: {
-  id: RankingScope;
-  label: string;
-  hint: string;
-}[] = [
-  { id: "fecha", label: "Fecha", hint: "Pool público" },
-  { id: "global", label: "Global", hint: "Todos los partidos" },
-  { id: "tournament", label: "Torneo", hint: "Por competición" },
-  { id: "friends", label: "Amigos", hint: "Tu círculo" },
+const TABS: { id: RankingScope; label: string }[] = [
+  { id: "fecha", label: "Fecha" },
+  { id: "global", label: "Global" },
+  { id: "tournament", label: "Torneo" },
+  { id: "friends", label: "Amigos" },
 ];
 
-function Podium({
-  rows,
-  selfPlayerId,
-}: {
-  rows: RankingEntry[];
-  selfPlayerId: string;
-}) {
-  const top = rows.slice(0, 3);
-  if (top.length === 0) return null;
-
-  if (top.length === 1) {
-    return (
-      <div className="flex justify-center px-1">
-        <PodiumCard
-          row={top[0]}
-          place={1}
-          emphasis
-          selfPlayerId={selfPlayerId}
-        />
-      </div>
-    );
-  }
-
-  if (top.length === 2) {
-    return (
-      <div className="flex items-end justify-center gap-2 px-1">
-        <PodiumCard row={top[1]} place={2} selfPlayerId={selfPlayerId} />
-        <PodiumCard
-          row={top[0]}
-          place={1}
-          emphasis
-          selfPlayerId={selfPlayerId}
-        />
-      </div>
-    );
-  }
-
-  return (
-    <div className="flex items-end justify-center gap-1.5 px-0.5">
-      <PodiumCard row={top[1]} place={2} selfPlayerId={selfPlayerId} />
-      <PodiumCard
-        row={top[0]}
-        place={1}
-        emphasis
-        selfPlayerId={selfPlayerId}
-      />
-      <PodiumCard row={top[2]} place={3} selfPlayerId={selfPlayerId} />
-    </div>
-  );
-}
-
-function PodiumCard({
+function Top10Row({
   row,
-  place,
-  emphasis,
   selfPlayerId,
 }: {
   row: RankingEntry;
-  place: 1 | 2 | 3;
-  emphasis?: boolean;
   selfPlayerId: string;
 }) {
   const isSelf = row.playerId === selfPlayerId;
-  const ring =
-    place === 1
-      ? "border-amber-200 bg-gradient-to-b from-amber-50 to-amber-100/90"
-      : place === 2
-        ? "border-slate-200 bg-gradient-to-b from-slate-50 to-slate-100/80"
-        : "border-orange-200 bg-gradient-to-b from-orange-50 to-orange-100/80";
-  const pron = row.predictionsOnScored ?? 0;
-
   return (
-    <div
+    <li
       className={cn(
-        "flex min-w-0 flex-1 flex-col items-center rounded-xl border px-1.5 pb-2 pt-2.5 text-center shadow-sm",
-        ring,
-        emphasis && "z-[1] min-h-[7.75rem] scale-[1.02] shadow-md",
-        !emphasis && "min-h-[6.5rem]",
-        isSelf && "ring-2 ring-app-primary/35",
+        "grid grid-cols-[2rem_1fr_auto] items-center gap-2 border-b border-app-border-subtle px-2.5 py-2 text-[12px] last:border-b-0",
+        isSelf && "bg-slate-50/90",
       )}
     >
+      <span className="text-center tabular-nums text-app-muted">{row.rank}</span>
       <span
         className={cn(
-          "text-[10px] font-bold tabular-nums text-app-muted",
-          emphasis && "text-app-text",
-        )}
-      >
-        {place}°
-      </span>
-      <div
-        className={cn(
-          "mt-1 flex h-9 w-9 items-center justify-center rounded-full text-[10px] font-bold text-white",
-          place === 1 && "bg-amber-500",
-          place === 2 && "bg-slate-400",
-          place === 3 && "bg-orange-400",
-        )}
-      >
-        {initialsFromDisplayName(row.displayName)}
-      </div>
-      <p
-        className={cn(
-          "mt-1 w-full truncate px-0.5 text-[11px] font-semibold leading-tight text-app-text",
-          isSelf && "text-app-primary",
+          "min-w-0 truncate font-medium",
+          isSelf ? "text-app-primary" : "text-app-text",
         )}
       >
         {row.displayName}
         {isSelf ? (
-          <span className="block text-[9px] font-normal text-app-muted">
-            vos
-          </span>
+          <span className="ml-1 text-[10px] font-normal text-app-muted">(vos)</span>
         ) : null}
-      </p>
-      <p className="mt-0.5 text-[16px] font-bold tabular-nums leading-none text-app-text">
-        {row.points}
-      </p>
-      <p className="mt-0.5 text-[9px] font-medium text-app-muted">pts</p>
-      <p className="mt-1 text-[8px] leading-tight text-app-muted">
-        {pron} pron. · {row.exactScores} pleno
-        {row.exactScores === 1 ? "" : "s"}
-      </p>
-    </div>
-  );
-}
-
-function RestRow({
-  row,
-  selfPlayerId,
-}: {
-  row: RankingEntry;
-  selfPlayerId: string;
-}) {
-  const isSelf = row.playerId === selfPlayerId;
-
-  return (
-    <li>
-      <div
-        className={cn(
-          "flex items-center gap-2 rounded-lg border border-app-border bg-app-surface px-2 py-2 shadow-[0_1px_0_rgba(15,23,42,0.03)]",
-          isSelf &&
-            "border-app-primary/40 bg-blue-50/90 ring-1 ring-app-primary/20",
-        )}
-      >
-        <span className="w-5 shrink-0 text-center text-[12px] font-bold tabular-nums text-app-muted">
-          {row.rank}
-        </span>
-        <div
-          className={cn(
-            "flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-white",
-            isSelf ? "bg-app-primary" : "bg-app-text/85",
-          )}
-        >
-          {initialsFromDisplayName(row.displayName)}
-        </div>
-        <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-1.5">
-            <span
-              className={cn(
-                "truncate text-[12px] font-semibold leading-tight",
-                isSelf ? "text-app-primary" : "text-app-text",
-              )}
-            >
-              {row.displayName}
-              {isSelf ? (
-                <span className="ml-1 text-[10px] font-normal text-app-muted">
-                  (vos)
-                </span>
-              ) : null}
-            </span>
-            <RankingDeltaBadge row={row} />
-          </div>
-          <RankingStatsLine row={row} />
-        </div>
-        <div className="shrink-0 text-right">
-          <p className="text-[17px] font-bold tabular-nums leading-none text-app-text">
-            {row.points}
-          </p>
-          <p className="mt-0.5 text-[9px] font-medium text-app-muted">pts</p>
-        </div>
+      </span>
+      <div className="shrink-0 text-right">
+        <p className="text-[14px] font-semibold tabular-nums leading-none text-app-text">
+          {row.points}
+        </p>
+        <p className="mt-0.5 text-[9px] text-app-muted">
+          {row.exactScores} pleno{row.exactScores === 1 ? "" : "s"}
+        </p>
       </div>
     </li>
   );
 }
 
 export function RankingScreen() {
-  const { user, state, recordActivity } = useAppState();
+  const { user, state } = useAppState();
   const catRev = useCatalogueRevision();
   const [tab, setTab] = useState<RankingScope>(DEFAULT_RANKING_TAB);
   const catalogue = useMemo(() => {
@@ -288,45 +136,22 @@ export function RankingScreen() {
     return tab;
   }, [tab, resolvedTournamentId, resolvedPoolId]);
 
-  const rankingScopeLabel = useMemo(() => {
-    if (tab === "tournament" && resolvedTournamentId) {
-      return (
-        catalogue.find((t) => t.id === resolvedTournamentId)?.shortName ??
-        "Torneo"
-      );
-    }
-    if (tab === "fecha" && resolvedPoolId) {
-      const p = poolOptions.find((x) => x.id === resolvedPoolId);
-      return p ? formatPublicPoolLabel(p) : "Fecha";
-    }
-    if (tab === "global") return "Global";
-    if (tab === "friends") return "Amigos";
-    return "Ranking";
-  }, [tab, resolvedTournamentId, resolvedPoolId, catalogue, poolOptions]);
+  const top10 = useMemo(() => rows.slice(0, 10), [rows]);
+
+  const userRow = useMemo(
+    () => rows.find((r) => r.playerId === user.id),
+    [rows, user.id],
+  );
+
+  const userInTop10 = useMemo(
+    () => top10.some((r) => r.playerId === user.id),
+    [top10, user.id],
+  );
 
   useEffect(() => {
     if (rows.length === 0) return;
     persistScopeRanks(scopeKey, rows);
   }, [scopeKey, rows]);
-
-  useEffect(() => {
-    const me = rows.find((r) => r.playerId === user.id);
-    if (!me?.rankDelta || me.rankDelta <= 0) return;
-    recordActivity({
-      title: "Subiste en el ranking",
-      detail: `+${me.rankDelta} posición${me.rankDelta === 1 ? "" : "es"} · ${rankingScopeLabel}`,
-      kind: "ranking",
-      dedupeKey: `rank:${scopeKey}:${user.id}:r${me.rank}`,
-    });
-  }, [
-    rows,
-    user.id,
-    scopeKey,
-    rankingScopeLabel,
-    recordActivity,
-  ]);
-
-  const rest = rows.slice(3);
 
   return (
     <div className="pb-2">
@@ -334,16 +159,14 @@ export function RankingScreen() {
         <p className={pageEyebrow}>ProdeMix</p>
         <h1 className={cn(pageTitle, "mt-0.5")}>Ranking</h1>
         <p className="mt-1.5 text-[12px] leading-relaxed text-app-muted">
-          Empezá por <strong className="font-semibold text-app-text">Fecha</strong>{" "}
-          para ver tu posición en un pool. Reglas: 3 pleno · 1 resultado · 0 si
-          falla el veredicto.
+          Tabla por alcance. Puntuación: pleno 3 pts, acierto de signo 1 pt.
         </p>
       </header>
 
       <div
-        className="mt-4 grid grid-cols-2 gap-1 rounded-xl border border-app-border bg-app-bg/60 p-1 shadow-inner"
+        className="mt-4 grid grid-cols-2 gap-1 rounded-lg border border-app-border bg-app-bg/50 p-1"
         role="tablist"
-        aria-label="Vista de ranking"
+        aria-label="Alcance del ranking"
       >
         {TABS.map((t) => {
           const active = tab === t.id;
@@ -355,18 +178,13 @@ export function RankingScreen() {
               aria-selected={active}
               onClick={() => setTab(t.id)}
               className={cn(
-                "rounded-lg px-1 py-2 text-center transition active:scale-[0.99]",
+                "rounded-md px-2 py-2 text-center text-[12px] font-semibold transition",
                 active
                   ? "bg-app-surface text-app-text shadow-sm ring-1 ring-app-border"
                   : "text-app-muted hover:text-app-text",
               )}
             >
-              <span className="block text-[12px] font-bold leading-none">
-                {t.label}
-              </span>
-              <span className="mt-0.5 block text-[9px] font-medium leading-tight text-app-muted">
-                {t.hint}
-              </span>
+              {t.label}
             </button>
           );
         })}
@@ -374,20 +192,21 @@ export function RankingScreen() {
 
       {tab === "fecha" && poolOptions.length > 0 && resolvedPoolId ? (
         <label className="mt-2 block">
-          <span className="text-[10px] font-semibold uppercase tracking-wide text-app-muted">
-            Pool de la fecha
+          <span className="text-[10px] font-medium uppercase tracking-wide text-app-muted">
+            Pool
           </span>
           <select
             value={resolvedPoolId}
             onChange={(e) => setPublicPoolId(e.target.value)}
-            className="mt-1 w-full rounded-lg border border-app-border bg-app-surface px-2.5 py-2 text-[13px] font-semibold text-app-text shadow-[0_1px_0_rgba(15,23,42,0.04)] outline-none focus:border-app-primary focus:ring-2 focus:ring-app-primary/20"
+            className="mt-1 w-full rounded-lg border border-app-border bg-app-surface px-2.5 py-2 text-[13px] font-medium text-app-text outline-none focus:border-app-primary focus:ring-2 focus:ring-app-primary/20"
           >
             {poolOptions.map((p) => (
               <option key={p.id} value={p.id}>
-                {formatPublicPoolLabel(p)} ·{" "}
+                {formatPublicPoolLabel(p)}
+                {" · "}
                 {p.type === "public_paid" ?
-                  `Entrada $${p.entryFeeArs.toLocaleString("es-AR")}`
-                : "Gratis"}
+                  `Ingreso $${p.entryFeeArs.toLocaleString("es-AR")}`
+                : "Sin ingreso"}
               </option>
             ))}
           </select>
@@ -396,17 +215,17 @@ export function RankingScreen() {
 
       {tab === "tournament" && catalogue.length > 0 && resolvedTournamentId ? (
         <label className="mt-2 block">
-          <span className="text-[10px] font-semibold uppercase tracking-wide text-app-muted">
+          <span className="text-[10px] font-medium uppercase tracking-wide text-app-muted">
             Competición
           </span>
           <select
             value={resolvedTournamentId}
             onChange={(e) => setTournamentId(e.target.value)}
-            className="mt-1 w-full rounded-lg border border-app-border bg-app-surface px-2.5 py-2 text-[13px] font-semibold text-app-text shadow-[0_1px_0_rgba(15,23,42,0.04)] outline-none focus:border-app-primary focus:ring-2 focus:ring-app-primary/20"
+            className="mt-1 w-full rounded-lg border border-app-border bg-app-surface px-2.5 py-2 text-[13px] font-medium text-app-text outline-none focus:border-app-primary focus:ring-2 focus:ring-app-primary/20"
           >
             {catalogue.map((t) => (
               <option key={t.id} value={t.id}>
-                {t.shortName} · {t.name}
+                {t.shortName}
               </option>
             ))}
           </select>
@@ -419,44 +238,48 @@ export function RankingScreen() {
           variant="soft"
           layout="horizontal"
           icon={Trophy}
-          title="Todavía no hay tabla en esta vista"
-          description="Entrá a un pool por fecha, cargá marcadores y, cuando haya resultados en la demo, la tabla se completa. El ranking global usa todos tus pronósticos con resultado."
+          title="Sin datos en esta vista"
+          description="Elegí un pool con partidos jugados y pronósticos cargados, o revisá el ranking global."
         >
-          <EmptyStateButtonLink href="/torneos">Torneos y fechas</EmptyStateButtonLink>
+          <EmptyStateButtonLink href="/torneos">Torneos</EmptyStateButtonLink>
           <EmptyStateButtonLink href="/crear" variant="secondary">
-            Prode propio (opcional)
+            Prode privado
           </EmptyStateButtonLink>
         </EmptyState>
       ) : (
         <>
-          <section className="mt-3 space-y-1.5">
-            <h2 className="text-[11px] font-semibold uppercase tracking-wide text-app-muted">
-              Top 3
+          <section className="mt-3">
+            <h2 className="text-[10px] font-medium uppercase tracking-wide text-app-muted">
+              Top 10
             </h2>
-            <Podium rows={rows} selfPlayerId={user.id} />
+            <ul className="mt-1.5 overflow-hidden rounded-lg border border-app-border bg-app-surface">
+              {top10.map((r) => (
+                <Top10Row
+                  key={`${scopeKey}-${r.playerId}`}
+                  row={r}
+                  selfPlayerId={user.id}
+                />
+              ))}
+            </ul>
+            {userRow && !userInTop10 ?
+              <p className="mt-2 rounded-lg border border-dashed border-app-border bg-app-bg/80 px-2.5 py-2 text-[11px] text-app-muted">
+                <span className="text-app-text">Tu posición:</span>{" "}
+                <span className="font-semibold tabular-nums text-app-text">
+                  {userRow.rank}
+                </span>
+                <span className="text-app-border"> · </span>
+                <span className="tabular-nums">{userRow.points} pts</span>
+                <span className="block pt-0.5 text-[10px]">
+                  {userRow.exactScores} plenos
+                </span>
+              </p>
+            : null}
           </section>
 
-          {rest.length > 0 ? (
-            <section className="mt-3 space-y-1.5">
-              <h2 className="text-[11px] font-semibold uppercase tracking-wide text-app-muted">
-                Tabla
-              </h2>
-              <ul className="space-y-1.5">
-                {rest.map((r) => (
-                  <RestRow
-                    key={`${scopeKey}-${r.playerId}`}
-                    row={r}
-                    selfPlayerId={user.id}
-                  />
-                ))}
-              </ul>
-            </section>
-          ) : null}
-
-          <p className="mt-3 rounded-lg border border-dashed border-app-border bg-app-bg/80 px-2.5 py-2 text-[10px] leading-snug text-app-muted">
-            En <strong className="font-semibold text-app-text">Fecha</strong>{" "}
-            solo cuentan partidos de ese pool con resultado. Las flechas son vs.
-            tu última visita (demo local).
+          <p className="mt-3 text-[10px] leading-snug text-app-muted">
+            En <span className="font-medium text-app-text">Fecha</span> entran
+            solo partidos de ese pool con resultado. Desempate: más plenos,
+            más aciertos de signo, pronóstico guardado antes.
           </p>
         </>
       )}

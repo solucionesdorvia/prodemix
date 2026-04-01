@@ -75,7 +75,7 @@ export function getMisProdeStatus(
   const allResults = allProdeMatchesHaveResult(prode);
 
   if (admin?.status === "finalized" || allResults) {
-    return { kind: "finalizado", label: "Finalizado" };
+    return { kind: "finalizado", label: "Cerrado" };
   }
   if (pending > 0 && canPredict) {
     return { kind: "pendiente", label: "Pendiente" };
@@ -83,5 +83,5 @@ export function getMisProdeStatus(
   if (pending === 0) {
     return { kind: "completado", label: "Completado" };
   }
-  return { kind: "en_juego", label: "En juego" };
+  return { kind: "en_juego", label: "Activo" };
 }

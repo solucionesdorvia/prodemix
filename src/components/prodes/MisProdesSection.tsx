@@ -37,12 +37,12 @@ function statusPillClass(kind: ReturnType<typeof getMisProdeStatus>["kind"]): st
     case "finalizado":
       return "bg-slate-100 text-slate-800 ring-slate-200/90";
     case "completado":
-      return "bg-emerald-50 text-emerald-950 ring-emerald-200/80";
+      return "bg-slate-50 text-slate-900 ring-slate-200/80";
     case "pendiente":
-      return "bg-amber-50 text-amber-950 ring-amber-200/80";
+      return "bg-amber-50/90 text-amber-950 ring-amber-200/70";
     case "en_juego":
     default:
-      return "bg-sky-50 text-sky-950 ring-sky-200/80";
+      return "bg-app-bg text-app-text ring-app-border";
   }
 }
 
@@ -93,8 +93,8 @@ export function MisProdesSection({
           variant="soft"
           layout="stack"
           icon={LayoutGrid}
-          title="Todavía no tenés prodes"
-          description="Creá un grupo o uníte con un código para ver tus competencias acá."
+          title="Sin prodes"
+          description="Creá uno o uníte con código de invitación."
         >
           <EmptyStateButtonLink href="/crear">Crear prode</EmptyStateButtonLink>
         </EmptyState>
@@ -113,7 +113,7 @@ export function MisProdesSection({
         }
       />
       <p className="text-[10px] leading-snug text-app-muted">
-        Torneos en los que participás: estado, puntos y puesto en la tabla.
+        Estado, puntos y posición por competencia.
       </p>
       <ul className="space-y-2">
         {rows.map((row) => {
@@ -127,11 +127,11 @@ export function MisProdesSection({
                   cardSurface,
                   "hover:border-app-muted hover:shadow-card-hover",
                   row.status.kind === "pendiente" &&
-                    "ring-1 ring-amber-200/90 border-amber-200/50 bg-amber-50/35",
+                    "ring-1 ring-amber-200/80 border-amber-200/40 bg-amber-50/25",
                   row.status.kind === "en_juego" &&
-                    "ring-1 ring-sky-200/80 border-sky-200/50 bg-sky-50/30",
+                    "border-app-border bg-app-surface",
                   row.status.kind === "completado" &&
-                    "ring-1 ring-emerald-200/60 bg-emerald-50/25",
+                    "border-app-border bg-app-bg/60",
                   row.status.kind === "finalizado" &&
                     "opacity-[0.98]",
                 )}
@@ -161,13 +161,13 @@ export function MisProdesSection({
                 </div>
                 <div className="flex shrink-0 flex-col items-end justify-center gap-0.5 text-right">
                   {row.rank !== null ?
-                    <p className="text-[10px] font-semibold uppercase text-app-muted">
-                      Puesto
+                    <p className="text-[10px] font-medium uppercase text-app-muted">
+                      N.º
                     </p>
                   : null}
                   {row.rank !== null ?
-                    <p className="text-[18px] font-bold tabular-nums leading-none text-app-text">
-                      {row.rank}°
+                    <p className="text-[18px] font-semibold tabular-nums leading-none text-app-text">
+                      {row.rank}
                     </p>
                   : (
                     <p className="text-[10px] text-app-muted">—</p>

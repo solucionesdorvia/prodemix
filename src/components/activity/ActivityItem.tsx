@@ -1,14 +1,14 @@
-import { BarChart3, Sparkles, Star, Trophy, Zap } from "lucide-react";
+import { BarChart3, Hash, Star, Target, Trophy } from "lucide-react";
 
 import type { ActivityEntry } from "@/domain";
 import { cn } from "@/lib/utils";
 
 const ICONS = {
-  prediction: Sparkles,
+  prediction: Target,
   prode: Trophy,
   ranking: BarChart3,
   follow: Star,
-  points: Zap,
+  points: Hash,
 } as const;
 
 type ActivityItemProps = {

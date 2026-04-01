@@ -71,20 +71,42 @@ export function isPredictionDeadlineOpen(
   return nowMs < t;
 }
 
-/** Countdown-style label for pool close times (future ISO). */
-export function formatTimeUntilFuture(iso: string): string {
-  const end = new Date(iso).getTime();
-  const now = Date.now();
-  const diff = end - now;
+/**
+ * Cierre de pool / pronósticos — solo hechos, sin tono promocional.
+ * "Cerrado" · "Cierra hoy HH:MM" · "Cierra en X h …" · fecha relativa si aplica.
+ */
+export function formatPoolCloseLabel(iso: string, nowMs = Date.now()): string {
+  const endMs = new Date(iso).getTime();
+  const diff = endMs - nowMs;
   if (diff <= 0) return "Cerrado";
-  const totalMin = Math.floor(diff / 60000);
-  const h = Math.floor(totalMin / 60);
-  const min = totalMin % 60;
-  if (h >= 72) {
-    return `Cierra ${formatDeadlineLabel(iso)}`;
+
+  const close = new Date(iso);
+  const now = new Date(nowMs);
+  const timeOnly = new Intl.DateTimeFormat(LOCALE, {
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(close);
+
+  if (close.toDateString() === now.toDateString()) {
+    return `Cierra hoy ${timeOnly}`;
   }
-  if (h > 0) {
-    return `Cierra en ${h}h ${min}m`;
+
+  const hoursFloat = diff / 3_600_000;
+  if (hoursFloat < 24) {
+    const h = Math.floor(hoursFloat);
+    const m = Math.round((hoursFloat - h) * 60);
+    if (h === 0) return `Cierra en ${m} min`;
+    return m > 0 ? `Cierra en ${h} h ${m} min` : `Cierra en ${h} h`;
   }
-  return `Cierra en ${totalMin}m`;
+
+  const tomorrow = new Date(nowMs);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  if (close.toDateString() === tomorrow.toDateString()) {
+    return `Cierra mañana ${timeOnly}`;
+  }
+
+  return `Cierra ${formatDeadlineLabel(iso)}`;
 }
+
+/** @deprecated Use {@link formatPoolCloseLabel} — mismo comportamiento. */
+export const formatTimeUntilFuture = formatPoolCloseLabel;

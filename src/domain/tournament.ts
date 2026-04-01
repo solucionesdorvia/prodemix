@@ -6,12 +6,7 @@ export type TournamentId = string;
 /** Top division only in current product scope. */
 export type TournamentDivision = "primera";
 
-export type TournamentCategory =
-  | "futsal"
-  | "futbol-8"
-  | "amateur"
-  | "barrial"
-  | "club-local";
+export type TournamentCategory = "futsal";
 
 export type TournamentStatus =
   | "scheduled"

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     template: "%s · ProdeMix",
   },
   description:
-    "Plataforma de pronósticos deportivos: torneos locales, futsal, ligas barriales y prodes combinados.",
+    "Pronósticos de futsal con pools por fecha y prodes privados. Reglas claras, ranking y resultados.",
   applicationName: "ProdeMix",
 };
 

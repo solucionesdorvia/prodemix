@@ -20,10 +20,6 @@ export const TORNEOS_CATEGORY_CHIPS: {
 }[] = [
   { id: "todos", label: "Todos" },
   { id: "futsal", label: "Futsal" },
-  { id: "futbol-8", label: "Fútbol 8" },
-  { id: "amateur", label: "Amateur" },
-  { id: "barrial", label: "Barrial" },
-  { id: "club-local", label: "Clubes" },
 ];
 
 /** Solo competiciones Primera (demo). */
