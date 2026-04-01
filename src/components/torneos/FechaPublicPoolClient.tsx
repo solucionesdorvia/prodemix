@@ -43,9 +43,11 @@ function formatArs(n: number): string {
 function PayoutBars({
   percents,
   topN,
+  amountsArs,
 }: {
   percents: readonly number[];
   topN: number;
+  amountsArs?: readonly number[];
 }) {
   const max = Math.max(...percents.slice(0, topN), 1);
   return (
@@ -63,14 +65,16 @@ function PayoutBars({
                 style={{ width: `${(pct / max) * 100}%` }}
               />
             </div>
-            <span className="w-9 shrink-0 text-right text-[11px] font-bold tabular-nums text-app-text">
-              {pct}%
+            <span className="w-[4.5rem] shrink-0 text-right text-[11px] font-semibold tabular-nums text-app-text">
+              {amountsArs?.[i] !== undefined ?
+                `$${formatArs(amountsArs[i]!)}`
+              : `${pct}%`}
             </span>
           </li>
         ))}
       </ul>
       <p className="text-[9px] leading-snug text-app-muted">
-        Competencia por pronósticos; sin cuotas ni probabilidades fijas.
+        Premios según posición al cierre de la fecha (demo).
       </p>
     </div>
   );
@@ -265,7 +269,7 @@ export function FechaPublicPoolClient({
               Premio
             </p>
             <p className="mt-0.5 text-[14px] font-semibold tabular-nums text-app-text">
-              {paid ? `$${formatArs(pool.prizePoolArs)}` : "—"}
+              {pool.prizePoolArs > 0 ? `$${formatArs(pool.prizePoolArs)}` : "—"}
             </p>
           </div>
           <div className="rounded-md border border-app-border-subtle bg-app-bg/60 px-2.5 py-2">
@@ -344,9 +348,13 @@ export function FechaPublicPoolClient({
 
       {/* Payout + rules — light card, not “odds” */}
       <div className={cn("mt-3", cardSurface)}>
-        {paid ? (
+        {pool.prizePoolArs > 0 ? (
           <div className="border-b border-app-border-subtle px-3 py-3">
-            <PayoutBars percents={pool.payoutPercents} topN={pool.payoutTopN} />
+            <PayoutBars
+              percents={pool.payoutPercents}
+              topN={pool.payoutTopN}
+              amountsArs={pool.payoutFixedArs}
+            />
           </div>
         ) : (
           <div className="border-b border-app-border-subtle px-3 py-2.5">
@@ -358,7 +366,8 @@ export function FechaPublicPoolClient({
         <div className="flex flex-wrap gap-x-3 gap-y-1 px-3 py-2 text-[10px] text-app-muted">
           <span className="inline-flex items-center gap-1">
             <Award className="h-3.5 w-3.5 text-app-muted" strokeWidth={2} />
-            Mejores {pool.payoutTopN} {paid ? "según reparto" : "posiciones"}
+            Mejores {pool.payoutTopN}{" "}
+            {pool.prizePoolArs > 0 ? "según reparto" : "posiciones"}
           </span>
           <span className="text-app-border">·</span>
           <span>Cierre pronósticos: {formatMatchKickoffFull(pool.closesAt)}</span>

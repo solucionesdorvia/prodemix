@@ -14,13 +14,17 @@ export const MOCK_MATCH_RESULTS: Record<
   MatchId,
   { home: number; away: number }
 > = {
-  /** Primera A · fecha 1 (coincide con fixture PLP). */
-  "afa-premio-a-m1-0": { home: 1, away: 2 },
-  "afa-premio-a-m1-1": { home: 1, away: 4 },
-  "afa-premio-a-m1-2": { home: 2, away: 1 },
-  "afa-premio-a-m1-3": { home: 4, away: 3 },
-  "afa-premio-a-m1-4": { home: 2, away: 4 },
-  "afa-premio-a-m1-5": { home: 3, away: 3 },
+  /** Joma Honor A · fecha 1 (demo ranking; AFA Premio queda sin resultado hasta el partido). */
+  "cm-joma-p-f01-m01": { home: 2, away: 1 },
+  "cm-joma-p-f01-m02": { home: 1, away: 1 },
+  "cm-joma-p-f01-m03": { home: 0, away: 2 },
+  "cm-joma-p-f01-m04": { home: 3, away: 2 },
+  "cm-joma-p-f01-m05": { home: 1, away: 0 },
+  "cm-joma-p-f01-m06": { home: 2, away: 2 },
+  "cm-joma-p-f01-m07": { home: 1, away: 3 },
+  "cm-joma-p-f01-m08": { home: 2, away: 0 },
+  "cm-joma-p-f01-m09": { home: 0, away: 3 },
+  "cm-joma-p-f01-m10": { home: 4, away: 4 },
 };
 
 export function getMockResultForMatch(

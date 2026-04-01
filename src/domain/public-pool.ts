@@ -21,6 +21,8 @@ export interface PublicPool {
   /** e.g. top 3 — percents should sum ~100. */
   payoutTopN: number;
   payoutPercents: readonly number[];
+  /** Montos ARS fijos por puesto (1°, 2°, …); si existe, la UI prioriza esto sobre %. */
+  payoutFixedArs?: readonly number[];
   participantsCount: number;
   status: PublicPoolStatus;
   closesAt: string;

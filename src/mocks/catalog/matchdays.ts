@@ -36,7 +36,6 @@ export function deriveMatchdaysFromMatches(
     let status: MatchdayStatus = "open";
     if (allFinished) status = "completed";
     else if (anyStarted) status = "closed";
-    else if (kick > now + 5 * 24 * 60 * 60 * 1000) status = "upcoming";
     return {
       id: mdId,
       tournamentId,

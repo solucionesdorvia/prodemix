@@ -1,5 +1,7 @@
 import type { Match } from "@/domain";
 
+import { getNextSaturday14BuenosAires } from "@/lib/next-saturday-ar";
+
 import plpA from "@/data/plp-primera-a-fixture-2026.json";
 import plpB from "@/data/plp-primera-b-fixture-2026.json";
 import plpC from "@/data/plp-primera-c-fixture-2026.json";
@@ -67,11 +69,17 @@ function mapFor(division: "a" | "b" | "c"): Record<string, string> {
   return MAP_C;
 }
 
-/** Primera fecha: sábado 14 mar 2026 (AR). Cada fecha +7 días; partidos cada 35 min. */
-function startsAtIso(fecha: number, slot: number): string {
-  const base = new Date("2026-03-14T14:00:00-03:00");
+/**
+ * Fecha 1 arranca el próximo sábado 14:00 AR; cada fecha siguiente +7 días; 35 min entre partidos.
+ * (Cuando haya scrapeo oficial, las fechas/horas vendrán del feed.)
+ */
+function startsAtIso(
+  fecha: number,
+  slot: number,
+  fecha1FirstKickMs: number,
+): string {
   const ms =
-    base.getTime() +
+    fecha1FirstKickMs +
     (fecha - 1) * 7 * 24 * 60 * 60 * 1000 +
     slot * 35 * 60 * 1000;
   return new Date(ms).toISOString();
@@ -93,6 +101,8 @@ export function buildPlaPremioMatches(
         ? "AFA Futsal · Primera B · Premio"
         : "AFA Futsal · Primera C · Premio";
 
+  const fecha1FirstKickMs = getNextSaturday14BuenosAires().getTime();
+
   const out: Match[] = [];
   for (const round of doc.rounds) {
     const fecha = round.fecha;
@@ -104,7 +114,7 @@ export function buildPlaPremioMatches(
         matchdayId: md,
         homeTeam: mapTeam(m.homeTeam, map),
         awayTeam: mapTeam(m.awayTeam, map),
-        startsAt: startsAtIso(fecha, slot),
+        startsAt: startsAtIso(fecha, slot, fecha1FirstKickMs),
         tournamentLabel: label,
       });
     });
