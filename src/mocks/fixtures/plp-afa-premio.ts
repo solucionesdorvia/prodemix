@@ -1,5 +1,12 @@
 import type { Match } from "@/domain";
 
+/**
+ * Horarios reales (Segundopalo, partido a partido): editar `src/data/afa-premio-kickoffs-2026.json`.
+ * Clave = `{tournamentId}-m{fecha}-{slot}` (ej. `afa-premio-a-m3-0`). Valor = ISO con zona AR.
+ * Referencia competencias: Primera A/B
+ * https://www.segundopalo.com/es/competencia/1/afa-primera-a · id 7 Primera B · id 10 Primera C
+ */
+import afaKickoffs from "@/data/afa-premio-kickoffs-2026.json";
 import { getNextSaturday14BuenosAires } from "@/lib/next-saturday-ar";
 
 import plpA from "@/data/plp-primera-a-fixture-2026.json";
@@ -69,24 +76,56 @@ function mapFor(division: "a" | "b" | "c"): Record<string, string> {
   return MAP_C;
 }
 
+/** Primera fecha incluida en el prode (fechas anteriores ya jugadas). */
+const START_FECHA: Record<"a" | "b" | "c", number> = {
+  /** Segundopalo: jornada 3 en adelante */
+  a: 3,
+  b: 3,
+  /** Segundopalo: desde fecha 2 */
+  c: 2,
+};
+
+const kickoffOverrides = afaKickoffs as {
+  overrides: Record<string, string>;
+};
+
 /**
- * Fecha 1 arranca el próximo sábado 14:00 AR; cada fecha siguiente +7 días; 35 min entre partidos.
- * (Cuando haya scrapeo oficial, las fechas/horas vendrán del feed.)
+ * Primer partido de la primera fecha incluida: próximo sábado 14:00 AR.
+ * Cada fecha oficial siguiente +7 días; entre partidos +35 min (placeholder si no hay override).
  */
-function startsAtIso(
+function computedKickoffMs(
   fecha: number,
   slot: number,
-  fecha1FirstKickMs: number,
+  startFecha: number,
+  firstIncludedFechaBaseMs: number,
+): number {
+  const weekIndex = fecha - startFecha;
+  return (
+    firstIncludedFechaBaseMs +
+    weekIndex * 7 * 24 * 60 * 60 * 1000 +
+    slot * 35 * 60 * 1000
+  );
+}
+
+function resolveStartsAt(
+  tournamentId: string,
+  fecha: number,
+  slot: number,
+  startFecha: number,
+  firstIncludedFechaBaseMs: number,
 ): string {
-  const ms =
-    fecha1FirstKickMs +
-    (fecha - 1) * 7 * 24 * 60 * 60 * 1000 +
-    slot * 35 * 60 * 1000;
-  return new Date(ms).toISOString();
+  const key = `${tournamentId}-m${fecha}-${slot}`;
+  const o = kickoffOverrides.overrides[key];
+  if (o) return new Date(o).toISOString();
+  return new Date(
+    computedKickoffMs(fecha, slot, startFecha, firstIncludedFechaBaseMs),
+  ).toISOString();
 }
 
 /**
- * Fixture completo AFA (34 fechas) desde JSON Paren La Pelota.
+ * Fixture AFA desde JSON local (equipos alineados al calendario).
+ * Rango activo: Primera A y B desde fecha 3; Primera C desde fecha 2 (Segundopalo).
+ * Horarios: `afa-premio-kickoffs-2026.json` o placeholder sábado 14:00 + semanas + 35 min.
  */
 export function buildPlaPremioMatches(
   division: "a" | "b" | "c",
@@ -94,6 +133,7 @@ export function buildPlaPremioMatches(
 ): Match[] {
   const doc = plpDoc(division);
   const map = mapFor(division);
+  const startFecha = START_FECHA[division];
   const label =
     division === "a"
       ? "AFA Futsal · Primera A · Premio"
@@ -101,11 +141,12 @@ export function buildPlaPremioMatches(
         ? "AFA Futsal · Primera B · Premio"
         : "AFA Futsal · Primera C · Premio";
 
-  const fecha1FirstKickMs = getNextSaturday14BuenosAires().getTime();
+  const firstIncludedFechaBaseMs = getNextSaturday14BuenosAires().getTime();
 
   const out: Match[] = [];
   for (const round of doc.rounds) {
     const fecha = round.fecha;
+    if (fecha < startFecha) continue;
     const md = `${tournamentId}-md-${String(fecha).padStart(2, "0")}`;
     round.matches.forEach((m, slot) => {
       out.push({
@@ -114,7 +155,13 @@ export function buildPlaPremioMatches(
         matchdayId: md,
         homeTeam: mapTeam(m.homeTeam, map),
         awayTeam: mapTeam(m.awayTeam, map),
-        startsAt: startsAtIso(fecha, slot, fecha1FirstKickMs),
+        startsAt: resolveStartsAt(
+          tournamentId,
+          fecha,
+          slot,
+          startFecha,
+          firstIncludedFechaBaseMs,
+        ),
         tournamentLabel: label,
       });
     });
