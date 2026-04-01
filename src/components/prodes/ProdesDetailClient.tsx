@@ -19,6 +19,10 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { findCatalogueMatchById } from "@/lib/catalogue-matches";
 import { pointsForPrediction } from "@/lib/scoring";
 import { pageEyebrow, pageHeader, pageTitle, statLabel } from "@/lib/ui-styles";
+import {
+  getOfficialProdeListItemById,
+  getStoredProdeFromOfficialOrNull,
+} from "@/mocks/official-prodes.mock";
 import { getMockProdeActivity, getMockParticipantCount } from "@/mocks/prode-hub.mock";
 import { getTournamentCatalogueEntryById } from "@/mocks/services/tournaments-catalogue.mock";
 import { getMockResultForMatch } from "@/mocks/mock-match-results";
@@ -45,10 +49,16 @@ export function ProdesDetailClient({ prodeId }: ProdesDetailClientProps) {
   const { user, state, setPrediction } = useAppState();
   const [shareUrl, setShareUrl] = useState("");
 
-  const prode = useMemo(
-    () => state.prodes.find((p) => p.id === prodeId),
-    [state.prodes, prodeId],
-  );
+  const prode = useMemo(() => {
+    return (
+      getStoredProdeFromOfficialOrNull(prodeId) ??
+      state.prodes.find((p) => p.id === prodeId) ??
+      null
+    );
+  }, [state.prodes, prodeId]);
+
+  const officialMeta = getOfficialProdeListItemById(prodeId);
+  const isOfficial = prode?.ownerId === "platform";
 
   const matches = useMemo((): Match[] => {
     if (!prode) return [];
@@ -115,7 +125,9 @@ export function ProdesDetailClient({ prodeId }: ProdesDetailClientProps) {
     return n;
   }, [prode, user.id, state.predictionMap]);
 
-  const participantCount = prode ? getMockParticipantCount(prode.id) : 0;
+  const participantCount = prode
+    ? (officialMeta?.participants ?? getMockParticipantCount(prode.id))
+    : 0;
   const activityLines = prode ? getMockProdeActivity(prode.name) : [];
 
   useEffect(() => {
@@ -136,11 +148,11 @@ export function ProdesDetailClient({ prodeId }: ProdesDetailClientProps) {
     return (
       <div className="pb-4">
         <Link
-          href="/"
+          href={officialMeta ? "/prodes" : "/"}
           className="inline-flex items-center gap-1 text-[12px] font-semibold text-app-primary hover:underline"
         >
           <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2} aria-hidden />
-          Inicio
+          {officialMeta ? "Prodes" : "Inicio"}
         </Link>
         <EmptyState
           className="mt-4"
@@ -148,9 +160,11 @@ export function ProdesDetailClient({ prodeId }: ProdesDetailClientProps) {
           layout="horizontal"
           icon={SearchX}
           title="No encontramos este prode"
-          description="El link puede estar incompleto o ese prode no existe en este dispositivo (demo local)."
+          description="El link puede estar incompleto o ese prode no existe en esta demo."
         >
-          <EmptyStateButtonLink href="/">Ir al inicio</EmptyStateButtonLink>
+          <EmptyStateButtonLink href={officialMeta ? "/prodes" : "/"}>
+            {officialMeta ? "Ver prodes" : "Ir al inicio"}
+          </EmptyStateButtonLink>
         </EmptyState>
       </div>
     );
@@ -161,21 +175,23 @@ export function ProdesDetailClient({ prodeId }: ProdesDetailClientProps) {
   return (
     <div className="pb-2">
       <Link
-        href="/"
+        href={isOfficial ? "/prodes" : "/"}
         className="mb-2 inline-flex items-center gap-1 text-[12px] font-semibold text-app-primary hover:underline"
       >
         <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2} aria-hidden />
-        Inicio
+        {isOfficial ? "Prodes" : "Inicio"}
       </Link>
 
       <header className={pageHeader}>
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
-            <p className={pageEyebrow}>Prode</p>
+            <p className={pageEyebrow}>
+              {isOfficial ? "Prode oficial" : "Prode"}
+            </p>
             <h1 className={cn(pageTitle, "mt-0.5")}>{prode.name}</h1>
           </div>
           <span className="shrink-0 rounded-md border border-app-border bg-app-bg px-1.5 py-0.5 text-[10px] font-semibold text-app-muted">
-            {visibilityLabel}
+            {isOfficial ? "Oficial" : visibilityLabel}
           </span>
         </div>
         <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] text-app-muted">
@@ -202,39 +218,42 @@ export function ProdesDetailClient({ prodeId }: ProdesDetailClientProps) {
         </div>
       </header>
 
-      <ProdeInviteShare
-        className="mt-2"
-        prodeName={prode.name}
-        inviteCode={prode.inviteCode}
-        prodeUrl={shareUrl || `/prodes/${encodeURIComponent(prode.id)}`}
-      />
+      {isOfficial ? null : (
+        <ProdeInviteShare
+          className="mt-2"
+          prodeName={prode.name}
+          inviteCode={prode.inviteCode}
+          prodeUrl={shareUrl || `/prodes/${encodeURIComponent(prode.id)}`}
+        />
+      )}
 
-      <div className="mt-2">
-        <button
-          type="button"
-          disabled
-          className="inline-flex h-9 w-full cursor-not-allowed items-center justify-center gap-1 rounded-lg border border-dashed border-app-border bg-app-bg/60 text-[12px] font-semibold text-app-muted opacity-80"
-          title="Próximamente"
-        >
-          <Settings className="h-3.5 w-3.5" strokeWidth={2} aria-hidden />
-          Ajustes del prode
-        </button>
-      </div>
+      {isOfficial ? null : (
+        <div className="mt-2">
+          <button
+            type="button"
+            disabled
+            className="inline-flex h-9 w-full cursor-not-allowed items-center justify-center gap-1 rounded-lg border border-dashed border-app-border bg-app-bg/60 text-[12px] font-semibold text-app-muted opacity-80"
+            title="Próximamente"
+          >
+            <Settings className="h-3.5 w-3.5" strokeWidth={2} aria-hidden />
+            Ajustes del prode
+          </button>
+        </div>
+      )}
 
       <section className="mt-3 space-y-1.5">
-        <SectionHeader title="Torneos en este prode" />
+        <SectionHeader title="Competencia" />
         {tournamentLabels.length === 0 ? (
-          <p className="text-[11px] text-app-muted">Sin torneos vinculados.</p>
+          <p className="text-[11px] text-app-muted">Sin datos de torneo.</p>
         ) : (
           <div className="flex flex-wrap gap-1">
             {tournamentLabels.map((t) => (
-              <Link
+              <span
                 key={t.id}
-                href={`/torneos/${encodeURIComponent(t.id)}`}
-                className="inline-flex max-w-full truncate rounded-full border border-app-border bg-app-surface px-2 py-0.5 text-[10px] font-semibold text-app-text shadow-[0_1px_0_rgba(15,23,42,0.03)] transition hover:border-app-muted"
+                className="inline-flex max-w-full truncate rounded-full border border-app-border bg-app-surface px-2 py-0.5 text-[10px] font-semibold text-app-text shadow-[0_1px_0_rgba(15,23,42,0.03)]"
               >
                 {t.shortName}
-              </Link>
+              </span>
             ))}
           </div>
         )}
@@ -409,6 +428,7 @@ export function ProdesDetailClient({ prodeId }: ProdesDetailClientProps) {
                   ) : null}
                   <MatchCard
                     match={match}
+                    predictionMode={isOfficial ? "outcome" : "score"}
                     initialScore={stored ?? null}
                     finalResult={finalResult ?? null}
                     pointsEarned={pointsEarned}

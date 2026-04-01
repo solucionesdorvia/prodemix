@@ -199,14 +199,14 @@ export function TournamentDetailClient({
               {following ? "Siguiendo" : "Seguir"}
             </button>
             <Link
-              href={`/crear?torneo=${encodeURIComponent(tournamentId)}`}
+              href="/prodes"
               className={cn(
                 btnCompact(),
                 "min-h-[40px] flex-1 gap-0.5 border border-app-border bg-app-bg px-2 text-[12px] text-app-text shadow-sm",
               )}
-              title="Prode privado o mixto"
+              title="Competencias oficiales"
             >
-              Prode propio
+              Prodes oficiales
               <ChevronRight className="h-3.5 w-3.5 opacity-90" strokeWidth={2} />
             </Link>
           </div>

@@ -7,7 +7,7 @@ type Props = { params: Promise<{ id: string }> };
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "Prode",
-    description: "Marcadores, puntos y ranking de tu prode.",
+    description: "Pronósticos, puntos y ranking de la competencia oficial.",
   };
 }
 

@@ -144,18 +144,18 @@ export function OnboardingHost() {
                 </p>
                 <button
                   type="button"
-                  onClick={() => finishAndGo("/torneos")}
+                  onClick={() => finishAndGo("/prodes")}
                   className="flex h-11 w-full items-center justify-center gap-1.5 rounded-xl bg-app-primary text-[13px] font-semibold text-white shadow-[0_1px_0_rgba(15,23,42,0.08)] transition hover:bg-blue-700 active:scale-[0.99]"
                 >
-                  Ver torneos
+                  Ver prodes oficiales
                   <ChevronRight className="h-4 w-4" strokeWidth={2} />
                 </button>
                 <button
                   type="button"
-                  onClick={() => finishAndGo("/crear")}
+                  onClick={() => finishAndGo("/")}
                   className="flex h-10 w-full items-center justify-center rounded-xl border border-app-border bg-app-bg text-[13px] font-semibold text-app-text transition hover:bg-app-surface active:scale-[0.99]"
                 >
-                  Crear un prode
+                  Ir al inicio
                 </button>
                 <button
                   type="button"

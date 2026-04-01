@@ -28,9 +28,9 @@ export function HomePendingSection({ items, className }: HomePendingSectionProps
         </h2>
       </div>
       <p className="text-[10px] leading-snug text-app-muted">
-        Prodes propios: partidos sin marcador. Los pools por fecha están en{" "}
-        <Link href="/torneos" className="font-semibold text-app-primary hover:underline">
-          Torneos
+        Partidos sin pronóstico en tus prodes. Sumate a competencias oficiales en{" "}
+        <Link href="/prodes" className="font-semibold text-app-primary hover:underline">
+          Prodes
         </Link>
         .
       </p>
@@ -43,16 +43,12 @@ export function HomePendingSection({ items, className }: HomePendingSectionProps
           title="Nada pendiente por acá"
           description={
             <>
-              Los <strong className="font-semibold text-app-text">pools por fecha</strong>{" "}
-              se cargan desde{" "}
-              <Link href="/torneos" className="font-semibold text-app-primary">
-                Torneos
-              </Link>
-              . Para grupos privados,{" "}
-              <Link href="/crear" className="font-semibold text-app-muted hover:text-app-primary">
-                creá un prode
+              Entrá a un <strong className="font-semibold text-app-text">prode oficial</strong>{" "}
+              desde{" "}
+              <Link href="/prodes" className="font-semibold text-app-primary">
+                Prodes
               </Link>{" "}
-              o abrilo desde el perfil.
+              y cargá tus pronósticos antes del cierre.
             </>
           }
         />

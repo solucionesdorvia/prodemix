@@ -1,22 +1,6 @@
-import type { Metadata } from "next";
-import { Suspense } from "react";
+import { redirect } from "next/navigation";
 
-import { CrearProdeClient } from "@/components/crear/CrearProdeClient";
-
-export const metadata: Metadata = {
-  title: "Prode propio",
-  description:
-    "Creá un prode privado o mixto (opcional). Los pools públicos por fecha están en Torneos.",
-};
-
+/** Crear prode ya no existe: producto solo con competencias oficiales. */
 export default function CrearPage() {
-  return (
-    <Suspense
-      fallback={
-        <p className="pb-4 text-[13px] text-app-muted">Cargando…</p>
-      }
-    >
-      <CrearProdeClient />
-    </Suspense>
-  );
+  redirect("/prodes");
 }

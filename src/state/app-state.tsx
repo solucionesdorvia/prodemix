@@ -244,7 +244,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         const label =
           m ? `${m.homeTeam} vs ${m.awayTeam}` : "Partido";
         const prodeName =
-          s.prodes.find((p) => p.id === prodeId)?.name ?? "Tu prode";
+          s.prodes.find((p) => p.id === prodeId)?.name ?? "Prode";
         const createdAt = new Date().toISOString();
 
         const activity =

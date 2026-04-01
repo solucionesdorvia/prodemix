@@ -23,18 +23,15 @@ import { useAppState } from "@/state/app-state";
 import { RankingDeltaBadge } from "./RankingDeltaBadge";
 import { RankingStatsLine } from "./RankingStatsLine";
 
-const DEFAULT_RANKING_TAB: RankingScope =
-  PRIMERA_PUBLIC_POOLS.some((p) => p.status !== "settled") ? "fecha" : "global";
+const DEFAULT_RANKING_TAB: RankingScope = "global";
 
 const TABS: {
   id: RankingScope;
   label: string;
   hint: string;
 }[] = [
-  { id: "fecha", label: "Fecha", hint: "Pool público" },
-  { id: "global", label: "Global", hint: "Todos los partidos" },
-  { id: "tournament", label: "Torneo", hint: "Por competición" },
-  { id: "friends", label: "Amigos", hint: "Tu círculo" },
+  { id: "global", label: "Global", hint: "Todos los pronósticos" },
+  { id: "fecha", label: "Por prode", hint: "Por competencia" },
 ];
 
 function Podium({
@@ -328,9 +325,9 @@ export function RankingScreen() {
         <p className={pageEyebrow}>ProdeMix</p>
         <h1 className={cn(pageTitle, "mt-0.5")}>Ranking</h1>
         <p className="mt-1.5 text-[12px] leading-relaxed text-app-muted">
-          Empezá por <strong className="font-semibold text-app-text">Fecha</strong>{" "}
-          para ver tu posición en un pool. Reglas: 3 pleno · 1 resultado · 0 si
-          falla el veredicto.
+          <strong className="font-semibold text-app-text">Global</strong> suma todos
+          tus pronósticos. <strong className="font-semibold text-app-text">Por prode</strong>{" "}
+          filtra por competencia oficial. 3 pts pleno · 1 pt resultado.
         </p>
       </header>
 
@@ -416,10 +413,7 @@ export function RankingScreen() {
           title="Todavía no hay tabla en esta vista"
           description="Entrá a un pool por fecha, cargá marcadores y, cuando haya resultados en la demo, la tabla se completa. El ranking global usa todos tus pronósticos con resultado."
         >
-          <EmptyStateButtonLink href="/torneos">Torneos y fechas</EmptyStateButtonLink>
-          <EmptyStateButtonLink href="/crear" variant="secondary">
-            Prode propio (opcional)
-          </EmptyStateButtonLink>
+          <EmptyStateButtonLink href="/prodes">Ver prodes oficiales</EmptyStateButtonLink>
         </EmptyState>
       ) : (
         <>

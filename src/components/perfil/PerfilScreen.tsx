@@ -78,7 +78,7 @@ export function PerfilScreen() {
         <p className={pageEyebrow}>ProdeMix</p>
         <h1 className={cn(pageTitle, "mt-0.5")}>Perfil</h1>
         <p className="mt-1 text-[11px] font-medium leading-snug text-app-muted">
-          Primera · pools por fecha · prodes opcionales
+          Futsal Argentina · prodes oficiales
         </p>
       </header>
 
@@ -124,10 +124,8 @@ export function PerfilScreen() {
           />
         </div>
         <p className="mt-2 text-[10px] leading-snug text-app-muted">
-          Prodes propios activos:{" "}
-          <Link href="/crear" className="font-semibold text-app-primary hover:underline">
-            {owned.length}
-          </Link>
+          Prodes extra (demo local):{" "}
+          <span className="font-semibold text-app-text">{owned.length}</span>
         </p>
       </section>
 
@@ -137,17 +135,17 @@ export function PerfilScreen() {
             Pools por fecha
           </h3>
           <Link
-            href="/torneos"
+            href="/prodes"
             className="text-[11px] font-semibold text-app-primary hover:underline"
           >
-            Explorar
+            Prodes
           </Link>
         </div>
         {joinedPools.length === 0 ? (
           <p className="rounded-lg border border-dashed border-app-border bg-app-bg/70 px-3 py-2.5 text-[11px] leading-snug text-app-muted">
-            Todavía no entraste a ningún pool público. Elegí una fecha en{" "}
-            <Link href="/torneos" className="font-semibold text-app-primary">
-              Torneos
+            Todavía no entraste a ningún pool público. Unite desde{" "}
+            <Link href="/prodes" className="font-semibold text-app-primary">
+              Prodes
             </Link>
             .
           </p>
@@ -180,10 +178,10 @@ export function PerfilScreen() {
             Torneos que seguís
           </h3>
           <Link
-            href="/torneos"
+            href="/prodes"
             className="text-[11px] font-semibold text-app-primary hover:underline"
           >
-            Explorar
+            Prodes
           </Link>
         </div>
         {followedLabels.length === 0 ? (
@@ -194,7 +192,7 @@ export function PerfilScreen() {
             title="Sin torneos seguidos"
             description="Explorá competiciones y tocá seguir para tenerlas a mano."
           >
-            <EmptyStateButtonLink href="/torneos">Ir a Torneos</EmptyStateButtonLink>
+            <EmptyStateButtonLink href="/prodes">Ver prodes</EmptyStateButtonLink>
           </EmptyState>
         ) : (
           <div className="flex flex-wrap gap-1.5">

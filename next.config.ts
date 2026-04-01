@@ -8,6 +8,16 @@ const nextConfig: NextConfig = {
         destination: "/prodes/:id",
         permanent: false,
       },
+      {
+        source: "/crear",
+        destination: "/prodes",
+        permanent: false,
+      },
+      {
+        source: "/torneos",
+        destination: "/prodes",
+        permanent: false,
+      },
     ];
   },
 };
