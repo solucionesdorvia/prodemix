@@ -39,6 +39,7 @@ import { RankingDeltaBadge } from "@/components/ranking/RankingDeltaBadge";
 import { RankingStatsLine } from "@/components/ranking/RankingStatsLine";
 import { persistScopeRanks } from "@/state/ranking-snapshot";
 
+import { ProdeCopyPredictionsSection } from "./ProdeCopyPredictionsSection";
 import { ProdeInviteShare } from "./ProdeInviteShare";
 
 type ProdesDetailClientProps = {
@@ -395,6 +396,8 @@ export function ProdesDetailClient({ prodeId }: ProdesDetailClientProps) {
           </ul>
         </section>
       ) : null}
+
+      <ProdeCopyPredictionsSection prode={prode} />
 
       <section className="mt-3 space-y-1.5">
         <SectionHeader title="Partidos y pronósticos" />

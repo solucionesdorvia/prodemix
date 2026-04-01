@@ -68,6 +68,11 @@ type AppStateValue = {
     matchId: string,
     score: ScorePrediction | null,
   ) => void;
+  /** Varias claves en un solo persist (p. ej. importar pronósticos). Sin actividad por partido. */
+  bulkSetPredictionsForProde: (
+    prodeId: string,
+    updates: Record<string, ScorePrediction | null>,
+  ) => void;
   joinPublicPool: (poolId: string) => void;
   setPublicPoolPrediction: (
     poolId: string,
@@ -279,6 +284,24 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     [user.id],
   );
 
+  const bulkSetPredictionsForProde = useCallback(
+    (prodeId: string, updates: Record<string, ScorePrediction | null>) => {
+      const matchIds = Object.keys(updates);
+      if (matchIds.length === 0) return;
+      setState((s) => {
+        const nextMap = { ...s.predictionMap };
+        for (const matchId of matchIds) {
+          const key = predictionStorageKey(user.id, prodeId, matchId);
+          const score = updates[matchId];
+          if (score === null) delete nextMap[key];
+          else nextMap[key] = score;
+        }
+        return { ...s, predictionMap: nextMap };
+      });
+    },
+    [user.id],
+  );
+
   const joinPublicPool = useCallback((poolId: string) => {
     setState((s) => {
       if (s.joinedPublicPoolIds.includes(poolId)) return s;
@@ -332,6 +355,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       toggleFollowTournament,
       createProde,
       setPrediction,
+      bulkSetPredictionsForProde,
       joinPublicPool,
       setPublicPoolPrediction,
       recordActivity,
@@ -345,6 +369,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       toggleFollowTournament,
       createProde,
       setPrediction,
+      bulkSetPredictionsForProde,
       joinPublicPool,
       setPublicPoolPrediction,
       recordActivity,
