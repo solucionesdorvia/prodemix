@@ -82,7 +82,7 @@ export function ProdeInviteShare({
         </p>
       </div>
       <p className="mt-0.5 text-[11px] leading-snug text-app-muted">
-        Mismo código para todos los integrantes (demo local).
+        Mismo código para todos los integrantes.
       </p>
 
       <div className="mt-2 rounded-lg border border-app-border bg-app-surface px-2 py-1.5 text-center">

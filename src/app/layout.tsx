@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 
+import { AuthProvider } from "@/components/auth/AuthProvider";
+
 import "./globals.css";
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -34,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="es-AR" className={`${plusJakarta.variable} h-full antialiased`}>
       <body className="min-h-dvh flex flex-col bg-app-bg text-app-text">
-        {children}
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );

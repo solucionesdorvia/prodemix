@@ -4,6 +4,7 @@ import type {
   ActivityKind,
   ProdeVisibility,
   ScorePrediction,
+  User,
 } from "@/domain";
 import type { AdminProdeRecord } from "@/state/admin-prode-types";
 import {
@@ -25,7 +26,6 @@ import {
 
 import { findCatalogueMatchById } from "@/lib/catalogue-matches";
 import { getTournamentCatalogueEntryById } from "@/mocks/services/tournaments-catalogue.mock";
-import { getMockCurrentUser } from "@/mocks/services/user.mock";
 
 import {
   computePointActivityEntries,
@@ -42,9 +42,11 @@ import type { PublicPoolPredictionMap } from "./types";
 import {
   DEFAULT_APP_STATE,
   type ActivityLogEntry,
+  type NotificationPreferences,
   type PersistedAppState,
   type StoredProde,
 } from "./types";
+import { resolveUser } from "./user-profile";
 
 function newProdeId(): string {
   return typeof crypto !== "undefined" && crypto.randomUUID ?
@@ -72,9 +74,15 @@ type RecordActivityInput = {
   dedupeKey?: string;
 };
 
+type UpdateProfileInput = {
+  username: string;
+  displayName: string;
+  avatarUrl: string | null;
+};
+
 type AppStateValue = {
   hydrated: boolean;
-  user: ReturnType<typeof getMockCurrentUser>;
+  user: User;
   state: PersistedAppState;
   toggleFollowTournament: (tournamentId: string) => void;
   createProde: (input: CreateProdeInput) => string;
@@ -102,6 +110,11 @@ type AppStateValue = {
   retryPersist: () => void;
   /** Guardado explícito (misma operación que persist automático) + feedback. */
   flushPersist: () => void;
+  updateProfile: (input: UpdateProfileInput) => void;
+  setNotificationPreferences: (
+    partial: Partial<NotificationPreferences>,
+  ) => void;
+  updateProdeName: (prodeId: string, name: string) => void;
   /** Panel admin: crear/actualizar prode + fixture en catálogo local. */
   adminUpsertProdeRecord: (record: AdminProdeRecord) => void;
   adminDeleteProdeRecord: (prodeId: string) => void;
@@ -247,7 +260,45 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const user = useMemo(() => getMockCurrentUser(), []);
+  const user = useMemo(() => resolveUser(state), [state]);
+
+  const updateProfile = useCallback((input: UpdateProfileInput) => {
+    setState((s) => ({
+      ...s,
+      userProfile: {
+        username: input.username.trim(),
+        displayName: input.displayName.trim(),
+        avatarUrl: input.avatarUrl?.trim() ? input.avatarUrl.trim() : null,
+      },
+    }));
+  }, []);
+
+  const setNotificationPreferences = useCallback(
+    (partial: Partial<NotificationPreferences>) => {
+      setState((s) => ({
+        ...s,
+        notificationPreferences: {
+          ...s.notificationPreferences,
+          ...partial,
+        },
+      }));
+    },
+    [],
+  );
+
+  const updateProdeName = useCallback(
+    (prodeId: string, name: string) => {
+      const trimmed = name.trim();
+      if (trimmed.length < 2) return;
+      setState((s) => ({
+        ...s,
+        prodes: s.prodes.map((p) =>
+          p.id === prodeId && p.ownerId === user.id ? { ...p, name: trimmed } : p,
+        ),
+      }));
+    },
+    [user.id],
+  );
 
   const adminUpsertProdeRecord = useCallback(
     (record: AdminProdeRecord) => {
@@ -541,6 +592,9 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       dismissPersistFeedback,
       retryPersist,
       flushPersist,
+      updateProfile,
+      setNotificationPreferences,
+      updateProdeName,
       adminUpsertProdeRecord,
       adminDeleteProdeRecord,
     }),
@@ -561,6 +615,9 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       dismissPersistFeedback,
       retryPersist,
       flushPersist,
+      updateProfile,
+      setNotificationPreferences,
+      updateProdeName,
       adminUpsertProdeRecord,
       adminDeleteProdeRecord,
     ],

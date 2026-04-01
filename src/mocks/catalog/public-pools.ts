@@ -8,7 +8,7 @@ function poolStatusFromMatchday(
   return "open";
 }
 
-/** AFA Primera A/B/C: prode gratuito, premios fijos en ARS (demo hasta scrapeo). */
+/** AFA Primera A/B/C: prode gratuito, premios fijos en ARS (hasta scrapeo). */
 const AFA_PREMIO_PRIZE_TOTAL_ARS = 60_000;
 const AFA_PREMIO_PAYOUT_ARS = [30_000, 20_000, 10_000] as const;
 const AFA_PREMIO_PAYOUT_PCT = [50, 33.33, 16.67] as const;
@@ -23,7 +23,7 @@ function isAfaPremioTournament(tournamentId: string): boolean {
 
 /**
  * Un pool por fecha. AFA Premio A/B/C: gratis, pozo 60k repartido 30/20/10 mil.
- * Resto: gratis sin premio en efectivo (demo).
+ * Resto: gratis sin premio en efectivo.
  */
 export function buildPublicPoolsForMatchdays(
   tournamentId: string,

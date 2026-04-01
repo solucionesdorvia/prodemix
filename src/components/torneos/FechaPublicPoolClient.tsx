@@ -74,7 +74,7 @@ function PayoutBars({
         ))}
       </ul>
       <p className="text-[9px] leading-snug text-app-muted">
-        Premios según posición al cierre de la fecha (demo).
+        Premios según posición al cierre de la fecha.
       </p>
     </div>
   );

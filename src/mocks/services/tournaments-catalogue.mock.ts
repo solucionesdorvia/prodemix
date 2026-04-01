@@ -5,7 +5,7 @@ import { PRIMERA_TOURNAMENT_CATALOGUE } from "@/mocks/catalog/primera-catalog";
 import { mergeTournamentCatalogue } from "@/mocks/merge-ingestion";
 
 /**
- * Data for “crear prode” — mirrors future `GET /tournaments?include=matches`.
+ * Data for armar grupos / torneos — mirrors future `GET /tournaments?include=matches`.
  * Solo Primera; fechas en `matchdays`, partidos con `matchdayId`.
  */
 export function getTournamentCatalogue(): TournamentCatalogueEntry[] {

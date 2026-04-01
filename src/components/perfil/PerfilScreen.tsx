@@ -1,10 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronRight, Settings2, Star, Trophy } from "lucide-react";
-import { useMemo } from "react";
+import { useRouter } from "next/navigation";
+import {
+  Bell,
+  ChevronRight,
+  LogOut,
+  Pencil,
+  Star,
+  Trophy,
+} from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 
 import type { PublicPool } from "@/domain";
+import { useAuth } from "@/components/auth/AuthProvider";
 import { MisProdesSection } from "@/components/prodes/MisProdesSection";
 import {
   EmptyState,
@@ -48,9 +57,39 @@ function StatCell({
 }
 
 export function PerfilScreen() {
+  const router = useRouter();
+  const { logout } = useAuth();
   const ingestionTick = useIngestionTick();
-  const { user, state } = useAppState();
+  const { user, state, setNotificationPreferences } = useAppState();
   const owned = useOwnedProdes();
+  const [avatarBroken, setAvatarBroken] = useState(false);
+  const [profileSavedBanner, setProfileSavedBanner] = useState(false);
+
+  useEffect(() => {
+    setAvatarBroken(false);
+  }, [user.avatarUrl]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (sessionStorage.getItem("prodemix_profile_ok") === "1") {
+      sessionStorage.removeItem("prodemix_profile_ok");
+      setProfileSavedBanner(true);
+      const t = window.setTimeout(() => setProfileSavedBanner(false), 4000);
+      return () => window.clearTimeout(t);
+    }
+  }, []);
+
+  const showAvatar =
+    Boolean(user.avatarUrl) &&
+    /^https?:\/\//i.test(user.avatarUrl!) &&
+    !avatarBroken;
+
+  const prefs = state.notificationPreferences;
+
+  const handleLogout = () => {
+    logout();
+    router.replace("/login");
+  };
 
   const { totalPoints, exactHits } = useMemo(() => {
     const preds = aggregateUserPredictionsByMatch(user.id, state);
@@ -79,16 +118,37 @@ export function PerfilScreen() {
         <p className={pageEyebrow}>ProdeMix</p>
         <h1 className={cn(pageTitle, "mt-0.5")}>Perfil</h1>
         <p className="mt-1 text-[11px] font-medium leading-snug text-app-muted">
-          Primera · pools por fecha · prodes opcionales
+          Primera · pools por fecha
         </p>
       </header>
 
+      {profileSavedBanner ?
+        <p
+          className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-[12px] font-semibold text-emerald-900"
+          role="status"
+        >
+          Perfil actualizado
+        </p>
+      : null}
+
       <section className="mt-4 flex gap-3">
         <div
-          className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-app-text text-lg font-bold text-app-surface shadow-sm"
+          className="relative flex h-16 w-16 shrink-0 overflow-hidden rounded-2xl bg-app-text text-lg font-bold text-app-surface shadow-sm"
           aria-hidden
         >
-          {initialsFromDisplayName(user.displayName)}
+          {showAvatar ?
+            // eslint-disable-next-line @next/next/no-img-element -- URL definida por el usuario
+            <img
+              src={user.avatarUrl!}
+              alt=""
+              className="h-full w-full object-cover"
+              onError={() => setAvatarBroken(true)}
+            />
+          : (
+            <span className="flex h-full w-full items-center justify-center">
+              {initialsFromDisplayName(user.displayName)}
+            </span>
+          )}
         </div>
         <div className="min-w-0 flex-1 pt-0.5">
           <h2 className="truncate text-[17px] font-semibold leading-tight text-app-text">
@@ -111,7 +171,7 @@ export function PerfilScreen() {
           <StatCell
             label="Pts totales"
             value={totalPoints}
-            sub="vs resultados demo"
+            sub="vs resultados oficiales"
           />
           <StatCell
             label="Plenos"
@@ -212,7 +272,7 @@ export function PerfilScreen() {
           </div>
         )}
         <p className="text-[10px] leading-snug text-app-muted">
-          Tus seguimientos se guardan en este dispositivo (demo local).
+          Tus seguimientos se guardan en este dispositivo.
         </p>
       </section>
 
@@ -245,21 +305,24 @@ export function PerfilScreen() {
         </Link>
       </section>
 
-      <section className="mt-3 space-y-2">
+      <section className="mt-4 space-y-2">
+        <h3 className="text-[11px] font-semibold uppercase tracking-wide text-app-muted">
+          Cuenta
+        </h3>
         <Link
-          href="#configuracion"
+          href="/perfil/editar"
           className="flex w-full items-center justify-between gap-2 rounded-[10px] border border-app-border bg-app-surface px-3 py-2.5 text-left shadow-[0_1px_0_rgba(15,23,42,0.04)] transition hover:bg-app-bg active:scale-[0.995]"
         >
           <span className="flex min-w-0 items-center gap-2">
             <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-app-bg text-app-primary">
-              <Settings2 className="h-4 w-4" strokeWidth={2} aria-hidden />
+              <Pencil className="h-4 w-4" strokeWidth={2} aria-hidden />
             </span>
             <span>
               <span className="block text-[13px] font-semibold text-app-text">
-                Configuración
+                Editar perfil
               </span>
               <span className="mt-0.5 block text-[10px] text-app-muted">
-                Cuenta, notificaciones y privacidad
+                Nombre, usuario e imagen
               </span>
             </span>
           </span>
@@ -269,15 +332,98 @@ export function PerfilScreen() {
             aria-hidden
           />
         </Link>
+      </section>
 
-        <div
-          id="configuracion"
-          className="scroll-mt-4 rounded-lg border border-dashed border-app-border bg-app-bg/70 px-3 py-2.5 text-[10px] leading-snug text-app-muted"
-          tabIndex={-1}
-        >
-          Próximamente: edición de perfil, alertas de partidos y cierre de
-          sesión.
+      <section className="mt-4 space-y-2">
+        <h3 className="text-[11px] font-semibold uppercase tracking-wide text-app-muted">
+          Notificaciones
+        </h3>
+        <div className="rounded-[10px] border border-app-border bg-app-surface px-3 py-1 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+          <div className="flex items-center justify-between gap-3 border-b border-app-border-subtle py-2.5 last:border-b-0">
+            <div className="flex min-w-0 items-start gap-2">
+              <Bell
+                className="mt-0.5 h-4 w-4 shrink-0 text-app-primary"
+                strokeWidth={2}
+                aria-hidden
+              />
+              <div className="min-w-0">
+                <p className="text-[13px] font-semibold text-app-text">
+                  Recibir recordatorios
+                </p>
+                <p className="text-[10px] leading-snug text-app-muted">
+                  Partidos y fechas de tus pools y grupos. Guardado en este
+                  dispositivo.
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={prefs.matchReminders}
+              onClick={() =>
+                setNotificationPreferences({
+                  matchReminders: !prefs.matchReminders,
+                })
+              }
+              className={cn(
+                "relative h-7 w-12 shrink-0 rounded-full transition-colors",
+                prefs.matchReminders ? "bg-app-primary" : "bg-app-border",
+              )}
+            >
+              <span
+                className={cn(
+                  "absolute top-0.5 h-6 w-6 rounded-full bg-white shadow transition-transform",
+                  prefs.matchReminders ? "translate-x-[1.375rem]" : "translate-x-0.5",
+                )}
+              />
+            </button>
+          </div>
+          <div className="flex items-center justify-between gap-3 py-2.5">
+            <div className="min-w-0">
+              <p className="text-[13px] font-semibold text-app-text">
+                Avisar antes del cierre del prode
+              </p>
+              <p className="text-[10px] leading-snug text-app-muted">
+                Antes del límite para cargar marcadores en tus grupos. Guardado
+                en este dispositivo.
+              </p>
+            </div>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={prefs.prodeDeadlineAlerts}
+              onClick={() =>
+                setNotificationPreferences({
+                  prodeDeadlineAlerts: !prefs.prodeDeadlineAlerts,
+                })
+              }
+              className={cn(
+                "relative h-7 w-12 shrink-0 rounded-full transition-colors",
+                prefs.prodeDeadlineAlerts ? "bg-app-primary" : "bg-app-border",
+              )}
+            >
+              <span
+                className={cn(
+                  "absolute top-0.5 h-6 w-6 rounded-full bg-white shadow transition-transform",
+                  prefs.prodeDeadlineAlerts ?
+                    "translate-x-[1.375rem]"
+                  : "translate-x-0.5",
+                )}
+              />
+            </button>
+          </div>
         </div>
+      </section>
+
+      <section className="mt-4">
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="flex w-full items-center justify-center gap-2 rounded-[10px] border border-app-border bg-app-surface px-3 py-2.5 text-[13px] font-semibold text-app-text shadow-[0_1px_0_rgba(15,23,42,0.04)] transition hover:bg-red-50 hover:text-red-800 active:scale-[0.995]"
+        >
+          <LogOut className="h-4 w-4" strokeWidth={2} aria-hidden />
+          Cerrar sesión
+        </button>
       </section>
     </div>
   );

@@ -14,7 +14,7 @@ export const MOCK_MATCH_RESULTS: Record<
   MatchId,
   { home: number; away: number }
 > = {
-  /** Joma Honor A · fecha 1 (demo ranking; AFA Premio queda sin resultado hasta el partido). */
+  /** Joma Honor A · fecha 1 (AFA Premio queda sin resultado hasta el partido). */
   "cm-joma-p-f01-m01": { home: 2, away: 1 },
   "cm-joma-p-f01-m02": { home: 1, away: 1 },
   "cm-joma-p-f01-m03": { home: 0, away: 2 },

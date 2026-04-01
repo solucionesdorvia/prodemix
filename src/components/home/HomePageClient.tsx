@@ -311,9 +311,7 @@ export function HomePageClient() {
               <Link href="/torneos" className="font-semibold text-app-primary">
                 Torneos
               </Link>{" "}
-              o un{" "}
-              <Link href="/perfil">prode propio</Link>: marcador exacto por
-              partido.
+              cargá el marcador exacto por partido.
             </>
           }
         />
@@ -379,10 +377,6 @@ export function HomePageClient() {
         <p className="border-t border-app-border-subtle pt-4 text-center text-[11px] text-app-muted">
           <Link href="/torneos" className="font-semibold text-app-primary hover:underline">
             Torneos
-          </Link>
-          <span className="text-app-border"> · </span>
-          <Link href="/crear" className="font-semibold text-app-muted hover:text-app-text hover:underline">
-            Prode privado
           </Link>
         </p>
       </div>

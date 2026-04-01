@@ -59,7 +59,7 @@ export interface TorneoBrowseItem {
   promoBadge?: string;
 }
 
-/** Crear prode / API: tournament with fechas + flat matches (matches include matchdayId). */
+/** API: tournament with fechas + flat matches (matches include matchdayId). */
 export interface TournamentCatalogueEntry {
   id: string;
   name: string;

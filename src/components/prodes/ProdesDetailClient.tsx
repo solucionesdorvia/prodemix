@@ -164,7 +164,7 @@ export function ProdesDetailClient({ prodeId }: ProdesDetailClientProps) {
           layout="horizontal"
           icon={SearchX}
           title="No encontramos este prode"
-          description="El link puede estar incompleto o ese prode no existe en este dispositivo (demo local)."
+          description="El link puede estar incompleto o ese prode no existe en este dispositivo."
         >
           <EmptyStateButtonLink href="/">Ir al inicio</EmptyStateButtonLink>
         </EmptyState>
@@ -219,17 +219,17 @@ export function ProdesDetailClient({ prodeId }: ProdesDetailClientProps) {
         prodeUrl={shareUrl || `/prodes/${encodeURIComponent(prode.id)}`}
       />
 
-      <div className="mt-2">
-        <button
-          type="button"
-          disabled
-          className="inline-flex h-9 w-full cursor-not-allowed items-center justify-center gap-1 rounded-lg border border-dashed border-app-border bg-app-bg/60 text-[12px] font-semibold text-app-muted opacity-80"
-          title="Próximamente"
-        >
-          <Settings className="h-3.5 w-3.5" strokeWidth={2} aria-hidden />
-          Ajustes del prode
-        </button>
-      </div>
+      {prode.ownerId === user.id ?
+        <div className="mt-2">
+          <Link
+            href={`/prodes/${encodeURIComponent(prode.id)}/ajustes`}
+            className="inline-flex h-9 w-full items-center justify-center gap-1 rounded-lg border border-app-border bg-app-surface text-[12px] font-semibold text-app-text shadow-[0_1px_0_rgba(15,23,42,0.04)] transition hover:bg-app-bg active:scale-[0.99]"
+          >
+            <Settings className="h-3.5 w-3.5" strokeWidth={2} aria-hidden />
+            Ajustes del prode
+          </Link>
+        </div>
+      : null}
 
       <section className="mt-3 space-y-1.5">
         <SectionHeader title="Torneos en este prode" />
@@ -435,7 +435,7 @@ export function ProdesDetailClient({ prodeId }: ProdesDetailClientProps) {
             layout="horizontal"
             icon={CalendarOff}
             title="No hay partidos para mostrar"
-            description="El fixture no está disponible o se perdió el vínculo con el catálogo en esta demo."
+            description="El fixture no está disponible o se perdió el vínculo con el catálogo."
           />
         ) : (
           <ul className="space-y-1.5">

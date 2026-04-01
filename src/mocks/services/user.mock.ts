@@ -1,6 +1,6 @@
 import type { User } from "@/domain";
 
-/** Until auth: single demo user id used across mocks. */
+/** Until auth: single provisional user id used across mocks. */
 export const MOCK_CURRENT_USER_ID = "user-valentin-1";
 
 export const MOCK_USER_DISPLAY_NAME = "Valentín";

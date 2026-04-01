@@ -136,16 +136,45 @@ export function RankingScreen() {
     return tab;
   }, [tab, resolvedTournamentId, resolvedPoolId]);
 
-  const top10 = useMemo(() => rows.slice(0, 10), [rows]);
+  const listRows = useMemo(() => rows.slice(0, 10), [rows]);
+
+  const rankingHeading = useMemo(() => {
+    if (tab === "fecha") {
+      if (resolvedPoolId) {
+        const p = poolOptions.find((x) => x.id === resolvedPoolId);
+        return p ?
+            `Clasificación · ${formatPublicPoolLabel(p)}`
+          : "Clasificación del pool";
+      }
+      return "Clasificación por fecha";
+    }
+    if (tab === "global") {
+      return "Clasificación general";
+    }
+    if (tab === "tournament" && resolvedTournamentId) {
+      const t = catalogue.find((x) => x.id === resolvedTournamentId);
+      return t ? `Clasificación · ${t.shortName}` : "Clasificación del torneo";
+    }
+    if (tab === "friends") {
+      return "Clasificación entre amigos";
+    }
+    return "Clasificación";
+  }, [
+    tab,
+    resolvedPoolId,
+    resolvedTournamentId,
+    poolOptions,
+    catalogue,
+  ]);
 
   const userRow = useMemo(
     () => rows.find((r) => r.playerId === user.id),
     [rows, user.id],
   );
 
-  const userInTop10 = useMemo(
-    () => top10.some((r) => r.playerId === user.id),
-    [top10, user.id],
+  const userInList = useMemo(
+    () => listRows.some((r) => r.playerId === user.id),
+    [listRows, user.id],
   );
 
   useEffect(() => {
@@ -242,39 +271,43 @@ export function RankingScreen() {
           description="Elegí un pool con partidos jugados y pronósticos cargados, o revisá el ranking global."
         >
           <EmptyStateButtonLink href="/torneos">Torneos</EmptyStateButtonLink>
-          <EmptyStateButtonLink href="/crear" variant="secondary">
-            Prode privado
-          </EmptyStateButtonLink>
         </EmptyState>
       ) : (
         <>
-          <section className="mt-3">
-            <h2 className="text-[10px] font-medium uppercase tracking-wide text-app-muted">
-              Top 10
-            </h2>
-            <ul className="mt-1.5 overflow-hidden rounded-lg border border-app-border bg-app-surface">
-              {top10.map((r) => (
-                <Top10Row
-                  key={`${scopeKey}-${r.playerId}`}
-                  row={r}
-                  selfPlayerId={user.id}
-                />
-              ))}
-            </ul>
-            {userRow && !userInTop10 ?
-              <p className="mt-2 rounded-lg border border-dashed border-app-border bg-app-bg/80 px-2.5 py-2 text-[11px] text-app-muted">
-                <span className="text-app-text">Tu posición:</span>{" "}
-                <span className="font-semibold tabular-nums text-app-text">
-                  {userRow.rank}
-                </span>
-                <span className="text-app-border"> · </span>
-                <span className="tabular-nums">{userRow.points} pts</span>
-                <span className="block pt-0.5 text-[10px]">
-                  {userRow.exactScores} plenos
-                </span>
+          {listRows.length > 0 ? (
+            <section className="mt-3">
+              <h2 className="text-[13px] font-semibold leading-snug tracking-tight text-app-text">
+                {rankingHeading}
+              </h2>
+              <p className="mt-0.5 text-[10px] leading-snug text-app-muted">
+                {rows.length}{" "}
+                {rows.length === 1 ? "jugador" : "jugadores"} en el ranking
+                {rows.length > 10 ? " · primeras 10 posiciones" : null}
               </p>
-            : null}
-          </section>
+              <ul className="mt-2 overflow-hidden rounded-lg border border-app-border bg-app-surface">
+                {listRows.map((r) => (
+                  <Top10Row
+                    key={`${scopeKey}-${r.playerId}`}
+                    row={r}
+                    selfPlayerId={user.id}
+                  />
+                ))}
+              </ul>
+              {userRow && !userInList ?
+                <p className="mt-2 rounded-lg border border-dashed border-app-border bg-app-bg/80 px-2.5 py-2 text-[11px] text-app-muted">
+                  <span className="text-app-text">Tu posición:</span>{" "}
+                  <span className="font-semibold tabular-nums text-app-text">
+                    {userRow.rank}
+                  </span>
+                  <span className="text-app-border"> · </span>
+                  <span className="tabular-nums">{userRow.points} pts</span>
+                  <span className="block pt-0.5 text-[10px]">
+                    {userRow.exactScores} plenos
+                  </span>
+                </p>
+              : null}
+            </section>
+          ) : null}
 
           <p className="mt-3 text-[10px] leading-snug text-app-muted">
             En <span className="font-medium text-app-text">Fecha</span> entran

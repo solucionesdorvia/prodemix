@@ -66,7 +66,7 @@ export function TournamentDetailClient({
           layout="horizontal"
           icon={SearchX}
           title="No encontramos este torneo"
-          description="El ID no coincide con la demo o el torneo fue quitado del catálogo."
+          description="El ID no coincide con la base actual o el torneo fue quitado del catálogo."
         >
           <EmptyStateButtonLink href="/torneos">Ver todos los torneos</EmptyStateButtonLink>
         </EmptyState>
@@ -184,32 +184,19 @@ export function TournamentDetailClient({
               <ChevronRight className="h-4 w-4 shrink-0" strokeWidth={2.25} aria-hidden />
             </Link>
           ) : null}
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => toggleFollowTournament(tournamentId)}
-              className={cn(
-                btnCompact(),
-                "min-h-[40px] flex-1 border text-[12px]",
-                following
-                  ? "border-app-primary bg-blue-50 text-app-primary"
-                  : "border-app-border bg-app-bg text-app-text shadow-sm",
-              )}
-            >
-              {following ? "Siguiendo" : "Seguir"}
-            </button>
-            <Link
-              href={`/crear?torneo=${encodeURIComponent(tournamentId)}`}
-              className={cn(
-                btnCompact(),
-                "min-h-[40px] flex-1 gap-0.5 border border-app-border bg-app-bg px-2 text-[12px] text-app-text shadow-sm",
-              )}
-              title="Prode privado o mixto"
-            >
-              Prode propio
-              <ChevronRight className="h-3.5 w-3.5 opacity-90" strokeWidth={2} />
-            </Link>
-          </div>
+          <button
+            type="button"
+            onClick={() => toggleFollowTournament(tournamentId)}
+            className={cn(
+              btnCompact(),
+              "min-h-[40px] w-full border text-[12px]",
+              following
+                ? "border-app-primary bg-blue-50 text-app-primary"
+                : "border-app-border bg-app-bg text-app-text shadow-sm",
+            )}
+          >
+            {following ? "Siguiendo" : "Seguir"}
+          </button>
         </div>
       </article>
 
@@ -278,7 +265,7 @@ export function TournamentDetailClient({
             layout="horizontal"
             icon={CalendarOff}
             title="Sin partidos próximos"
-            description="En esta demo no quedan fechas pendientes o la competición ya cerró la fase regular."
+            description="No quedan fechas pendientes o la competición ya cerró la fase regular."
           />
         </section>
       )}
@@ -320,7 +307,7 @@ export function TournamentDetailClient({
             layout="horizontal"
             icon={History}
             title="Sin resultados recientes"
-            description="Cuando el fixture tenga partidos jugados en esta demo, los vas a ver acá."
+            description="Cuando el fixture tenga partidos jugados, los vas a ver acá."
           />
         </section>
       )}
@@ -357,7 +344,7 @@ export function TournamentDetailClient({
               ))}
             </ul>
             <p className="border-t border-app-border-subtle px-2.5 py-1.5 text-[9px] leading-snug text-app-muted">
-              Vista previa · posiciones demo según fixture cargado.
+              Vista previa · posiciones según fixture cargado.
             </p>
           </div>
         </section>

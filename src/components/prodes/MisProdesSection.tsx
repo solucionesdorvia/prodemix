@@ -1,14 +1,10 @@
 "use client";
 
-import { ChevronRight, LayoutGrid } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useMemo } from "react";
 
 import { useCatalogueRevision } from "@/components/app/CatalogueRefreshContext";
-import {
-  EmptyState,
-  EmptyStateButtonLink,
-} from "@/components/ui/EmptyState";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import {
   countPendingProdePredictions,
@@ -86,32 +82,12 @@ export function MisProdesSection({
   }, [prodes, userId, displayName, state, catRev]);
 
   if (prodes.length === 0) {
-    return (
-      <section className={cn("space-y-2", className)}>
-        <SectionHeader title="Mis prodes" />
-        <EmptyState
-          variant="soft"
-          layout="stack"
-          icon={LayoutGrid}
-          title="Sin prodes"
-          description="Creá uno o uníte con código de invitación."
-        >
-          <EmptyStateButtonLink href="/crear">Crear prode</EmptyStateButtonLink>
-        </EmptyState>
-      </section>
-    );
+    return null;
   }
 
   return (
     <section className={cn("space-y-2", className)}>
-      <SectionHeader
-        title="Mis prodes"
-        action={
-          <Link href="/crear" className="font-semibold hover:underline">
-            Crear
-          </Link>
-        }
-      />
+      <SectionHeader title="Mis prodes" />
       <p className="text-[10px] leading-snug text-app-muted">
         Estado, puntos y posición por competencia.
       </p>

@@ -1,6 +1,6 @@
 const LOCALE = "es-AR";
 
-/** One line: weekday, day, month, time — e.g. match rows in crear / torneo detail. */
+/** One line: weekday, day, month, time — e.g. match rows in torneo detail. */
 export function formatMatchKickoffFull(iso: string): string {
   const d = new Date(iso);
   return new Intl.DateTimeFormat(LOCALE, {

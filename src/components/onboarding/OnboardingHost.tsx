@@ -11,7 +11,7 @@ const STEPS = [
   {
     title: "ProdeMix",
     body:
-      "Pronósticos de futsal: torneos oficiales, pools por fecha y prodes privados. Una cuenta para cargar marcadores y ver puntos.",
+      "Pronósticos de futsal: torneos oficiales y pools por fecha. Una cuenta para cargar marcadores y ver puntos.",
   },
   {
     title: "Torneos",
@@ -19,14 +19,9 @@ const STEPS = [
       "En Torneos elegís competiciones y fechas. Podés seguir las que uses en el inicio.",
   },
   {
-    title: "Prodes",
-    body:
-      "Armás un grupo con código, sumás partidos y cargás el marcador exacto antes del horario de cada uno.",
-  },
-  {
     title: "Ranking",
     body:
-      "Los puntos salen de los resultados reales. Tabla por fecha, global o torneo; desempates según reglas del prode.",
+      "Los puntos salen de los resultados reales. Tabla por fecha, global o torneo; desempates según las reglas publicadas.",
   },
 ] as const;
 
@@ -149,13 +144,6 @@ export function OnboardingHost() {
                 >
                   Ver torneos
                   <ChevronRight className="h-4 w-4" strokeWidth={2} />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => finishAndGo("/crear")}
-                  className="flex h-10 w-full items-center justify-center rounded-xl border border-app-border bg-app-bg text-[13px] font-semibold text-app-text transition hover:bg-app-surface active:scale-[0.99]"
-                >
-                  Crear un prode
                 </button>
                 <button
                   type="button"

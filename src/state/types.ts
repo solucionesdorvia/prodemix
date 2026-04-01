@@ -26,12 +26,30 @@ export interface ActivityLogEntry {
 /** Key: `${userId}::${publicPoolId}::${matchId}` — mismo formato que prodes. */
 export type PublicPoolPredictionMap = Record<string, ScorePrediction>;
 
+export interface UserProfilePersisted {
+  username: string;
+  displayName: string;
+  avatarUrl: string | null;
+}
+
+export interface NotificationPreferences {
+  /** Recordatorios de partidos (estructura para futuras notificaciones). */
+  matchReminders: boolean;
+  /** Aviso antes del cierre del prode (estructura para futuras notificaciones). */
+  prodeDeadlineAlerts: boolean;
+}
+
 export interface PersistedAppState {
   /**
    * When set, first-run onboarding is not shown again.
    * Omitted in older saves; persistence migrates from usage (prodes/follows).
    */
   onboardingCompletedAt: string | null;
+  /**
+   * Overrides sobre el usuario mock. Si es null, se usan valores por defecto.
+   */
+  userProfile: UserProfilePersisted | null;
+  notificationPreferences: NotificationPreferences;
   followedTournamentIds: string[];
   prodes: StoredProde[];
   /**
@@ -39,7 +57,7 @@ export interface PersistedAppState {
    * Same match in two prodes uses distinct keys.
    */
   predictionMap: Record<string, ScorePrediction>;
-  /** Pools públicos de fecha en los que el usuario entró (demo local). */
+  /** Pools públicos de fecha en los que el usuario entró (persistido localmente). */
   joinedPublicPoolIds: string[];
   publicPoolPredictionMap: PublicPoolPredictionMap;
   activity: ActivityLogEntry[];
@@ -51,6 +69,11 @@ export interface PersistedAppState {
 
 export const DEFAULT_APP_STATE: PersistedAppState = {
   onboardingCompletedAt: null,
+  userProfile: null,
+  notificationPreferences: {
+    matchReminders: true,
+    prodeDeadlineAlerts: true,
+  },
   followedTournamentIds: [],
   prodes: [],
   predictionMap: {},

@@ -1,4 +1,5 @@
 import { generateInviteCode } from "./invite-code";
+import { defaultUserProfileFromMock } from "./user-profile";
 import type { PersistedAppState, StoredProde } from "./types";
 import { DEFAULT_APP_STATE } from "./types";
 
@@ -55,8 +56,40 @@ function mergeWithDefaults(partial: PersistedAppState): PersistedAppState {
     return { ...p, inviteCode } as StoredProde;
   });
 
+  const baseProfile = defaultUserProfileFromMock();
+  const up = partial.userProfile;
+  const userProfile =
+    up &&
+    typeof up === "object" &&
+    typeof (up as { username?: unknown }).username === "string" &&
+    typeof (up as { displayName?: unknown }).displayName === "string" ?
+      {
+        username: String((up as { username: string }).username),
+        displayName: String((up as { displayName: string }).displayName),
+        avatarUrl:
+          (up as { avatarUrl?: string | null }).avatarUrl === null ||
+          typeof (up as { avatarUrl?: unknown }).avatarUrl === "string" ?
+            ((up as { avatarUrl: string | null }).avatarUrl ?? null)
+          : baseProfile.avatarUrl,
+      }
+    : null;
+
+  const np = partial.notificationPreferences;
+  const notificationPreferences = {
+    matchReminders:
+      typeof np?.matchReminders === "boolean" ?
+        np.matchReminders
+      : DEFAULT_APP_STATE.notificationPreferences.matchReminders,
+    prodeDeadlineAlerts:
+      typeof np?.prodeDeadlineAlerts === "boolean" ?
+        np.prodeDeadlineAlerts
+      : DEFAULT_APP_STATE.notificationPreferences.prodeDeadlineAlerts,
+  };
+
   return {
     onboardingCompletedAt: resolveOnboardingCompleted(partial),
+    userProfile,
+    notificationPreferences,
     followedTournamentIds:
       Array.isArray(partial.followedTournamentIds) ?
         partial.followedTournamentIds

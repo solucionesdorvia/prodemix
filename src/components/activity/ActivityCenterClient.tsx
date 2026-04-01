@@ -36,7 +36,7 @@ export function ActivityCenterClient() {
         <p className={cn(pageEyebrow, "mt-3")}>Centro</p>
         <h1 className={cn(pageTitle, "mt-0.5")}>Actividad</h1>
         <p className="mt-1.5 text-[12px] leading-relaxed text-app-muted">
-          Novedades de tus prodes, pronósticos y ranking (demo local).
+          Novedades de pools, pronósticos y ranking en esta cuenta.
         </p>
       </header>
 

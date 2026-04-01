@@ -22,5 +22,5 @@ export const TORNEOS_CATEGORY_CHIPS: {
   { id: "futsal", label: "Futsal" },
 ];
 
-/** Solo competiciones Primera (demo). */
+/** Solo competiciones Primera. */
 const TORNEOS_BROWSE_FIXTURE: TorneoBrowseItem[] = PRIMERA_BROWSE_ITEMS;

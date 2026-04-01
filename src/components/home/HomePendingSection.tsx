@@ -28,7 +28,7 @@ export function HomePendingSection({ items, className }: HomePendingSectionProps
         </h2>
       </div>
       <p className="text-[10px] leading-snug text-app-muted">
-        Prodes propios: partidos sin marcador. Los pools por fecha están en{" "}
+        Partidos sin marcador en tus grupos. Los pools por fecha están en{" "}
         <Link href="/torneos" className="font-semibold text-app-primary hover:underline">
           Torneos
         </Link>
@@ -48,11 +48,7 @@ export function HomePendingSection({ items, className }: HomePendingSectionProps
               <Link href="/torneos" className="font-semibold text-app-primary">
                 Torneos
               </Link>
-              . Para grupos privados,{" "}
-              <Link href="/crear" className="font-semibold text-app-muted hover:text-app-primary">
-                creá un prode
-              </Link>{" "}
-              o abrilo desde el perfil.
+              .
             </>
           }
         />
