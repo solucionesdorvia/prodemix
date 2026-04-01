@@ -1,10 +1,8 @@
 import type { Match } from "@/domain";
 
 /**
- * Horarios reales (Segundopalo, partido a partido): editar `src/data/afa-premio-kickoffs-2026.json`.
- * Clave = `{tournamentId}-m{fecha}-{slot}` (ej. `afa-premio-a-m3-0`). Valor = ISO con zona AR.
- * Referencia competencias: Primera A/B
- * https://www.segundopalo.com/es/competencia/1/afa-primera-a · id 7 Primera B · id 10 Primera C
+ * Horarios reales: completar `src/data/afa-premio-kickoffs-2026.json` (clave `afa-premio-*-m{fecha}-{slot}`, valor ISO AR).
+ * Calendario en app alineado a Segundopalo 2026: Primera A y B desde fecha 3; Primera C desde fecha 2.
  */
 import afaKickoffs from "@/data/afa-premio-kickoffs-2026.json";
 import { getNextSaturday14BuenosAires } from "@/lib/next-saturday-ar";
