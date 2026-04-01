@@ -16,11 +16,14 @@ import {
   TORNEOS_CATEGORY_CHIPS,
 } from "@/mocks/services/torneos-browse.mock";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { formatPoolCloseLabel } from "@/lib/datetime";
+import { formatPrizeLine } from "@/lib/pool-cta";
 import { pageEyebrow, pageHeader, pageTitle } from "@/lib/ui-styles";
+import { getPublicPoolForMatchday } from "@/mocks/catalog/primera-catalog";
 import { useAppState } from "@/state/app-state";
 import { cn } from "@/lib/utils";
 
-import { TorneoCard } from "./TorneoCard";
+import { TorneoCard, type PlayPoolCta } from "./TorneoCard";
 
 const STATUS_SEGMENTS: { id: TorneoStatusFilter; label: string }[] = [
   { id: "all", label: "Todos" },
@@ -41,15 +44,25 @@ export function TorneosScreen() {
     return getTorneoBrowseItems();
   }, [ingestionTick]);
 
-  const playFechaHrefByTournamentId = useMemo(() => {
+  const playPoolCtaByTournamentId = useMemo(() => {
     void ingestionTick;
-    const out: Record<string, string> = {};
+    const out: Record<string, PlayPoolCta> = {};
     for (const t of getTournamentCatalogue()) {
       const md =
         t.matchdays.find((m) => m.status === "open") ?? t.matchdays[0];
-      if (md) {
-        out[t.id] = `/torneos/${encodeURIComponent(t.id)}/fechas/${encodeURIComponent(md.id)}`;
-      }
+      if (!md) continue;
+      const pool = getPublicPoolForMatchday(t.id, md.id);
+      const href = `/torneos/${encodeURIComponent(t.id)}/fechas/${encodeURIComponent(md.id)}`;
+      const prizeLine = pool ? formatPrizeLine(pool) : "Premio: gratuito";
+      const closesLine = pool ?
+        formatPoolCloseLabel(pool.closesAt)
+      : "Cierre al inicio del primer partido";
+      out[t.id] = {
+        href,
+        fechaLabel: md.name,
+        prizeLine,
+        closesLine,
+      };
     }
     return out;
   }, [ingestionTick]);
@@ -106,8 +119,8 @@ export function TorneosScreen() {
         <p className={pageEyebrow}>ProdeMix</p>
         <h1 className={cn(pageTitle, "mt-0.5")}>Torneos</h1>
         <p className="mt-1.5 text-[12px] leading-relaxed text-app-muted">
-          Solo Primera. Elegí un torneo, abrí la fecha y entrá al pool público de
-          esa jornada.
+          Solo Primera. Elegí un torneo, la fecha y competí por el premio de esa
+          jornada.
         </p>
       </header>
 
@@ -242,7 +255,7 @@ export function TorneosScreen() {
                   following={followed.has(t.id)}
                   onToggleFollow={() => toggleFollow(t.id)}
                   variant="featured"
-                  playFechaHref={playFechaHrefByTournamentId[t.id] ?? null}
+                  playPoolCta={playPoolCtaByTournamentId[t.id] ?? null}
                 />
               </div>
             ))}
@@ -284,7 +297,7 @@ export function TorneosScreen() {
                   torneo={t}
                   following={followed.has(t.id)}
                   onToggleFollow={() => toggleFollow(t.id)}
-                  playFechaHref={playFechaHrefByTournamentId[t.id] ?? null}
+                  playPoolCta={playPoolCtaByTournamentId[t.id] ?? null}
                 />
               </li>
             ))}

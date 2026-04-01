@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Banknote, Calendar, Target } from "lucide-react";
+import { ArrowRight, Banknote, Target } from "lucide-react";
 import Link from "next/link";
 import { useMemo } from "react";
 
@@ -18,6 +18,7 @@ import { MisProdesSection } from "@/components/prodes/MisProdesSection";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { formatPoolCloseLabel } from "@/lib/datetime";
+import { formatPrizeLine } from "@/lib/pool-cta";
 import { getRecentActivity } from "@/mocks/services/activity.mock";
 import { useIngestionTick } from "@/hooks/useIngestionTick";
 import type { PersistedAppState } from "@/state/types";
@@ -161,37 +162,26 @@ export function HomePageClient() {
               "block overflow-hidden transition hover:border-app-muted active:scale-[0.995]",
             )}
           >
-            <div className="border-b border-app-border-subtle px-3 py-2.5">
-              <p className="text-[15px] font-semibold leading-snug text-app-text">
+            <div className="border-b border-app-border-subtle px-3 py-3">
+              <p className="text-[12px] font-semibold leading-snug text-app-text">
                 {formatPublicPoolLabel(heroPool)}
               </p>
-              <dl className="mt-2 space-y-1 text-[11px] text-app-text">
-                <div className="flex justify-between gap-2">
-                  <dt className="text-app-muted">Premio</dt>
-                  <dd className="font-medium tabular-nums">
-                    {heroPool.prizePoolArs > 0 ?
-                      `$${formatArs(heroPool.prizePoolArs)}`
-                    : "—"}
-                  </dd>
-                </div>
-                {heroPool.type === "public_paid" && heroPool.entryFeeArs > 0 ? (
-                  <div className="flex justify-between gap-2">
-                    <dt className="text-app-muted">Ingreso</dt>
-                    <dd className="font-medium tabular-nums">
-                      ${formatArs(heroPool.entryFeeArs)}
-                    </dd>
-                  </div>
-                ) : null}
-                <div className="flex justify-between gap-2">
-                  <dt className="text-app-muted">Cierre</dt>
-                  <dd className="font-medium">{formatPoolCloseLabel(heroPool.closesAt)}</dd>
-                </div>
-              </dl>
+              <p className="mt-2 text-[22px] font-bold tabular-nums leading-none text-app-text">
+                {formatPrizeLine(heroPool)}
+              </p>
+              {heroPool.type === "public_paid" && heroPool.entryFeeArs > 0 ?
+                <p className="mt-1 text-[11px] text-app-muted">
+                  Ingreso ${formatArs(heroPool.entryFeeArs)}
+                </p>
+              : null}
+              <p className="mt-1.5 text-[12px] font-medium text-app-muted">
+                {formatPoolCloseLabel(heroPool.closesAt)}
+              </p>
             </div>
             <div className="flex items-center justify-between gap-2 px-3 py-2">
-              <span className="inline-flex items-center gap-1 text-[11px] text-app-muted">
+              <span className="inline-flex items-center gap-1 text-[10px] font-medium text-app-muted">
                 <Banknote className="h-3.5 w-3.5 shrink-0" strokeWidth={2} aria-hidden />
-                Reparto top {heroPool.payoutTopN}
+                Top {heroPool.payoutTopN} posiciones
               </span>
               <span className={cn(btnPrimaryFull(), "w-auto px-3 py-1.5 text-[12px]")}>
                 Jugar
@@ -217,24 +207,20 @@ export function HomePageClient() {
               <li key={p.id}>
                 <Link
                   href={poolHref(p)}
-                  className="flex items-center justify-between gap-2 rounded-lg border border-app-border bg-app-surface px-2.5 py-2 shadow-[0_1px_0_rgba(15,23,42,0.03)] transition hover:bg-app-bg active:scale-[0.995]"
+                  className="block rounded-lg border border-app-border bg-app-surface px-2.5 py-2.5 shadow-[0_1px_0_rgba(15,23,42,0.03)] transition hover:bg-app-bg active:scale-[0.995]"
                 >
-                  <div className="min-w-0">
-                    <p className="truncate text-[12px] font-semibold text-app-text">
-                      {formatPublicPoolLabel(p)}
-                    </p>
-                    <p className="mt-0.5 text-[10px] text-app-muted">
-                      {formatPoolCloseLabel(p.closesAt)}
-                      {p.prizePoolArs > 0 ?
-                        ` · Pozo $${formatArs(p.prizePoolArs)}`
-                      : null}
-                    </p>
-                  </div>
-                  <Calendar
-                    className="h-4 w-4 shrink-0 text-app-primary"
-                    strokeWidth={2}
-                    aria-hidden
-                  />
+                  <p className="text-[12px] font-semibold leading-snug text-app-text">
+                    {formatPublicPoolLabel(p)}
+                  </p>
+                  <p className="mt-1 text-[16px] font-bold tabular-nums text-app-text">
+                    {formatPrizeLine(p)}
+                  </p>
+                  <p className="mt-0.5 text-[11px] font-medium text-app-muted">
+                    {formatPoolCloseLabel(p.closesAt)}
+                  </p>
+                  <p className="mt-2 text-right text-[12px] font-semibold text-app-primary">
+                    Jugar →
+                  </p>
                 </Link>
               </li>
             ))}

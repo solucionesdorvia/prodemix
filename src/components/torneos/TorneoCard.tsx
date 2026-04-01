@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Calendar, ChevronRight, MapPin } from "lucide-react";
+import { ChevronRight, MapPin } from "lucide-react";
 
 import type { TorneoBrowseItem } from "@/domain";
 import { btnCompact, cardSurface } from "@/lib/ui-styles";
@@ -7,13 +7,20 @@ import { cn } from "@/lib/utils";
 
 import { accentByCategory, pillByCategory } from "./torneo-styles";
 
+export type PlayPoolCta = {
+  href: string;
+  fechaLabel: string;
+  prizeLine: string;
+  closesLine: string;
+};
+
 type TorneoCardProps = {
   torneo: TorneoBrowseItem;
   following: boolean;
   onToggleFollow: () => void;
   variant?: "default" | "featured";
-  /** Pool público de la fecha abierta (producto principal). */
-  playFechaHref?: string | null;
+  /** Pool de la fecha abierta: premio, cierre y CTA. */
+  playPoolCta?: PlayPoolCta | null;
 };
 
 export function TorneoCard({
@@ -21,7 +28,7 @@ export function TorneoCard({
   following,
   onToggleFollow,
   variant = "default",
-  playFechaHref,
+  playPoolCta,
 }: TorneoCardProps) {
   const teamsLine =
     torneo.teamsCount > 0
@@ -91,19 +98,32 @@ export function TorneoCard({
         </p>
 
         <div className="mt-2.5 flex flex-col gap-2">
-          {playFechaHref ? (
-            <Link
-              href={playFechaHref}
-              className={cn(
-                btnCompact(),
-                "min-h-[40px] w-full justify-center gap-1 bg-app-primary px-2 text-[12px] font-semibold text-white shadow-sm hover:bg-blue-700",
-              )}
-            >
-              <Calendar className="h-3.5 w-3.5 opacity-95" strokeWidth={2} aria-hidden />
-              Jugar fecha · pool
-              <ChevronRight className="h-3.5 w-3.5 opacity-90" strokeWidth={2} />
-            </Link>
-          ) : null}
+          {playPoolCta ?
+            <div className="rounded-xl border border-app-border bg-gradient-to-b from-slate-50/95 to-app-surface px-2.5 py-2.5 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+              <p className="text-[11px] font-semibold leading-snug text-app-text line-clamp-2">
+                {torneo.name}
+              </p>
+              <p className="mt-0.5 text-[10px] font-bold uppercase tracking-wide text-app-primary">
+                {playPoolCta.fechaLabel}
+              </p>
+              <p className="mt-2 text-[19px] font-bold tabular-nums leading-none tracking-tight text-app-text">
+                {playPoolCta.prizeLine}
+              </p>
+              <p className="mt-1.5 text-[11px] font-medium leading-snug text-app-muted">
+                {playPoolCta.closesLine}
+              </p>
+              <Link
+                href={playPoolCta.href}
+                className={cn(
+                  btnCompact(),
+                  "mt-2.5 min-h-[40px] w-full justify-center gap-1 border border-app-border bg-app-bg px-2 text-[13px] font-semibold text-app-text shadow-sm hover:border-app-primary/40 hover:bg-app-surface",
+                )}
+              >
+                Jugar
+                <ChevronRight className="h-3.5 w-3.5 opacity-80" strokeWidth={2} />
+              </Link>
+            </div>
+          : null}
           <div className="flex gap-2">
             <button
               type="button"

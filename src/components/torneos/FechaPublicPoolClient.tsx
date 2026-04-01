@@ -268,7 +268,7 @@ export function FechaPublicPoolClient({
             <p className="text-[9px] font-medium uppercase tracking-wide text-app-muted">
               Premio
             </p>
-            <p className="mt-0.5 text-[14px] font-semibold tabular-nums text-app-text">
+            <p className="mt-0.5 text-[18px] font-bold tabular-nums leading-none text-app-text">
               {pool.prizePoolArs > 0 ? `$${formatArs(pool.prizePoolArs)}` : "—"}
             </p>
           </div>

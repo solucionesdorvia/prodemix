@@ -21,7 +21,8 @@ import {
 } from "@/components/ui/EmptyState";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { useIngestionTick } from "@/hooks/useIngestionTick";
-import { formatMatchKickoffFull } from "@/lib/datetime";
+import { formatMatchKickoffFull, formatPoolCloseLabel } from "@/lib/datetime";
+import { formatPrizeLine } from "@/lib/pool-cta";
 import {
   btnCompact,
   btnPrimaryFull,
@@ -177,10 +178,21 @@ export function TournamentDetailClient({
           </div>
         </div>
 
+        {playFechaHref && featuredPublicPool ?
+          <div className="border-b border-app-border-subtle px-2.5 py-3">
+            <p className="text-[22px] font-bold tabular-nums leading-none tracking-tight text-app-text">
+              {formatPrizeLine(featuredPublicPool)}
+            </p>
+            <p className="mt-1.5 text-[12px] font-medium text-app-muted">
+              {formatPoolCloseLabel(featuredPublicPool.closesAt)}
+            </p>
+          </div>
+        : null}
+
         <div className="flex flex-col gap-2 p-2.5">
           {playFechaHref ? (
             <Link href={playFechaHref} className={btnPrimaryFull()}>
-              Jugar fecha · pool
+              Jugar
               <ChevronRight className="h-4 w-4 shrink-0" strokeWidth={2.25} aria-hidden />
             </Link>
           ) : null}
