@@ -17,6 +17,7 @@ import {
 } from "@/mocks/services/torneos-browse.mock";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { formatPoolCloseLabel } from "@/lib/datetime";
+import { publicPoolEntryLabel } from "@/lib/prode-entry-label";
 import { formatPrizeLine } from "@/lib/pool-cta";
 import { pageEyebrow, pageHeader, pageTitle } from "@/lib/ui-styles";
 import { getPublicPoolForMatchday } from "@/mocks/catalog/primera-catalog";
@@ -53,7 +54,8 @@ export function TorneosScreen() {
       if (!md) continue;
       const pool = getPublicPoolForMatchday(t.id, md.id);
       const href = `/torneos/${encodeURIComponent(t.id)}/fechas/${encodeURIComponent(md.id)}`;
-      const prizeLine = pool ? formatPrizeLine(pool) : "Premio: gratuito";
+      const prizeLine = pool ? formatPrizeLine(pool) : "Sin premio en efectivo";
+      const entryLine = pool ? publicPoolEntryLabel(pool) : "Gratis";
       const closesLine = pool ?
         formatPoolCloseLabel(pool.closesAt)
       : "Cierre al inicio del primer partido";
@@ -61,6 +63,7 @@ export function TorneosScreen() {
         href,
         fechaLabel: md.name,
         prizeLine,
+        entryLine,
         closesLine,
       };
     }

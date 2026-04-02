@@ -104,10 +104,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             },
           });
           if (dbUser) {
+            const img = dbUser.image;
+            const imageForSession =
+              img &&
+              (img.startsWith("http://") || img.startsWith("https://")) ?
+                img
+              : null;
             Object.assign(session.user, {
               name: dbUser.name,
               email: dbUser.email,
-              image: dbUser.image,
+              image: imageForSession,
               username: dbUser.username ?? null,
             });
           }

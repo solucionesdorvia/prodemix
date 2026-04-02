@@ -123,8 +123,8 @@ export function AdminProdeNewClient() {
               value={type}
               onChange={(e) => setType(e.target.value as "FREE" | "ELITE")}
             >
-              <option value="FREE">FREE</option>
-              <option value="ELITE">ELITE</option>
+              <option value="FREE">Gratis</option>
+              <option value="ELITE">Con entrada o premio</option>
             </select>
           </label>
           <label className="block">

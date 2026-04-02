@@ -290,7 +290,7 @@ export function AdminProdesClient() {
               onChange={(e) => setTier(e.target.value as AdminProdeTier)}
             >
               <option value="gratis">Gratis</option>
-              <option value="elite">Elite</option>
+              <option value="elite">Con premio</option>
             </select>
           </label>
           <label className="block text-[12px] sm:col-span-2">

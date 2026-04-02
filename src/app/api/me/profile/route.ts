@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { apiError } from "@/lib/api-errors";
 import { getPrisma } from "@/lib/prisma";
-import { normalizeUsername, validateUsernameFormat } from "@/lib/username";
 import { profilePatchBodySchema } from "@/lib/validation/profile-api";
 import { zodToApiError } from "@/lib/validation/zod-to-api";
 
@@ -81,53 +80,11 @@ export async function PATCH(req: Request) {
   const prisma = getPrisma();
 
   const data: {
-    name?: string | null;
     image?: string | null;
-    username?: string;
   } = {};
 
-  if (o.name !== undefined) {
-    data.name = o.name;
-  }
-
-  if (o.username !== undefined) {
-    const normalized = normalizeUsername(o.username);
-    const fmtErr = validateUsernameFormat(normalized);
-    if (fmtErr) {
-      return apiError(422, "INVALID_DATA", fmtErr);
-    }
-    const taken = await prisma.user.findFirst({
-      where: { username: normalized, NOT: { id: userId } },
-      select: { id: true },
-    });
-    if (taken) {
-      return apiError(
-        409,
-        "CONFLICT",
-        "Ese nombre de usuario ya está en uso.",
-      );
-    }
-    data.username = normalized;
-  }
-
   if (o.image !== undefined) {
-    if (o.image === null) {
-      data.image = null;
-    } else {
-      try {
-        const url = new URL(o.image);
-        if (url.protocol !== "http:" && url.protocol !== "https:") {
-          return apiError(
-            422,
-            "INVALID_DATA",
-            "La imagen debe ser una URL http o https.",
-          );
-        }
-      } catch {
-        return apiError(422, "INVALID_DATA", "URL de imagen inválida.");
-      }
-      data.image = o.image;
-    }
+    data.image = null;
   }
 
   if (o.notificationPreferences !== undefined) {

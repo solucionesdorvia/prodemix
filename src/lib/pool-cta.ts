@@ -9,5 +9,5 @@ export function formatPrizeLine(pool: PublicPool): string {
   if (pool.prizePoolArs > 0) {
     return `Premio: $${formatArsCompact(pool.prizePoolArs)}`;
   }
-  return "Premio: gratuito";
+  return "Sin premio en efectivo";
 }

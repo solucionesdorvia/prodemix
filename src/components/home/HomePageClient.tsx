@@ -20,6 +20,7 @@ import { MisProdesServerSection } from "@/components/prodes/MisProdesServerSecti
 import { EmptyState } from "@/components/ui/EmptyState";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { formatPoolCloseLabel } from "@/lib/datetime";
+import { publicPoolEntryLabel } from "@/lib/prode-entry-label";
 import { formatPrizeLine } from "@/lib/pool-cta";
 import { getRecentActivity } from "@/mocks/services/activity.mock";
 import { useIngestionTick } from "@/hooks/useIngestionTick";
@@ -40,10 +41,6 @@ import {
 import { btnPrimaryFull, cardSurface } from "@/lib/ui-styles";
 import { useAppState, useOwnedProdes } from "@/state/app-state";
 import { cn } from "@/lib/utils";
-
-function formatArs(n: number): string {
-  return n.toLocaleString("es-AR", { maximumFractionDigits: 0 });
-}
 
 function poolHref(pool: PublicPool): string {
   return `/torneos/${encodeURIComponent(pool.tournamentId)}/fechas/${encodeURIComponent(pool.matchdayId)}`;
@@ -176,11 +173,9 @@ export function HomePageClient() {
               <p className="mt-2 text-[22px] font-bold tabular-nums leading-none text-app-text">
                 {formatPrizeLine(heroPool)}
               </p>
-              {heroPool.type === "public_paid" && heroPool.entryFeeArs > 0 ?
-                <p className="mt-1 text-[11px] text-app-muted">
-                  Ingreso ${formatArs(heroPool.entryFeeArs)}
-                </p>
-              : null}
+              <p className="mt-1 text-[11px] font-medium text-app-muted">
+                {publicPoolEntryLabel(heroPool)}
+              </p>
               <p className="mt-1.5 text-[12px] font-medium text-app-muted">
                 {formatPoolCloseLabel(heroPool.closesAt)}
               </p>

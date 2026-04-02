@@ -18,6 +18,7 @@ import { MatchCard } from "@/components/matches/MatchCard";
 import { EmptyState, EmptyStateButtonLink } from "@/components/ui/EmptyState";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { fetchProdeApi, postJoinProde, postProdePredictions } from "@/lib/api/prodes-fetch";
+import { prodeEntryLabel } from "@/lib/prode-entry-label";
 import { reportClientError } from "@/lib/observability/client-error";
 import { clientCanEditPredictions } from "@/lib/prode-prediction-window";
 import { isPredictionDeadlineOpen } from "@/lib/datetime";
@@ -32,10 +33,15 @@ type ApiProde = {
   slug: string;
   ownerId: string | null;
   title: string;
+  type?: string;
   status: string;
   visibility: string;
   closesAt: string;
   inviteCode: string | null;
+  entryFeeArs?: number;
+  prizeFirstArs?: number | null;
+  prizeSecondArs?: number | null;
+  prizeThirdArs?: number | null;
 };
 
 type ApiMatchRow = {
@@ -103,6 +109,7 @@ export function ProdesDetailServerView({ prodeId }: Props) {
   const [matches, setMatches] = useState<ApiMatchRow[]>([]);
   const [predMap, setPredMap] = useState<Record<string, ScorePrediction>>({});
   const [ranking, setRanking] = useState<ApiRankingRow[]>([]);
+  const [rankingLocked, setRankingLocked] = useState(false);
   const [shareUrl, setShareUrl] = useState("");
   const [saving, setSaving] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -119,13 +126,15 @@ export function ProdesDetailServerView({ prodeId }: Props) {
         fetchProdeApi<{ matches: ApiMatchRow[] }>(
           `/api/prodes/${encodeURIComponent(prodeId)}/matches`,
         ),
-        fetchProdeApi<{ ranking: ApiRankingRow[] }>(
-          `/api/prodes/${encodeURIComponent(prodeId)}/ranking`,
-        ),
+        fetchProdeApi<{
+          ranking: ApiRankingRow[];
+          rankingLocked?: boolean;
+        }>(`/api/prodes/${encodeURIComponent(prodeId)}/ranking`),
       ]);
       setProde(detail.prode);
       setMatches(mRes.matches);
-      setRanking(rRes.ranking);
+      setRanking(rRes.rankingLocked ? [] : rRes.ranking);
+      setRankingLocked(Boolean(rRes.rankingLocked));
       setPredMap({});
 
       try {
@@ -260,9 +269,13 @@ export function ProdesDetailServerView({ prodeId }: Props) {
         }));
         setFeedback("Guardado en tu cuenta");
         window.setTimeout(() => setFeedback(null), 2200);
-        void fetchProdeApi<{ ranking: ApiRankingRow[] }>(
-          `/api/prodes/${encodeURIComponent(prode.id)}/ranking`,
-        ).then((r) => setRanking(r.ranking));
+        void fetchProdeApi<{
+          ranking: ApiRankingRow[];
+          rankingLocked?: boolean;
+        }>(`/api/prodes/${encodeURIComponent(prode.id)}/ranking`).then((r) => {
+          setRanking(r.rankingLocked ? [] : r.ranking);
+          setRankingLocked(Boolean(r.rankingLocked));
+        });
       } catch (e) {
         reportClientError(e, { area: "prode.predictions.save" });
         setFeedback(
@@ -328,6 +341,12 @@ export function ProdesDetailServerView({ prodeId }: Props) {
   }
 
   const visibilityLabel = prode.visibility === "PUBLIC" ? "Público" : "Privado";
+  const participacionLabel = prodeEntryLabel({
+    entryFeeArs: prode.entryFeeArs ?? 0,
+    prizeFirstArs: prode.prizeFirstArs,
+    prizeSecondArs: prode.prizeSecondArs,
+    prizeThirdArs: prode.prizeThirdArs,
+  });
 
   return (
     <div className="pb-2">
@@ -350,6 +369,9 @@ export function ProdesDetailServerView({ prodeId }: Props) {
           </span>
         </div>
         <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] text-app-muted">
+          <span className="rounded-md bg-app-bg px-1.5 py-0.5 font-semibold text-app-text ring-1 ring-app-border-subtle">
+            {participacionLabel}
+          </span>
           <span>
             Marcadores:{" "}
             <span className="font-semibold tabular-nums text-app-text">
@@ -544,8 +566,12 @@ export function ProdesDetailServerView({ prodeId }: Props) {
             variant="minimal"
             layout="horizontal"
             icon={Trophy}
-            title="Todavía no hay tabla"
-            description="Cuando haya resultados oficiales cargados, verás el ranking."
+            title={rankingLocked ? "Todavía no hay ranking" : "Todavía no hay tabla"}
+            description={
+              rankingLocked ?
+                "Va a aparecer cuando se haya jugado el primer partido del calendario oficial."
+              : "Cuando haya resultados oficiales cargados, verás el ranking."
+            }
           />
         )}
       </section>

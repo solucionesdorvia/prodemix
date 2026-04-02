@@ -10,6 +10,7 @@ import {
   EmptyStateButtonLink,
 } from "@/components/ui/EmptyState";
 import { pageEyebrow, pageHeader, pageTitle } from "@/lib/ui-styles";
+import { publicPoolEntryLabel } from "@/lib/prode-entry-label";
 import { cn } from "@/lib/utils";
 import {
   formatPublicPoolLabel,
@@ -113,6 +114,8 @@ export function RankingScreen() {
   const [globalFetchState, setGlobalFetchState] = useState<
     "idle" | "loading" | "error" | "success"
   >("idle");
+  /** Hasta que el primer partido del calendario compartido esté finalizado, no hay ranking. */
+  const [rankingLocked, setRankingLocked] = useState<boolean | null>(null);
 
   const poolOptions = useMemo(
     () => PRIMERA_PUBLIC_POOLS.filter((p) => p.status !== "settled"),
@@ -137,6 +140,7 @@ export function RankingScreen() {
 
   const rows = useMemo(() => {
     void catRev;
+    if (rankingLocked) return [];
     if (tab === "global") {
       if (globalApiRows === null) return [];
       return globalApiRows;
@@ -171,31 +175,41 @@ export function RankingScreen() {
     user.displayName,
     state,
     catRev,
+    rankingLocked,
   ]);
 
   useEffect(() => {
-    if (tab !== "global") return;
     let cancelled = false;
-    setGlobalApiRows(null);
     setGlobalFetchState("loading");
+    setGlobalApiRows(null);
+    setRankingLocked(null);
     fetch("/api/ranking", { credentials: "include" })
       .then(async (res) => {
         const data = (await res.json()) as {
           ranking?: ApiRankingUserRow[];
+          rankingLocked?: boolean;
           error?: { message?: string };
         };
         if (!res.ok) {
           throw new Error(data.error?.message ?? "Error al cargar el ranking.");
         }
-        return data.ranking ?? [];
+        return data;
       })
-      .then((ranking) => {
+      .then((data) => {
         if (cancelled) return;
-        setGlobalApiRows(mapGlobalApiToEntries(ranking));
+        if (data.rankingLocked) {
+          setRankingLocked(true);
+          setGlobalApiRows([]);
+          setGlobalFetchState("success");
+          return;
+        }
+        setRankingLocked(false);
+        setGlobalApiRows(mapGlobalApiToEntries(data.ranking ?? []));
         setGlobalFetchState("success");
       })
       .catch(() => {
         if (!cancelled) {
+          setRankingLocked(false);
           setGlobalApiRows([]);
           setGlobalFetchState("error");
         }
@@ -203,7 +217,7 @@ export function RankingScreen() {
     return () => {
       cancelled = true;
     };
-  }, [tab, user.id]);
+  }, [user.id]);
 
   const scopeKey = useMemo(() => {
     if (tab === "tournament" && resolvedTournamentId) {
@@ -257,9 +271,10 @@ export function RankingScreen() {
   );
 
   useEffect(() => {
+    if (rankingLocked) return;
     if (rows.length === 0) return;
     persistScopeRanks(scopeKey, rows);
-  }, [scopeKey, rows]);
+  }, [scopeKey, rows, rankingLocked]);
 
   return (
     <div className="pb-2">
@@ -312,9 +327,7 @@ export function RankingScreen() {
               <option key={p.id} value={p.id}>
                 {formatPublicPoolLabel(p)}
                 {" · "}
-                {p.type === "public_paid" ?
-                  `Ingreso $${p.entryFeeArs.toLocaleString("es-AR")}`
-                : "Sin ingreso"}
+                {publicPoolEntryLabel(p)}
               </option>
             ))}
           </select>
@@ -340,10 +353,21 @@ export function RankingScreen() {
         </label>
       ) : null}
 
-      {tab === "global" && globalApiRows === null && globalFetchState !== "error" ?
+      {rankingLocked === null ?
         <p className="mt-3 text-[13px] text-app-muted">
           Cargando clasificación…
         </p>
+      : rankingLocked ?
+        <EmptyState
+          className="mt-3"
+          variant="soft"
+          layout="horizontal"
+          icon={Trophy}
+          title="Todavía no hay ranking"
+          description="Va a aparecer cuando se haya jugado el primer partido del calendario (fixture oficial)."
+        >
+          <EmptyStateButtonLink href="/torneos">Torneos</EmptyStateButtonLink>
+        </EmptyState>
       : tab === "global" && globalFetchState === "error" ?
         <p className="mt-3 text-[13px] text-red-700">
           No se pudo cargar el ranking global. Reintentá más tarde.

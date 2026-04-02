@@ -151,8 +151,9 @@ export function PerfilScreen() {
 
   const showAvatar =
     Boolean(user.avatarUrl) &&
-    /^https?:\/\//i.test(user.avatarUrl!) &&
-    !avatarBroken;
+    !avatarBroken &&
+    (/^https?:\/\//i.test(user.avatarUrl!) ||
+      user.avatarUrl!.startsWith("data:image/"));
 
   const prefs = state.notificationPreferences;
 

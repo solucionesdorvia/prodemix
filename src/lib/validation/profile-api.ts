@@ -1,7 +1,5 @@
 import { z } from "zod";
 
-const MAX_NAME = 120;
-
 export const profileNotificationPrefsSchema = z.object({
   remindersEnabled: z.boolean(),
   closingAlertEnabled: z.boolean(),
@@ -9,20 +7,14 @@ export const profileNotificationPrefsSchema = z.object({
 
 export const profilePatchBodySchema = z
   .object({
-    name: z.preprocess(
-      (v) => (typeof v === "string" ? v.trim() : v),
-      z.union([z.string().min(2).max(MAX_NAME), z.null()]).optional(),
-    ),
-    username: z.preprocess(
-      (v) => (typeof v === "string" ? v.trim() : v),
-      z.string().min(1).max(64).optional(),
-    ),
-    image: z.preprocess(
-      (v) => (typeof v === "string" ? v.trim() : v),
-      z.union([z.string().max(2048), z.null()]).optional(),
-    ),
+    /** Solo para quitar foto subida / OAuth desde el servidor (no editar URL a mano). */
+    image: z.null().optional(),
     notificationPreferences: profileNotificationPrefsSchema.optional(),
   })
-  .strict();
+  .strict()
+  .refine(
+    (o) => o.image !== undefined || o.notificationPreferences !== undefined,
+    { message: "Se requiere al menos un cambio." },
+  );
 
 export type ProfilePatchBody = z.infer<typeof profilePatchBodySchema>;

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { queryProdeRanking } from "@/lib/ranking-query";
+import { isRankingUnlocked } from "@/lib/ranking-visibility";
 import { prodeRouteIdSchema } from "@/lib/validation/prodes-api";
 import { zodToApiError } from "@/lib/validation/zod-to-api";
 
@@ -22,8 +23,18 @@ export async function GET(
     return result.response;
   }
 
+  const unlocked = await isRankingUnlocked();
+  if (!unlocked) {
+    return NextResponse.json({
+      prodeId: result.prodeId,
+      rankingLocked: true,
+      ranking: [],
+    });
+  }
+
   return NextResponse.json({
     prodeId: result.prodeId,
+    rankingLocked: false,
     ranking: result.ranking.map((r) => ({
       rank: r.rank,
       points: r.points,

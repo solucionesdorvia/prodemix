@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 
 import { adminFetch } from "@/lib/admin/admin-fetch";
+import { prodeDbTypeLabel } from "@/lib/prode-entry-label";
 
 type Row = {
   id: string;
@@ -78,7 +79,7 @@ export function AdminProdesListClient() {
               <tr key={r.id} className="border-b border-neutral-100">
                 <td className="p-2 font-medium">{r.title}</td>
                 <td className="p-2 font-mono text-[11px]">{r.slug}</td>
-                <td className="p-2">{r.type}</td>
+                <td className="p-2">{prodeDbTypeLabel(r.type)}</td>
                 <td className="p-2">{r.status}</td>
                 <td className="p-2">{r.seasonLabel ?? "—"}</td>
                 <td className="p-2 tabular-nums">{r._count.prodeMatches}</td>

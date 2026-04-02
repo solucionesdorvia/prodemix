@@ -22,6 +22,7 @@ import {
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { useIngestionTick } from "@/hooks/useIngestionTick";
 import { formatMatchKickoffFull, formatPoolCloseLabel } from "@/lib/datetime";
+import { publicPoolEntryLabel } from "@/lib/prode-entry-label";
 import { formatPrizeLine } from "@/lib/pool-cta";
 import {
   btnCompact,
@@ -182,6 +183,9 @@ export function TournamentDetailClient({
           <div className="border-b border-app-border-subtle px-2.5 py-3">
             <p className="text-[22px] font-bold tabular-nums leading-none tracking-tight text-app-text">
               {formatPrizeLine(featuredPublicPool)}
+            </p>
+            <p className="mt-1 text-[12px] font-semibold text-app-text">
+              {publicPoolEntryLabel(featuredPublicPool)}
             </p>
             <p className="mt-1.5 text-[12px] font-medium text-app-muted">
               {formatPoolCloseLabel(featuredPublicPool.closesAt)}

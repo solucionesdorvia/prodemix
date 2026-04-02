@@ -246,8 +246,8 @@ export function AdminProdeDetailClient({ prodeId }: { prodeId: string }) {
               value={prode.type}
               onChange={(e) => setProde({ ...prode, type: e.target.value })}
             >
-              <option value="FREE">FREE</option>
-              <option value="ELITE">ELITE</option>
+              <option value="FREE">Gratis</option>
+              <option value="ELITE">Con entrada o premio</option>
             </select>
           </label>
           <label className="sm:col-span-2">

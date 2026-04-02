@@ -13,6 +13,7 @@ import {
   formatPoolCloseLabel,
   isPredictionDeadlineOpen,
 } from "@/lib/datetime";
+import { publicPoolEntryLabel } from "@/lib/prode-entry-label";
 import { getPublicPoolForMatchday } from "@/mocks/catalog/primera-catalog";
 import { getTournamentCatalogueEntryById } from "@/mocks/services/tournaments-catalogue.mock";
 import { getMockResultForMatch } from "@/mocks/mock-match-results";
@@ -219,7 +220,6 @@ export function FechaPublicPoolClient({
     );
   }
 
-  const paid = pool.type === "public_paid";
   const poolAcceptsEntries = pool.status === "open";
   /** Por partido: cada uno cierra 3 h antes del kickoff; la fecha no congela todo al arrancar el 1°. */
   const predictionsFrozen =
@@ -256,10 +256,10 @@ export function FechaPublicPoolClient({
         <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3">
           <div className="rounded-md border border-app-border-subtle bg-app-bg/60 px-2.5 py-2">
             <p className="text-[9px] font-medium uppercase tracking-wide text-app-muted">
-              {paid ? "Ingreso" : "Acceso"}
+              Participación
             </p>
-            <p className="mt-0.5 text-[14px] font-semibold tabular-nums text-app-text">
-              {paid ? `$${formatArs(pool.entryFeeArs)}` : "Gratis"}
+            <p className="mt-0.5 text-[14px] font-semibold leading-snug text-app-text">
+              {publicPoolEntryLabel(pool)}
             </p>
           </div>
           <div className="rounded-md border border-app-border-subtle bg-app-bg/60 px-2.5 py-2">

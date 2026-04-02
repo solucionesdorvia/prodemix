@@ -3,11 +3,10 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 
 import { pageEyebrow, pageHeader, pageTitle } from "@/lib/ui-styles";
-import { normalizeUsername, validateUsernameFormat } from "@/lib/username";
 import { initialsFromDisplayName } from "@/lib/user-display";
 import { useAppState } from "@/state/app-state";
 import { cn } from "@/lib/utils";
@@ -22,6 +21,16 @@ async function readApiError(res: Response): Promise<string> {
   return "No se pudo guardar. Probá de nuevo.";
 }
 
+function canShowImage(src: string | null): boolean {
+  if (!src?.trim()) return false;
+  const s = src.trim();
+  return (
+    /^https?:\/\//i.test(s) || s.startsWith("data:image/jpeg") ||
+    s.startsWith("data:image/png") ||
+    s.startsWith("data:image/webp")
+  );
+}
+
 export function EditProfileClient() {
   const router = useRouter();
   const { status, update } = useSession();
@@ -29,13 +38,15 @@ export function EditProfileClient() {
 
   const [loadError, setLoadError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const [displayName, setDisplayName] = useState("");
   const [username, setUsername] = useState("");
-  const [avatarUrl, setAvatarUrl] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [imgError, setImgError] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [clearing, setClearing] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (status === "loading") return;
@@ -66,7 +77,7 @@ export function EditProfileClient() {
         const { profile } = data;
         setDisplayName(profile.name?.trim() ?? "");
         setUsername(profile.username ?? "");
-        setAvatarUrl(profile.image?.trim() ?? "");
+        setAvatarUrl(profile.image?.trim() ? profile.image.trim() : null);
       } catch {
         if (!cancelled) setLoadError("Error de red. Probá de nuevo.");
       } finally {
@@ -83,56 +94,32 @@ export function EditProfileClient() {
     [displayName],
   );
 
-  const handleSubmit = useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault();
-      setError(null);
-      const dn = displayName.trim();
-      if (dn.length < 2) {
-        setError("El nombre debe tener al menos 2 caracteres.");
-        return;
-      }
-      const normalized = normalizeUsername(username);
-      const uErr = validateUsernameFormat(normalized);
-      if (uErr) {
-        setError(uErr);
-        return;
-      }
-      let image: string | null = avatarUrl.trim();
-      if (image) {
-        try {
-          const u = new URL(image);
-          if (u.protocol !== "http:" && u.protocol !== "https:") {
-            setError("La imagen debe ser una URL http o https.");
-            return;
-          }
-        } catch {
-          setError("La imagen debe ser una URL válida.");
-          return;
-        }
-      } else {
-        image = null;
-      }
+  const showImg = Boolean(avatarUrl && canShowImage(avatarUrl) && !imgError);
 
-      setSaving(true);
+  const uploadFile = useCallback(
+    async (file: File) => {
+      setError(null);
+      setImgError(false);
+      setUploading(true);
       try {
-        const res = await fetch("/api/me/profile", {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: dn,
-            username: normalized,
-            image,
-          }),
+        const fd = new FormData();
+        fd.set("file", file);
+        const res = await fetch("/api/me/avatar", {
+          method: "POST",
+          body: fd,
+          credentials: "include",
         });
         if (!res.ok) {
           setError(await readApiError(res));
           return;
         }
+        const data = (await res.json()) as { image?: string };
+        const next = data.image ?? null;
+        setAvatarUrl(next);
         updateProfile({
-          displayName: dn,
-          username: normalized,
-          avatarUrl: image,
+          displayName: displayName.trim() || "Usuario",
+          username: username.trim(),
+          avatarUrl: next,
         });
         await update();
         if (typeof window !== "undefined") {
@@ -143,14 +130,54 @@ export function EditProfileClient() {
       } catch {
         setError("Error de red. Probá de nuevo.");
       } finally {
-        setSaving(false);
+        setUploading(false);
       }
     },
-    [avatarUrl, displayName, router, update, updateProfile, username],
+    [displayName, router, update, updateProfile, username],
   );
 
-  const showImg =
-    avatarUrl.trim() && !imgError && /^https?:\/\//i.test(avatarUrl.trim());
+  const handleFileChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const f = e.target.files?.[0];
+      e.target.value = "";
+      if (!f) return;
+      void uploadFile(f);
+    },
+    [uploadFile],
+  );
+
+  const handleClearPhoto = useCallback(async () => {
+    setError(null);
+    setClearing(true);
+    try {
+      const res = await fetch("/api/me/profile", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ image: null }),
+      });
+      if (!res.ok) {
+        setError(await readApiError(res));
+        return;
+      }
+      setAvatarUrl(null);
+      setImgError(false);
+      updateProfile({
+        displayName: displayName.trim() || "Usuario",
+        username: username.trim(),
+        avatarUrl: null,
+      });
+      await update();
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("prodemix_profile_ok", "1");
+      }
+      router.push("/perfil");
+      router.refresh();
+    } catch {
+      setError("Error de red. Probá de nuevo.");
+    } finally {
+      setClearing(false);
+    }
+  }, [displayName, router, update, updateProfile, username]);
 
   if (status === "loading" || loading) {
     return (
@@ -191,84 +218,77 @@ export function EditProfileClient() {
         <p className={pageEyebrow}>Cuenta</p>
         <h1 className={cn(pageTitle, "mt-0.5")}>Editar perfil</h1>
         <p className="mt-1.5 text-[12px] leading-relaxed text-app-muted">
-          Los datos se guardan en tu cuenta.
+          Podés cambiar solo la foto. Nombre y usuario no se modifican acá.
         </p>
       </header>
 
-      <form onSubmit={(e) => void handleSubmit(e)} className="mt-4 space-y-4">
+      <div className="mt-6 space-y-4">
         <div className="flex justify-center">
-          <div className="relative h-20 w-20 overflow-hidden rounded-2xl border border-app-border bg-app-surface shadow-sm">
+          <div className="relative h-24 w-24 overflow-hidden rounded-2xl border border-app-border bg-app-surface shadow-sm">
             {showImg ?
-              // eslint-disable-next-line @next/next/no-img-element -- URLs arbitrarias del usuario
+              // eslint-disable-next-line @next/next/no-img-element -- data URL o https
               <img
-                src={avatarUrl.trim()}
+                src={avatarUrl!}
                 alt=""
                 className="h-full w-full object-cover"
                 onError={() => setImgError(true)}
               />
             : (
-              <div className="flex h-full w-full items-center justify-center bg-app-text text-xl font-bold text-app-surface">
+              <div className="flex h-full w-full items-center justify-center bg-app-text text-2xl font-bold text-app-surface">
                 {previewInitials}
               </div>
             )}
           </div>
         </div>
 
-        <label className="block">
-          <span className="text-[11px] font-semibold text-app-muted">
-            URL de imagen
-          </span>
-          <input
-            value={avatarUrl}
-            onChange={(e) => {
-              setAvatarUrl(e.target.value);
-              setImgError(false);
-            }}
-            type="url"
-            inputMode="url"
-            autoComplete="photo"
-            placeholder="https://…"
-            className="mt-1 w-full rounded-xl border border-app-border bg-app-surface px-3 py-2.5 text-[14px] text-app-text outline-none focus:border-app-primary focus:ring-2 focus:ring-app-primary/20"
-          />
-          <span className="mt-1 block text-[10px] text-app-muted">
-            Enlace a una imagen cuadrada (http o https). Si falla la carga, se
-            muestran iniciales.
-          </span>
-        </label>
+        <input
+          ref={fileRef}
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          className="sr-only"
+          aria-hidden
+          tabIndex={-1}
+          onChange={handleFileChange}
+        />
 
-        <label className="block">
-          <span className="text-[11px] font-semibold text-app-muted">
+        <div className="flex flex-col gap-2 sm:flex-row sm:justify-center">
+          <button
+            type="button"
+            disabled={uploading || clearing}
+            onClick={() => fileRef.current?.click()}
+            className="flex h-11 items-center justify-center rounded-xl bg-app-primary px-4 text-[14px] font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:opacity-60"
+          >
+            {uploading ? "Subiendo…" : "Elegir foto"}
+          </button>
+          {showImg ?
+            <button
+              type="button"
+              disabled={uploading || clearing}
+              onClick={() => void handleClearPhoto()}
+              className="flex h-11 items-center justify-center rounded-xl border border-app-border bg-app-surface px-4 text-[14px] font-semibold text-app-text shadow-sm transition hover:bg-app-bg disabled:opacity-60"
+            >
+              {clearing ? "Quitando…" : "Quitar foto"}
+            </button>
+          : null}
+        </div>
+
+        <div className="rounded-xl border border-app-border bg-app-bg/80 px-3 py-3">
+          <p className="text-[10px] font-semibold uppercase tracking-wide text-app-muted">
             Nombre visible
-          </span>
-          <input
-            value={displayName}
-            onChange={(e) => setDisplayName(e.target.value)}
-            required
-            minLength={2}
-            maxLength={120}
-            autoComplete="name"
-            className="mt-1 w-full rounded-xl border border-app-border bg-app-surface px-3 py-2.5 text-[14px] text-app-text outline-none focus:border-app-primary focus:ring-2 focus:ring-app-primary/20"
-          />
-        </label>
+          </p>
+          <p className="mt-1 text-[15px] font-medium text-app-text">
+            {displayName || "—"}
+          </p>
+        </div>
 
-        <label className="block">
-          <span className="text-[11px] font-semibold text-app-muted">
+        <div className="rounded-xl border border-app-border bg-app-bg/80 px-3 py-3">
+          <p className="text-[10px] font-semibold uppercase tracking-wide text-app-muted">
             Usuario
-          </span>
-          <input
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            minLength={3}
-            maxLength={30}
-            autoComplete="username"
-            className="mt-1 w-full rounded-xl border border-app-border bg-app-surface px-3 py-2.5 font-mono text-[14px] text-app-text outline-none focus:border-app-primary focus:ring-2 focus:ring-app-primary/20"
-          />
-          <span className="mt-1 block text-[10px] text-app-muted">
-            Entre 3 y 30 caracteres: letras minúsculas, números y guión bajo
-            (_). Debe ser único.
-          </span>
-        </label>
+          </p>
+          <p className="mt-1 font-mono text-[15px] font-medium text-app-primary">
+            {username ? `@${username}` : "—"}
+          </p>
+        </div>
 
         {error ?
           <p className="text-[12px] font-medium text-red-600" role="alert">
@@ -276,14 +296,10 @@ export function EditProfileClient() {
           </p>
         : null}
 
-        <button
-          type="submit"
-          disabled={saving}
-          className="flex h-11 w-full items-center justify-center rounded-xl bg-app-primary text-[14px] font-semibold text-white shadow-sm transition hover:bg-blue-700 active:scale-[0.99] disabled:opacity-60"
-        >
-          {saving ? "Guardando…" : "Guardar cambios"}
-        </button>
-      </form>
+        <p className="text-center text-[10px] leading-snug text-app-muted">
+          JPEG, PNG o WebP · máx. 512 KB
+        </p>
+      </div>
     </div>
   );
 }
