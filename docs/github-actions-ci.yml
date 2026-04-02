@@ -1,3 +1,6 @@
+# Copiar a `.github/workflows/ci.yml` en el repo (o pegar en GitHub → Actions → New workflow).
+# Si `git push` falla por "workflow scope", añadí el scope `workflow` al PAT o usá la UI de GitHub.
+
 name: CI
 
 on:
@@ -14,7 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
-      # Placeholders so Prisma + Next build without repo secrets.
       AUTH_SECRET: ci-placeholder-auth-secret-min-32-chars!!
       DATABASE_URL: postgresql://user:pass@localhost:5432/db?schema=public
 
