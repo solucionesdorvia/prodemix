@@ -1,4 +1,7 @@
-import { getAppBaseUrl } from "@/lib/email/app-base-url";
+import {
+  EMAIL_BRAND_FOOTER,
+  getAppBaseUrl,
+} from "@/lib/email/app-base-url";
 import {
   emailHtmlDocument,
   escapeHtml,
@@ -21,11 +24,11 @@ export function buildProdeClosingReminderContent(input: {
     timeZone: "America/Argentina/Buenos_Aires",
   });
 
-  const subject = `ProdeMix — aviso de cierre: ${input.prodeTitle}`;
+  const subject = `${EMAIL_BRAND_FOOTER} — aviso de cierre: ${input.prodeTitle}`;
 
-  const detail = input.incomplete ?
-    "Constan pronósticos pendientes de cargar para este prode."
-  : "Puede revisar los pronósticos registrados antes del cierre.";
+  const detail = input.incomplete
+    ? "La fecha está por cerrar y todavía no cargaste todos tus pronósticos. Entrá y dejalos listos antes de que cierre el prode."
+    : "Ya cargaste tus pronósticos; igual podés revisarlos o ajustar algo hasta el cierre.";
 
   const text = [
     `El cierre del prode «${input.prodeTitle}» está previsto para ${closeLabel} (hora Argentina).`,
@@ -35,7 +38,7 @@ export function buildProdeClosingReminderContent(input: {
     "Acceso:",
     ctaUrl,
     "",
-    `ProdeMix · ${base}`,
+    EMAIL_BRAND_FOOTER,
   ].join("\n");
 
   const inner = `
@@ -45,7 +48,7 @@ export function buildProdeClosingReminderContent(input: {
 <p style="margin:0 0 24px;">
   <a href="${escapeHtml(ctaUrl)}" style="display:inline-block;padding:10px 18px;background:#171717;color:#ffffff;text-decoration:none;border-radius:6px;font-weight:600;">Abrir prode</a>
 </p>
-<p style="margin:0;font-size:12px;color:#737373;">ProdeMix · ${escapeHtml(base)}</p>
+<p style="margin:0;font-size:12px;color:#737373;">${escapeHtml(EMAIL_BRAND_FOOTER)}</p>
 `;
 
   const html = emailHtmlDocument(inner);

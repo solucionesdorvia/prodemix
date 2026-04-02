@@ -490,10 +490,6 @@ export function PerfilScreen() {
                 <p className="text-[13px] font-semibold text-app-text">
                   Recibir recordatorios
                 </p>
-                <p className="text-[10px] leading-snug text-app-muted">
-                  Recordatorios por correo cuando el envío esté configurado en el
-                  servidor.
-                </p>
               </div>
             </div>
             <button
