@@ -243,7 +243,7 @@ export function HomePageClient() {
         />
         {joinedPools.length === 0 ? (
           <p className="rounded-lg border border-dashed border-app-border bg-app-bg/70 px-3 py-2.5 text-[11px] leading-snug text-app-muted">
-            Elegí una fecha en Torneos y uníte al pool. Tus pronósticos quedan
+            Elegí una fecha en Torneos y entrá al prode. Tus pronósticos quedan
             listados acá.
           </p>
         ) : (
@@ -345,7 +345,7 @@ export function HomePageClient() {
               variant="minimal"
               layout="stack"
               title="Sin movimientos todavía"
-              description="Movimientos de pools, prodes y ranking en esta cuenta."
+              description="Movimientos de prodes, puntos y ranking en esta cuenta."
             />
           ) : (
             <div className={cn("overflow-hidden", cardSurface)}>

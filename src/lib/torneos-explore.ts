@@ -16,7 +16,7 @@ export type PoolExploreEntry = {
   matchdayId: string;
   matchdayName: string;
   href: string;
-  /** Ej. "Premio · A — Fecha 3" */
+  /** Ej. "AFA Futsal A — Fecha 3" */
   title: string;
 };
 
@@ -43,7 +43,7 @@ export function collectPoolExploreEntries(
 }
 
 /**
- * 0 = cierra hoy, 1 = mañana, 2 = después, 3 = día calendario pasado (raro con pool abierto).
+ * 0 = cierra hoy, 1 = mañana, 2 = después, 3 = día calendario pasado (raro con prode abierto).
  */
 export function closeDayBucket(iso: string, nowMs = Date.now()): number {
   const close = new Date(iso);

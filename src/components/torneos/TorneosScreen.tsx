@@ -17,7 +17,7 @@ import {
 import { cn } from "@/lib/utils";
 import { CalendarRange, Trophy } from "lucide-react";
 
-import { TorneosExplorePoolCard } from "./TorneosExplorePoolCard";
+import { TorneosExploreProdeCard } from "./TorneosExploreProdeCard";
 
 type ViewTab = "fecha" | "torneo";
 type PayFilter = "todos" | "gratis" | "pago";
@@ -102,7 +102,7 @@ export function TorneosScreen() {
         <p className={pageEyebrow}>ProdeMix</p>
         <h1 className={cn(pageTitle, "mt-0.5")}>Torneos</h1>
         <p className="mt-1.5 text-[12px] leading-relaxed text-app-muted">
-          Elegí cómo explorar las fechas y jugá el prode que te convenga.
+          Cada fecha tiene su prode. Entrá y cargá tus resultados.
         </p>
       </header>
 
@@ -172,14 +172,14 @@ export function TorneosScreen() {
               variant="soft"
               layout="horizontal"
               icon={CalendarRange}
-              title="No hay prodes abiertos"
-              description="Cuando haya fechas disponibles, las vas a ver acá ordenadas por cuándo cierran."
+              title="No hay fechas para jugar"
+              description="Cuando haya fechas abiertas, las vas a ver acá ordenadas por el cierre."
             />
           : (
             <ul className="space-y-2">
               {dateViewEntries.map((entry) => (
                 <li key={`${entry.tournamentId}-${entry.matchdayId}`}>
-                  <TorneosExplorePoolCard entry={entry} />
+                  <TorneosExploreProdeCard entry={entry} />
                 </li>
               ))}
             </ul>

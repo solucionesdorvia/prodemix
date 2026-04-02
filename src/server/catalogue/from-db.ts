@@ -75,7 +75,7 @@ function mapTournamentRow(
   const matches = t.matches.map((m) => mapMatch(m, t.name));
   const shortName =
     t.slug.includes("afa-premio") ?
-      `Premio · ${t.slug.endsWith("-a") ? "A" : t.slug.endsWith("-b") ? "B" : "C"}`
+      `AFA Futsal ${t.slug.endsWith("-a") ? "A" : t.slug.endsWith("-b") ? "B" : "C"}`
     : t.name;
 
   return {

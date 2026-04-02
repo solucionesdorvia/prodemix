@@ -36,7 +36,7 @@ function recordToCatalogueEntry(r: AdminProdeRecord): TournamentCatalogueEntry {
   return {
     id: r.syntheticTournamentId,
     name: `AFA ${r.afaBand} — ${r.name}`,
-    shortName: `AFA ${r.afaBand}`,
+    shortName: `AFA Futsal ${r.afaBand}`,
     division: "primera",
     matchdays: [md],
     matches,

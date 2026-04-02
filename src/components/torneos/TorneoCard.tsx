@@ -21,7 +21,7 @@ type TorneoCardProps = {
   following: boolean;
   onToggleFollow: () => void;
   variant?: "default" | "featured";
-  /** Pool de la fecha abierta: premio, cierre y CTA. */
+  /** Prode de la fecha abierta: premio, cierre y CTA. */
   playPoolCta?: PlayPoolCta | null;
 };
 

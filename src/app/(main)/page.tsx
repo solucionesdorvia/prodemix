@@ -5,7 +5,7 @@ import { HomePageClient } from "@/components/home/HomePageClient";
 export const metadata: Metadata = {
   title: "Inicio",
   description:
-    "ProdeMix · Primera. Pools públicos por fecha: pronosticá marcadores y competí por ranking.",
+    "ProdeMix · Primera futsal. Prodes por fecha: marcador exacto, ranking y premios.",
 };
 
 export default function HomePage() {

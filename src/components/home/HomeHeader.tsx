@@ -17,7 +17,7 @@ export function HomeHeader({
   userName,
   activityUnreadCount = 0,
   className,
-  tagline = "Futsal · Primera · pools por fecha",
+  tagline = "Futsal · Primera · prodes por fecha",
 }: HomeHeaderProps) {
   return (
     <header

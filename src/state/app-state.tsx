@@ -588,7 +588,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
               {
                 id: newActivityId(),
                 title: "Pronóstico guardado",
-                detail: `${label} · ${score.home}-${score.away} · Pool público`,
+                detail: `${label} · ${score.home}-${score.away} · Prode de fecha`,
                 timeLabel: formatActivityTimeLabel(createdAt),
                 kind: "prediction" as const,
                 createdAt,

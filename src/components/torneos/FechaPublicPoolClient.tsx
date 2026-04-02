@@ -245,7 +245,7 @@ export function FechaPublicPoolClient({
               {cat.name}
             </p>
             <h1 className="mt-0.5 text-[18px] font-semibold leading-tight text-app-text">
-              {matchday.name}
+              {cat.shortName} — {matchday.name}
             </h1>
             <p className="mt-1.5 max-w-[22rem] text-[11px] leading-snug text-app-muted">
               Marcador exacto por partido. Pleno 3 pts · acierto de signo 1 pt.
@@ -304,7 +304,7 @@ export function FechaPublicPoolClient({
           <p className="text-[12px] font-semibold text-app-text">
             {pool.status === "closed" ?
               "Cierre de pronósticos: no se aceptan más marcadores."
-            : "Pool liquidado."}
+            : "Prode liquidado."}
           </p>
           <p className="mt-1 text-[10px] text-app-muted">
             Podés ver partidos y el ranking de referencia.
@@ -357,7 +357,7 @@ export function FechaPublicPoolClient({
         ) : (
           <div className="border-b border-app-border-subtle px-3 py-2.5">
             <p className="text-[11px] leading-snug text-app-muted">
-              Pool sin premio en efectivo: ranking por puntos en esta fecha.
+              Sin premio en efectivo: ranking por puntos en esta fecha.
             </p>
           </div>
         )}
@@ -451,7 +451,7 @@ export function FechaPublicPoolClient({
           </div>
           {!joined ? (
             <p className="text-[10px] leading-snug text-app-muted">
-              Datos de referencia. Unite al pool para registrar pronósticos.
+              Datos de referencia. Entrá al prode para cargar pronósticos.
             </p>
           ) : null}
           <ul

@@ -219,7 +219,7 @@ async function seedTournament(
       create: {
         id: prodeId,
         slug: prodeId,
-        title: `Premio · ${def.label} · ${md.name}`,
+        title: `AFA Futsal ${def.label} — ${md.name}`,
         type: "ELITE",
         seasonLabel: "2026",
         prizeFirstArs: PRIZE.first,
@@ -232,7 +232,7 @@ async function seedTournament(
         visibility: "PUBLIC",
       },
       update: {
-        title: `Premio · ${def.label} · ${md.name}`,
+        title: `AFA Futsal ${def.label} — ${md.name}`,
         status: prodeLifecycleFromMatchday(md.status),
         closesAt: new Date(md.closesAt),
         startsAt: new Date(md.startsAt),

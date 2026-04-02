@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     template: "%s · ProdeMix",
   },
   description:
-    "Pronósticos de futsal con pools por fecha y prodes privados. Reglas claras, ranking y resultados.",
+    "Pronósticos de futsal: prodes por fecha y grupos privados. Reglas claras, ranking y resultados.",
   applicationName: "ProdeMix",
 };
 

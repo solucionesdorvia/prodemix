@@ -1,5 +1,5 @@
 /**
- * Etiquetas cortas de participación en prodes / pools públicos (es-AR).
+ * Etiquetas cortas de participación en prodes de fecha (es-AR).
  * Evita términos tipo SaaS; prioriza claridad: si hay que pagar, cuánto, o si hay premio.
  */
 
@@ -11,7 +11,7 @@ export function formatArsAmount(n: number): string {
 
 export type ProdeEntryLabelInput = {
   entryFeeArs: number;
-  /** Premio acumulado (pools públicos). */
+  /** Premio acumulado (prode de fecha). */
   prizePoolArs?: number;
   /** Premios por puesto (prodes en DB). */
   prizeFirstArs?: number | null;

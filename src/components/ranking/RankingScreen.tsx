@@ -237,7 +237,7 @@ export function RankingScreen() {
         const p = poolOptions.find((x) => x.id === resolvedPoolId);
         return p ?
             `Clasificación · ${formatPublicPoolLabel(p)}`
-          : "Clasificación del pool";
+          : "Clasificación de la fecha";
       }
       return "Clasificación por fecha";
     }
@@ -316,7 +316,7 @@ export function RankingScreen() {
       {tab === "fecha" && poolOptions.length > 0 && resolvedPoolId ? (
         <label className="mt-2 block">
           <span className="text-[10px] font-medium uppercase tracking-wide text-app-muted">
-            Pool
+            Fecha
           </span>
           <select
             value={resolvedPoolId}
@@ -382,7 +382,7 @@ export function RankingScreen() {
           description={
             tab === "global" ?
               "Cuando haya puntos registrados en prodes, aparecerán en esta tabla."
-            : "Elegí un pool con partidos jugados y pronósticos cargados, o revisá el ranking global."
+            : "Elegí una fecha con partidos jugados y pronósticos cargados, o revisá el ranking general."
           }
         >
           <EmptyStateButtonLink href="/torneos">Torneos</EmptyStateButtonLink>
@@ -433,7 +433,7 @@ export function RankingScreen() {
             : (
               <>
                 En <span className="font-medium text-app-text">Fecha</span>{" "}
-                entran solo partidos de ese pool con resultado. Desempate: más
+                entran solo partidos de esa fecha con resultado. Desempate: más
                 plenos, más aciertos de signo, pronóstico guardado antes.
               </>
             )}

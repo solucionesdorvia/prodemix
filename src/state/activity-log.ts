@@ -100,11 +100,11 @@ export function computePointActivityEntries(
       const label =
         m ? `${m.homeTeam} vs ${m.awayTeam}` : "Partido";
       const createdAt = new Date().toISOString();
-      const title = pts === 3 ? "Pleno (pool)" : "Puntos (pool)";
+      const title = pts === 3 ? "Pleno" : "Puntos";
       const detail =
         pts === 3 ?
-          `${label} · +3 pts · pool público`
-        : `${label} · +1 pt · pool público`;
+          `${label} · +3 pts · prode de fecha`
+        : `${label} · +1 pt · prode de fecha`;
 
       out.push({
         dedupeKey,

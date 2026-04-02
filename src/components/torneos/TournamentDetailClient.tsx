@@ -221,7 +221,7 @@ export function TournamentDetailClient({
           <div>
             <SectionHeader title="Fechas" />
             <p className="mt-0.5 text-[10px] leading-snug text-app-muted">
-              Cada jornada tiene pool público: tocá para entrar y pronosticar.
+              Cada fecha tiene su prode. Entrá y cargá tus resultados.
             </p>
           </div>
           <ul className="space-y-1">

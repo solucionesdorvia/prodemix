@@ -5,7 +5,7 @@ import { TorneosScreen } from "@/components/torneos/TorneosScreen";
 export const metadata: Metadata = {
   title: "Torneos",
   description:
-    "Competiciones Primera por fecha. Elegí torneo, abrí la jornada y entrá al pool público.",
+    "Primera AFA: explorá por fecha o por competición, jugá gratis y seguí el cierre.",
 };
 
 export default function TorneosPage() {

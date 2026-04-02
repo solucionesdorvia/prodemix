@@ -51,7 +51,7 @@ function activityForCatalogue(id: string): TournamentActivityNote[] {
       {
         id: "a1",
         title: "Pozo · Primera A",
-        detail: "Pool público con premio en efectivo por fecha.",
+        detail: "Prode gratuito con premio en efectivo por fecha.",
         timeLabel: "Hoy",
       },
     ],
@@ -59,7 +59,7 @@ function activityForCatalogue(id: string): TournamentActivityNote[] {
       {
         id: "a1",
         title: "Pozo · Primera B",
-        detail: "Fixture 34 fechas · pozo por jornada.",
+        detail: "Fixture 34 fechas · pozo por fecha.",
         timeLabel: "Hoy",
       },
     ],

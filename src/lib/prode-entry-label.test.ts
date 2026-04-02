@@ -11,7 +11,7 @@ describe("prodeEntryLabel", () => {
     expect(prodeEntryLabel({ entryFeeArs: 5000 })).toBe("Entrada $5.000");
   });
 
-  it("sin entrada con premio en pool", () => {
+  it("sin entrada con premio en juego", () => {
     expect(
       prodeEntryLabel({ entryFeeArs: 0, prizePoolArs: 100_000 }),
     ).toBe("Con premio");

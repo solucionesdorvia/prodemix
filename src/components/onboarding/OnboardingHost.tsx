@@ -11,7 +11,7 @@ const STEPS = [
   {
     title: "ProdeMix",
     body:
-      "Pronósticos de futsal: torneos oficiales y pools por fecha. Una cuenta para cargar marcadores y ver puntos.",
+      "Pronósticos de futsal: torneos oficiales y prodes por fecha. Una cuenta para cargar marcadores y ver puntos.",
   },
   {
     title: "Torneos",

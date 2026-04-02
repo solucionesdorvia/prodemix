@@ -7,13 +7,15 @@ import { btnCompact, cardSurface } from "@/lib/ui-styles";
 import type { PoolExploreEntry } from "@/lib/torneos-explore";
 import { cn } from "@/lib/utils";
 
-type TorneosExplorePoolCardProps = {
+type TorneosExploreProdeCardProps = {
   entry: PoolExploreEntry;
 };
 
-export function TorneosExplorePoolCard({ entry }: TorneosExplorePoolCardProps) {
+/**
+ * Card de exploración: liga — fecha, premio, cierre, CTA Jugar.
+ */
+export function TorneosExploreProdeCard({ entry }: TorneosExploreProdeCardProps) {
   const { pool, href, tournamentShortName, matchdayName } = entry;
-  const hasPrize = pool.prizePoolArs > 0;
 
   return (
     <article className={cn("overflow-hidden", cardSurface)}>
@@ -21,11 +23,9 @@ export function TorneosExplorePoolCard({ entry }: TorneosExplorePoolCardProps) {
         <h3 className="text-[13px] font-semibold leading-snug text-app-text">
           {tournamentShortName} — {matchdayName}
         </h3>
-        {hasPrize ?
-          <p className="mt-1 text-[19px] font-bold tabular-nums leading-none tracking-tight text-app-text">
-            {formatPrizeLine(pool)}
-          </p>
-        : null}
+        <p className="mt-1 text-[19px] font-bold tabular-nums leading-none tracking-tight text-app-text">
+          {formatPrizeLine(pool)}
+        </p>
         <p className="mt-1.5 text-[11px] font-medium leading-snug text-app-muted">
           {formatPoolCloseLabel(pool.closesAt)}
         </p>

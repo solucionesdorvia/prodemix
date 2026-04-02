@@ -223,7 +223,7 @@ export function PerfilScreen() {
         <p className={pageEyebrow}>ProdeMix</p>
         <h1 className={cn(pageTitle, "mt-0.5")}>Perfil</h1>
         <p className="mt-1 text-[11px] font-medium leading-snug text-app-muted">
-          Primera · pools por fecha
+          Primera · prodes por fecha
         </p>
       </header>
 
@@ -317,7 +317,7 @@ export function PerfilScreen() {
           <StatCell
             label="Fechas"
             value={joinedPools.length}
-            sub="pools públicos"
+            sub="prodes de fecha"
           />
         </div>
       </section>
@@ -337,7 +337,7 @@ export function PerfilScreen() {
       <section className="mt-3 space-y-1.5">
         <div className="flex items-baseline justify-between gap-2">
           <h3 className="text-[11px] font-semibold uppercase tracking-wide text-app-muted">
-            Pools por fecha
+            Prodes por fecha
           </h3>
           <Link
             href="/torneos"
@@ -348,7 +348,7 @@ export function PerfilScreen() {
         </div>
         {joinedPools.length === 0 ? (
           <p className="rounded-lg border border-dashed border-app-border bg-app-bg/70 px-3 py-2.5 text-[11px] leading-snug text-app-muted">
-            Todavía no entraste a ningún pool público. Elegí una fecha en{" "}
+            Todavía no entraste a ningún prode de fecha. Elegí una competición en{" "}
             <Link href="/torneos" className="font-semibold text-app-primary">
               Torneos
             </Link>

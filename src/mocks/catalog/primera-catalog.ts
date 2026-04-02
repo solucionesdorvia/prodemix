@@ -37,7 +37,7 @@ export const PRIMERA_TOURNAMENT_CATALOGUE: TournamentCatalogueEntry[] = [
   entry({
     id: AFA_PREMIO_A,
     name: "AFA Futsal · Primera A · Premio",
-    shortName: "Premio · A",
+    shortName: "AFA Futsal A",
     matches: labelMatches(
       buildPlaPremioMatches("a", AFA_PREMIO_A),
       "AFA Futsal · Primera A · Premio",
@@ -46,7 +46,7 @@ export const PRIMERA_TOURNAMENT_CATALOGUE: TournamentCatalogueEntry[] = [
   entry({
     id: AFA_PREMIO_B,
     name: "AFA Futsal · Primera B · Premio",
-    shortName: "Premio · B",
+    shortName: "AFA Futsal B",
     matches: labelMatches(
       buildPlaPremioMatches("b", AFA_PREMIO_B),
       "AFA Futsal · Primera B · Premio",
@@ -55,7 +55,7 @@ export const PRIMERA_TOURNAMENT_CATALOGUE: TournamentCatalogueEntry[] = [
   entry({
     id: AFA_PREMIO_C,
     name: "AFA Futsal · Primera C · Premio",
-    shortName: "Premio · C",
+    shortName: "AFA Futsal C",
     matches: labelMatches(
       buildPlaPremioMatches("c", AFA_PREMIO_C),
       "AFA Futsal · Primera C · Premio",
@@ -142,11 +142,13 @@ export function getMatchIdsForMatchday(
     .map((m) => m.id);
 }
 
-/** Human-readable label for selects and headers (tournament short name + fecha name). */
+/**
+ * Título de fecha para listas y selects: liga corta — Fecha N (es-AR, futsal).
+ */
 export function formatPublicPoolLabel(pool: PublicPool): string {
   const t = PRIMERA_TOURNAMENT_CATALOGUE.find((x) => x.id === pool.tournamentId);
   const md = t?.matchdays.find((m) => m.id === pool.matchdayId);
   const tName = t?.shortName ?? pool.tournamentId;
   const fecha = md?.name ?? "Fecha";
-  return `${tName} · ${fecha}`;
+  return `${tName} — ${fecha}`;
 }
