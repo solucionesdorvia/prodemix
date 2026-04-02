@@ -5,8 +5,8 @@
 import "dotenv/config";
 
 import type { Match as DomainMatch, Matchday } from "../src/domain";
-import { deriveMatchdaysFromMatches } from "../src/mocks/catalog/matchdays";
 import { buildPlaPremioMatches } from "../src/mocks/fixtures/plp-afa-premio";
+import { PREDICTION_CLOSE_MS_BEFORE_KICKOFF } from "../src/lib/datetime";
 import { getPrisma } from "../src/lib/prisma";
 import type {
   MatchdayStatus as PrismaMatchdayStatus,
@@ -37,6 +37,51 @@ function prodeLifecycleFromMatchday(
   return "OPEN";
 }
 
+/**
+ * Same idea que `deriveMatchdaysFromMatches` pero sin importar mocks/catalog (evita cargar
+ * media app en Node y hace el seed usable en <1 min).
+ */
+function deriveMatchdaysForSeed(
+  tournamentId: string,
+  matches: DomainMatch[],
+): Matchday[] {
+  const map = new Map<string, DomainMatch[]>();
+  for (const m of matches) {
+    if (!m.matchdayId) continue;
+    if (!map.has(m.matchdayId)) map.set(m.matchdayId, []);
+    map.get(m.matchdayId)!.push(m);
+  }
+  const ids = [...map.keys()].sort((a, b) => {
+    const na = parseInt(a.split("-md-").pop() ?? "0", 10);
+    const nb = parseInt(b.split("-md-").pop() ?? "0", 10);
+    return na - nb;
+  });
+  const now = Date.now();
+  return ids.map((mdId) => {
+    const ms = map.get(mdId)!;
+    const sorted = [...ms].sort((x, y) =>
+      x.startsAt.localeCompare(y.startsAt),
+    );
+    const first = sorted[0]!;
+    const roundNum = parseInt(mdId.split("-md-").pop() ?? "1", 10);
+    const closes = new Date(first.startsAt);
+    closes.setTime(closes.getTime() - PREDICTION_CLOSE_MS_BEFORE_KICKOFF);
+    const kick = new Date(first.startsAt).getTime();
+    const anyStarted = kick <= now;
+    let status: Matchday["status"] = "open";
+    if (anyStarted) status = "closed";
+    return {
+      id: mdId,
+      tournamentId,
+      name: `Fecha ${roundNum}`,
+      roundNumber: roundNum,
+      startsAt: first.startsAt,
+      closesAt: closes.toISOString(),
+      status,
+    };
+  });
+}
+
 const PRIZE = { first: 30_000, second: 20_000, third: 10_000 } as const;
 
 const TOURNAMENTS = [
@@ -65,7 +110,7 @@ async function seedTournament(
   def: (typeof TOURNAMENTS)[number],
 ) {
   const matches: DomainMatch[] = buildPlaPremioMatches(def.division, def.id);
-  const matchdays = deriveMatchdaysFromMatches(def.id, matches);
+  const matchdays = deriveMatchdaysForSeed(def.id, matches);
 
   await prisma.tournament.upsert({
     where: { id: def.id },
@@ -139,28 +184,31 @@ async function seedTournament(
     mdExternalToRowId.set(md.id, row.id);
   }
 
-  for (const m of matches) {
+  const matchRows = matches.flatMap((m) => {
     const mdKey = m.matchdayId;
-    if (!mdKey) continue;
+    if (!mdKey) return [];
     const matchdayId = mdExternalToRowId.get(mdKey);
-    if (!matchdayId) continue;
-
-    await prisma.match.upsert({
-      where: { id: m.id },
-      create: {
+    if (!matchdayId) return [];
+    const homeTeamId = teamNameToId.get(m.homeTeam);
+    const awayTeamId = teamNameToId.get(m.awayTeam);
+    if (!homeTeamId || !awayTeamId) return [];
+    return [
+      {
         id: m.id,
         tournamentId: def.id,
         matchdayId,
-        homeTeamId: teamNameToId.get(m.homeTeam)!,
-        awayTeamId: teamNameToId.get(m.awayTeam)!,
+        homeTeamId,
+        awayTeamId,
         startsAt: new Date(m.startsAt),
-        status: "SCHEDULED",
+        status: "SCHEDULED" as const,
       },
-      update: {
-        startsAt: new Date(m.startsAt),
-        homeTeamId: teamNameToId.get(m.homeTeam)!,
-        awayTeamId: teamNameToId.get(m.awayTeam)!,
-      },
+    ];
+  });
+  if (matchRows.length > 0) {
+    const byId = new Map(matchRows.map((r) => [r.id, r]));
+    await prisma.match.createMany({
+      data: [...byId.values()],
+      skipDuplicates: true,
     });
   }
 

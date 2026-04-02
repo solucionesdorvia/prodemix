@@ -141,7 +141,11 @@ export function HomePageClient() {
   return (
     <>
       <HomeHeader
-        userName={user.displayName.split(" ")[0] ?? user.displayName}
+        userName={
+          user.username.trim().length > 0 ?
+            user.username
+          : (user.displayName.split(" ")[0] ?? user.displayName)
+        }
         activityUnreadCount={unreadCount}
       />
 

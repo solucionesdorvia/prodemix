@@ -10,8 +10,8 @@
 
 - `ADMIN_SECRET` solo en servidor; nunca en cliente.
 - Cookie `prodemix_admin`: `httpOnly`, `SameSite=Lax`, `Secure` en producción.
-- Login admin: comparación **en tiempo constante** del secreto; **rate limit** por IP (middleware + ruta).
-- APIs `/api/admin/*`: middleware + `requireAdminApi()` en cada handler.
+- Login admin: comparación **en tiempo constante** del secreto; **rate limit** por IP (`src/proxy.ts` + ruta).
+- APIs `/api/admin/*`: `proxy` + `requireAdminApi()` en cada handler.
 
 ## Rate limiting
 
@@ -20,7 +20,7 @@ Implementación en memoria por instancia (útil contra ráfagas; en varias répl
 | Área | Límite orientativo |
 |------|---------------------|
 | `/api/auth/*` | 60 req / min / IP |
-| `POST` …/predictions | 120 req / min / IP (middleware) + 90 / min / usuario+IP (ruta) |
+| `POST` …/predictions | 120 req / min / IP (`proxy`) + 90 / min / usuario+IP (ruta) |
 | `POST` /api/admin/login | 15 / min / IP |
 
 Respuesta **429** con cabecera `Retry-After` cuando aplica.

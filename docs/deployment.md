@@ -88,7 +88,11 @@ The Prisma client is emitted to `src/generated/prisma` and is **gitignored**, so
 
 This repo runs generation in **`postinstall`** and again in **`build`** (`prisma generate && next build`). **`prisma`** and **`dotenv`** (used by `prisma.config.ts`) are **dependencies** so `postinstall` works even when install omits dev-only tooling.
 
-**Producción en Railway:** **`railway.toml`** fija **`numReplicas = 1`** (evita varios `migrate` a la vez). **`npm start`** ejecuta **`npm run db:migrate:deploy:neon`** (migrate con **`PRISMA_SCHEMA_DISABLE_ADVISORY_LOCK`**) y luego **`next start`**. No usamos **preDeploy** en Railway porque suele fallar con otro entorno que el runtime. Si escalás a más réplicas, corré migraciones en CI o un job aparte.
+**Producción en Railway:** **`railway.toml`** fija **`numReplicas = 1`** (evita varios `migrate` a la vez). **`npm start`** ejecuta **`db:migrate:deploy:neon`**, luego **`db:seed:if-empty`** (solo si no hay torneos/partidos en la base — primer deploy o DB nueva) y **`next start`**. No usamos **preDeploy** en Railway porque suele fallar con otro entorno que el runtime. Si escalás a más réplicas, corré migraciones en CI o un job aparte.
+
+**Primer deploy y health checks:** el seed puede tardar varios minutos en una base vacía. Si el host corta el proceso por timeout antes de que termine `next start`, subí el **health check delay / timeout** del servicio o ejecutá **`npm run db:seed`** una vez en un shell con `DATABASE_URL` y redeploy (así `db:seed:if-empty` no hace nada).
+
+**E2E (Playwright):** `npm run test:e2e` — levanta el dev server si el puerto está libre (`playwright.config.ts`). Flujo con cuenta real: `E2E_EMAIL=… E2E_PASSWORD=… npm run test:e2e`. Ver `e2e/`.
 
 ### Seed
 
@@ -100,7 +104,8 @@ npm run db:seed
 ```
 
 - **Staging / new dev DB:** common.
-- **Production:** only if the seed is idempotent and safe for your data policy; many teams **never** seed production.
+- **Production:** `db:seed:if-empty` corre el seed automáticamente **solo** cuando `Tournament` y `Match` están vacíos (catálogo AFA Premio). Después de la primera carga, arranca rápido sin volver a sembrar.
+- **Manual:** `npm run db:seed` siempre que quieras forzar el seed (p. ej. tras un reset local).
 
 ---
 
@@ -108,11 +113,15 @@ npm run db:seed
 
 | Script | Command | Use |
 |--------|---------|-----|
-| `start` | `db:migrate:deploy:neon && next start` | Producción: migrate + Next; Railway `numReplicas=1` en `railway.toml` |
+| `start` | `db:migrate:deploy:neon && db:seed:if-empty && next start` | Producción: migrate + seed si catálogo vacío + Next |
+| `db:seed:if-empty` | `tsx scripts/seed-if-empty.ts` | Solo si `Tournament`/`Match` vacíos; usado por `start` |
 | `db:migrate:dev` | `prisma migrate dev` | Local: create/apply migrations interactively |
 | `db:migrate:deploy` | `prisma migrate deploy` | Staging/prod: apply pending migrations |
 | `db:generate` | `prisma generate` | Regenerate client (CI, after schema change) |
 | `db:seed` | `prisma db seed` | Run `prisma/seed.ts` |
+| `test:e2e` | `playwright test` | UI + API smoke; opcional `E2E_*` para login |
+
+**Datos mock vs Postgres:** [data-sources.md](./data-sources.md).
 
 ---
 
@@ -148,7 +157,7 @@ Schedule the cron URL with your scheduler (host cron, GitHub Actions, external p
 
 ## 7. Admin
 
-`ADMIN_SECRET` — used at `/api/admin/login`. Without it, admin APIs respond with **503** and `/admin` is blocked by middleware.
+`ADMIN_SECRET` — used at `/api/admin/login`. Without it, admin APIs respond with **503** and `/admin` is blocked by **`src/proxy.ts`** (Next.js 16; antes `middleware`).
 
 ---
 

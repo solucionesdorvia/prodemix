@@ -54,7 +54,7 @@ For deployment procedures and staging vs production, see [deployment.md](./deplo
 
 | Variable | Tag | Where used | Notes |
 |----------|-----|------------|--------|
-| `ADMIN_SECRET` | Optional | `src/lib/require-admin.ts`, `src/middleware.ts`, `src/app/api/admin/login/route.ts` | If unset, admin routes return 503 / are blocked. Cookie `secure` follows `NODE_ENV`. |
+| `ADMIN_SECRET` | Optional | `src/lib/require-admin.ts`, `src/proxy.ts`, `src/app/api/admin/login/route.ts` | If unset, admin routes return 503 / are blocked. Cookie `secure` follows `NODE_ENV`. |
 
 ---
 

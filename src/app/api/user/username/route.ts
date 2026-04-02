@@ -1,6 +1,8 @@
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import { NextResponse } from "next/server";
 
 import { auth } from "@/auth";
+import { logStructured } from "@/lib/observability";
 import { getPrisma } from "@/lib/prisma";
 import { normalizeUsername, validateUsernameFormat } from "@/lib/username";
 
@@ -37,7 +39,16 @@ export async function PATCH(request: Request) {
     where: { id: session.user.id },
     select: { username: true },
   });
-  if (existing?.username) {
+  if (!existing) {
+    return NextResponse.json(
+      {
+        error:
+          "Tu sesión no coincide con la base de datos (p. ej. después de un reset). Cerrá sesión y volvé a entrar.",
+      },
+      { status: 401 },
+    );
+  }
+  if (existing.username) {
     return NextResponse.json(
       { error: "El nombre de usuario ya está definido." },
       { status: 409 },
@@ -60,10 +71,30 @@ export async function PATCH(request: Request) {
       where: { id: session.user.id },
       data: { username: normalized },
     });
-  } catch {
+  } catch (e) {
+    if (e instanceof PrismaClientKnownRequestError) {
+      if (e.code === "P2002") {
+        return NextResponse.json(
+          { error: "Ese nombre ya está en uso. Elegí otro." },
+          { status: 409 },
+        );
+      }
+      if (e.code === "P2025") {
+        return NextResponse.json(
+          {
+            error:
+              "No se encontró tu usuario. Cerrá sesión y volvé a entrar.",
+          },
+          { status: 401 },
+        );
+      }
+    }
+    logStructured("user.username_patch_failed", {
+      message: e instanceof Error ? e.message : String(e),
+    });
     return NextResponse.json(
-      { error: "No se pudo guardar. Probá otro nombre." },
-      { status: 409 },
+      { error: "No se pudo guardar. Probá de nuevo en unos segundos." },
+      { status: 503 },
     );
   }
 

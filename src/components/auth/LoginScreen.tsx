@@ -8,7 +8,7 @@ import { pageEyebrow, pageHeader, pageTitle } from "@/lib/ui-styles";
 import { cn } from "@/lib/utils";
 
 export function LoginScreen() {
-  const { status } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [credMode, setCredMode] = useState<"login" | "register">("login");
@@ -17,9 +17,16 @@ export function LoginScreen() {
   const [credConfirm, setCredConfirm] = useState("");
   const [credError, setCredError] = useState<string | null>(null);
 
+  /** Autenticado sin username: ir al onboarding, no a `/` (AuthGate te devolvería igual). */
   useEffect(() => {
-    if (status === "authenticated") router.replace("/");
-  }, [status, router]);
+    if (status === "loading") return;
+    if (status !== "authenticated") return;
+    if (session?.user?.username) {
+      router.replace("/");
+    } else {
+      router.replace("/onboarding/username");
+    }
+  }, [status, session?.user?.username, router]);
 
   const handleGoogle = async () => {
     setBusy(true);

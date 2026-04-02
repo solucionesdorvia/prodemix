@@ -41,6 +41,8 @@ export function AppBottomNav() {
             <Link
               key={href}
               href={href}
+              aria-current={active ? "page" : undefined}
+              aria-label={active ? `${label}, pantalla actual` : label}
               className={cn(
                 "flex min-h-[52px] min-w-0 flex-1 select-none flex-col items-center justify-center gap-0.5 rounded-xl px-0.5 py-1 text-[10px] font-semibold leading-none tracking-wide transition-colors",
                 active

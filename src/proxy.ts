@@ -13,7 +13,8 @@ function jsonError(
   return NextResponse.json({ error: { code, message } }, { status });
 }
 
-export function middleware(request: NextRequest) {
+/** Next.js 16+: `proxy` reemplaza `middleware` (misma API, runtime Node por defecto). */
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const ip = getClientIp(request);
 

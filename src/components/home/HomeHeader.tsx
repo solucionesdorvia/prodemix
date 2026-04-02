@@ -2,6 +2,7 @@ import { Bell } from "lucide-react";
 import Link from "next/link";
 
 import { pageEyebrow, pageTitle } from "@/lib/ui-styles";
+import { initialsFromGreetingName } from "@/lib/user-display";
 import { cn } from "@/lib/utils";
 
 type HomeHeaderProps = {
@@ -47,12 +48,7 @@ export function HomeHeader({
           className="flex h-9 w-9 min-h-[36px] min-w-[36px] items-center justify-center rounded-full bg-app-text text-[10px] font-bold text-app-surface shadow-sm ring-2 ring-app-border-subtle"
           aria-hidden
         >
-          {userName
-            .split(/\s+/)
-            .map((p) => p[0])
-            .join("")
-            .slice(0, 2)
-            .toUpperCase()}
+          {initialsFromGreetingName(userName)}
         </div>
       </div>
     </header>

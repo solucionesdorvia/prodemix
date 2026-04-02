@@ -20,6 +20,7 @@ export async function GET() {
         directUrlSet,
         userTableExists: false,
         passwordHashColumnExists: false,
+        userColumnNames: [] as string[],
       },
       { status: 503 },
     );
@@ -32,19 +33,25 @@ export async function GET() {
     `;
     const userTableExists = Boolean(table?.exists);
 
-    const [col] = await prisma.$queryRaw<Array<{ exists: boolean }>>`
-      SELECT EXISTS (
-        SELECT 1
-        FROM pg_attribute a
-        JOIN pg_class t ON a.attrelid = t.oid
-        JOIN pg_namespace n ON t.relnamespace = n.oid
-        WHERE n.nspname = 'public'
-          AND t.relname = 'User'
-          AND a.attname = 'passwordHash'
-          AND NOT a.attisdropped
-      ) AS exists
-    `;
-    const passwordHashColumnExists = Boolean(col?.exists);
+    const columnRows =
+      userTableExists ?
+        await prisma.$queryRaw<Array<{ attname: string }>>`
+          SELECT a.attname::text AS attname
+          FROM pg_attribute a
+          JOIN pg_class t ON a.attrelid = t.oid
+          JOIN pg_namespace n ON t.relnamespace = n.oid
+          WHERE n.nspname = 'public'
+            AND t.relname = 'User'
+            AND a.attnum > 0
+            AND NOT a.attisdropped
+          ORDER BY a.attnum
+        `
+      : [];
+
+    const userColumnNames = columnRows.map((r) => r.attname);
+    const passwordHashColumnExists = userColumnNames.some(
+      (name) => name.toLowerCase() === "passwordhash",
+    );
 
     const ok = userTableExists && passwordHashColumnExists;
     return NextResponse.json(
@@ -54,6 +61,7 @@ export async function GET() {
         directUrlSet,
         userTableExists,
         passwordHashColumnExists,
+        userColumnNames,
         hint: ok
           ? null
           : "En Neon copiá la URL directa (sin -pooler) como DIRECT_URL en Railway y redeploy; el migrate deploy usa DIRECT_URL si está definida.",
@@ -68,6 +76,7 @@ export async function GET() {
         directUrlSet,
         userTableExists: false,
         passwordHashColumnExists: false,
+        userColumnNames: [] as string[],
         hint: "No se pudo consultar la base. Revisá DATABASE_URL y que Neon esté accesible.",
       },
       { status: 503 },

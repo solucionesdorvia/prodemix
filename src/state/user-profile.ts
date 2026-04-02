@@ -1,7 +1,10 @@
 import type { Session } from "next-auth";
 
 import type { User } from "@/domain";
-import { getMockCurrentUser } from "@/mocks/services/user.mock";
+import {
+  getMockCurrentUser,
+  MOCK_CURRENT_USER_ID,
+} from "@/mocks/services/user.mock";
 
 import type { PersistedAppState, UserProfilePersisted } from "./types";
 
@@ -30,9 +33,13 @@ export function resolveUser(
   const name = session.user.name?.trim() || null;
   const image = session.user.image ?? null;
   const sessionUsername = session.user.username?.trim() || null;
+  const isMockUser = session.user.id === MOCK_CURRENT_USER_ID;
   return {
     id: session.user.id,
-    username: p?.username?.trim() || sessionUsername || base.username,
+    username:
+      p?.username?.trim() ||
+      sessionUsername ||
+      (isMockUser ? base.username : ""),
     displayName: p?.displayName?.trim() || name || base.displayName,
     avatarUrl:
       p?.avatarUrl?.trim() ? p.avatarUrl.trim()
@@ -43,12 +50,4 @@ export function resolveUser(
     createdAt: base.createdAt,
     authProviderId: null,
   };
-}
-
-export function normalizeUsername(raw: string): string {
-  return raw
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, "")
-    .replace(/[^a-z0-9._-]/g, "");
 }

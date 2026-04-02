@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 import { pageEyebrow, pageHeader, pageTitle } from "@/lib/ui-styles";
 import { cn } from "@/lib/utils";
@@ -22,8 +22,30 @@ export function OnboardingUsernameScreen() {
     }
     if (session?.user?.username) {
       router.replace("/");
+      return;
     }
-  }, [status, session?.user?.username, router]);
+    /** Misma reconciliación que AuthGate: DB con username, sesión vieja tras F5. */
+    let cancelled = false;
+    void (async () => {
+      try {
+        const res = await fetch("/api/me/profile");
+        if (cancelled) return;
+        if (!res.ok) return;
+        const data = (await res.json()) as {
+          profile?: { username?: string | null };
+        };
+        if (data.profile?.username?.trim()) {
+          await update();
+          if (!cancelled) router.replace("/");
+        }
+      } catch {
+        /* ignorar */
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [status, session?.user?.username, router, update]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,6 +59,19 @@ export function OnboardingUsernameScreen() {
       });
       const data = (await res.json()) as { error?: string };
       if (!res.ok) {
+        if (res.status === 401) {
+          await signOut({ callbackUrl: "/login" });
+          return;
+        }
+        if (
+          res.status === 409 &&
+          typeof data.error === "string" &&
+          data.error.includes("ya está definido")
+        ) {
+          await update();
+          router.replace("/");
+          return;
+        }
         setError(data.error ?? "No se pudo guardar.");
         return;
       }
@@ -49,10 +84,31 @@ export function OnboardingUsernameScreen() {
     }
   };
 
-  if (status === "loading" || status === "unauthenticated") {
+  if (status === "loading") {
     return (
       <div className="mx-auto flex min-h-dvh w-full max-w-lg flex-col justify-center px-4">
         <p className="text-center text-[13px] text-app-muted">Cargando…</p>
+        <p className="mt-6 text-center text-[11px] text-app-muted">
+          Si quedás acá, probá{" "}
+          <button
+            type="button"
+            onClick={() => signOut({ callbackUrl: "/login" })}
+            className="font-semibold text-app-primary underline underline-offset-2"
+          >
+            cerrar sesión
+          </button>{" "}
+          e iniciar de nuevo.
+        </p>
+      </div>
+    );
+  }
+
+  if (status === "unauthenticated") {
+    return (
+      <div className="mx-auto flex min-h-dvh w-full max-w-lg flex-col justify-center px-4">
+        <p className="text-center text-[13px] text-app-muted">
+          Redirigiendo al inicio de sesión…
+        </p>
       </div>
     );
   }
@@ -83,14 +139,14 @@ export function OnboardingUsernameScreen() {
             onChange={(e) => setValue(e.target.value)}
             autoComplete="username"
             required
-            minLength={3}
-            maxLength={30}
+            maxLength={64}
             className="mt-1 w-full rounded-xl border border-app-border bg-app-surface px-3 py-2.5 text-[14px] text-app-text outline-none ring-app-primary/20 placeholder:text-app-muted focus:border-app-primary focus:ring-2"
             placeholder="tu_usuario"
           />
         </label>
         <p className="text-[10px] leading-snug text-app-muted">
-          3–30 caracteres: letras minúsculas, números y guión bajo.
+          3–30 caracteres (a–z, números, guión bajo). Podés escribir con tildes,
+          ñ o espacios: los normalizamos al guardar.
         </p>
         <button
           type="submit"
@@ -105,6 +161,17 @@ export function OnboardingUsernameScreen() {
           </p>
         ) : null}
       </form>
+
+      <p className="mt-8 text-center text-[11px] text-app-muted">
+        ¿Querés entrar con otra cuenta?{" "}
+        <button
+          type="button"
+          onClick={() => signOut({ callbackUrl: "/login" })}
+          className="font-semibold text-app-primary underline underline-offset-2"
+        >
+          Cerrar sesión
+        </button>
+      </p>
     </div>
   );
 }

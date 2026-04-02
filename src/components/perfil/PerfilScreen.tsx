@@ -10,7 +10,7 @@ import {
   Trophy,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 
 import type { PublicPool } from "@/domain";
 import { useAuth } from "@/components/auth/AuthProvider";
@@ -69,7 +69,7 @@ function StatCell({
 
 export function PerfilScreen() {
   const { logout, hydrated, loggedIn } = useAuth();
-  const { data: session, update } = useSession();
+  const { data: session } = useSession();
   const ingestionTick = useIngestionTick();
   const { user, state, setNotificationPreferences, updateProfile } =
     useAppState();
@@ -91,7 +91,8 @@ export function PerfilScreen() {
     try {
       const res = await fetch("/api/me/profile");
       if (!res.ok) {
-        setServerUsername(session?.user?.username ?? null);
+        const s = await getSession();
+        setServerUsername(s?.user?.username ?? null);
         setProfileHydrated(true);
         return;
       }
@@ -122,18 +123,12 @@ export function PerfilScreen() {
       setMemberSince(profile.createdAt ?? null);
       setServerUsername(profile.username);
       setProfileHydrated(true);
-      await update();
     } catch {
-      setServerUsername(session?.user?.username ?? null);
+      const s = await getSession();
+      setServerUsername(s?.user?.username ?? null);
       setProfileHydrated(true);
     }
-  }, [
-    loggedIn,
-    session?.user?.username,
-    setNotificationPreferences,
-    update,
-    updateProfile,
-  ]);
+  }, [loggedIn, setNotificationPreferences, updateProfile]);
 
   useEffect(() => {
     void fetchServerProfile();

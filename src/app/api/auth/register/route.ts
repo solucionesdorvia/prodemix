@@ -88,6 +88,12 @@ export async function POST(req: Request) {
           "No pudimos conectar con la base de datos. Revisá DATABASE_URL y que Neon esté accesible.",
         );
       }
+      return apiError(
+        503,
+        "SERVICE_UNAVAILABLE",
+        `No se pudo crear la cuenta (ref: ${code}). Probá de nuevo en unos minutos.`,
+        { prismaCode: code, meta: e.meta },
+      );
     } else if (e instanceof PrismaClientUnknownRequestError) {
       logStructured("auth.register_failed", {
         kind: "unknown_request",
@@ -115,15 +121,10 @@ export async function POST(req: Request) {
       logStructured("auth.register_failed", { kind: "other", name, message: msg });
     }
 
-    const prismaCode =
-      e instanceof PrismaClientKnownRequestError ? e.code : undefined;
     return apiError(
       503,
       "SERVICE_UNAVAILABLE",
-      prismaCode != null ?
-        `No se pudo crear la cuenta (ref: ${prismaCode}). Probá de nuevo en unos minutos.`
-      : "No se pudo crear la cuenta. Probá de nuevo en unos minutos.",
-      prismaCode != null ? { prismaCode } : undefined,
+      "No se pudo crear la cuenta. Probá de nuevo en unos minutos.",
     );
   }
 }
