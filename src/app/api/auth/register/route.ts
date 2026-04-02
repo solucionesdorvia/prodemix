@@ -77,26 +77,17 @@ export async function POST(req: Request) {
 
     if (e instanceof PrismaClientKnownRequestError) {
       const { code } = e;
-      if (code === "P2021" || code === "P2022") {
-        logStructured("auth.register_failed", {
-          prismaCode: code,
-          meta: e.meta,
-        });
-        return apiError(
-          503,
-          "SERVICE_UNAVAILABLE",
-          "Falta la tabla User o la columna passwordHash. En Neon agregá DIRECT_URL (URL directa sin -pooler) en Railway además de DATABASE_URL, redeploy, y abrí /api/health/db para ver el estado.",
-        );
-      }
+      logStructured("auth.register_failed", {
+        prismaCode: code,
+        meta: e.meta,
+      });
       if (code === "P1001" || code === "P1017" || code === "P1000") {
-        logStructured("auth.register_failed", { prismaCode: code });
         return apiError(
           503,
           "SERVICE_UNAVAILABLE",
           "No pudimos conectar con la base de datos. Revisá DATABASE_URL y que Neon esté accesible.",
         );
       }
-      logStructured("auth.register_failed", { prismaCode: code });
     } else if (e instanceof PrismaClientInitializationError) {
       logStructured("auth.register_failed", {
         kind: "init",
