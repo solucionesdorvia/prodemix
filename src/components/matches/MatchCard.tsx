@@ -86,11 +86,13 @@ export function MatchCard({
       if (initialScore) {
         setHomeStr(formatGoalsInput(initialScore.home));
         setAwayStr(formatGoalsInput(initialScore.away));
+        /** Avoid firing onPredictionCommit when hydrating from server/local saved score. */
+        lastCommitSig.current = `${initialScore.home}-${initialScore.away}`;
       } else {
         setHomeStr("");
         setAwayStr("");
+        lastCommitSig.current = null;
       }
-      lastCommitSig.current = null;
     });
   }, [initialScore, match.id]);
 

@@ -221,11 +221,9 @@ export function FechaPublicPoolClient({
 
   const paid = pool.type === "public_paid";
   const poolAcceptsEntries = pool.status === "open";
+  /** Por partido: cada uno cierra 3 h antes del kickoff; la fecha no congela todo al arrancar el 1°. */
   const predictionsFrozen =
-    !joined ||
-    !poolAcceptsEntries ||
-    matchday.status === "completed" ||
-    matchday.status === "closed";
+    !joined || matchday.status === "completed";
 
   return (
     <div className="relative pb-3">
@@ -382,7 +380,8 @@ export function FechaPublicPoolClient({
               Partidos de la fecha
             </h2>
             <p className="mt-1 text-[10px] text-app-muted">
-              Marcador exacto; el resultado define puntos.
+              Marcador exacto; podés cargar o editar hasta 3 h antes de cada
+              inicio.
             </p>
           </div>
           {!joined ? (

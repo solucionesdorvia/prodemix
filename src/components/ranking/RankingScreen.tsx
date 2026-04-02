@@ -30,6 +30,33 @@ const TABS: { id: RankingScope; label: string }[] = [
   { id: "friends", label: "Amigos" },
 ];
 
+type ApiRankingUserRow = {
+  rank: number | null;
+  points: number;
+  plenos: number;
+  signHits: number;
+  user: {
+    id: string;
+    name: string | null;
+    username: string | null;
+  };
+};
+
+function mapGlobalApiToEntries(rows: ApiRankingUserRow[]): RankingEntry[] {
+  return rows.map((r) => ({
+    rank: r.rank ?? 0,
+    playerId: r.user.id,
+    displayName:
+      r.user.username ?
+        `@${r.user.username}`
+      : r.user.name ?? "Usuario",
+    points: r.points,
+    exactScores: r.plenos,
+    signHits: r.signHits,
+    scope: "global",
+  }));
+}
+
 function Top10Row({
   row,
   selfPlayerId,
@@ -80,6 +107,13 @@ export function RankingScreen() {
   const [tournamentId, setTournamentId] = useState<string | null>(null);
   const [publicPoolId, setPublicPoolId] = useState<string | null>(null);
 
+  const [globalApiRows, setGlobalApiRows] = useState<RankingEntry[] | null>(
+    null,
+  );
+  const [globalFetchState, setGlobalFetchState] = useState<
+    "idle" | "loading" | "error" | "success"
+  >("idle");
+
   const poolOptions = useMemo(
     () => PRIMERA_PUBLIC_POOLS.filter((p) => p.status !== "settled"),
     [],
@@ -103,6 +137,10 @@ export function RankingScreen() {
 
   const rows = useMemo(() => {
     void catRev;
+    if (tab === "global") {
+      if (globalApiRows === null) return [];
+      return globalApiRows;
+    }
     if (tab === "fecha" && resolvedPoolId) {
       return buildRankingEntries(
         "fecha",
@@ -124,7 +162,48 @@ export function RankingScreen() {
       );
     }
     return buildRankingEntries(tab, user.id, user.displayName, state);
-  }, [tab, resolvedTournamentId, resolvedPoolId, user.id, user.displayName, state, catRev]);
+  }, [
+    tab,
+    globalApiRows,
+    resolvedTournamentId,
+    resolvedPoolId,
+    user.id,
+    user.displayName,
+    state,
+    catRev,
+  ]);
+
+  useEffect(() => {
+    if (tab !== "global") return;
+    let cancelled = false;
+    setGlobalApiRows(null);
+    setGlobalFetchState("loading");
+    fetch("/api/ranking", { credentials: "include" })
+      .then(async (res) => {
+        const data = (await res.json()) as {
+          ranking?: ApiRankingUserRow[];
+          error?: { message?: string };
+        };
+        if (!res.ok) {
+          throw new Error(data.error?.message ?? "Error al cargar el ranking.");
+        }
+        return data.ranking ?? [];
+      })
+      .then((ranking) => {
+        if (cancelled) return;
+        setGlobalApiRows(mapGlobalApiToEntries(ranking));
+        setGlobalFetchState("success");
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setGlobalApiRows([]);
+          setGlobalFetchState("error");
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [tab, user.id]);
 
   const scopeKey = useMemo(() => {
     if (tab === "tournament" && resolvedTournamentId) {
@@ -261,18 +340,30 @@ export function RankingScreen() {
         </label>
       ) : null}
 
-      {rows.length === 0 ? (
+      {tab === "global" && globalApiRows === null && globalFetchState !== "error" ?
+        <p className="mt-3 text-[13px] text-app-muted">
+          Cargando clasificación…
+        </p>
+      : tab === "global" && globalFetchState === "error" ?
+        <p className="mt-3 text-[13px] text-red-700">
+          No se pudo cargar el ranking global. Reintentá más tarde.
+        </p>
+      : rows.length === 0 ?
         <EmptyState
           className="mt-3"
           variant="soft"
           layout="horizontal"
           icon={Trophy}
           title="Sin datos en esta vista"
-          description="Elegí un pool con partidos jugados y pronósticos cargados, o revisá el ranking global."
+          description={
+            tab === "global" ?
+              "Cuando haya puntos registrados en prodes, aparecerán en esta tabla."
+            : "Elegí un pool con partidos jugados y pronósticos cargados, o revisá el ranking global."
+          }
         >
           <EmptyStateButtonLink href="/torneos">Torneos</EmptyStateButtonLink>
         </EmptyState>
-      ) : (
+      : (
         <>
           {listRows.length > 0 ? (
             <section className="mt-3">
@@ -310,9 +401,18 @@ export function RankingScreen() {
           ) : null}
 
           <p className="mt-3 text-[10px] leading-snug text-app-muted">
-            En <span className="font-medium text-app-text">Fecha</span> entran
-            solo partidos de ese pool con resultado. Desempate: más plenos,
-            más aciertos de signo, pronóstico guardado antes.
+            {tab === "global" ?
+              <>
+                Clasificación global: suma de puntos de todos los prodes. Mismo
+                criterio de desempate que en cada prode.
+              </>
+            : (
+              <>
+                En <span className="font-medium text-app-text">Fecha</span>{" "}
+                entran solo partidos de ese pool con resultado. Desempate: más
+                plenos, más aciertos de signo, pronóstico guardado antes.
+              </>
+            )}
           </p>
         </>
       )}

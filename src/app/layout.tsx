@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 
 import { AuthProvider } from "@/components/auth/AuthProvider";
+import { SessionProvider } from "@/components/providers/SessionProvider";
 
 import "./globals.css";
 
@@ -36,7 +37,9 @@ export default function RootLayout({
   return (
     <html lang="es-AR" className={`${plusJakarta.variable} h-full antialiased`}>
       <body className="min-h-dvh flex flex-col bg-app-bg text-app-text">
-        <AuthProvider>{children}</AuthProvider>
+        <SessionProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </SessionProvider>
       </body>
     </html>
   );

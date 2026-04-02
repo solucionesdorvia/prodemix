@@ -14,7 +14,9 @@ import { HomeFollowedStrip } from "@/components/home/HomeFollowedStrip";
 import { HomeHeader } from "@/components/home/HomeHeader";
 import { HomePendingSection } from "@/components/home/HomePendingSection";
 import { HomeQuickStats } from "@/components/home/HomeQuickStats";
+import { useAuth } from "@/components/auth/AuthProvider";
 import { MisProdesSection } from "@/components/prodes/MisProdesSection";
+import { MisProdesServerSection } from "@/components/prodes/MisProdesServerSection";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { formatPoolCloseLabel } from "@/lib/datetime";
@@ -62,6 +64,7 @@ function countPoolPending(
 }
 
 export function HomePageClient() {
+  const { hydrated, loggedIn } = useAuth();
   const { user, state } = useAppState();
   const owned = useOwnedProdes();
   const ingestionTick = useIngestionTick();
@@ -307,12 +310,16 @@ export function HomePageClient() {
 
         <HomeFollowedStrip items={followedTournaments} />
 
-        <MisProdesSection
-          prodes={owned}
-          userId={user.id}
-          displayName={user.displayName}
-          state={state}
-        />
+        {hydrated && loggedIn ?
+          <MisProdesServerSection showViewAllLink />
+        : (
+          <MisProdesSection
+            prodes={owned}
+            userId={user.id}
+            displayName={user.displayName}
+            state={state}
+          />
+        )}
 
         <section className="space-y-2">
           <SectionHeader

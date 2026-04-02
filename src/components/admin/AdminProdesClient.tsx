@@ -202,22 +202,15 @@ export function AdminProdesClient() {
           de este navegador.
         </p>
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-semibold">
+          <Link href="/admin/dashboard" className="text-blue-700 hover:underline">
+            Panel
+          </Link>
+          <Link href="/admin/prodes" className="text-blue-700 hover:underline">
+            Prodes (DB)
+          </Link>
           <Link href="/" className="text-blue-700 hover:underline">
-            ← Volver a la app
+            App
           </Link>
-          <Link href="/admin/mock-ingestion" className="text-blue-700 hover:underline">
-            Mock ingesta
-          </Link>
-          <button
-            type="button"
-            className="text-neutral-600 underline hover:text-neutral-900"
-            onClick={async () => {
-              await fetch("/api/admin/logout", { method: "POST" });
-              window.location.href = "/admin/login";
-            }}
-          >
-            Salir del admin
-          </button>
         </div>
       </header>
 

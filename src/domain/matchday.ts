@@ -18,7 +18,7 @@ export interface Matchday {
   roundNumber: number;
   /** First kickoff in this fecha (ISO). */
   startsAt: string;
-  /** Predictions close (ISO) — e.g. before first kickoff. */
+  /** Cierre de pronósticos para la fecha (ISO) — 3 h antes del primer partido. */
   closesAt: string;
   status: MatchdayStatus;
 }

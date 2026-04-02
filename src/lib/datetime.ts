@@ -58,9 +58,18 @@ export function formatDeadlineLabel(iso: string): string {
   }).format(d);
 }
 
+/** Cierre de pronósticos: 3 h antes del inicio del partido. */
+export const PREDICTION_CLOSE_MS_BEFORE_KICKOFF = 3 * 60 * 60 * 1000;
+
+/** ISO del instante en que dejan de aceptarse pronósticos para ese partido. */
+export function predictionCloseAtIso(matchStartsAtIso: string): string {
+  const t = Date.parse(matchStartsAtIso);
+  if (Number.isNaN(t)) return matchStartsAtIso;
+  return new Date(t - PREDICTION_CLOSE_MS_BEFORE_KICKOFF).toISOString();
+}
+
 /**
- * `true` si todavía se puede editar el pronóstico (antes del kickoff).
- * Tras el horario de inicio, solo lectura hasta que exista resultado mock.
+ * `true` si todavía se puede cargar o editar el pronóstico (hasta 3 h antes del kickoff).
  */
 export function isPredictionDeadlineOpen(
   matchStartsAtIso: string,
@@ -68,7 +77,8 @@ export function isPredictionDeadlineOpen(
 ): boolean {
   const t = Date.parse(matchStartsAtIso);
   if (Number.isNaN(t)) return false;
-  return nowMs < t;
+  const deadline = t - PREDICTION_CLOSE_MS_BEFORE_KICKOFF;
+  return nowMs < deadline;
 }
 
 /**

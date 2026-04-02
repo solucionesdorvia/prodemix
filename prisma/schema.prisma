@@ -1,7 +1,23 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
+// ProdeMix — Postgres (Neon) data model
+// Commands: npx prisma migrate deploy | npx prisma db seed
+//
+// RELATIONS (why it’s shaped this way)
+// - Tournament → Team / Matchday / Match: canonical fixture for a competition.
+// - Match.prodeId (optional): null = shared catalogue row; set = copy/fixture owned by one Prode (rare).
+// - Prode ↔ Tournament (ProdeTournament): a prode can draw from one or more tournaments over time.
+// - Prode ↔ Match (ProdeMatch): which fixture rows count for scoring in that prode (subset of catalogue).
+// - Prediction: one row per (user, prode, match); @@unique enforces a single pick per match in a pool.
+// - ProdeEntry: participation / invite state; separate from predictions.
+// - ProdeLeaderboardEntry: denormalized stats per (prode, user); recompute in app/worker.
+// - NotificationPreference: 1:1 with User for push/email prefs.
+//
+// CONSTRAINTS
+// - User: email, username (nullable) unique — Auth.js + handle onboarding.
+// - Team: unique slug per tournament.
+// - Matchday: externalKey unique — stable id aligned with mocks/API.
+// - Prediction: @@unique([userId, prodeId, matchId]).
+// - ProdeEntry: @@unique([userId, prodeId]).
+// - ProdeLeaderboardEntry: @@unique([prodeId, userId]).
 
 generator client {
   provider = "prisma-client"
@@ -10,4 +26,324 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+}
+
+// --- Auth.js (Prisma adapter) ---
+
+model User {
+  id              String    @id @default(cuid())
+  email           String?   @unique
+  emailVerified   DateTime?
+  name            String?
+  image           String?
+  /// Unique handle (sin @). Null until onboarding.
+  username        String?   @unique
+  /// user | admin
+  role            String    @default("user")
+  bannedAt        DateTime?
+  premiumEligible Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  accounts              Account[]
+  sessions              Session[]
+  notificationPreference NotificationPreference?
+  predictions           Prediction[]
+  prodeEntries          ProdeEntry[]
+  ownedProdes           Prode[]                 @relation("ProdeOwner")
+  leaderboardRows       ProdeLeaderboardEntry[]
+  prodeClosingReminderLogs ProdeClosingReminderLog[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// --- Notifications ---
+
+model NotificationPreference {
+  id                  String   @id @default(cuid())
+  userId              String   @unique
+  remindersEnabled    Boolean  @default(true)
+  closingAlertEnabled Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// --- Tournaments & teams ---
+
+model Tournament {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  name      String
+  category  String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  teams           Team[]
+  matchdays       Matchday[]
+  matches         Match[]
+  prodeTournaments ProdeTournament[]
+}
+
+model Team {
+  id           String   @id @default(cuid())
+  tournamentId String
+  name         String
+  slug         String
+  logoUrl      String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  tournament Tournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  homeMatches Match[]   @relation("HomeTeam")
+  awayMatches Match[]   @relation("AwayTeam")
+
+  @@unique([tournamentId, slug])
+  @@index([tournamentId])
+}
+
+model Matchday {
+  id           String           @id @default(cuid())
+  tournamentId String
+  /// Stable key aligned with mocks, e.g. afa-premio-a-md-03
+  externalKey  String           @unique
+  name         String
+  roundNumber  Int
+  startsAt     DateTime
+  closesAt     DateTime
+  status       MatchdayStatus   @default(OPEN)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  tournament Tournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  matches    Match[]
+
+  @@index([tournamentId])
+}
+
+// --- Matches & prodes ---
+
+model Match {
+  id           String       @id @default(cuid())
+  tournamentId String
+  matchdayId   String
+  /// When set, this row is scoped to a prode-only fixture; null = shared tournament fixture.
+  prodeId      String?
+  homeTeamId   String
+  awayTeamId   String
+  startsAt     DateTime
+  status       MatchStatus  @default(SCHEDULED)
+  homeScore    Int?
+  awayScore    Int?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  tournament Tournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  matchday   Matchday   @relation(fields: [matchdayId], references: [id], onDelete: Cascade)
+  prode      Prode?     @relation(fields: [prodeId], references: [id], onDelete: Cascade)
+  homeTeam   Team       @relation("HomeTeam", fields: [homeTeamId], references: [id], onDelete: Restrict)
+  awayTeam   Team       @relation("AwayTeam", fields: [awayTeamId], references: [id], onDelete: Restrict)
+  predictions     Prediction[]
+  prodeMatchJoins ProdeMatch[]
+
+  @@index([tournamentId])
+  @@index([matchdayId])
+  @@index([prodeId])
+  @@index([startsAt])
+}
+
+model Prode {
+  id            String              @id @default(cuid())
+  slug          String              @unique
+  ownerId       String?
+  title         String
+  type          ProdePoolType       @default(FREE)
+  /// Label de temporada o fecha visible (ej. "2026 · Fecha 3")
+  seasonLabel   String?
+  prizeFirstArs  Int?
+  prizeSecondArs Int?
+  prizeThirdArs  Int?
+  entryFeeArs    Int               @default(0)
+  status        ProdeLifecycleStatus @default(DRAFT)
+  closesAt      DateTime
+  startsAt      DateTime?
+  endsAt        DateTime?
+  visibility    ProdeVisibility     @default(PUBLIC)
+  inviteCode    String?             @unique
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+
+  owner          User?               @relation("ProdeOwner", fields: [ownerId], references: [id], onDelete: SetNull)
+  tournaments    ProdeTournament[]
+  prodeMatches   ProdeMatch[]
+  entries        ProdeEntry[]
+  predictions    Prediction[]
+  leaderboard    ProdeLeaderboardEntry[]
+  matchesOwned   Match[]
+  closingReminderLogs ProdeClosingReminderLog[]
+}
+
+/// One closing reminder email per user per prode (dedupe for cron jobs).
+model ProdeClosingReminderLog {
+  id        String   @id @default(cuid())
+  userId    String
+  prodeId   String
+  sentAt    DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  prode Prode @relation(fields: [prodeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, prodeId])
+  @@index([prodeId])
+  @@index([sentAt])
+}
+
+model ProdeTournament {
+  prodeId       String
+  tournamentId  String
+
+  prode       Prode       @relation(fields: [prodeId], references: [id], onDelete: Cascade)
+  tournament  Tournament  @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+
+  @@id([prodeId, tournamentId])
+}
+
+/// Which catalogue matches belong to a prode (subset of tournament fixtures).
+model ProdeMatch {
+  prodeId String
+  matchId String
+
+  prode Prode @relation(fields: [prodeId], references: [id], onDelete: Cascade)
+  match Match @relation(fields: [matchId], references: [id], onDelete: Cascade)
+
+  @@id([prodeId, matchId])
+}
+
+model ProdeEntry {
+  id        String           @id @default(cuid())
+  userId    String
+  prodeId   String
+  status    ProdeEntryStatus  @default(JOINED)
+  createdAt DateTime        @default(now())
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  prode Prode @relation(fields: [prodeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, prodeId])
+  @@index([prodeId])
+}
+
+model Prediction {
+  id                   String   @id @default(cuid())
+  userId               String
+  prodeId              String
+  matchId              String
+  predictedHomeScore   Int
+  predictedAwayScore   Int
+  savedAt              DateTime @default(now())
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  prode Prode @relation(fields: [prodeId], references: [id], onDelete: Cascade)
+  match Match @relation(fields: [matchId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, prodeId, matchId])
+  @@index([prodeId])
+  @@index([userId])
+}
+
+/// Materialized-style leaderboard row (recompute server-side).
+model ProdeLeaderboardEntry {
+  id           String   @id @default(cuid())
+  prodeId      String
+  userId       String
+  points       Int      @default(0)
+  plenos       Int      @default(0)
+  signHits     Int      @default(0)
+  rankPosition Int?
+  computedAt   DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  prode Prode @relation(fields: [prodeId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([prodeId, userId])
+  @@index([prodeId, rankPosition])
+}
+
+// --- Enums ---
+
+enum ProdePoolType {
+  FREE
+  ELITE
+}
+
+enum ProdeLifecycleStatus {
+  DRAFT
+  OPEN
+  CLOSED
+  FINALIZED
+  CANCELLED
+}
+
+enum ProdeVisibility {
+  PUBLIC
+  PRIVATE
+}
+
+enum ProdeEntryStatus {
+  JOINED
+  INVITED
+  PENDING
+  LEFT
+}
+
+enum MatchStatus {
+  SCHEDULED
+  LIVE
+  FINISHED
+  CANCELLED
+  POSTPONED
+}
+
+enum MatchdayStatus {
+  OPEN
+  CLOSED
+  COMPLETED
 }

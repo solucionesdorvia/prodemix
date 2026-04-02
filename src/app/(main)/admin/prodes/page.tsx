@@ -1,5 +1,5 @@
-import { AdminProdesClient } from "@/components/admin/AdminProdesClient";
+import { AdminProdesListClient } from "@/components/admin/AdminProdesListClient";
 
-export default function AdminProdesPage() {
-  return <AdminProdesClient />;
+export default function AdminProdesDbPage() {
+  return <AdminProdesListClient />;
 }

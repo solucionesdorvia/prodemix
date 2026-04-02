@@ -3,9 +3,17 @@ import { defaultUserProfileFromMock } from "./user-profile";
 import type { PersistedAppState, StoredProde } from "./types";
 import { DEFAULT_APP_STATE } from "./types";
 
-const STORAGE_KEY = "prodemix:v1:app";
-/** Copia de respaldo si el JSON principal se corrompe o falla al leer. */
-const BACKUP_KEY = "prodemix:v1:app:backup";
+/** Datos por usuario (id de Auth.js). Migración: se lee una vez la clave legacy sin sufijo. */
+const LEGACY_STORAGE_KEY = "prodemix:v1:app";
+const LEGACY_BACKUP_KEY = "prodemix:v1:app:backup";
+
+function storageKey(userId: string): string {
+  return `prodemix:v1:app:${userId}`;
+}
+
+function backupKey(userId: string): string {
+  return `prodemix:v1:app:${userId}:backup`;
+}
 
 export type PersistFailureReason = "quota" | "unknown";
 
@@ -120,12 +128,25 @@ function mergeWithDefaults(partial: PersistedAppState): PersistedAppState {
   };
 }
 
-export function loadPersistedState(): PersistedAppState {
+export function loadPersistedState(userId: string): PersistedAppState {
   if (typeof window === "undefined") return DEFAULT_APP_STATE;
-  const main = safeParse(localStorage.getItem(STORAGE_KEY));
+  const key = storageKey(userId);
+  const main = safeParse(localStorage.getItem(key));
   if (main) return mergeWithDefaults(main);
-  const backup = safeParse(localStorage.getItem(BACKUP_KEY));
-  if (backup) return mergeWithDefaults(backup);
+  const bk = safeParse(localStorage.getItem(backupKey(userId)));
+  if (bk) return mergeWithDefaults(bk);
+  const legacyMain = safeParse(localStorage.getItem(LEGACY_STORAGE_KEY));
+  if (legacyMain) {
+    const merged = mergeWithDefaults(legacyMain);
+    try {
+      localStorage.setItem(key, JSON.stringify(merged));
+    } catch {
+      /* ignore */
+    }
+    return merged;
+  }
+  const legacyBackup = safeParse(localStorage.getItem(LEGACY_BACKUP_KEY));
+  if (legacyBackup) return mergeWithDefaults(legacyBackup);
   return DEFAULT_APP_STATE;
 }
 
@@ -134,14 +155,19 @@ export function loadPersistedState(): PersistedAppState {
  * (no hay guardados parciales de pronósticos).
  * Reintenta una vez ante fallos intermitentes del motor de almacenamiento.
  */
-export function savePersistedState(state: PersistedAppState): PersistResult {
+export function savePersistedState(
+  state: PersistedAppState,
+  userId: string,
+): PersistResult {
   if (typeof window === "undefined") return { ok: true };
   const serialized = JSON.stringify(state);
+  const key = storageKey(userId);
+  const bk = backupKey(userId);
   for (let attempt = 0; attempt < 2; attempt++) {
     try {
-      localStorage.setItem(STORAGE_KEY, serialized);
+      localStorage.setItem(key, serialized);
       try {
-        localStorage.setItem(BACKUP_KEY, serialized);
+        localStorage.setItem(bk, serialized);
       } catch {
         /* backup opcional */
       }

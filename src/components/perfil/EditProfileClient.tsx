@@ -3,69 +3,179 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useSession } from "next-auth/react";
 
 import { pageEyebrow, pageHeader, pageTitle } from "@/lib/ui-styles";
+import { normalizeUsername, validateUsernameFormat } from "@/lib/username";
 import { initialsFromDisplayName } from "@/lib/user-display";
-import { normalizeUsername } from "@/state/user-profile";
 import { useAppState } from "@/state/app-state";
 import { cn } from "@/lib/utils";
 
+async function readApiError(res: Response): Promise<string> {
+  try {
+    const j = (await res.json()) as { error?: { message?: string } };
+    if (typeof j?.error?.message === "string") return j.error.message;
+  } catch {
+    /* ignore */
+  }
+  return "No se pudo guardar. Probá de nuevo.";
+}
+
 export function EditProfileClient() {
   const router = useRouter();
-  const { user, updateProfile } = useAppState();
-  const [displayName, setDisplayName] = useState(user.displayName);
-  const [username, setUsername] = useState(user.username);
-  const [avatarUrl, setAvatarUrl] = useState(user.avatarUrl ?? "");
+  const { status, update } = useSession();
+  const { updateProfile } = useAppState();
+
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const [displayName, setDisplayName] = useState("");
+  const [username, setUsername] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState("");
   const [imgError, setImgError] = useState(false);
 
+  useEffect(() => {
+    if (status === "loading") return;
+    if (status === "unauthenticated") {
+      router.replace("/login");
+      return;
+    }
+    let cancelled = false;
+    void (async () => {
+      setLoadError(null);
+      setLoading(true);
+      try {
+        const res = await fetch("/api/me/profile");
+        if (!res.ok) {
+          if (!cancelled) {
+            setLoadError(await readApiError(res));
+          }
+          return;
+        }
+        const data = (await res.json()) as {
+          profile: {
+            name: string | null;
+            username: string | null;
+            image: string | null;
+          };
+        };
+        if (cancelled) return;
+        const { profile } = data;
+        setDisplayName(profile.name?.trim() ?? "");
+        setUsername(profile.username ?? "");
+        setAvatarUrl(profile.image?.trim() ?? "");
+      } catch {
+        if (!cancelled) setLoadError("Error de red. Probá de nuevo.");
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [status, router]);
+
   const previewInitials = useMemo(
-    () => initialsFromDisplayName(displayName.trim() || user.displayName),
-    [displayName, user.displayName],
+    () => initialsFromDisplayName(displayName.trim() || "Usuario"),
+    [displayName],
   );
 
   const handleSubmit = useCallback(
-    (e: React.FormEvent) => {
+    async (e: React.FormEvent) => {
       e.preventDefault();
       setError(null);
       const dn = displayName.trim();
-      const uRaw = normalizeUsername(username);
       if (dn.length < 2) {
-        setError("El nombre debe tener al menos 2 letras.");
+        setError("El nombre debe tener al menos 2 caracteres.");
         return;
       }
-      if (uRaw.length < 3) {
-        setError("El usuario debe tener al menos 3 caracteres válidos.");
+      const normalized = normalizeUsername(username);
+      const uErr = validateUsernameFormat(normalized);
+      if (uErr) {
+        setError(uErr);
         return;
       }
-      let avatar: string | null = avatarUrl.trim();
-      if (avatar) {
+      let image: string | null = avatarUrl.trim();
+      if (image) {
         try {
-          // eslint-disable-next-line no-new -- validación de URL
-          new URL(avatar);
+          const u = new URL(image);
+          if (u.protocol !== "http:" && u.protocol !== "https:") {
+            setError("La imagen debe ser una URL http o https.");
+            return;
+          }
         } catch {
-          setError("La imagen debe ser una URL válida (https://…).");
+          setError("La imagen debe ser una URL válida.");
           return;
         }
       } else {
-        avatar = null;
+        image = null;
       }
-      updateProfile({
-        displayName: dn,
-        username: uRaw,
-        avatarUrl: avatar,
-      });
-      if (typeof window !== "undefined") {
-        sessionStorage.setItem("prodemix_profile_ok", "1");
+
+      setSaving(true);
+      try {
+        const res = await fetch("/api/me/profile", {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: dn,
+            username: normalized,
+            image,
+          }),
+        });
+        if (!res.ok) {
+          setError(await readApiError(res));
+          return;
+        }
+        updateProfile({
+          displayName: dn,
+          username: normalized,
+          avatarUrl: image,
+        });
+        await update();
+        if (typeof window !== "undefined") {
+          sessionStorage.setItem("prodemix_profile_ok", "1");
+        }
+        router.push("/perfil");
+        router.refresh();
+      } catch {
+        setError("Error de red. Probá de nuevo.");
+      } finally {
+        setSaving(false);
       }
-      router.push("/perfil");
     },
-    [avatarUrl, displayName, router, updateProfile, username],
+    [avatarUrl, displayName, router, update, updateProfile, username],
   );
 
   const showImg =
     avatarUrl.trim() && !imgError && /^https?:\/\//i.test(avatarUrl.trim());
+
+  if (status === "loading" || loading) {
+    return (
+      <div className="pb-6">
+        <p className="text-[13px] text-app-muted">Cargando perfil…</p>
+      </div>
+    );
+  }
+
+  if (loadError) {
+    return (
+      <div className="pb-6 space-y-3">
+        <p className="text-[13px] text-red-700" role="alert">
+          {loadError}
+        </p>
+        <button
+          type="button"
+          className="text-[12px] font-semibold text-app-primary underline"
+          onClick={() => router.refresh()}
+        >
+          Reintentar
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="pb-6">
@@ -80,9 +190,12 @@ export function EditProfileClient() {
       <header className={pageHeader}>
         <p className={pageEyebrow}>Cuenta</p>
         <h1 className={cn(pageTitle, "mt-0.5")}>Editar perfil</h1>
+        <p className="mt-1.5 text-[12px] leading-relaxed text-app-muted">
+          Los datos se guardan en tu cuenta.
+        </p>
       </header>
 
-      <form onSubmit={handleSubmit} className="mt-4 space-y-4">
+      <form onSubmit={(e) => void handleSubmit(e)} className="mt-4 space-y-4">
         <div className="flex justify-center">
           <div className="relative h-20 w-20 overflow-hidden rounded-2xl border border-app-border bg-app-surface shadow-sm">
             {showImg ?
@@ -118,8 +231,8 @@ export function EditProfileClient() {
             className="mt-1 w-full rounded-xl border border-app-border bg-app-surface px-3 py-2.5 text-[14px] text-app-text outline-none focus:border-app-primary focus:ring-2 focus:ring-app-primary/20"
           />
           <span className="mt-1 block text-[10px] text-app-muted">
-            Pegá un enlace a una imagen cuadrada. Si falla, se muestran tus
-            iniciales.
+            Enlace a una imagen cuadrada (http o https). Si falla la carga, se
+            muestran iniciales.
           </span>
         </label>
 
@@ -132,6 +245,7 @@ export function EditProfileClient() {
             onChange={(e) => setDisplayName(e.target.value)}
             required
             minLength={2}
+            maxLength={120}
             autoComplete="name"
             className="mt-1 w-full rounded-xl border border-app-border bg-app-surface px-3 py-2.5 text-[14px] text-app-text outline-none focus:border-app-primary focus:ring-2 focus:ring-app-primary/20"
           />
@@ -146,11 +260,13 @@ export function EditProfileClient() {
             onChange={(e) => setUsername(e.target.value)}
             required
             minLength={3}
+            maxLength={30}
             autoComplete="username"
-            className="mt-1 w-full rounded-xl border border-app-border bg-app-surface px-3 py-2.5 text-[14px] text-app-text outline-none focus:border-app-primary focus:ring-2 focus:ring-app-primary/20"
+            className="mt-1 w-full rounded-xl border border-app-border bg-app-surface px-3 py-2.5 font-mono text-[14px] text-app-text outline-none focus:border-app-primary focus:ring-2 focus:ring-app-primary/20"
           />
           <span className="mt-1 block text-[10px] text-app-muted">
-            Letras, números, punto y guión. Se guarda en minúsculas.
+            Entre 3 y 30 caracteres: letras minúsculas, números y guión bajo
+            (_). Debe ser único.
           </span>
         </label>
 
@@ -162,9 +278,10 @@ export function EditProfileClient() {
 
         <button
           type="submit"
-          className="flex h-11 w-full items-center justify-center rounded-xl bg-app-primary text-[14px] font-semibold text-white shadow-sm transition hover:bg-blue-700 active:scale-[0.99]"
+          disabled={saving}
+          className="flex h-11 w-full items-center justify-center rounded-xl bg-app-primary text-[14px] font-semibold text-white shadow-sm transition hover:bg-blue-700 active:scale-[0.99] disabled:opacity-60"
         >
-          Guardar cambios
+          {saving ? "Guardando…" : "Guardar cambios"}
         </button>
       </form>
     </div>

@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import {
   Bell,
   ChevronRight,
@@ -10,11 +9,13 @@ import {
   Star,
   Trophy,
 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useSession } from "next-auth/react";
 
 import type { PublicPool } from "@/domain";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { MisProdesSection } from "@/components/prodes/MisProdesSection";
+import { MisProdesServerSection } from "@/components/prodes/MisProdesServerSection";
 import {
   EmptyState,
   EmptyStateButtonLink,
@@ -33,6 +34,16 @@ import {
   computePointsBreakdown,
 } from "@/state/selectors";
 import { useAppState, useOwnedProdes } from "@/state/app-state";
+
+async function readApiError(res: Response): Promise<string> {
+  try {
+    const j = (await res.json()) as { error?: { message?: string } };
+    if (typeof j?.error?.message === "string") return j.error.message;
+  } catch {
+    /* ignore */
+  }
+  return "Error al guardar.";
+}
 
 function StatCell({
   label,
@@ -57,13 +68,76 @@ function StatCell({
 }
 
 export function PerfilScreen() {
-  const router = useRouter();
-  const { logout } = useAuth();
+  const { logout, hydrated, loggedIn } = useAuth();
+  const { data: session, update } = useSession();
   const ingestionTick = useIngestionTick();
-  const { user, state, setNotificationPreferences } = useAppState();
+  const { user, state, setNotificationPreferences, updateProfile } =
+    useAppState();
   const owned = useOwnedProdes();
   const [avatarBroken, setAvatarBroken] = useState(false);
   const [profileSavedBanner, setProfileSavedBanner] = useState(false);
+  const [accountEmail, setAccountEmail] = useState<string | null>(null);
+  const [memberSince, setMemberSince] = useState<string | null>(null);
+  const [serverUsername, setServerUsername] = useState<string | null>(null);
+  const [profileHydrated, setProfileHydrated] = useState(false);
+  const [prefsError, setPrefsError] = useState<string | null>(null);
+  const [prefsBusy, setPrefsBusy] = useState(false);
+
+  const fetchServerProfile = useCallback(async () => {
+    if (!loggedIn) {
+      setProfileHydrated(false);
+      return;
+    }
+    try {
+      const res = await fetch("/api/me/profile");
+      if (!res.ok) {
+        setServerUsername(session?.user?.username ?? null);
+        setProfileHydrated(true);
+        return;
+      }
+      const data = (await res.json()) as {
+        profile: {
+          email: string | null;
+          name: string | null;
+          username: string | null;
+          image: string | null;
+          createdAt: string;
+          notificationPreferences: {
+            remindersEnabled: boolean;
+            closingAlertEnabled: boolean;
+          };
+        };
+      };
+      const { profile } = data;
+      updateProfile({
+        displayName: profile.name?.trim() || "Usuario",
+        username: profile.username ?? "",
+        avatarUrl: profile.image ?? null,
+      });
+      setNotificationPreferences({
+        matchReminders: profile.notificationPreferences.remindersEnabled,
+        prodeDeadlineAlerts: profile.notificationPreferences.closingAlertEnabled,
+      });
+      setAccountEmail(profile.email ?? null);
+      setMemberSince(profile.createdAt ?? null);
+      setServerUsername(profile.username);
+      setProfileHydrated(true);
+      await update();
+    } catch {
+      setServerUsername(session?.user?.username ?? null);
+      setProfileHydrated(true);
+    }
+  }, [
+    loggedIn,
+    session?.user?.username,
+    setNotificationPreferences,
+    update,
+    updateProfile,
+  ]);
+
+  useEffect(() => {
+    void fetchServerProfile();
+  }, [fetchServerProfile]);
 
   useEffect(() => {
     setAvatarBroken(false);
@@ -73,11 +147,12 @@ export function PerfilScreen() {
     if (typeof window === "undefined") return;
     if (sessionStorage.getItem("prodemix_profile_ok") === "1") {
       sessionStorage.removeItem("prodemix_profile_ok");
+      void fetchServerProfile();
       setProfileSavedBanner(true);
       const t = window.setTimeout(() => setProfileSavedBanner(false), 4000);
       return () => window.clearTimeout(t);
     }
-  }, []);
+  }, [fetchServerProfile]);
 
   const showAvatar =
     Boolean(user.avatarUrl) &&
@@ -86,9 +161,43 @@ export function PerfilScreen() {
 
   const prefs = state.notificationPreferences;
 
-  const handleLogout = () => {
-    logout();
-    router.replace("/login");
+  const patchNotificationPrefs = async (next: {
+    matchReminders: boolean;
+    prodeDeadlineAlerts: boolean;
+  }) => {
+    const revert = {
+      matchReminders: prefs.matchReminders,
+      prodeDeadlineAlerts: prefs.prodeDeadlineAlerts,
+    };
+    setNotificationPreferences(next);
+    setPrefsError(null);
+    setPrefsBusy(true);
+    try {
+      const res = await fetch("/api/me/profile", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          notificationPreferences: {
+            remindersEnabled: next.matchReminders,
+            closingAlertEnabled: next.prodeDeadlineAlerts,
+          },
+        }),
+      });
+      if (!res.ok) {
+        setNotificationPreferences(revert);
+        setPrefsError(await readApiError(res));
+        return;
+      }
+    } catch {
+      setNotificationPreferences(revert);
+      setPrefsError("No se pudo guardar las preferencias.");
+    } finally {
+      setPrefsBusy(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    await logout();
   };
 
   const { totalPoints, exactHits } = useMemo(() => {
@@ -122,6 +231,15 @@ export function PerfilScreen() {
         </p>
       </header>
 
+      {prefsError ?
+        <p
+          className="mt-3 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-[12px] font-medium text-red-900"
+          role="alert"
+        >
+          {prefsError}
+        </p>
+      : null}
+
       {profileSavedBanner ?
         <p
           className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-[12px] font-semibold text-emerald-900"
@@ -154,11 +272,33 @@ export function PerfilScreen() {
           <h2 className="truncate text-[17px] font-semibold leading-tight text-app-text">
             {user.displayName}
           </h2>
-          <p className="mt-0.5 text-[13px] font-medium text-app-primary">
-            @{user.username}
-          </p>
+          {!profileHydrated ?
+            <p className="mt-0.5 text-[13px] text-app-muted">Cargando…</p>
+          : (serverUsername ?? session?.user?.username) ?
+            <p className="mt-0.5 font-mono text-[13px] font-medium text-app-primary">
+              @{serverUsername ?? session?.user?.username}
+            </p>
+          : (
+            <Link
+              href="/onboarding/username"
+              className="mt-0.5 inline-block text-[13px] font-semibold text-app-primary underline"
+            >
+              Completá tu usuario
+            </Link>
+          )}
           <p className="mt-1 text-[11px] leading-snug text-app-muted">
-            Temporada 2026 · CABA y alrededores
+            {profileHydrated ?
+              <>
+                {accountEmail ?? "Sin correo en la cuenta"}
+                {memberSince ?
+                  ` · Desde ${new Date(memberSince).toLocaleDateString("es-AR", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                  })}`
+                : null}
+              </>
+            : null}
           </p>
         </div>
       </section>
@@ -186,13 +326,17 @@ export function PerfilScreen() {
         </div>
       </section>
 
-      <MisProdesSection
-        className="mt-3"
-        prodes={owned}
-        userId={user.id}
-        displayName={user.displayName}
-        state={state}
-      />
+      {hydrated && loggedIn ?
+        <MisProdesServerSection className="mt-3" showViewAllLink />
+      : (
+        <MisProdesSection
+          className="mt-3"
+          prodes={owned}
+          userId={user.id}
+          displayName={user.displayName}
+          state={state}
+        />
+      )}
 
       <section className="mt-3 space-y-1.5">
         <div className="flex items-baseline justify-between gap-2">
@@ -351,8 +495,8 @@ export function PerfilScreen() {
                   Recibir recordatorios
                 </p>
                 <p className="text-[10px] leading-snug text-app-muted">
-                  Partidos y fechas de tus pools y grupos. Guardado en este
-                  dispositivo.
+                  Recordatorios por correo cuando el envío esté configurado en el
+                  servidor.
                 </p>
               </div>
             </div>
@@ -360,13 +504,15 @@ export function PerfilScreen() {
               type="button"
               role="switch"
               aria-checked={prefs.matchReminders}
+              disabled={prefsBusy}
               onClick={() =>
-                setNotificationPreferences({
+                void patchNotificationPrefs({
                   matchReminders: !prefs.matchReminders,
+                  prodeDeadlineAlerts: prefs.prodeDeadlineAlerts,
                 })
               }
               className={cn(
-                "relative h-7 w-12 shrink-0 rounded-full transition-colors",
+                "relative h-7 w-12 shrink-0 rounded-full transition-colors disabled:opacity-50",
                 prefs.matchReminders ? "bg-app-primary" : "bg-app-border",
               )}
             >
@@ -384,21 +530,23 @@ export function PerfilScreen() {
                 Avisar antes del cierre del prode
               </p>
               <p className="text-[10px] leading-snug text-app-muted">
-                Antes del límite para cargar marcadores en tus grupos. Guardado
-                en este dispositivo.
+                Aviso por correo antes del cierre del prode para completar
+                pronósticos.
               </p>
             </div>
             <button
               type="button"
               role="switch"
               aria-checked={prefs.prodeDeadlineAlerts}
+              disabled={prefsBusy}
               onClick={() =>
-                setNotificationPreferences({
+                void patchNotificationPrefs({
+                  matchReminders: prefs.matchReminders,
                   prodeDeadlineAlerts: !prefs.prodeDeadlineAlerts,
                 })
               }
               className={cn(
-                "relative h-7 w-12 shrink-0 rounded-full transition-colors",
+                "relative h-7 w-12 shrink-0 rounded-full transition-colors disabled:opacity-50",
                 prefs.prodeDeadlineAlerts ? "bg-app-primary" : "bg-app-border",
               )}
             >

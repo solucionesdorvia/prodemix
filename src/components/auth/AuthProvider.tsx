@@ -4,45 +4,34 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
-  useState,
   type ReactNode,
 } from "react";
-
-import {
-  loadSessionLoggedIn,
-  saveSessionLoggedIn,
-} from "@/state/session-storage";
+import { signOut, useSession } from "next-auth/react";
 
 type AuthValue = {
   hydrated: boolean;
   loggedIn: boolean;
+  /** Navega a /login (por si un flujo legacy lo necesita). */
   login: () => void;
-  logout: () => void;
+  logout: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthValue | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [hydrated, setHydrated] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(true);
-
-  useEffect(() => {
-    queueMicrotask(() => {
-      setLoggedIn(loadSessionLoggedIn());
-      setHydrated(true);
-    });
-  }, []);
+  const { status } = useSession();
+  const hydrated = status !== "loading";
+  const loggedIn = status === "authenticated";
 
   const login = useCallback(() => {
-    saveSessionLoggedIn(true);
-    setLoggedIn(true);
+    if (typeof window !== "undefined") {
+      window.location.href = "/login";
+    }
   }, []);
 
-  const logout = useCallback(() => {
-    saveSessionLoggedIn(false);
-    setLoggedIn(false);
+  const logout = useCallback(async () => {
+    await signOut({ callbackUrl: "/login" });
   }, []);
 
   const value = useMemo(

@@ -1,5 +1,6 @@
 import type { TorneoBrowseItem, TorneoCategoryFilterId } from "@/domain";
 
+import { isPredictionDeadlineOpen } from "@/lib/datetime";
 import { normalizeSearchKey } from "@/lib/string-normalize";
 import { getMockResultForMatch } from "@/mocks/mock-match-results";
 import { getTournamentCatalogueEntryById } from "@/mocks/services/tournaments-catalogue.mock";
@@ -11,14 +12,14 @@ export function isCompletedTorneo(t: TorneoBrowseItem): boolean {
   return /finalizado/i.test(t.statusLabel);
 }
 
-/** Catalogue: at least one scheduled match still in the future without result. */
+/** Al menos un partido sin resultado y con plazo de pronóstico aún abierto (3 h antes del inicio). */
 export function hasFutureOpenFixture(tournamentId: string): boolean {
   const t = getTournamentCatalogueEntryById(tournamentId);
   if (!t) return false;
   const now = Date.now();
   for (const m of t.matches) {
     if (getMockResultForMatch(m.id)) continue;
-    if (new Date(m.startsAt).getTime() > now) return true;
+    if (isPredictionDeadlineOpen(m.startsAt, now)) return true;
   }
   return false;
 }

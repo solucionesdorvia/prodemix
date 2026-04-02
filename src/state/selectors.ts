@@ -7,7 +7,11 @@ import type {
   ScorePrediction,
 } from "@/domain";
 
-import { formatDeadlineLabel } from "@/lib/datetime";
+import {
+  formatDeadlineLabel,
+  isPredictionDeadlineOpen,
+  predictionCloseAtIso,
+} from "@/lib/datetime";
 import {
   findCatalogueMatchById,
   getMatchIdsForTournament,
@@ -562,7 +566,7 @@ export function buildHomePendingPredictions(
       if (getMockResultForMatch(matchId)) continue;
       const m = findCatalogueMatchById(matchId);
       if (!m) continue;
-      if (new Date(m.startsAt).getTime() <= now) continue;
+      if (!isPredictionDeadlineOpen(m.startsAt, now)) continue;
       out.push({ match: m, prodeId: prode.id, prodeName: prode.name });
     }
   }
@@ -593,20 +597,21 @@ export function buildProdeSummary(
 ): ProdeSummary {
   const n = prode.matchIds.length;
   let pending = 0;
-  let earliest: string | null = null;
+  let earliestClose: string | null = null;
   for (const matchId of prode.matchIds) {
     const key = predictionStorageKey(currentUserId, prode.id, matchId);
     if (!state.predictionMap[key]) pending += 1;
     const m = findCatalogueMatchById(matchId);
     if (m) {
-      if (!earliest || m.startsAt < earliest) earliest = m.startsAt;
+      const close = predictionCloseAtIso(m.startsAt);
+      if (!earliestClose || close < earliestClose) earliestClose = close;
     }
   }
   return {
     id: prode.id,
     name: prode.name,
     matchCount: n,
-    nextDeadline: earliest ? formatDeadlineLabel(earliest) : "—",
+    nextDeadline: earliestClose ? formatDeadlineLabel(earliestClose) : "—",
     progressLabel: `Marcadores ${n - pending}/${n}`,
   };
 }

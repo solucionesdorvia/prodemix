@@ -1,3 +1,5 @@
+import type { Session } from "next-auth";
+
 import type { User } from "@/domain";
 import { getMockCurrentUser } from "@/mocks/services/user.mock";
 
@@ -12,17 +14,34 @@ export function defaultUserProfileFromMock(): UserProfilePersisted {
   };
 }
 
-export function resolveUser(state: PersistedAppState): User {
+/**
+ * Usuario de la app: sesión Auth.js + overrides locales (perfil editado).
+ */
+export function resolveUser(
+  state: PersistedAppState,
+  session: Session | null,
+): User {
   const base = getMockCurrentUser();
-  const p = state.userProfile;
-  if (!p) {
+  if (!session?.user?.id) {
     return base;
   }
+  const p = state.userProfile;
+  const email = session.user.email ?? null;
+  const name = session.user.name?.trim() || null;
+  const image = session.user.image ?? null;
+  const sessionUsername = session.user.username?.trim() || null;
   return {
-    ...base,
-    username: p.username.trim() || base.username,
-    displayName: p.displayName.trim() || base.displayName,
-    avatarUrl: p.avatarUrl?.trim() ? p.avatarUrl.trim() : null,
+    id: session.user.id,
+    username: p?.username?.trim() || sessionUsername || base.username,
+    displayName: p?.displayName?.trim() || name || base.displayName,
+    avatarUrl:
+      p?.avatarUrl?.trim() ? p.avatarUrl.trim()
+      : image ?
+        image
+      : null,
+    email,
+    createdAt: base.createdAt,
+    authProviderId: null,
   };
 }
 

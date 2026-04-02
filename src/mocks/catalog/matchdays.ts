@@ -1,5 +1,6 @@
 import type { Match, Matchday, MatchdayStatus } from "@/domain";
 
+import { PREDICTION_CLOSE_MS_BEFORE_KICKOFF } from "@/lib/datetime";
 import { getMockResultForMatch } from "@/mocks/mock-match-results";
 
 /**
@@ -29,7 +30,7 @@ export function deriveMatchdaysFromMatches(
     const first = sorted[0]!;
     const roundNum = parseInt(mdId.split("-md-").pop() ?? "1", 10);
     const closes = new Date(first.startsAt);
-    closes.setHours(closes.getHours() - 1);
+    closes.setTime(closes.getTime() - PREDICTION_CLOSE_MS_BEFORE_KICKOFF);
     const kick = new Date(first.startsAt).getTime();
     const allFinished = sorted.every((x) => !!getMockResultForMatch(x.id));
     const anyStarted = kick <= now;

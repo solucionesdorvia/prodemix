@@ -13,6 +13,7 @@ import {
   saveAdminProdeStorage,
   upsertAdminProdeRecord as upsertAdminProdeInStorage,
 } from "@/state/admin-prode-storage";
+import { useSession } from "next-auth/react";
 import {
   createContext,
   useCallback,
@@ -25,6 +26,7 @@ import {
 } from "react";
 
 import { findCatalogueMatchById } from "@/lib/catalogue-matches";
+import { isPredictionDeadlineOpen } from "@/lib/datetime";
 import { getTournamentCatalogueEntryById } from "@/mocks/services/tournaments-catalogue.mock";
 
 import {
@@ -123,6 +125,7 @@ type AppStateValue = {
 const AppStateContext = createContext<AppStateValue | null>(null);
 
 export function AppStateProvider({ children }: { children: ReactNode }) {
+  const { data: session, status: sessionStatus } = useSession();
   const [state, setState] = useState<PersistedAppState>(DEFAULT_APP_STATE);
   const [hydrated, setHydrated] = useState(false);
   const [persistSaveError, setPersistSaveError] =
@@ -141,13 +144,18 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   const retryPersistTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
     null,
   );
+  const sessionUserIdRef = useRef<string | undefined>(undefined);
+  useEffect(() => {
+    sessionUserIdRef.current = session?.user?.id;
+  }, [session?.user?.id]);
 
   useEffect(() => {
+    if (sessionStatus !== "authenticated" || !session?.user?.id) return;
     queueMicrotask(() => {
-      setState(loadPersistedState());
+      setState(loadPersistedState(session.user.id));
       setHydrated(true);
     });
-  }, []);
+  }, [sessionStatus, session?.user?.id]);
 
   useEffect(() => {
     stateRef.current = state;
@@ -155,7 +163,9 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!hydrated) return;
-    const result = savePersistedState(state);
+    const uid = session?.user?.id;
+    if (!uid) return;
+    const result = savePersistedState(state, uid);
     if (result.ok) {
       if (retryPersistTimerRef.current) {
         clearTimeout(retryPersistTimerRef.current);
@@ -200,7 +210,9 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     }
     retryPersistTimerRef.current = setTimeout(() => {
       retryPersistTimerRef.current = null;
-      const retry = savePersistedState(stateRef.current);
+      const uid = sessionUserIdRef.current;
+      if (!uid) return;
+      const retry = savePersistedState(stateRef.current, uid);
       if (retry.ok) {
         setPersistSaveError(null);
       }
@@ -211,7 +223,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         retryPersistTimerRef.current = null;
       }
     };
-  }, [state, hydrated]);
+  }, [state, hydrated, session?.user?.id]);
 
   useEffect(() => {
     if (!persistSuccessMessage) return;
@@ -222,7 +234,9 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!hydrated) return;
     const flush = () => {
-      savePersistedState(stateRef.current);
+      const uid = sessionUserIdRef.current;
+      if (!uid) return;
+      savePersistedState(stateRef.current, uid);
     };
     window.addEventListener("pagehide", flush);
     const onVisibility = () => {
@@ -241,7 +255,9 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const retryPersist = useCallback(() => {
-    const r = savePersistedState(stateRef.current);
+    const uid = sessionUserIdRef.current;
+    if (!uid) return;
+    const r = savePersistedState(stateRef.current, uid);
     if (r.ok) {
       setPersistSaveError(null);
       setPersistSuccessMessage("Pronósticos guardados");
@@ -251,7 +267,9 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const flushPersist = useCallback(() => {
-    const r = savePersistedState(stateRef.current);
+    const uid = sessionUserIdRef.current;
+    if (!uid) return;
+    const r = savePersistedState(stateRef.current, uid);
     if (r.ok) {
       setPersistSaveError(null);
       setPersistSuccessMessage("Pronósticos guardados");
@@ -260,7 +278,10 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const user = useMemo(() => resolveUser(state), [state]);
+  const user = useMemo(
+    () => resolveUser(state, session ?? null),
+    [state, session],
+  );
 
   const updateProfile = useCallback((input: UpdateProfileInput) => {
     setState((s) => ({
@@ -476,6 +497,10 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
 
   const setPrediction = useCallback(
     (prodeId: string, matchId: string, score: ScorePrediction | null) => {
+      if (score !== null) {
+        const m = findCatalogueMatchById(matchId);
+        if (m && !isPredictionDeadlineOpen(m.startsAt)) return;
+      }
       const key = predictionStorageKey(user.id, prodeId, matchId);
       setState((s) => {
         const nextMap = { ...s.predictionMap };
@@ -537,6 +562,10 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
 
   const setPublicPoolPrediction = useCallback(
     (poolId: string, matchId: string, score: ScorePrediction | null) => {
+      if (score !== null) {
+        const m = findCatalogueMatchById(matchId);
+        if (m && !isPredictionDeadlineOpen(m.startsAt)) return;
+      }
       const key = predictionStorageKey(user.id, poolId, matchId);
       setState((s) => {
         const nextMap: PublicPoolPredictionMap = {
