@@ -49,6 +49,7 @@ const providers: Provider[] = [
         email: user.email,
         name: user.name,
         image: user.image,
+        role: user.role,
       };
     },
   }),
@@ -83,9 +84,27 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     signIn: "/login",
   },
   callbacks: {
-    jwt({ token, user }) {
+    async jwt({ token, user }) {
       if (user?.id) {
         token.sub = String(user.id);
+        const u = user as { role?: string | null };
+        if (typeof u.role === "string" && u.role.length > 0) {
+          token.role = u.role;
+        } else {
+          const row = await getPrisma().user.findUnique({
+            where: { id: user.id },
+            select: { role: true },
+          });
+          token.role = row?.role ?? "user";
+        }
+      }
+      const uid = typeof token.sub === "string" ? token.sub : null;
+      if (uid && !token.role) {
+        const row = await getPrisma().user.findUnique({
+          where: { id: uid },
+          select: { role: true },
+        });
+        token.role = row?.role ?? "user";
       }
       return token;
     },
@@ -93,6 +112,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       const id = typeof token.sub === "string" ? token.sub : null;
       if (session.user && id) {
         session.user.id = id;
+        if (typeof token.role === "string") {
+          session.user.role = token.role;
+        }
         try {
           const dbUser = await getPrisma().user.findUnique({
             where: { id },
@@ -101,6 +123,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
               image: true,
               email: true,
               username: true,
+              role: true,
             },
           });
           if (dbUser) {
@@ -115,6 +138,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
               email: dbUser.email,
               image: imageForSession,
               username: dbUser.username ?? null,
+              role: dbUser.role,
             });
           }
         } catch {

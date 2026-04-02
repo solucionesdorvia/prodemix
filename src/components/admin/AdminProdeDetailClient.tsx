@@ -47,6 +47,23 @@ export function AdminProdeDetailClient({ prodeId }: { prodeId: string }) {
   >([]);
   const [linkTournamentId, setLinkTournamentId] = useState("");
   const [linkMatchId, setLinkMatchId] = useState("");
+  const [participants, setParticipants] = useState<
+    {
+      user: {
+        id: string;
+        email: string | null;
+        username: string | null;
+        name: string | null;
+      };
+      predictionCount: number;
+      matchCount: number;
+      predictionsComplete: boolean;
+      points: number | null;
+      plenos: number | null;
+      signHits: number | null;
+      leaderboardUpdatedAt: string | null;
+    }[]
+  >([]);
   const [msg, setMsg] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -55,7 +72,7 @@ export function AdminProdeDetailClient({ prodeId }: { prodeId: string }) {
     setMsg(null);
     setErr(null);
     try {
-      const [detail, tlist, m] = await Promise.all([
+      const [detail, tlist, m, part] = await Promise.all([
         adminFetch<{ prode: ProdePayload; tournaments: { id: string; name: string }[] }>(
           `/api/admin/prodes/${encodeURIComponent(prodeId)}`,
         ),
@@ -69,11 +86,29 @@ export function AdminProdeDetailClient({ prodeId }: { prodeId: string }) {
             awayTeam: { name: string };
           }[];
         }>(`/api/admin/prodes/${encodeURIComponent(prodeId)}/matches`),
+        adminFetch<{
+          participants: {
+            user: {
+              id: string;
+              email: string | null;
+              username: string | null;
+              name: string | null;
+            };
+            predictionCount: number;
+            matchCount: number;
+            predictionsComplete: boolean;
+            points: number | null;
+            plenos: number | null;
+            signHits: number | null;
+            leaderboardUpdatedAt: string | null;
+          }[];
+        }>(`/api/admin/prodes/${encodeURIComponent(prodeId)}/participants`),
       ]);
       setProde(detail.prode);
       setLinkedTournaments(detail.tournaments);
       setTournaments(tlist.tournaments);
       setMatches(m.matches);
+      setParticipants(part.participants);
     } catch (e) {
       setErr(e instanceof Error ? e.message : "Error");
     }
@@ -206,7 +241,7 @@ export function AdminProdeDetailClient({ prodeId }: { prodeId: string }) {
             Vista pública
           </Link>
           <Link
-            href="/admin/resultados"
+            href="/admin/results"
             className="text-blue-700 hover:underline"
           >
             Cargar resultados
@@ -436,6 +471,47 @@ export function AdminProdeDetailClient({ prodeId }: { prodeId: string }) {
           >
             Vincular
           </button>
+        </div>
+      </section>
+
+      <section className="rounded border border-neutral-200 bg-white p-3">
+        <h2 className="text-[13px] font-bold">
+          Participación ({participants.length})
+        </h2>
+        <p className="text-[11px] text-neutral-600">
+          Pronósticos completos, puntos del ranking materializado y última actualización.
+        </p>
+        <div className="mt-2 overflow-x-auto">
+          <table className="w-full border-collapse text-left text-[11px]">
+            <thead>
+              <tr className="border-b border-neutral-200">
+                <th className="p-1">Usuario</th>
+                <th className="p-1">Pronósticos</th>
+                <th className="p-1">Completo</th>
+                <th className="p-1">Pts</th>
+                <th className="p-1">Plenos</th>
+                <th className="p-1">Signo</th>
+              </tr>
+            </thead>
+            <tbody>
+              {participants.map((row) => (
+                <tr key={row.user.id} className="border-b border-neutral-100">
+                  <td className="p-1">
+                    {row.user.username ?
+                      `@${row.user.username}`
+                    : row.user.name || row.user.email || "—"}
+                  </td>
+                  <td className="p-1">
+                    {row.predictionCount}/{row.matchCount}
+                  </td>
+                  <td className="p-1">{row.predictionsComplete ? "Sí" : "No"}</td>
+                  <td className="p-1">{row.points ?? "—"}</td>
+                  <td className="p-1">{row.plenos ?? "—"}</td>
+                  <td className="p-1">{row.signHits ?? "—"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </section>
 

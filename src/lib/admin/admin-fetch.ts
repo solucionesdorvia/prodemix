@@ -1,4 +1,4 @@
-/** Fetch admin API (cookie `prodemix_admin`). */
+/** Fetch admin API (sesión NextAuth + rol admin; cookies automáticas). */
 export async function adminFetch<T>(
   path: string,
   init?: RequestInit,

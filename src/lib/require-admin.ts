@@ -1,23 +1,14 @@
-import { cookies } from "next/headers";
-
+import { auth } from "@/auth";
 import { apiError } from "@/lib/api-errors";
 
-/** Admin UI uses cookie `prodemix_admin` + env ADMIN_SECRET (same as /admin/login). */
+/** Admin APIs: sesión NextAuth + `User.role === "admin"`. */
 export async function requireAdminApi() {
-  if (!process.env.ADMIN_SECRET) {
-    return apiError(
-      503,
-      "SERVICE_UNAVAILABLE",
-      "Admin is not configured (ADMIN_SECRET).",
-    );
+  const session = await auth();
+  if (!session?.user?.id) {
+    return apiError(401, "UNAUTHORIZED", "Tenés que iniciar sesión.");
   }
-  const store = await cookies();
-  if (store.get("prodemix_admin")?.value !== "1") {
-    return apiError(
-      401,
-      "UNAUTHORIZED",
-      "Admin authentication required.",
-    );
+  if (session.user.role !== "admin") {
+    return apiError(403, "FORBIDDEN", "Se requiere rol administrador.");
   }
   return null;
 }

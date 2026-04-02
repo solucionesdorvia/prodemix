@@ -27,6 +27,14 @@ export async function GET(
 
   const matchCount = await prisma.prodeMatch.count({ where: { prodeId: prode.id } });
 
+  const leaderboardRows = await prisma.prodeLeaderboardEntry.findMany({
+    where: { prodeId: prode.id },
+    select: { userId: true, points: true, plenos: true, signHits: true, updatedAt: true },
+  });
+  const pointsByUser = new Map(
+    leaderboardRows.map((r) => [r.userId, r] as const),
+  );
+
   const entries = await prisma.prodeEntry.findMany({
     where: { prodeId: prode.id, status: "JOINED" },
     orderBy: { createdAt: "desc" },
@@ -46,6 +54,8 @@ export async function GET(
       const predictionsComplete =
         matchCount === 0 || predictionCount >= matchCount;
 
+      const lb = pointsByUser.get(e.userId);
+
       return {
         entryId: e.id,
         joinedAt: e.createdAt,
@@ -54,6 +64,10 @@ export async function GET(
         matchCount,
         pendingCount,
         predictionsComplete,
+        points: lb?.points ?? null,
+        plenos: lb?.plenos ?? null,
+        signHits: lb?.signHits ?? null,
+        leaderboardUpdatedAt: lb?.updatedAt ?? null,
       };
     }),
   );

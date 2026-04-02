@@ -2,13 +2,13 @@ import type { ReactNode } from "react";
 
 import { AuthGate } from "@/components/auth/AuthGate";
 import { AppProviders } from "@/components/app/AppProviders";
-import { AppShell } from "@/components/app/AppShell";
+import { MainLayoutShell } from "@/components/app/MainLayoutShell";
 
 export default function MainLayout({ children }: { children: ReactNode }) {
   return (
     <AuthGate>
       <AppProviders>
-        <AppShell>{children}</AppShell>
+        <MainLayoutShell>{children}</MainLayoutShell>
       </AppProviders>
     </AuthGate>
   );

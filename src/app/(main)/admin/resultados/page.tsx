@@ -1,12 +1,5 @@
-import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 
-import { AdminProdeResultsClient } from "@/components/admin/AdminProdeResultsClient";
-
-export const metadata: Metadata = {
-  title: "Admin · Resultados",
-  robots: { index: false, follow: false },
-};
-
-export default function AdminResultadosPage() {
-  return <AdminProdeResultsClient />;
+export default function AdminResultadosAliasPage() {
+  redirect("/admin/results");
 }

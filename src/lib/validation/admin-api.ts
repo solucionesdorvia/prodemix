@@ -91,3 +91,8 @@ export const adminProdeLinkMatchSchema = z.object({
 export const adminProdeLinkTournamentSchema = z.object({
   tournamentId: z.string().min(1),
 });
+
+export const adminUserPatchSchema = z.object({
+  role: z.enum(["user", "admin"]).optional(),
+  bannedAt: z.string().datetime().nullable().optional(),
+});
