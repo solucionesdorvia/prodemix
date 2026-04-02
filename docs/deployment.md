@@ -81,6 +81,12 @@ npx prisma generate
 
 `npm run check` / GitHub Actions run this before `next build` when `DATABASE_URL` is available.
 
+### Build on Railway, Render, Docker, etc.
+
+The Prisma client is emitted to `src/generated/prisma` and is **gitignored**, so a fresh clone must run **`prisma generate`** before **`next build`**.
+
+This repo runs generation in **`postinstall`** and again in **`build`** (`prisma generate && next build`). **`prisma`** and **`dotenv`** (used by `prisma.config.ts`) are **dependencies** so `postinstall` works even when install omits dev-only tooling.
+
 ### Seed
 
 Configured in `prisma.config.ts` as `tsx prisma/seed.ts`. Run only when appropriate:
