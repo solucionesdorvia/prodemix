@@ -78,11 +78,14 @@ export async function POST(req: Request) {
     if (e instanceof PrismaClientKnownRequestError) {
       const { code } = e;
       if (code === "P2021" || code === "P2022") {
-        logStructured("auth.register_failed", { prismaCode: code });
+        logStructured("auth.register_failed", {
+          prismaCode: code,
+          meta: e.meta,
+        });
         return apiError(
           503,
           "SERVICE_UNAVAILABLE",
-          "La base de datos no tiene las tablas al día. En el deploy ejecutá: npx prisma migrate deploy",
+          "No se pudo acceder al esquema de usuarios en la base de datos. Reiniciá el servicio en Railway (las migraciones se aplican al arrancar) o verificá que DATABASE_URL sea la misma base que en Neon.",
         );
       }
       if (code === "P1001" || code === "P1017" || code === "P1000") {

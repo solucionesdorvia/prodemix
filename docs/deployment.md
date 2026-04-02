@@ -87,6 +87,8 @@ The Prisma client is emitted to `src/generated/prisma` and is **gitignored**, so
 
 This repo runs generation in **`postinstall`** and again in **`build`** (`prisma generate && next build`). **`prisma`** and **`dotenv`** (used by `prisma.config.ts`) are **dependencies** so `postinstall` works even when install omits dev-only tooling.
 
+**Production `npm start`:** runs **`prisma migrate deploy`** and then **`next start`**, so Railway / Docker / cualquier host que use el script `start` aplica migraciones pendientes al levantar el servicio (necesitás `DATABASE_URL` en runtime). Así la base no queda desfasada respecto al código desplegado.
+
 ### Seed
 
 Configured in `prisma.config.ts` as `tsx prisma/seed.ts`. Run only when appropriate:
@@ -105,6 +107,7 @@ npm run db:seed
 
 | Script | Command | Use |
 |--------|---------|-----|
+| `start` | `prisma migrate deploy && next start` | Producción: migraciones al arrancar, luego Next |
 | `db:migrate:dev` | `prisma migrate dev` | Local: create/apply migrations interactively |
 | `db:migrate:deploy` | `prisma migrate deploy` | Staging/prod: apply pending migrations |
 | `db:generate` | `prisma generate` | Regenerate client (CI, after schema change) |
