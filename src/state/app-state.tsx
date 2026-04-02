@@ -94,6 +94,14 @@ type AppStateValue = {
     score: ScorePrediction | null,
   ) => void;
   joinPublicPool: (poolId: string) => void;
+  /**
+   * Fusiona pronósticos desde el servidor (GET) sin actividad extra.
+   * Por partido: si el servidor trae `savedAt` más reciente que el local, pisa; si no, conserva el borrador local.
+   */
+  mergePublicPoolPredictionsFromServer: (
+    poolId: string,
+    rows: { matchId: string; home: number; away: number; savedAt: string }[],
+  ) => void;
   setPublicPoolPrediction: (
     poolId: string,
     matchId: string,
@@ -560,6 +568,34 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
+  const mergePublicPoolPredictionsFromServer = useCallback(
+    (
+      poolId: string,
+      rows: { matchId: string; home: number; away: number; savedAt: string }[],
+    ) => {
+      setState((s) => {
+        const nextMap: PublicPoolPredictionMap = {
+          ...s.publicPoolPredictionMap,
+        };
+        for (const r of rows) {
+          const key = predictionStorageKey(user.id, poolId, r.matchId);
+          const prev = nextMap[key];
+          const serverMs = Date.parse(r.savedAt);
+          const localMs = prev?.savedAt ? Date.parse(prev.savedAt) : 0;
+          if (!prev || !Number.isFinite(localMs) || serverMs >= localMs) {
+            nextMap[key] = {
+              home: r.home,
+              away: r.away,
+              savedAt: r.savedAt,
+            };
+          }
+        }
+        return { ...s, publicPoolPredictionMap: nextMap };
+      });
+    },
+    [user.id],
+  );
+
   const setPublicPoolPrediction = useCallback(
     (poolId: string, matchId: string, score: ScorePrediction | null) => {
       if (score !== null) {
@@ -612,6 +648,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       createProde,
       setPrediction,
       joinPublicPool,
+      mergePublicPoolPredictionsFromServer,
       setPublicPoolPrediction,
       recordActivity,
       markActivitySeen,
@@ -635,6 +672,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       createProde,
       setPrediction,
       joinPublicPool,
+      mergePublicPoolPredictionsFromServer,
       setPublicPoolPrediction,
       recordActivity,
       markActivitySeen,

@@ -1,10 +1,10 @@
 "use client";
 
-import { ArrowLeft, Award, Clock, Target, Trophy } from "lucide-react";
+import { ArrowLeft, Award, Clock, Trophy } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import type { Match } from "@/domain";
+import type { Match, ScorePrediction } from "@/domain";
 import { useCatalogueRevision } from "@/components/app/CatalogueRefreshContext";
 import { MatchCard } from "@/components/matches/MatchCard";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -31,6 +31,11 @@ import {
 } from "@/state/selectors";
 import { useAppState } from "@/state/app-state";
 import { cn } from "@/lib/utils";
+import {
+  fetchProdePredictions,
+  postJoinProde,
+  postProdePredictions,
+} from "@/lib/api/prodes-fetch";
 
 type FechaPublicPoolClientProps = {
   tournamentId: string;
@@ -116,11 +121,20 @@ function StatusPill({
   );
 }
 
+const SAVE_DEBOUNCE_MS = 1600;
+
 export function FechaPublicPoolClient({
   tournamentId,
   fechaId,
 }: FechaPublicPoolClientProps) {
-  const { user, state, joinPublicPool, setPublicPoolPrediction } = useAppState();
+  const {
+    user,
+    state,
+    joinPublicPool,
+    mergePublicPoolPredictionsFromServer,
+    setPublicPoolPrediction,
+    flushPersist,
+  } = useAppState();
   const catRev = useCatalogueRevision();
 
   const cat = useMemo(
@@ -142,8 +156,6 @@ export function FechaPublicPoolClient({
     if (!cat) return [];
     return cat.matches.filter((m) => m.matchdayId === fechaId);
   }, [cat, fechaId]);
-
-  const joined = pool ? state.joinedPublicPoolIds.includes(pool.id) : false;
 
   const userPreds = useMemo(() => {
     if (!pool) return {};
@@ -200,6 +212,113 @@ export function FechaPublicPoolClient({
   }, []);
   void kickoffClock;
 
+  const [serverSyncEnabled, setServerSyncEnabled] = useState(false);
+  const [saveFeedback, setSaveFeedback] = useState<string | null>(null);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+  const saveDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (!pool) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        await postJoinProde(pool.id);
+        if (cancelled) return;
+        joinPublicPool(pool.id);
+        const { predictions } = await fetchProdePredictions(pool.id);
+        if (cancelled) return;
+        mergePublicPoolPredictionsFromServer(pool.id, predictions);
+        setServerSyncEnabled(true);
+      } catch {
+        setServerSyncEnabled(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [pool, joinPublicPool, mergePublicPoolPredictionsFromServer]);
+
+  useEffect(
+    () => () => {
+      if (saveDebounceRef.current) clearTimeout(saveDebounceRef.current);
+    },
+    [],
+  );
+
+  const savePredictionsToServer = useCallback(async () => {
+    if (!serverSyncEnabled || !pool) return;
+    const list = matches
+      .map((m) => {
+        const p = userPreds[m.id];
+        if (!p) return null;
+        return {
+          matchId: m.id,
+          predictedHomeScore: p.home,
+          predictedAwayScore: p.away,
+        };
+      })
+      .filter((x): x is NonNullable<typeof x> => x !== null);
+    if (list.length === 0) return;
+    setSaving(true);
+    setSaveError(null);
+    try {
+      await postProdePredictions(pool.id, list);
+      setSaveFeedback("Guardado en tu cuenta");
+      window.setTimeout(() => setSaveFeedback(null), 2200);
+    } catch (e) {
+      setSaveError(
+        e instanceof Error ? e.message : "No se pudo guardar. Reintentá.",
+      );
+    } finally {
+      setSaving(false);
+    }
+  }, [serverSyncEnabled, pool, matches, userPreds]);
+
+  const scheduleDebouncedSave = useCallback(() => {
+    if (!serverSyncEnabled || !pool) return;
+    if (saveDebounceRef.current) clearTimeout(saveDebounceRef.current);
+    saveDebounceRef.current = setTimeout(() => {
+      saveDebounceRef.current = null;
+      void savePredictionsToServer();
+    }, SAVE_DEBOUNCE_MS);
+  }, [serverSyncEnabled, pool, savePredictionsToServer]);
+
+  const commitPrediction = useCallback(
+    (matchId: string, score: ScorePrediction) => {
+      if (!pool) return;
+      setPublicPoolPrediction(pool.id, matchId, score);
+      scheduleDebouncedSave();
+    },
+    [pool, setPublicPoolPrediction, scheduleDebouncedSave],
+  );
+
+  const handleManualSave = useCallback(() => {
+    const filled = matches.filter((m) => userPreds[m.id]).length;
+    if (filled === 0) {
+      setSaveError("Cargá al menos un marcador para guardar.");
+      return;
+    }
+    setSaveError(null);
+    if (saveDebounceRef.current) {
+      clearTimeout(saveDebounceRef.current);
+      saveDebounceRef.current = null;
+    }
+    if (!serverSyncEnabled) {
+      flushPersist();
+      setSaveFeedback("Guardado en este dispositivo");
+      window.setTimeout(() => setSaveFeedback(null), 2200);
+      return;
+    }
+    void savePredictionsToServer();
+  }, [
+    serverSyncEnabled,
+    matches,
+    userPreds,
+    savePredictionsToServer,
+    flushPersist,
+  ]);
+
   if (!cat || !matchday || !pool) {
     return (
       <div className="pb-4">
@@ -221,9 +340,7 @@ export function FechaPublicPoolClient({
   }
 
   const poolAcceptsEntries = pool.status === "open";
-  /** Por partido: cada uno cierra 3 h antes del kickoff; la fecha no congela todo al arrancar el 1°. */
-  const predictionsFrozen =
-    !joined || matchday.status === "completed";
+  const matchdayCompleted = matchday.status === "completed";
 
   return (
     <div className="relative pb-3">
@@ -282,24 +399,7 @@ export function FechaPublicPoolClient({
         </div>
       </header>
 
-      {!joined && poolAcceptsEntries ? (
-        <div className="mt-3">
-          <button
-            type="button"
-            className={cn(btnPrimaryFull(), "min-h-[44px] text-[14px]")}
-            onClick={() => joinPublicPool(pool.id)}
-          >
-            <Target className="h-4 w-4 shrink-0 opacity-95" strokeWidth={2} />
-            Jugar
-          </button>
-          <p className="mt-2 text-center text-[10px] leading-snug text-app-muted">
-            Al unirte podés cargar pronósticos y ver tu posición en el ranking
-            de la fecha.
-          </p>
-        </div>
-      ) : null}
-
-      {!joined && !poolAcceptsEntries ? (
+      {!poolAcceptsEntries ?
         <div className="mt-3 rounded-[10px] border border-app-border bg-app-surface px-3 py-2.5 text-center">
           <p className="text-[12px] font-semibold text-app-text">
             {pool.status === "closed" ?
@@ -310,39 +410,63 @@ export function FechaPublicPoolClient({
             Podés ver partidos y el ranking de referencia.
           </p>
         </div>
-      ) : null}
+      : null}
 
-      {joined && poolAcceptsEntries ? (
-        <div
-          className={cn(
-            "mt-3 rounded-[10px] border border-app-primary/25 bg-blue-50/90 px-3 py-2.5",
-          )}
-        >
-          <div className="flex items-start justify-between gap-3">
-            <div className="min-w-0 flex-1">
-              <p className="text-[12px] font-bold text-app-text">
-                {pendingCount === 0 ?
-                  "Pronósticos completos"
-                : `${totalMatches - pendingCount}/${totalMatches} partidos listos`}
-              </p>
-              <p className="mt-0.5 text-[10px] text-app-muted">
-                {pendingCount === 0 ?
-                  "Podés ajustar hasta el cierre."
-                : "Completá el marcador exacto en cada partido."}
-              </p>
+      {poolAcceptsEntries && !matchdayCompleted ?
+        <div className="mt-3 space-y-2">
+          <div
+            className={cn(
+              "rounded-[10px] border border-app-primary/25 bg-blue-50/90 px-3 py-2.5",
+            )}
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0 flex-1">
+                <p className="text-[12px] font-bold text-app-text">
+                  {`${totalMatches - pendingCount} de ${totalMatches} resultados cargados`}
+                </p>
+                <p className="mt-0.5 text-[10px] text-app-muted">
+                  {pendingCount === 0 ?
+                    "Podés ajustar hasta el cierre."
+                  : "Completá el marcador exacto en cada partido."}
+                </p>
+              </div>
+              <span className="shrink-0 text-[13px] font-bold tabular-nums text-app-primary">
+                {progressPct}%
+              </span>
             </div>
-            <span className="shrink-0 text-[13px] font-bold tabular-nums text-app-primary">
-              {progressPct}%
-            </span>
+            <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/80">
+              <div
+                className="h-full rounded-full bg-app-primary transition-[width] duration-300"
+                style={{ width: `${progressPct}%` }}
+              />
+            </div>
           </div>
-          <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/80">
-            <div
-              className="h-full rounded-full bg-app-primary transition-[width] duration-300"
-              style={{ width: `${progressPct}%` }}
-            />
-          </div>
+          <button
+            type="button"
+            className={cn(btnPrimaryFull(), "min-h-[44px] text-[14px]")}
+            disabled={saving}
+            onClick={handleManualSave}
+          >
+            {saving ? "Guardando…" : "Guardar resultados"}
+          </button>
+          <p className="text-center text-[10px] leading-snug text-app-muted">
+            Podés cargar tus resultados ahora y modificarlos hasta el cierre.
+            {serverSyncEnabled ?
+              " Se guardan en tu cuenta y en este dispositivo."
+            : " Se guardan en este dispositivo; sincronización con servidor no disponible."}
+          </p>
+          {saveFeedback ?
+            <p className="text-center text-[11px] font-semibold text-emerald-800">
+              {saveFeedback}
+            </p>
+          : null}
+          {saveError ?
+            <p className="text-center text-[11px] font-medium text-red-800" role="alert">
+              {saveError}
+            </p>
+          : null}
         </div>
-      ) : null}
+      : null}
 
       {/* Payout + rules — light card, not “odds” */}
       <div className={cn("mt-3", cardSurface)}>
@@ -384,18 +508,16 @@ export function FechaPublicPoolClient({
               inicio.
             </p>
           </div>
-          {!joined ? (
-            <span className="shrink-0 rounded-md border border-app-border bg-app-bg px-2 py-1 text-[9px] font-medium uppercase tracking-wide text-app-muted">
-              Solo lectura
-            </span>
-          ) : null}
         </div>
         <ul className="space-y-2.5">
           {matches.map((m, idx) => {
             const res = getMockResultForMatch(m.id);
             const pred = userPreds[m.id];
             const locked =
-              !!res || predictionsFrozen || !isPredictionDeadlineOpen(m.startsAt);
+              !!res ||
+              matchdayCompleted ||
+              !poolAcceptsEntries ||
+              !isPredictionDeadlineOpen(m.startsAt);
             let pts: 0 | 1 | 3 | null = null;
             if (res && pred) {
               pts = pointsForPrediction(pred, res);
@@ -421,9 +543,7 @@ export function FechaPublicPoolClient({
                   hideTournamentLabel
                   compact
                   onPredictionCommit={
-                    joined && !locked ?
-                      (score) => setPublicPoolPrediction(pool.id, m.id, score)
-                    : undefined
+                    !locked ? (score) => commitPrediction(m.id, score) : undefined
                   }
                 />
               </li>
@@ -449,16 +569,8 @@ export function FechaPublicPoolClient({
               </span>
             ) : null}
           </div>
-          {!joined ? (
-            <p className="text-[10px] leading-snug text-app-muted">
-              Datos de referencia. Entrá al prode para cargar pronósticos.
-            </p>
-          ) : null}
           <ul
-            className={cn(
-              "overflow-hidden rounded-[10px] border border-app-border bg-app-surface shadow-card",
-              !joined && "opacity-95",
-            )}
+            className="overflow-hidden rounded-[10px] border border-app-border bg-app-surface shadow-card"
           >
             {rankingPreview.map((r, i) => (
               <li

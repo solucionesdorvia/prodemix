@@ -53,3 +53,19 @@ export async function postJoinProde(prodeId: string): Promise<{ ok: boolean }> {
     { method: "POST", body: "{}" },
   );
 }
+
+export type FetchedProdePrediction = {
+  matchId: string;
+  home: number;
+  away: number;
+  savedAt: string;
+};
+
+/** Pronósticos guardados en servidor para el prode (GET). */
+export async function fetchProdePredictions(
+  prodeId: string,
+): Promise<{ predictions: FetchedProdePrediction[] }> {
+  return fetchProdeApi<{ predictions: FetchedProdePrediction[] }>(
+    `/api/prodes/${encodeURIComponent(prodeId)}/predictions`,
+  );
+}
