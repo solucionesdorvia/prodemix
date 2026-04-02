@@ -1,5 +1,9 @@
 /**
- * Auth.js (NextAuth v5) — sesión en base de datos (cookies HTTP-only).
+ * Auth.js (NextAuth v5) — sesión JWT en cookie HTTP-only.
+ *
+ * Usamos JWT (no sesión en tabla Session) porque el login por credenciales
+ * siempre emite JWT; con `strategy: "database"` la cookie JWT no coincide con
+ * `getSessionAndUser` y `/api/auth/session` quedaba vacío.
  *
  * Variables (ver `.env.example`):
  * - AUTH_SECRET — openssl rand -base64 32
@@ -76,7 +80,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(getPrisma()),
   providers,
   session: {
-    strategy: "database",
+    strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60,
     updateAge: 24 * 60 * 60,
   },
@@ -88,18 +92,33 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     signIn: "/login",
   },
   callbacks: {
-    session({ session, user }) {
-      if (session.user) {
-        const u = user as unknown as {
-          id: string;
-          name: string | null;
-          image: string | null;
-          username: string | null;
-        };
-        session.user.id = u.id;
-        session.user.name = u.name;
-        session.user.image = u.image;
-        session.user.username = u.username ?? null;
+    jwt({ token, user }) {
+      if (user?.id) {
+        token.sub = String(user.id);
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      const id = typeof token.sub === "string" ? token.sub : null;
+      if (session.user && id) {
+        session.user.id = id;
+        const dbUser = await getPrisma().user.findUnique({
+          where: { id },
+          select: {
+            name: true,
+            image: true,
+            email: true,
+            username: true,
+          },
+        });
+        if (dbUser) {
+          Object.assign(session.user, {
+            name: dbUser.name,
+            email: dbUser.email,
+            image: dbUser.image,
+            username: dbUser.username ?? null,
+          });
+        }
       }
       return session;
     },
