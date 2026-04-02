@@ -9,14 +9,48 @@
  * - EMAIL_SERVER + EMAIL_FROM — enlace mágico por correo (opcional; Nodemailer)
  */
 import NextAuth from "next-auth";
+import type { Provider } from "next-auth/providers";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import Google from "next-auth/providers/google";
 import Nodemailer from "next-auth/providers/nodemailer";
+import Credentials from "next-auth/providers/credentials";
 
 import { logStructured } from "@/lib/observability";
+import { verifyPassword } from "@/lib/auth/password";
 import { getPrisma } from "@/lib/prisma";
 
-const providers = [];
+const providers: Provider[] = [
+  Credentials({
+    id: "credentials",
+    name: "credentials",
+    credentials: {
+      email: { label: "Email", type: "email" },
+      password: { label: "Contraseña", type: "password" },
+    },
+    async authorize(credentials) {
+      const emailRaw = credentials?.email;
+      const password = credentials?.password;
+      const email =
+        typeof emailRaw === "string" ? emailRaw.trim().toLowerCase() : "";
+      if (!email || typeof password !== "string" || !password) return null;
+
+      const prisma = getPrisma();
+      const user = await prisma.user.findUnique({
+        where: { email },
+      });
+      if (!user?.passwordHash || user.bannedAt) return null;
+      const ok = await verifyPassword(password, user.passwordHash);
+      if (!ok) return null;
+
+      return {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        image: user.image,
+      };
+    },
+  }),
+];
 
 if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
   providers.push(
@@ -32,16 +66,6 @@ if (process.env.EMAIL_SERVER && process.env.EMAIL_FROM) {
     Nodemailer({
       server: process.env.EMAIL_SERVER,
       from: process.env.EMAIL_FROM,
-    }),
-  );
-}
-
-if (providers.length === 0) {
-  /** Permite compilar sin .env; el login fallará hasta configurar proveedores. */
-  providers.push(
-    Google({
-      clientId: process.env.GOOGLE_CLIENT_ID ?? "unset",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "unset",
     }),
   );
 }

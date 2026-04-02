@@ -117,13 +117,15 @@ npm run db:seed
 - **`AUTH_SECRET`** — session/cookie signing.
 - **`AUTH_URL`** — should match the URL users open in the browser.
 
+**Email y contraseña (cuenta local):** registro con `POST /api/auth/register` y login con el proveedor `credentials`. Las contraseñas se guardan como hash bcrypt en `User.passwordHash`. Aplicá la migración `20260402160000_user_password_hash` (o `prisma migrate deploy`) si actualizás un deploy que no tenga esa columna.
+
 **Google OAuth:** set `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`. In Google Cloud Console, add redirect URI:
 
 `https://<your-domain>/api/auth/callback/google`
 
 **Email magic link:** set both `EMAIL_SERVER` and `EMAIL_FROM` (verified sender).
 
-If no provider is configured, the app may still build; login must be configured before users can sign in.
+Si el correo ya existe con otro método (p. ej. Google), el registro por contraseña responde conflicto: usá ese método para entrar.
 
 ---
 

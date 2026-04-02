@@ -11,7 +11,13 @@ export function LoginScreen() {
   const { status } = useSession();
   const router = useRouter();
   const [busy, setBusy] = useState(false);
-  const [email, setEmail] = useState("");
+  const [credMode, setCredMode] = useState<"login" | "register">("login");
+  const [credEmail, setCredEmail] = useState("");
+  const [credPassword, setCredPassword] = useState("");
+  const [credConfirm, setCredConfirm] = useState("");
+  const [credError, setCredError] = useState<string | null>(null);
+
+  const [magicEmail, setMagicEmail] = useState("");
   const [emailFeedback, setEmailFeedback] = useState<
     "idle" | "sent" | "error"
   >("idle");
@@ -22,6 +28,7 @@ export function LoginScreen() {
 
   const handleGoogle = async () => {
     setBusy(true);
+    setCredError(null);
     setEmailFeedback("idle");
     try {
       await signIn("google", { callbackUrl: "/" });
@@ -30,9 +37,70 @@ export function LoginScreen() {
     }
   };
 
+  const handleCredentials = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const email = credEmail.trim().toLowerCase();
+    if (!email || !credPassword) return;
+    setCredError(null);
+    setBusy(true);
+    try {
+      if (credMode === "register") {
+        if (credPassword !== credConfirm) {
+          setCredError("Las contraseñas no coinciden.");
+          return;
+        }
+        const res = await fetch("/api/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password: credPassword }),
+        });
+        const data = (await res.json().catch(() => ({}))) as {
+          error?: { message?: string };
+        };
+        if (!res.ok) {
+          setCredError(
+            typeof data.error?.message === "string" ?
+              data.error.message
+            : "No se pudo crear la cuenta.",
+          );
+          return;
+        }
+        const signRes = await signIn("credentials", {
+          email,
+          password: credPassword,
+          redirect: false,
+          callbackUrl: "/",
+        });
+        if (signRes?.error) {
+          setCredError(
+            "Cuenta creada. Iniciá sesión con email y contraseña.",
+          );
+        } else {
+          router.replace("/");
+        }
+      } else {
+        const signRes = await signIn("credentials", {
+          email,
+          password: credPassword,
+          redirect: false,
+          callbackUrl: "/",
+        });
+        if (signRes?.error) {
+          setCredError("Email o contraseña incorrectos.");
+        } else {
+          router.replace("/");
+        }
+      }
+    } catch {
+      setCredError("Algo salió mal. Probá de nuevo.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const handleMagicLink = async (e: React.FormEvent) => {
     e.preventDefault();
-    const trimmed = email.trim();
+    const trimmed = magicEmail.trim();
     if (!trimmed) return;
     setBusy(true);
     setEmailFeedback("idle");
@@ -74,8 +142,8 @@ export function LoginScreen() {
         <p className={pageEyebrow}>ProdeMix</p>
         <h1 className={cn(pageTitle, "mt-0.5")}>Iniciar sesión</h1>
         <p className="mt-1.5 text-[12px] leading-relaxed text-app-muted">
-          Creá tu cuenta al entrar por primera vez. Sesión segura en el
-          servidor.
+          Creá tu cuenta con email y contraseña, o entrá con Google. Sesión
+          segura en el servidor.
         </p>
       </header>
 
@@ -107,6 +175,116 @@ export function LoginScreen() {
           Continuar con Google
         </button>
 
+        <div className="relative py-2">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t border-app-border" />
+          </div>
+          <div className="relative flex justify-center text-[10px] uppercase tracking-wide">
+            <span className="bg-app-bg px-2 text-app-muted">o</span>
+          </div>
+        </div>
+
+        <div className="rounded-xl border border-app-border bg-app-surface/80 p-4 shadow-sm">
+          <div className="mb-3 flex gap-2 rounded-lg bg-app-bg p-1">
+            <button
+              type="button"
+              onClick={() => {
+                setCredMode("login");
+                setCredError(null);
+              }}
+              className={cn(
+                "flex-1 rounded-md py-2 text-[12px] font-semibold transition",
+                credMode === "login" ?
+                  "bg-app-surface text-app-text shadow-sm"
+                : "text-app-muted hover:text-app-text",
+              )}
+            >
+              Iniciar sesión
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setCredMode("register");
+                setCredError(null);
+              }}
+              className={cn(
+                "flex-1 rounded-md py-2 text-[12px] font-semibold transition",
+                credMode === "register" ?
+                  "bg-app-surface text-app-text shadow-sm"
+                : "text-app-muted hover:text-app-text",
+              )}
+            >
+              Crear cuenta
+            </button>
+          </div>
+
+          <form onSubmit={handleCredentials} className="space-y-3">
+            <label className="block">
+              <span className="text-[11px] font-semibold text-app-muted">
+                Email
+              </span>
+              <input
+                type="email"
+                name="credEmail"
+                value={credEmail}
+                onChange={(e) => setCredEmail(e.target.value)}
+                autoComplete="email"
+                required
+                className="mt-1 w-full rounded-xl border border-app-border bg-app-surface px-3 py-2.5 text-[14px] text-app-text outline-none ring-app-primary/20 placeholder:text-app-muted focus:border-app-primary focus:ring-2"
+                placeholder="vos@ejemplo.com"
+              />
+            </label>
+            <label className="block">
+              <span className="text-[11px] font-semibold text-app-muted">
+                Contraseña
+              </span>
+              <input
+                type="password"
+                name="credPassword"
+                value={credPassword}
+                onChange={(e) => setCredPassword(e.target.value)}
+                autoComplete={
+                  credMode === "register" ? "new-password" : "current-password"
+                }
+                required
+                minLength={8}
+                className="mt-1 w-full rounded-xl border border-app-border bg-app-surface px-3 py-2.5 text-[14px] text-app-text outline-none ring-app-primary/20 placeholder:text-app-muted focus:border-app-primary focus:ring-2"
+                placeholder="Mínimo 8 caracteres"
+              />
+            </label>
+            {credMode === "register" ? (
+              <label className="block">
+                <span className="text-[11px] font-semibold text-app-muted">
+                  Repetir contraseña
+                </span>
+                <input
+                  type="password"
+                  name="credConfirm"
+                  value={credConfirm}
+                  onChange={(e) => setCredConfirm(e.target.value)}
+                  autoComplete="new-password"
+                  required
+                  minLength={8}
+                  className="mt-1 w-full rounded-xl border border-app-border bg-app-surface px-3 py-2.5 text-[14px] text-app-text outline-none ring-app-primary/20 placeholder:text-app-muted focus:border-app-primary focus:ring-2"
+                  placeholder="Misma contraseña"
+                />
+              </label>
+            ) : null}
+            {credError ? (
+              <p className="text-center text-[11px] font-medium text-red-700">
+                {credError}
+              </p>
+            ) : null}
+            <button
+              type="submit"
+              disabled={busy}
+              className="flex h-12 w-full items-center justify-center rounded-xl bg-app-primary text-[14px] font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:opacity-60"
+            >
+              {credMode === "register" ? "Crear cuenta" : "Entrar"}
+            </button>
+          </form>
+        </div>
+
         {showEmail ? (
           <>
             <div className="relative py-2">
@@ -119,15 +297,15 @@ export function LoginScreen() {
             </div>
 
             <form onSubmit={handleMagicLink} className="space-y-3">
+              <p className="text-[11px] font-semibold text-app-muted">
+                Enlace por correo (sin contraseña)
+              </p>
               <label className="block">
-                <span className="text-[11px] font-semibold text-app-muted">
-                  Enlace por correo
-                </span>
                 <input
                   type="email"
-                  name="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  name="magicEmail"
+                  value={magicEmail}
+                  onChange={(e) => setMagicEmail(e.target.value)}
                   autoComplete="email"
                   required
                   className="mt-1 w-full rounded-xl border border-app-border bg-app-surface px-3 py-2.5 text-[14px] text-app-text outline-none ring-app-primary/20 placeholder:text-app-muted focus:border-app-primary focus:ring-2"
@@ -137,7 +315,7 @@ export function LoginScreen() {
               <button
                 type="submit"
                 disabled={busy}
-                className="flex h-12 w-full items-center justify-center rounded-xl bg-app-primary text-[14px] font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:opacity-60"
+                className="flex h-12 w-full items-center justify-center rounded-xl border border-app-border bg-app-surface text-[14px] font-semibold text-app-text shadow-sm transition hover:bg-slate-50 disabled:opacity-60"
               >
                 Enviar enlace mágico
               </button>
@@ -149,7 +327,7 @@ export function LoginScreen() {
               {emailFeedback === "error" ? (
                 <p className="text-center text-[11px] font-medium text-red-700">
                   No pudimos enviar el correo. Verificá la dirección o probá con
-                  Google.
+                  Google o contraseña.
                 </p>
               ) : null}
             </form>

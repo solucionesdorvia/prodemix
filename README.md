@@ -39,6 +39,7 @@ Open [http://localhost:3000](http://localhost:3000).
 | **[docs/environment.md](./docs/environment.md)** | Full env var audit (what the code reads) |
 | **[docs/deployment.md](./docs/deployment.md)** | Staging vs production, migrations, seed, auth, email, admin |
 | [docs/email.md](./docs/email.md) | Transactional email and reminders |
+| [docs/resend-setup.md](./docs/resend-setup.md) | Configurar Resend (API key, dominio, `EMAIL_FROM`) |
 | [docs/security.md](./docs/security.md) | Security notes |
 
 **Commands:** `npm run db:migrate:dev` (local), `npm run db:migrate:deploy` (staging/prod), `npm run db:seed` (when appropriate).

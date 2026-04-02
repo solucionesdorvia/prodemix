@@ -1,5 +1,7 @@
 # Correo transaccional (alcance actual)
 
+**Configuración paso a paso de Resend (API key, dominio, `EMAIL_FROM`):** [resend-setup.md](./resend-setup.md)
+
 Implementado en esta base:
 
 1. **Resend** — `src/lib/email/resend.ts` (`getResendClient`, `isResendConfigured`).

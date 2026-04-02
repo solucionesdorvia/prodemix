@@ -34,6 +34,8 @@ model User {
   id              String    @id @default(cuid())
   email           String?   @unique
   emailVerified   DateTime?
+  /// bcrypt hash; null for OAuth-only users
+  passwordHash    String?   @db.Text
   name            String?
   image           String?
   /// Unique handle (sin @). Null until onboarding.
