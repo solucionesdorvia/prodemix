@@ -1,4 +1,7 @@
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
+import {
+  PrismaClientInitializationError,
+  PrismaClientKnownRequestError,
+} from "@prisma/client/runtime/client";
 import { NextResponse } from "next/server";
 
 import { apiError } from "@/lib/api-errors";
@@ -12,6 +15,10 @@ import { parseJsonBody } from "@/lib/validation/parse-json";
 import { registerBodySchema } from "@/lib/validation/register";
 
 export const dynamic = "force-dynamic";
+
+function sanitizeForLog(msg: string): string {
+  return msg.replace(/postgres(ql)?:\/\/[^\s"'`]+/gi, "[db_url]");
+}
 
 /** Registro con email + contraseña (cuenta local). */
 export async function POST(req: Request) {
@@ -67,9 +74,42 @@ export async function POST(req: Request) {
         "Ya existe una cuenta con ese correo. Iniciá sesión u otro método.",
       );
     }
-    const code =
-      e instanceof PrismaClientKnownRequestError ? e.code : "unknown";
-    logStructured("auth.register_failed", { prismaCode: code });
+
+    if (e instanceof PrismaClientKnownRequestError) {
+      const { code } = e;
+      if (code === "P2021" || code === "P2022") {
+        logStructured("auth.register_failed", { prismaCode: code });
+        return apiError(
+          503,
+          "SERVICE_UNAVAILABLE",
+          "La base de datos no tiene las tablas al día. En el deploy ejecutá: npx prisma migrate deploy",
+        );
+      }
+      if (code === "P1001" || code === "P1017" || code === "P1000") {
+        logStructured("auth.register_failed", { prismaCode: code });
+        return apiError(
+          503,
+          "SERVICE_UNAVAILABLE",
+          "No pudimos conectar con la base de datos. Revisá DATABASE_URL y que Neon esté accesible.",
+        );
+      }
+      logStructured("auth.register_failed", { prismaCode: code });
+    } else if (e instanceof PrismaClientInitializationError) {
+      logStructured("auth.register_failed", {
+        kind: "init",
+        message: sanitizeForLog(e.message),
+      });
+      return apiError(
+        503,
+        "SERVICE_UNAVAILABLE",
+        "No pudimos conectar con la base de datos. Revisá DATABASE_URL en el servidor (Neon activo y URL con sslmode=require).",
+      );
+    } else {
+      const msg = e instanceof Error ? sanitizeForLog(e.message) : "unknown";
+      const name = e instanceof Error ? e.name : typeof e;
+      logStructured("auth.register_failed", { kind: "other", name, message: msg });
+    }
+
     return apiError(
       503,
       "SERVICE_UNAVAILABLE",
