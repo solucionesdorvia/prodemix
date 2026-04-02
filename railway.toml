@@ -1,0 +1,4 @@
+# Railway: migraciones una sola vez por deploy (evita P1002 por advisory lock
+# cuando varios contenedores arrancan a la vez). Requiere DATABASE_URL + DIRECT_URL (Neon).
+[deploy]
+preDeployCommand = "npx prisma migrate deploy"
