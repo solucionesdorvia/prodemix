@@ -3,6 +3,15 @@
 import "dotenv/config";
 import { defineConfig } from "prisma/config";
 
+/**
+ * Prisma CLI (migrate, db seed) usa esta URL.
+ * En Neon conviene `DIRECT_URL` (host sin `-pooler`) para migraciones; el pooler
+ * a veces da problemas con DDL. La app en runtime sigue usando `DATABASE_URL`
+ * en `src/lib/prisma.ts` (pooled).
+ */
+const migrateUrl =
+  process.env["DIRECT_URL"]?.trim() || process.env["DATABASE_URL"];
+
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
@@ -10,6 +19,6 @@ export default defineConfig({
     seed: "tsx prisma/seed.ts",
   },
   datasource: {
-    url: process.env["DATABASE_URL"],
+    url: migrateUrl,
   },
 });

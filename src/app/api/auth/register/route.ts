@@ -85,7 +85,7 @@ export async function POST(req: Request) {
         return apiError(
           503,
           "SERVICE_UNAVAILABLE",
-          "No se pudo acceder al esquema de usuarios en la base de datos. Reiniciá el servicio en Railway (las migraciones se aplican al arrancar) o verificá que DATABASE_URL sea la misma base que en Neon.",
+          "Falta la tabla User o la columna passwordHash. En Neon agregá DIRECT_URL (URL directa sin -pooler) en Railway además de DATABASE_URL, redeploy, y abrí /api/health/db para ver el estado.",
         );
       }
       if (code === "P1001" || code === "P1017" || code === "P1000") {

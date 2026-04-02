@@ -30,7 +30,8 @@ Minimum for database + sessions:
 
 | Variable | Purpose |
 |----------|---------|
-| `DATABASE_URL` | Postgres connection string (use SSL in cloud: e.g. `?sslmode=require`). |
+| `DATABASE_URL` | Postgres connection string (Neon: pooled, host con `-pooler`; `?sslmode=require`). |
+| `DIRECT_URL` | Opcional en Neon: misma base con host **sin** `-pooler`. Si la definís, `prisma migrate deploy` (incluido en `npm start`) usa esta URL para DDL; evita fallos raros con el pooler. La app sigue usando `DATABASE_URL` en runtime. |
 | `AUTH_SECRET` | `openssl rand -base64 32` — unique per environment. |
 
 Strongly recommended:

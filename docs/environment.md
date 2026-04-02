@@ -21,7 +21,8 @@ For deployment procedures and staging vs production, see [deployment.md](./deplo
 
 | Variable | Tag | Where used | Notes |
 |----------|-----|------------|--------|
-| `DATABASE_URL` | Required (deploy) | `prisma.config.ts`, `src/lib/prisma.ts`, `prisma/seed.ts` | Postgres URL. **Staging and production must use different databases.** |
+| `DATABASE_URL` | Required (deploy) | `prisma.config.ts` (fallback), `src/lib/prisma.ts`, `prisma/seed.ts` | Postgres URL (Neon: pooled, host con `-pooler`). |
+| `DIRECT_URL` | Optional (Neon) | `prisma.config.ts` (migrate / Prisma CLI) | Misma base, **host sin `-pooler`**. Si está definida, `migrate deploy` la usa en lugar del pooler (más fiable para DDL). La app sigue usando `DATABASE_URL` en runtime. |
 | `AUTH_SECRET` | Required (deploy) | `src/auth.ts`, `instrumentation.ts` (prod warning if missing) | `openssl rand -base64 32`. Unique per environment. |
 | `AUTH_URL` | Strongly recommended | `src/lib/email/app-base-url.ts` (via helpers), Auth.js behavior | Public origin, **no trailing slash**. Prefer explicit value for OAuth and emails. |
 | `NEXTAUTH_URL` | Optional | `src/lib/email/app-base-url.ts` | Legacy alias for `AUTH_URL`. |
