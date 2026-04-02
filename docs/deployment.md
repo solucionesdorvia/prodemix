@@ -88,7 +88,7 @@ The Prisma client is emitted to `src/generated/prisma` and is **gitignored**, so
 
 This repo runs generation in **`postinstall`** and again in **`build`** (`prisma generate && next build`). **`prisma`** and **`dotenv`** (used by `prisma.config.ts`) are **dependencies** so `postinstall` works even when install omits dev-only tooling.
 
-**Producción en Railway:** **`railway.toml`** define **`preDeployCommand`** con **`PRISMA_SCHEMA_DISABLE_ADVISORY_LOCK=1`** y **`npx prisma migrate deploy`**. Ese flag evita **P1002** (timeout al pedir `pg_advisory_lock` en 10s), frecuente con **Neon** en frío o con el pooler. **`npm start`** solo ejecuta **`next start`**. No desplegues dos veces en paralelo contra la misma base sin lock.
+**Producción en Railway:** **`railway.toml`** fija **`numReplicas = 1`** (evita varios `migrate` a la vez). **`npm start`** ejecuta **`npm run db:migrate:deploy:neon`** (migrate con **`PRISMA_SCHEMA_DISABLE_ADVISORY_LOCK`**) y luego **`next start`**. No usamos **preDeploy** en Railway porque suele fallar con otro entorno que el runtime. Si escalás a más réplicas, corré migraciones en CI o un job aparte.
 
 ### Seed
 
@@ -108,7 +108,7 @@ npm run db:seed
 
 | Script | Command | Use |
 |--------|---------|-----|
-| `start` | `next start` | Producción (Railway: migraciones vía `preDeployCommand` en `railway.toml`) |
+| `start` | `db:migrate:deploy:neon && next start` | Producción: migrate + Next; Railway `numReplicas=1` en `railway.toml` |
 | `db:migrate:dev` | `prisma migrate dev` | Local: create/apply migrations interactively |
 | `db:migrate:deploy` | `prisma migrate deploy` | Staging/prod: apply pending migrations |
 | `db:generate` | `prisma generate` | Regenerate client (CI, after schema change) |

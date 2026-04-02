@@ -1,6 +1,4 @@
-# Railway: migraciones una vez por deploy (preDeploy, no en cada réplica).
-# PRISMA_SCHEMA_DISABLE_ADVISORY_LOCK: Neon / cold start a veces no completan
-# pg_advisory_lock en 10s (P1002). Prisma documenta este flag para ese caso.
-# No correr dos deploys a la vez contra la misma base.
+# Sin preDeployCommand: en Railway suele fallar (cwd, npx o env distinto al runtime).
+# Migraciones en npm start + una réplica para no competir por la base.
 [deploy]
-preDeployCommand = "env PRISMA_SCHEMA_DISABLE_ADVISORY_LOCK=1 npx prisma migrate deploy"
+numReplicas = 1
