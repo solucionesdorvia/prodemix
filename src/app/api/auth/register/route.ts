@@ -1,6 +1,7 @@
 import {
   PrismaClientInitializationError,
   PrismaClientKnownRequestError,
+  PrismaClientUnknownRequestError,
 } from "@prisma/client/runtime/client";
 import { NextResponse } from "next/server";
 
@@ -46,7 +47,6 @@ export async function POST(req: Request) {
     const prisma = getPrisma();
     const existing = await prisma.user.findUnique({
       where: { email },
-      select: { id: true, passwordHash: true },
     });
     if (existing) {
       return apiError(
@@ -88,6 +88,17 @@ export async function POST(req: Request) {
           "No pudimos conectar con la base de datos. Revisá DATABASE_URL y que Neon esté accesible.",
         );
       }
+    } else if (e instanceof PrismaClientUnknownRequestError) {
+      logStructured("auth.register_failed", {
+        kind: "unknown_request",
+        message: sanitizeForLog(e.message),
+      });
+      return apiError(
+        503,
+        "SERVICE_UNAVAILABLE",
+        "Error al hablar con la base de datos. Probá de nuevo en unos minutos.",
+        { prismaCode: "UNKNOWN" },
+      );
     } else if (e instanceof PrismaClientInitializationError) {
       logStructured("auth.register_failed", {
         kind: "init",
@@ -104,10 +115,15 @@ export async function POST(req: Request) {
       logStructured("auth.register_failed", { kind: "other", name, message: msg });
     }
 
+    const prismaCode =
+      e instanceof PrismaClientKnownRequestError ? e.code : undefined;
     return apiError(
       503,
       "SERVICE_UNAVAILABLE",
-      "No se pudo crear la cuenta. Probá de nuevo en unos minutos.",
+      prismaCode != null ?
+        `No se pudo crear la cuenta (ref: ${prismaCode}). Probá de nuevo en unos minutos.`
+      : "No se pudo crear la cuenta. Probá de nuevo en unos minutos.",
+      prismaCode != null ? { prismaCode } : undefined,
     );
   }
 }
