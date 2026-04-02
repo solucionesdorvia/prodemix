@@ -15,6 +15,7 @@
     "db:generate": "prisma generate",
     "db:migrate:dev": "prisma migrate dev",
     "db:migrate:deploy": "prisma migrate deploy",
+    "db:migrate:deploy:neon": "env PRISMA_SCHEMA_DISABLE_ADVISORY_LOCK=1 prisma migrate deploy",
     "db:seed": "prisma db seed",
     "test:api:prodes": "bash scripts/test-prodes-api.sh"
   },

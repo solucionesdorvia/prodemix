@@ -88,7 +88,7 @@ The Prisma client is emitted to `src/generated/prisma` and is **gitignored**, so
 
 This repo runs generation in **`postinstall`** and again in **`build`** (`prisma generate && next build`). **`prisma`** and **`dotenv`** (used by `prisma.config.ts`) are **dependencies** so `postinstall` works even when install omits dev-only tooling.
 
-**Producción en Railway:** el archivo **`railway.toml`** define **`preDeployCommand = npx prisma migrate deploy`** (una vez por deploy, antes de levantar réplicas). **`npm start`** solo ejecuta **`next start`**. Así se evita el error **P1002** (timeout del advisory lock de Prisma) cuando varios contenedores arrancaban a la vez con migrate en `start`.
+**Producción en Railway:** **`railway.toml`** define **`preDeployCommand`** con **`PRISMA_SCHEMA_DISABLE_ADVISORY_LOCK=1`** y **`npx prisma migrate deploy`**. Ese flag evita **P1002** (timeout al pedir `pg_advisory_lock` en 10s), frecuente con **Neon** en frío o con el pooler. **`npm start`** solo ejecuta **`next start`**. No desplegues dos veces en paralelo contra la misma base sin lock.
 
 ### Seed
 
