@@ -4,6 +4,8 @@ This document lists **every variable the codebase reads** (directly or via tooli
 
 For deployment procedures and staging vs production, see [deployment.md](./deployment.md).
 
+**Dominio de producción `prodemix.app`:** URLs, Google OAuth y checklist en [prodemix-app.md](./prodemix-app.md).
+
 ---
 
 ## Legend
@@ -33,8 +35,8 @@ For deployment procedures and staging vs production, see [deployment.md](./deplo
 
 | Variable | Tag | Where used | Notes |
 |----------|-----|------------|--------|
-| `GOOGLE_CLIENT_ID` | Optional (pair) | `src/auth.ts` | Both Google vars required to enable Google OAuth. |
-| `GOOGLE_CLIENT_SECRET` | Optional (pair) | `src/auth.ts` | |
+| `GOOGLE_CLIENT_ID` | Optional (pair) | `src/auth.ts`, `src/app/login/page.tsx` | Ambas variables habilitan el botón "Continuar con Google" en `/login`. |
+| `GOOGLE_CLIENT_SECRET` | Optional (pair) | `src/auth.ts` | En Google Cloud Console, redirect URI: `{AUTH_URL}/api/auth/callback/google` (sin barra final en `AUTH_URL`). |
 
 ---
 
