@@ -504,13 +504,14 @@ export function PerfilScreen() {
                 })
               }
               className={cn(
-                "relative h-7 w-11 shrink-0 overflow-hidden rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-app-bg disabled:opacity-50",
+                "relative inline-flex h-7 w-11 shrink-0 items-center rounded-full p-0.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-app-bg disabled:opacity-50",
                 prefs.matchReminders ? "bg-app-primary" : "bg-app-border",
               )}
             >
               <span
+                aria-hidden
                 className={cn(
-                  "pointer-events-none absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm ring-1 ring-black/5 transition-transform duration-200 ease-out",
+                  "pointer-events-none h-5 w-5 rounded-full bg-white shadow-sm ring-1 ring-black/5 transition-[transform] duration-200 ease-out",
                   prefs.matchReminders ? "translate-x-5" : "translate-x-0",
                 )}
               />
@@ -538,13 +539,14 @@ export function PerfilScreen() {
                 })
               }
               className={cn(
-                "relative h-7 w-11 shrink-0 overflow-hidden rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-app-bg disabled:opacity-50",
+                "relative inline-flex h-7 w-11 shrink-0 items-center rounded-full p-0.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-app-bg disabled:opacity-50",
                 prefs.prodeDeadlineAlerts ? "bg-app-primary" : "bg-app-border",
               )}
             >
               <span
+                aria-hidden
                 className={cn(
-                  "pointer-events-none absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm ring-1 ring-black/5 transition-transform duration-200 ease-out",
+                  "pointer-events-none h-5 w-5 rounded-full bg-white shadow-sm ring-1 ring-black/5 transition-[transform] duration-200 ease-out",
                   prefs.prodeDeadlineAlerts ? "translate-x-5" : "translate-x-0",
                 )}
               />
