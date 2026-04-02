@@ -10,13 +10,11 @@
  * - AUTH_URL o NEXTAUTH_URL — URL pública (ej. http://localhost:3000)
  * - DATABASE_URL — Postgres
  * - GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET — OAuth Google (opcional)
- * - EMAIL_SERVER + EMAIL_FROM — enlace mágico por correo (opcional; Nodemailer)
  */
 import NextAuth from "next-auth";
 import type { Provider } from "next-auth/providers";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import Google from "next-auth/providers/google";
-import Nodemailer from "next-auth/providers/nodemailer";
 import Credentials from "next-auth/providers/credentials";
 
 import { logStructured } from "@/lib/observability";
@@ -61,15 +59,8 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    }),
-  );
-}
-
-if (process.env.EMAIL_SERVER && process.env.EMAIL_FROM) {
-  providers.push(
-    Nodemailer({
-      server: process.env.EMAIL_SERVER,
-      from: process.env.EMAIL_FROM,
+      /** Mismo email que cuenta local: vincular Google al usuario existente (evita OAuthAccountNotLinked / fallos en callback). */
+      allowDangerousEmailAccountLinking: true,
     }),
   );
 }
@@ -102,22 +93,26 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       const id = typeof token.sub === "string" ? token.sub : null;
       if (session.user && id) {
         session.user.id = id;
-        const dbUser = await getPrisma().user.findUnique({
-          where: { id },
-          select: {
-            name: true,
-            image: true,
-            email: true,
-            username: true,
-          },
-        });
-        if (dbUser) {
-          Object.assign(session.user, {
-            name: dbUser.name,
-            email: dbUser.email,
-            image: dbUser.image,
-            username: dbUser.username ?? null,
+        try {
+          const dbUser = await getPrisma().user.findUnique({
+            where: { id },
+            select: {
+              name: true,
+              image: true,
+              email: true,
+              username: true,
+            },
           });
+          if (dbUser) {
+            Object.assign(session.user, {
+              name: dbUser.name,
+              email: dbUser.email,
+              image: dbUser.image,
+              username: dbUser.username ?? null,
+            });
+          }
+        } catch {
+          // Dejar name/email/image del JWT; evita 500 en /api/auth/session si la DB cae.
         }
       }
       return session;

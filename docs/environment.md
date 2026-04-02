@@ -34,8 +34,6 @@ For deployment procedures and staging vs production, see [deployment.md](./deplo
 |----------|-----|------------|--------|
 | `GOOGLE_CLIENT_ID` | Optional (pair) | `src/auth.ts` | Both Google vars required to enable Google OAuth. |
 | `GOOGLE_CLIENT_SECRET` | Optional (pair) | `src/auth.ts` | |
-| `EMAIL_SERVER` | Optional (pair with `EMAIL_FROM`) | `src/auth.ts`, `src/lib/email/send-email.ts` | SMTP / Nodemailer URL for magic link + fallback email. |
-| `EMAIL_FROM` | Optional | `src/auth.ts`, `src/lib/email/send-email.ts` | Required for sending mail when using Resend or SMTP paths. |
 
 ---
 
@@ -43,6 +41,8 @@ For deployment procedures and staging vs production, see [deployment.md](./deplo
 
 | Variable | Tag | Where used | Notes |
 |----------|-----|------------|--------|
+| `EMAIL_FROM` | Optional | `src/lib/email/send-email.ts` | Sender for transactional mail and SMTP fallback. |
+| `EMAIL_SERVER` | Optional (with `EMAIL_FROM`) | `src/lib/email/send-email.ts` | SMTP URL for Nodemailer fallback when `RESEND_API_KEY` is unset. |
 | `RESEND_API_KEY` | Optional | `src/lib/email/resend.ts`, `send-email.ts` | Enables Resend API path when set. |
 | `CRON_SECRET` | Optional | `src/app/api/cron/reminders/route.ts` | Protects `GET /api/cron/reminders`. |
 | `REMINDER_WINDOW_HOURS` | Optional | `src/lib/email/reminders/run-closing-reminders.ts` | Defaults to `24` if unset. |
@@ -61,7 +61,6 @@ For deployment procedures and staging vs production, see [deployment.md](./deplo
 
 | Variable | Tag | Where used | Notes |
 |----------|-----|------------|--------|
-| `NEXT_PUBLIC_AUTH_EMAIL_ENABLED` | Optional | `src/components/auth/LoginScreen.tsx` | Show email block when value is exactly `"1"`. |
 | `NEXT_PUBLIC_SENTRY_DSN` | Optional | `instrumentation-client.ts`, Sentry server/edge fallbacks | DSN is public by design. |
 | `NEXT_PUBLIC_VERCEL_ENV` | Optional | `instrumentation-client.ts` | Overrides Sentry environment label in the browser. |
 

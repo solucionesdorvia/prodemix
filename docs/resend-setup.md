@@ -48,10 +48,6 @@ Mínimo para que el código use Resend:
 | `RESEND_API_KEY` | API key de Resend. |
 | `EMAIL_FROM` | Remitente permitido (ver arriba). |
 
-Opcional para otros canales:
-
-- **Enlace mágico (Auth.js por SMTP de Resend):** Resend expone SMTP; podés usar `EMAIL_SERVER` con esas credenciales + el mismo `EMAIL_FROM`, o seguir con solo Google / email+contraseña sin magic link.
-
 ## 5. Dónde configurarlas
 
 - **Local:** `.env` (copiá desde `.env.example`).

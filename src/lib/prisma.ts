@@ -12,7 +12,12 @@ function createPrismaClient(): PrismaClient {
   if (!url) {
     throw new Error("DATABASE_URL is not set");
   }
-  const pool = new pg.Pool({ connectionString: url });
+  // Serverless (p. ej. Vercel): un pool pequeño evita agotar el límite de conexiones
+  // de Neon/Railway cuando hay muchas funciones en paralelo.
+  const pool = new pg.Pool({
+    connectionString: url,
+    max: process.env.VERCEL ? 1 : 10,
+  });
   const adapter = new PrismaPg(pool);
   return new PrismaClient({ adapter });
 }

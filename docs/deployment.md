@@ -123,9 +123,9 @@ npm run db:seed
 
 `https://<your-domain>/api/auth/callback/google`
 
-**Email magic link:** set both `EMAIL_SERVER` and `EMAIL_FROM` (verified sender).
+El proveedor Google tiene **vinculación por email** habilitada: si el usuario ya se registró con email y contraseña, puede entrar con Google usando el mismo correo (se asocia la cuenta de Google al usuario existente).
 
-Si el correo ya existe con otro método (p. ej. Google), el registro por contraseña responde conflicto: usá ese método para entrar.
+Si el correo ya existe con otro método y no querés usar Google, el registro por contraseña responde conflicto: iniciá sesión con el método que ya usaste.
 
 ---
 

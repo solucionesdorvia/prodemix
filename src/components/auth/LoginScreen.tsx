@@ -17,11 +17,6 @@ export function LoginScreen() {
   const [credConfirm, setCredConfirm] = useState("");
   const [credError, setCredError] = useState<string | null>(null);
 
-  const [magicEmail, setMagicEmail] = useState("");
-  const [emailFeedback, setEmailFeedback] = useState<
-    "idle" | "sent" | "error"
-  >("idle");
-
   useEffect(() => {
     if (status === "authenticated") router.replace("/");
   }, [status, router]);
@@ -29,7 +24,6 @@ export function LoginScreen() {
   const handleGoogle = async () => {
     setBusy(true);
     setCredError(null);
-    setEmailFeedback("idle");
     try {
       await signIn("google", { callbackUrl: "/" });
     } finally {
@@ -98,27 +92,6 @@ export function LoginScreen() {
     }
   };
 
-  const handleMagicLink = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const trimmed = magicEmail.trim();
-    if (!trimmed) return;
-    setBusy(true);
-    setEmailFeedback("idle");
-    try {
-      const res = await signIn("nodemailer", {
-        email: trimmed,
-        redirect: false,
-        callbackUrl: "/",
-      });
-      if (res?.error) setEmailFeedback("error");
-      else setEmailFeedback("sent");
-    } catch {
-      setEmailFeedback("error");
-    } finally {
-      setBusy(false);
-    }
-  };
-
   if (status === "loading") {
     return (
       <div className="mx-auto flex min-h-dvh w-full max-w-lg flex-col justify-center px-4">
@@ -130,11 +103,6 @@ export function LoginScreen() {
   if (status === "authenticated") {
     return null;
   }
-
-  const showEmail =
-    typeof process.env.NEXT_PUBLIC_AUTH_EMAIL_ENABLED === "string" ?
-      process.env.NEXT_PUBLIC_AUTH_EMAIL_ENABLED === "1"
-    : true;
 
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-lg flex-col px-4 pb-8 pt-[max(2rem,env(safe-area-inset-top))]">
@@ -284,55 +252,6 @@ export function LoginScreen() {
             </button>
           </form>
         </div>
-
-        {showEmail ? (
-          <>
-            <div className="relative py-2">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t border-app-border" />
-              </div>
-              <div className="relative flex justify-center text-[10px] uppercase tracking-wide">
-                <span className="bg-app-bg px-2 text-app-muted">o</span>
-              </div>
-            </div>
-
-            <form onSubmit={handleMagicLink} className="space-y-3">
-              <p className="text-[11px] font-semibold text-app-muted">
-                Enlace por correo (sin contraseña)
-              </p>
-              <label className="block">
-                <input
-                  type="email"
-                  name="magicEmail"
-                  value={magicEmail}
-                  onChange={(e) => setMagicEmail(e.target.value)}
-                  autoComplete="email"
-                  required
-                  className="mt-1 w-full rounded-xl border border-app-border bg-app-surface px-3 py-2.5 text-[14px] text-app-text outline-none ring-app-primary/20 placeholder:text-app-muted focus:border-app-primary focus:ring-2"
-                  placeholder="vos@ejemplo.com"
-                />
-              </label>
-              <button
-                type="submit"
-                disabled={busy}
-                className="flex h-12 w-full items-center justify-center rounded-xl border border-app-border bg-app-surface text-[14px] font-semibold text-app-text shadow-sm transition hover:bg-slate-50 disabled:opacity-60"
-              >
-                Enviar enlace mágico
-              </button>
-              {emailFeedback === "sent" ? (
-                <p className="text-center text-[11px] font-medium text-emerald-700">
-                  Revisá tu correo: te enviamos un enlace para entrar.
-                </p>
-              ) : null}
-              {emailFeedback === "error" ? (
-                <p className="text-center text-[11px] font-medium text-red-700">
-                  No pudimos enviar el correo. Verificá la dirección o probá con
-                  Google o contraseña.
-                </p>
-              ) : null}
-            </form>
-          </>
-        ) : null}
 
         <p className="text-center text-[10px] leading-snug text-app-muted">
           Tus pronósticos siguen guardados en este dispositivo (localmente),
