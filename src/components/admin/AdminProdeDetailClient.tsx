@@ -64,6 +64,33 @@ export function AdminProdeDetailClient({ prodeId }: { prodeId: string }) {
       leaderboardUpdatedAt: string | null;
     }[]
   >([]);
+  const [predictionsByMatch, setPredictionsByMatch] = useState<
+    {
+      match: {
+        id: string;
+        startsAt: string;
+        status: string;
+        homeScore: number | null;
+        awayScore: number | null;
+        homeTeam: { name: string };
+        awayTeam: { name: string };
+      };
+      predictions: {
+        userId: string;
+        user: {
+          id: string;
+          email: string | null;
+          username: string | null;
+          name: string | null;
+        };
+        predictedHomeScore: number;
+        predictedAwayScore: number;
+        savedAt: string;
+        updatedAt: string;
+      }[];
+    }[]
+  >([]);
+  const [predictionTotal, setPredictionTotal] = useState(0);
   const [msg, setMsg] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -72,7 +99,7 @@ export function AdminProdeDetailClient({ prodeId }: { prodeId: string }) {
     setMsg(null);
     setErr(null);
     try {
-      const [detail, tlist, m, part] = await Promise.all([
+      const [detail, tlist, m, part, preds] = await Promise.all([
         adminFetch<{ prode: ProdePayload; tournaments: { id: string; name: string }[] }>(
           `/api/admin/prodes/${encodeURIComponent(prodeId)}`,
         ),
@@ -103,12 +130,41 @@ export function AdminProdeDetailClient({ prodeId }: { prodeId: string }) {
             leaderboardUpdatedAt: string | null;
           }[];
         }>(`/api/admin/prodes/${encodeURIComponent(prodeId)}/participants`),
+        adminFetch<{
+          totalPredictions: number;
+          byMatch: {
+            match: {
+              id: string;
+              startsAt: string;
+              status: string;
+              homeScore: number | null;
+              awayScore: number | null;
+              homeTeam: { name: string };
+              awayTeam: { name: string };
+            };
+            predictions: {
+              userId: string;
+              user: {
+                id: string;
+                email: string | null;
+                username: string | null;
+                name: string | null;
+              };
+              predictedHomeScore: number;
+              predictedAwayScore: number;
+              savedAt: string;
+              updatedAt: string;
+            }[];
+          }[];
+        }>(`/api/admin/prodes/${encodeURIComponent(prodeId)}/predictions`),
       ]);
       setProde(detail.prode);
       setLinkedTournaments(detail.tournaments);
       setTournaments(tlist.tournaments);
       setMatches(m.matches);
       setParticipants(part.participants);
+      setPredictionsByMatch(preds.byMatch);
+      setPredictionTotal(preds.totalPredictions);
     } catch (e) {
       setErr(e instanceof Error ? e.message : "Error");
     }
@@ -512,6 +568,86 @@ export function AdminProdeDetailClient({ prodeId }: { prodeId: string }) {
               ))}
             </tbody>
           </table>
+        </div>
+      </section>
+
+      <section className="rounded border border-neutral-200 bg-white p-3">
+        <h2 className="text-[13px] font-bold">
+          Pronósticos de usuarios ({predictionTotal} cargados)
+        </h2>
+        <p className="text-[11px] text-neutral-600">
+          Detalle por partido: qué marcador pronosticó cada usuario. Resultado
+          oficial cuando ya está cargado.
+        </p>
+        <div className="mt-3 space-y-4">
+          {predictionsByMatch.length === 0 ?
+            <p className="text-[12px] text-neutral-500">
+              No hay partidos vinculados al prode: cargá partidos abajo para que
+              los usuarios puedan pronosticar.
+            </p>
+          : predictionsByMatch.map((block) => {
+              const { match } = block;
+              const official =
+                match.homeScore != null && match.awayScore != null ?
+                  `${match.homeScore} – ${match.awayScore}`
+                : "—";
+              return (
+                <div
+                  key={match.id}
+                  className="rounded border border-neutral-100 bg-neutral-50/80 p-2"
+                >
+                  <p className="text-[12px] font-semibold text-neutral-900">
+                    {match.homeTeam.name} vs {match.awayTeam.name}
+                  </p>
+                  <p className="text-[10px] text-neutral-500">
+                    {new Date(match.startsAt).toLocaleString("es-AR")} ·{" "}
+                    {match.status} · Oficial: {official}
+                  </p>
+                  {block.predictions.length === 0 ?
+                    <p className="mt-2 text-[11px] text-neutral-500">
+                      Nadie cargó pronóstico para este partido aún.
+                    </p>
+                  : (
+                    <div className="mt-2 overflow-x-auto">
+                      <table className="w-full border-collapse text-left text-[11px]">
+                        <thead>
+                          <tr className="border-b border-neutral-200 bg-white">
+                            <th className="p-1.5">Usuario</th>
+                            <th className="p-1.5">Pronóstico</th>
+                            <th className="p-1.5">Última modificación</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {block.predictions.map((pr) => (
+                            <tr
+                              key={`${pr.userId}-${match.id}`}
+                              className="border-b border-neutral-100 bg-white"
+                            >
+                              <td className="p-1.5">
+                                {pr.user.username ?
+                                  `@${pr.user.username}`
+                                : pr.user.name || pr.user.email || pr.user.id.slice(0, 8)}
+                                {pr.user.email ?
+                                  <span className="ml-1 block text-[10px] text-neutral-500">
+                                    {pr.user.email}
+                                  </span>
+                                : null}
+                              </td>
+                              <td className="p-1.5 font-mono tabular-nums">
+                                {pr.predictedHomeScore} – {pr.predictedAwayScore}
+                              </td>
+                              <td className="p-1.5 text-neutral-600">
+                                {new Date(pr.updatedAt).toLocaleString("es-AR")}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
         </div>
       </section>
 
