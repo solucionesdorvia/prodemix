@@ -418,7 +418,7 @@ export function PerfilScreen() {
 
       <section className="mt-3 space-y-1.5">
         <h3 className="text-[11px] font-semibold uppercase tracking-wide text-app-muted">
-          Actividad
+          Ranking
         </h3>
         <Link
           href="/ranking"

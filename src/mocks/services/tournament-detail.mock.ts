@@ -1,6 +1,5 @@
 import type {
   TorneoBrowseItem,
-  TournamentActivityNote,
   TournamentDetailView,
   TournamentMatchRow,
   TournamentResultRow,
@@ -43,43 +42,6 @@ function buildStandingsFromTeams(teams: string[]): TournamentStandingRow[] {
     pj: 6 + (i % 3),
     pts: base[i] ?? 15 - i,
   }));
-}
-
-function activityForCatalogue(id: string): TournamentActivityNote[] {
-  const notes: Record<string, TournamentActivityNote[]> = {
-    "afa-premio-a": [
-      {
-        id: "a1",
-        title: "Pozo · Primera A",
-        detail: "Prode gratuito con premio en efectivo por fecha.",
-        timeLabel: "Hoy",
-      },
-    ],
-    "afa-premio-b": [
-      {
-        id: "a1",
-        title: "Pozo · Primera B",
-        detail: "Fixture 34 fechas · pozo por fecha.",
-        timeLabel: "Hoy",
-      },
-    ],
-    "afa-premio-c": [
-      {
-        id: "a1",
-        title: "Pozo · Primera C",
-        detail: "Competencia nacional · premio por fecha.",
-        timeLabel: "Hoy",
-      },
-    ],
-  };
-  return notes[id] ?? [
-    {
-      id: "a1",
-      title: "Novedades del torneo",
-      detail: "Seguí el fixture desde ProdeMix.",
-      timeLabel: "Hoy",
-    },
-  ];
 }
 
 function buildFromCatalogue(browse: TorneoBrowseItem): TournamentDetailView {
@@ -142,7 +104,7 @@ function buildFromCatalogue(browse: TorneoBrowseItem): TournamentDetailView {
     recentResults: recent,
     standingsPreview: standings,
     featuredTeams: featured,
-    activityNotes: activityForCatalogue(browse.id),
+    activityNotes: [],
   };
 }
 
@@ -215,20 +177,7 @@ function buildSynthetic(browse: TorneoBrowseItem): TournamentDetailView {
     recentResults: recent,
     standingsPreview: buildStandingsFromTeams(teams),
     featuredTeams: teams.slice(0, 4),
-    activityNotes: [
-      {
-        id: "syn-a1",
-        title: "Fixture regional",
-        detail: `${browse.region} · ${browse.subtitle}`,
-        timeLabel: "Reciente",
-      },
-      {
-        id: "syn-a2",
-        title: "Seguí el torneo",
-        detail: "Sumalo a un prode y cargá marcadores.",
-        timeLabel: "Hoy",
-      },
-    ],
+    activityNotes: [],
   };
 }
 

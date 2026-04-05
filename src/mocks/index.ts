@@ -3,7 +3,6 @@
  * Prefer importing getters (e.g. getHomeUpcomingMatches) over raw fixtures.
  */
 
-export * from "./services/activity.mock";
 export * from "./services/home.mock";
 export * from "./services/matches.mock";
 export * from "./services/prodes.mock";

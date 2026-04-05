@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useMemo } from "react";
 import {
   BarChart3,
   Home,
@@ -11,8 +10,6 @@ import {
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { countUnreadActivity } from "@/state/activity-unread";
-import { useAppState } from "@/state/app-state";
 
 const NAV = [
   { href: "/", label: "Inicio", Icon: Home },
@@ -23,8 +20,6 @@ const NAV = [
 
 export function AppBottomNav() {
   const pathname = usePathname();
-  const { state } = useAppState();
-  const unread = useMemo(() => countUnreadActivity(state), [state]);
 
   return (
     <nav
@@ -65,12 +60,6 @@ export function AppBottomNav() {
                   )}
                   aria-hidden
                 />
-                {href === "/" && unread > 0 ? (
-                  <span
-                    className="absolute right-1 top-1 h-2 w-2 rounded-full bg-app-primary ring-2 ring-app-surface"
-                    aria-label={`${unread} notificaciones sin leer`}
-                  />
-                ) : null}
               </span>
               <span className="max-w-[4.75rem] truncate pt-px">{label}</span>
             </Link>

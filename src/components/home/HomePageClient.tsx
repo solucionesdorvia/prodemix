@@ -4,12 +4,7 @@ import { ArrowRight, Banknote, Target } from "lucide-react";
 import Link from "next/link";
 import { useMemo } from "react";
 
-import type { ActivityEntry, PublicPool } from "@/domain";
-import { ActivityItem } from "@/components/activity/ActivityItem";
-import {
-  activityLogToEntry,
-  sortActivityByCreatedDesc,
-} from "@/lib/activity-feed";
+import type { PublicPool } from "@/domain";
 import { HomeFollowedStrip } from "@/components/home/HomeFollowedStrip";
 import { HomeHeader } from "@/components/home/HomeHeader";
 import { HomePendingSection } from "@/components/home/HomePendingSection";
@@ -22,10 +17,8 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { formatPoolCloseLabel } from "@/lib/datetime";
 import { publicPoolEntryLabel } from "@/lib/prode-entry-label";
 import { formatPrizeLine } from "@/lib/pool-cta";
-import { getRecentActivity } from "@/mocks/services/activity.mock";
 import { useIngestionTick } from "@/hooks/useIngestionTick";
 import type { PersistedAppState } from "@/state/types";
-import { countUnreadActivity } from "@/state/activity-unread";
 import {
   buildHomePendingPredictions,
   buildHomeStats,
@@ -81,21 +74,6 @@ export function HomePageClient() {
     return getFollowedTournamentsForHome(state);
   }, [state, ingestionTick]);
 
-  const unreadCount = useMemo(
-    () => countUnreadActivity(state),
-    [state],
-  );
-
-  const activity = useMemo((): ActivityEntry[] => {
-    const persisted = sortActivityByCreatedDesc(state.activity);
-    if (persisted.length === 0) {
-      return getRecentActivity().slice(0, 3);
-    }
-    return persisted.slice(0, 8).map(activityLogToEntry);
-  }, [state.activity]);
-
-  const activityPreview = useMemo(() => activity.slice(0, 3), [activity]);
-
   const userPredictionCount = useMemo(() => {
     const prefix = `${user.id}::`;
     const a = Object.keys(state.predictionMap).filter((k) =>
@@ -143,7 +121,6 @@ export function HomePageClient() {
             user.username
           : (user.displayName.split(" ")[0] ?? user.displayName)
         }
-        activityUnreadCount={unreadCount}
       />
 
       <div className="mt-4 space-y-5">
@@ -319,52 +296,6 @@ export function HomePageClient() {
             state={state}
           />
         )}
-
-        <section className="space-y-2">
-          <SectionHeader
-            title="Actividad reciente"
-            action={
-              <Link
-                href="/actividad"
-                className="relative inline-flex items-center font-semibold hover:underline"
-              >
-                Centro
-                {unreadCount > 0 ? (
-                  <span
-                    className="absolute -right-2 -top-1.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-app-primary px-1 text-[9px] font-bold leading-none text-white"
-                    aria-hidden
-                  >
-                    {unreadCount > 9 ? "9+" : unreadCount}
-                  </span>
-                ) : null}
-              </Link>
-            }
-          />
-          {activityPreview.length === 0 ? (
-            <EmptyState
-              variant="minimal"
-              layout="stack"
-              title="Sin movimientos todavía"
-              description="Movimientos de prodes, puntos y ranking en esta cuenta."
-            />
-          ) : (
-            <div className={cn("overflow-hidden", cardSurface)}>
-              {activityPreview.map((a, i) => (
-                <ActivityItem
-                  key={a.id}
-                  entry={a}
-                  className={i > 0 ? "border-t border-app-border-subtle" : ""}
-                />
-              ))}
-            </div>
-          )}
-          <Link
-            href="/actividad"
-            className="block text-center text-[11px] font-semibold text-app-muted hover:text-app-primary hover:underline"
-          >
-            Ver toda la actividad
-          </Link>
-        </section>
 
         <p className="border-t border-app-border-subtle pt-4 text-center text-[11px] text-app-muted">
           <Link href="/torneos" className="font-semibold text-app-primary hover:underline">

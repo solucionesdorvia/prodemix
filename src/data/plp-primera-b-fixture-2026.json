@@ -208,8 +208,8 @@
           "id": "match-3-1773329884586-0-primera",
           "homeTeam": "SECLA",
           "awayTeam": "Villa La Ñata",
-          "homeScore": null,
-          "awayScore": null,
+          "homeScore": 4,
+          "awayScore": 5,
           "status": "vs",
           "date": null,
           "venue": null
@@ -218,8 +218,8 @@
           "id": "match-3-1773329884586-1-primera",
           "homeTeam": "Gimnasia LP.",
           "awayTeam": "Velez Sarsfield",
-          "homeScore": null,
-          "awayScore": null,
+          "homeScore": 1,
+          "awayScore": 5,
           "status": "vs",
           "date": null,
           "venue": null
@@ -228,8 +228,8 @@
           "id": "match-3-1773329884586-2-primera",
           "homeTeam": "Atlanta",
           "awayTeam": "Argentinos Jrs",
-          "homeScore": null,
-          "awayScore": null,
+          "homeScore": 2,
+          "awayScore": 0,
           "status": "vs",
           "date": null,
           "venue": null
@@ -238,8 +238,8 @@
           "id": "match-3-1773329884586-3-primera",
           "homeTeam": "Franja de Oro",
           "awayTeam": "Country",
-          "homeScore": null,
-          "awayScore": null,
+          "homeScore": 7,
+          "awayScore": 2,
           "status": "vs",
           "date": null,
           "venue": null

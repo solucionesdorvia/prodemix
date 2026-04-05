@@ -8,7 +8,6 @@ import {
   History,
   MapPin,
   SearchX,
-  Trophy,
   Users,
 } from "lucide-react";
 import Link from "next/link";
@@ -86,7 +85,6 @@ export function TournamentDetailClient({
     recentResults,
     standingsPreview,
     featuredTeams,
-    activityNotes,
   } = detail;
 
   const playFechaHref =
@@ -390,38 +388,6 @@ export function TournamentDetailClient({
         </section>
       ) : null}
 
-      {activityNotes.length > 0 ? (
-        <section className="space-y-1.5">
-          <SectionHeader
-            title={
-              <span className="inline-flex items-center gap-1">
-                <Trophy className="h-3.5 w-3.5 text-app-muted" strokeWidth={2} />
-                Actividad
-              </span>
-            }
-          />
-          <ul className="space-y-1.5">
-            {activityNotes.map((a) => (
-              <li
-                key={a.id}
-                className="rounded-[10px] border border-app-border bg-app-surface px-2.5 py-2 shadow-[0_1px_0_rgba(15,23,42,0.04)]"
-              >
-                <div className="flex items-start justify-between gap-2">
-                  <p className="text-[12px] font-semibold leading-snug text-app-text">
-                    {a.title}
-                  </p>
-                  <span className="shrink-0 text-[9px] font-medium text-app-muted">
-                    {a.timeLabel}
-                  </span>
-                </div>
-                <p className="mt-0.5 text-[10px] leading-snug text-app-muted">
-                  {a.detail}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
       </div>
     </div>
   );
