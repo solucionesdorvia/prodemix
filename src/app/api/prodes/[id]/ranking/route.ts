@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { queryProdeRanking } from "@/lib/ranking-query";
-import { isRankingUnlocked } from "@/lib/ranking-visibility";
+import { isRankingUnlockedForProde } from "@/lib/ranking-visibility";
 import { prodeRouteIdSchema } from "@/lib/validation/prodes-api";
 import { zodToApiError } from "@/lib/validation/zod-to-api";
 
@@ -23,7 +23,7 @@ export async function GET(
     return result.response;
   }
 
-  const unlocked = await isRankingUnlocked();
+  const unlocked = await isRankingUnlockedForProde(result.prodeId);
   if (!unlocked) {
     return NextResponse.json({
       prodeId: result.prodeId,

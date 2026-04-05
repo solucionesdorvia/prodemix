@@ -4,7 +4,10 @@ import { auth } from "@/auth";
 import { apiError } from "@/lib/api-errors";
 import { getPrisma } from "@/lib/prisma";
 import { misProdeServerStatus } from "@/lib/mis-prode-server-status";
-import { isRankingUnlocked } from "@/lib/ranking-visibility";
+import {
+  isRankingUnlocked,
+  isRankingUnlockedForProde,
+} from "@/lib/ranking-visibility";
 import { meProdesQuerySchema } from "@/lib/validation/prodes-api";
 import { zodToApiError } from "@/lib/validation/zod-to-api";
 
@@ -57,11 +60,15 @@ export async function GET(req: Request) {
   });
 
   const now = new Date();
-  const rankingUnlocked = await isRankingUnlocked();
+  const globalRankingUnlocked = await isRankingUnlocked();
 
   const prodes = await Promise.all(
     entries.map(async (e) => {
       const prodeId = e.prode.id;
+      const rankingUnlocked = await isRankingUnlockedForProde(
+        prodeId,
+        globalRankingUnlocked,
+      );
       const [
         matchCount,
         predictionCount,

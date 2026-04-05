@@ -194,7 +194,7 @@ export function ProdesDetailLegacyClient({ prodeId }: Props) {
         </div>
         <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] text-app-muted">
           <span>
-            Marcadores:{" "}
+            Pronósticos:{" "}
             <span className="font-semibold tabular-nums text-app-text">
               {prode.matchIds.length - pendingCount}/{prode.matchIds.length}
             </span>

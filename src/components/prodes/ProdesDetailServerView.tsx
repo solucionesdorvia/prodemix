@@ -372,8 +372,8 @@ export function ProdesDetailServerView({ prodeId }: Props) {
           <span className="rounded-md bg-app-bg px-1.5 py-0.5 font-semibold text-app-text ring-1 ring-app-border-subtle">
             {participacionLabel}
           </span>
-          <span>
-            Marcadores:{" "}
+          <span title="Cuántos partidos tenés pronosticados sobre el total del prode">
+            Pronósticos:{" "}
             <span className="font-semibold tabular-nums text-app-text">
               {matches.length - pendingCount}/{matches.length}
             </span>
@@ -569,7 +569,7 @@ export function ProdesDetailServerView({ prodeId }: Props) {
             title={rankingLocked ? "Todavía no hay ranking" : "Todavía no hay tabla"}
             description={
               rankingLocked ?
-                "Va a aparecer cuando se haya jugado el primer partido del calendario oficial."
+                "Va a aparecer cuando haya marcadores oficiales en este prode o cuando el calendario general tenga partidos jugados."
               : "Cuando haya resultados oficiales cargados, verás el ranking."
             }
           />
