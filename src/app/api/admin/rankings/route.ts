@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import { apiError } from "@/lib/api-errors";
 import { getPrisma } from "@/lib/prisma";
+import { prismaUserIncludedInRankings } from "@/lib/ranking-user-filter";
 import { findProdeByIdOrSlug } from "@/lib/prode-resolve";
 import { requireAdminApi } from "@/lib/require-admin";
 
@@ -23,7 +24,7 @@ export async function GET(req: Request) {
   if (!prode) return apiError(404, "NOT_FOUND", "Prode no encontrado.");
 
   const rows = await prisma.prodeLeaderboardEntry.findMany({
-    where: { prodeId: prode.id },
+    where: { prodeId: prode.id, user: prismaUserIncludedInRankings },
     orderBy: [
       { rankPosition: "asc" },
       { points: "desc" },

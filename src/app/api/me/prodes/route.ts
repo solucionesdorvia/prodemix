@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { apiError } from "@/lib/api-errors";
 import { getPrisma } from "@/lib/prisma";
+import { prismaUserIncludedInRankings } from "@/lib/ranking-user-filter";
 import { misProdeServerStatus } from "@/lib/mis-prode-server-status";
 import { meProdesQuerySchema } from "@/lib/validation/prodes-api";
 import { zodToApiError } from "@/lib/validation/zod-to-api";
@@ -94,7 +95,7 @@ export async function GET(req: Request) {
           },
         }),
         prisma.prodeLeaderboardEntry.findMany({
-          where: { prodeId },
+          where: { prodeId, user: prismaUserIncludedInRankings },
           orderBy: [
             { rankPosition: "asc" },
             { points: "desc" },

@@ -3,6 +3,7 @@ import {
   type LeaderboardRowInput,
   sortAndAssignRanks,
 } from "@/lib/ranking-sort";
+import { RANKING_EXCLUDED_USER_ROLE } from "@/lib/ranking-user-filter";
 import { scorePrediction } from "@/lib/scoring";
 
 /**
@@ -27,7 +28,16 @@ export async function recalculateProdeLeaderboard(prodeId: string): Promise<void
     where: { prodeId, status: "JOINED" },
     select: { userId: true },
   });
-  const participantIds = new Set(participants.map((p) => p.userId));
+  const joinedIds = participants.map((p) => p.userId);
+  const adminRows =
+    joinedIds.length > 0 ?
+      await prisma.user.findMany({
+        where: { id: { in: joinedIds }, role: RANKING_EXCLUDED_USER_ROLE },
+        select: { id: true },
+      })
+    : [];
+  const excluded = new Set(adminRows.map((u) => u.id));
+  const participantIds = new Set(joinedIds.filter((id) => !excluded.has(id)));
 
   const predictions = await prisma.prediction.findMany({
     where: { prodeId },

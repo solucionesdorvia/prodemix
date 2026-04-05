@@ -6,6 +6,7 @@ import { assertCanViewProde } from "@/lib/prode-access";
 import { getPrisma } from "@/lib/prisma";
 import { recalculateProdeLeaderboard } from "@/lib/ranking-compute";
 import { findProdeByIdOrSlug } from "@/lib/prode-resolve";
+import { prismaUserIncludedInRankings } from "@/lib/ranking-user-filter";
 
 export type RankingApiRow = {
   rank: number | null;
@@ -48,7 +49,10 @@ export async function queryProdeRanking(
   await recalculateProdeLeaderboard(prode.id);
 
   const leaderboardQuery = {
-    where: { prodeId: prode.id },
+    where: {
+      prodeId: prode.id,
+      user: prismaUserIncludedInRankings,
+    },
     orderBy: [
       { rankPosition: "asc" as const },
       { points: "desc" as const },
@@ -121,18 +125,19 @@ export async function queryGlobalRanking(): Promise<RankingApiRow[]> {
   if (userIds.length === 0) return [];
 
   const users = await prisma.user.findMany({
-    where: { id: { in: userIds } },
+    where: { id: { in: userIds }, ...prismaUserIncludedInRankings },
     select: { id: true, name: true, username: true, image: true },
   });
   const userMap = new Map(users.map((u) => [u.id, u]));
+  const aggsVisible = aggs.filter((a) => userMap.has(a.userId));
 
   const now = new Date();
   let rank = 1;
   const ranking: RankingApiRow[] = [];
-  for (let i = 0; i < aggs.length; i++) {
-    const cur = aggs[i]!;
+  for (let i = 0; i < aggsVisible.length; i++) {
+    const cur = aggsVisible[i]!;
     if (i > 0) {
-      const prev = aggs[i - 1]!;
+      const prev = aggsVisible[i - 1]!;
       if (
         prev.points !== cur.points ||
         prev.plenos !== cur.plenos ||
