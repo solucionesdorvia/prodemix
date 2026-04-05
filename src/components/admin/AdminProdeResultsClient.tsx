@@ -194,6 +194,35 @@ export function AdminProdeResultsClient() {
     }
   };
 
+  const syncCatalogToDb = async () => {
+    setMessage(null);
+    setBusy(true);
+    try {
+      const qs =
+        selectedId ?
+          `?prodeId=${encodeURIComponent(selectedId)}`
+        : "";
+      const data = await adminFetch<{
+        ok: boolean;
+        updated: number;
+        skippedMissing: number;
+        affectedProdeIds: string[];
+      }>(`/api/admin/sync-catalog-results${qs}`, { method: "POST" });
+      setMessage(
+        `Catálogo aplicado a la base: ${data.updated} partido(s). Prodes recalculados: ${data.affectedProdeIds.length}.` +
+          (data.skippedMissing > 0 ?
+            ` (${data.skippedMissing} id de catálogo sin fila Match en DB — revisá el seed o los ids.)`
+          : ""),
+      );
+      if (selectedId) await loadMatches(selectedId);
+    } catch (e) {
+      reportClientError(e, { area: "admin.catalog.sync" });
+      setMessage(e instanceof Error ? e.message : "No se pudo sincronizar el catálogo.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const recalcOnly = async () => {
     setMessage(null);
     if (!selectedId) {
@@ -229,6 +258,26 @@ export function AdminProdeResultsClient() {
           actualizan los resultados y se recalcula el ranking (3 pleno · 1 signo
           · 0 error).
         </p>
+        <div className="rounded-md border border-blue-100 bg-blue-50/80 px-3 py-2 text-[12px] text-neutral-800">
+          <p className="font-semibold text-neutral-900">
+            Catálogo MVP → base de datos
+          </p>
+          <p className="mt-1 text-neutral-700">
+            Al arrancar el servidor y en <code className="rounded bg-white/80 px-1">npm start</code>{" "}
+            (script <code className="rounded bg-white/80 px-1">seed-if-empty</code>) se aplica{" "}
+            <code className="rounded bg-white/80 px-1">MOCK_MATCH_RESULTS</code> a Prisma de
+            forma idempotente. El botón repite la misma sincronización si hace falta (p. ej.
+            tras un deploy sin reinicio). Podés elegir un prode para forzar su recálculo.
+          </p>
+          <button
+            type="button"
+            disabled={busy}
+            className="mt-2 rounded-lg bg-blue-800 px-3 py-1.5 text-[12px] font-semibold text-white hover:bg-blue-900 disabled:opacity-50"
+            onClick={() => void syncCatalogToDb()}
+          >
+            {busy ? "Sincronizando…" : "Aplicar catálogo a la base (MOCK_MATCH_RESULTS)"}
+          </button>
+        </div>
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-semibold">
           <Link href="/admin/dashboard" className="text-blue-700 hover:underline">
             Panel

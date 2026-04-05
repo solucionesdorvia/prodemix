@@ -8,6 +8,7 @@ import type { Match as DomainMatch, Matchday } from "../src/domain";
 import { buildPlaPremioMatches } from "../src/mocks/fixtures/plp-afa-premio";
 import { PREDICTION_CLOSE_MS_BEFORE_KICKOFF } from "../src/lib/datetime";
 import { getPrisma } from "../src/lib/prisma";
+import { syncCatalogMockResultsToDb } from "../src/lib/sync-catalog-mock-results-to-db";
 import type {
   MatchdayStatus as PrismaMatchdayStatus,
   ProdeLifecycleStatus,
@@ -265,7 +266,10 @@ async function main() {
   for (const t of TOURNAMENTS) {
     await seedTournament(prisma, t);
   }
-  console.log("Seed OK: AFA Premio A/B/C (tournaments, teams, matchdays, matches, prodes).");
+  const sync = await syncCatalogMockResultsToDb();
+  console.log(
+    `Seed OK: AFA Premio A/B/C. Catálogo → DB: ${sync.updated} partido(s) con marcador, ${sync.skippedMissing} id(s) sin fila en DB.`,
+  );
 }
 
 main()

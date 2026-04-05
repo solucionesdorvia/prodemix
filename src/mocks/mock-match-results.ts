@@ -7,8 +7,10 @@ import {
 import { loadIngestionResultsOverlay } from "@/state/ingestion-storage";
 
 /**
- * Mock finalized scores for catalogue matches — used for MVP scoring & rankings.
- * AFA Premio: carga manual / API. Ingestion overlay merges on top (see /admin/mock-ingestion).
+ * Marcadores del catálogo (MVP). En **modo legacy** (sin sesión) se usan para puntos en cliente.
+ * Con **sesión**, el ranking y el admin leen `Match` en Prisma: hay que aplicar estos valores
+ * con `POST /api/admin/sync-catalog-results` o volver a correr `npx prisma db seed`.
+ * Ingestion overlay y resultados admin en localStorage se fusionan en `getMockResultForMatch`.
  */
 export const MOCK_MATCH_RESULTS: Partial<
   Record<MatchId, { home: number; away: number }>

@@ -6,6 +6,7 @@ import "dotenv/config";
 import { execSync } from "node:child_process";
 
 import { getPrisma } from "../src/lib/prisma";
+import { syncCatalogMockResultsToDb } from "../src/lib/sync-catalog-mock-results-to-db";
 
 async function main() {
   if (!process.env.DATABASE_URL?.trim()) {
@@ -22,9 +23,16 @@ async function main() {
 
     if (tournaments > 0 && matches > 0) {
       console.log(
-        "seed-if-empty: catálogo presente (tournaments=%s, matches=%s), omitiendo.",
+        "seed-if-empty: catálogo presente (tournaments=%s, matches=%s), sincronizando marcadores catálogo→DB…",
         tournaments,
         matches,
+      );
+      const r = await syncCatalogMockResultsToDb();
+      console.log(
+        "seed-if-empty: catalog→DB: %s partido(s) tocado(s), %s id(s) sin fila, %s prode(s) con recálculo.",
+        r.updated,
+        r.skippedMissing,
+        r.affectedProdeIds.length,
       );
       return;
     }
