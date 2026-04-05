@@ -1,9 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 
+import { REFERRAL_STORAGE_KEY } from "@/lib/referrals/constants";
 import { pageEyebrow, pageHeader, pageTitle } from "@/lib/ui-styles";
 import { cn } from "@/lib/utils";
 
@@ -41,6 +43,21 @@ export function LoginScreen({ googleOAuthEnabled }: LoginScreenProps) {
   const [credError, setCredError] = useState<string | null>(null);
 
   const urlOAuthError = oauthErrorMessage(searchParams.get("error"));
+  const passwordResetOk = searchParams.get("reset") === "ok";
+
+  /** Guardar código ?ref= en localStorage como respaldo del cookie `prodemix_ref`. */
+  useEffect(() => {
+    const ref = searchParams.get("ref");
+    if (!ref) return;
+    try {
+      const n = ref.trim().toUpperCase();
+      if (n.length >= 4 && /^[A-Z0-9]+$/.test(n)) {
+        localStorage.setItem(REFERRAL_STORAGE_KEY, n);
+      }
+    } catch {
+      /* ignore */
+    }
+  }, [searchParams]);
 
   /** Autenticado sin username: ir al onboarding, no a `/` (AuthGate te devolvería igual). */
   useEffect(() => {
@@ -91,10 +108,23 @@ export function LoginScreen({ googleOAuthEnabled }: LoginScreenProps) {
           setCredError("Las contraseñas no coinciden.");
           return;
         }
+        let referralFromStorage: string | null = null;
+        try {
+          referralFromStorage = localStorage.getItem(REFERRAL_STORAGE_KEY);
+        } catch {
+          referralFromStorage = null;
+        }
         const res = await fetch("/api/auth/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password: credPassword }),
+          credentials: "include",
+          body: JSON.stringify({
+            email,
+            password: credPassword,
+            ...(referralFromStorage && referralFromStorage.length >= 4 ?
+              { referralCode: referralFromStorage }
+            : {}),
+          }),
         });
         const data = (await res.json().catch(() => ({}))) as {
           error?: { message?: string };
@@ -165,6 +195,15 @@ export function LoginScreen({ googleOAuthEnabled }: LoginScreenProps) {
       </header>
 
       <div className="mt-8 space-y-4">
+        {passwordResetOk ?
+          <p
+            className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-center text-[11px] font-medium text-emerald-900"
+            role="status"
+          >
+            Contraseña actualizada. Iniciá sesión con la nueva.
+          </p>
+        : null}
+
         {urlOAuthError ?
           <p
             className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-center text-[11px] font-medium text-red-800"
@@ -309,6 +348,16 @@ export function LoginScreen({ googleOAuthEnabled }: LoginScreenProps) {
                 />
               </label>
             ) : null}
+            {credMode === "login" ?
+              <div className="text-right">
+                <Link
+                  href="/auth/forgot-password"
+                  className="text-[11px] font-semibold text-app-primary hover:underline"
+                >
+                  ¿Olvidaste tu contraseña?
+                </Link>
+              </div>
+            : null}
             <button
               type="submit"
               disabled={busy}

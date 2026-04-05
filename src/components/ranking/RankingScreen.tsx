@@ -1,6 +1,6 @@
 "use client";
 
-import { Trophy } from "lucide-react";
+import { Gift, Trophy } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
@@ -363,6 +363,28 @@ export function RankingScreen() {
           </Link>
         : null}
       </header>
+
+      <Link
+        href="/invitar"
+        className="mt-3 flex items-center justify-between gap-3 rounded-xl border border-app-border bg-app-surface px-3 py-2.5 shadow-[0_1px_0_rgba(15,23,42,0.04)] transition hover:bg-app-bg active:scale-[0.995]"
+      >
+        <span className="flex min-w-0 items-center gap-2.5">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-app-bg text-app-primary">
+            <Gift className="h-4 w-4" strokeWidth={2} aria-hidden />
+          </span>
+          <span className="min-w-0">
+            <span className="block text-[13px] font-semibold text-app-text">
+              Invitar amigos
+            </span>
+            <span className="mt-0.5 block text-[10px] leading-snug text-app-muted">
+              Entrada gratis en el próximo prode pago
+            </span>
+          </span>
+        </span>
+        <span className="shrink-0 text-[11px] font-semibold text-app-primary">
+          Ver
+        </span>
+      </Link>
 
       {!prodeIdParam ?
         <div

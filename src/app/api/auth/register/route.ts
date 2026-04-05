@@ -11,6 +11,7 @@ import { getClientIpFromHeaders } from "@/lib/client-ip";
 import { rateLimit } from "@/lib/rate-limit";
 import { rateLimitResponse } from "@/lib/rate-limit-response";
 import { logStructured } from "@/lib/observability";
+import { createUserWithReferral } from "@/lib/referrals/apply";
 import { getPrisma } from "@/lib/prisma";
 import { parseJsonBody } from "@/lib/validation/parse-json";
 import { registerBodySchema } from "@/lib/validation/register";
@@ -57,12 +58,12 @@ export async function POST(req: Request) {
     }
 
     const passwordHash = await hashPassword(password);
-    await prisma.user.create({
-      data: {
-        email,
-        passwordHash,
-        name: email.split("@")[0] ?? "Usuario",
-      },
+    const displayName = email.split("@")[0] ?? "Usuario";
+    await createUserWithReferral({
+      email,
+      passwordHash,
+      name: displayName,
+      referralFromBody: parsed.data.referralCode ?? null,
     });
 
     return NextResponse.json({ ok: true });

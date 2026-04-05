@@ -19,6 +19,7 @@ import Credentials from "next-auth/providers/credentials";
 
 import { logStructured } from "@/lib/observability";
 import { verifyPassword } from "@/lib/auth/password";
+import { finalizeNewUserReferral } from "@/lib/referrals/apply";
 import { getPrisma } from "@/lib/prisma";
 
 const providers: Provider[] = [
@@ -149,6 +150,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
   },
   events: {
+    async createUser({ user }) {
+      const id = user.id;
+      if (!id) return;
+      try {
+        await finalizeNewUserReferral(id);
+      } catch (e) {
+        logStructured("referral.finalize_failed", {
+          userId: id,
+          message: e instanceof Error ? e.message : String(e),
+        });
+      }
+    },
     signIn({ account, isNewUser }) {
       logStructured("auth.sign_in", {
         provider: account?.provider ?? "unknown",

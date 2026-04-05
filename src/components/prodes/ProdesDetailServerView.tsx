@@ -124,6 +124,7 @@ export function ProdesDetailServerView({ prodeId }: Props) {
   const [shareUrl, setShareUrl] = useState("");
   const [saving, setSaving] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
+  const [inviteNudge, setInviteNudge] = useState(false);
   const [pickerUser, setPickerUser] = useState<{
     id: string;
     label: string;
@@ -334,6 +335,7 @@ export function ProdesDetailServerView({ prodeId }: Props) {
           [matchId]: { ...score, savedAt },
         }));
         setFeedback("Guardado en tu cuenta");
+        setInviteNudge(true);
         window.setTimeout(() => setFeedback(null), 2200);
         void fetchProdeApi<{
           ranking: ApiRankingRow[];
@@ -820,6 +822,14 @@ export function ProdesDetailServerView({ prodeId }: Props) {
             : null}
           </div>
         </div>
+        {inviteNudge ?
+          <Link
+            href="/invitar"
+            className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-dashed border-app-primary/40 bg-app-primary/5 px-3 py-2 text-center text-[11px] font-semibold text-app-primary"
+          >
+            Invitá amigos y sumá progreso hacia entrada gratis
+          </Link>
+        : null}
         {!globalOpen && domainMatches.length > 0 ?
           <p className="text-[10px] leading-snug text-app-muted">
             El plazo de pronósticos del prode cerró: solo lectura.

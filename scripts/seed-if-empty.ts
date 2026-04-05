@@ -5,6 +5,7 @@
 import "dotenv/config";
 import { execSync } from "node:child_process";
 
+import { backfillMissingReferralCodes } from "../src/lib/referrals/backfill";
 import { getPrisma } from "../src/lib/prisma";
 import { syncCatalogMockResultsToDb } from "../src/lib/sync-catalog-mock-results-to-db";
 
@@ -34,6 +35,13 @@ async function main() {
         r.skippedMissing,
         r.affectedProdeIds.length,
       );
+      const refN = await backfillMissingReferralCodes();
+      if (refN > 0) {
+        console.log(
+          "seed-if-empty: códigos de invitación asignados a %s usuario(s) sin código.",
+          refN,
+        );
+      }
       return;
     }
 

@@ -44,8 +44,16 @@ model User {
   role            String    @default("user")
   bannedAt        DateTime?
   premiumEligible Boolean   @default(false)
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  /// Código único para enlaces ?ref= (mayúsculas + números).
+  referralCode  String? @unique
+  /// Usuario que invitó a esta cuenta (si aplica).
+  referredById  String?
+  referredBy    User?   @relation("UserReferralTree", fields: [referredById], references: [id], onDelete: SetNull)
+  referredUsers User[]  @relation("UserReferralTree")
+  referralCount Int     @default(0)
+  hasFreeEntry  Boolean @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   accounts              Account[]
   sessions              Session[]
@@ -55,6 +63,35 @@ model User {
   ownedProdes           Prode[]                 @relation("ProdeOwner")
   leaderboardRows       ProdeLeaderboardEntry[]
   prodeClosingReminderLogs ProdeClosingReminderLog[]
+  passwordResetTokens     PasswordResetToken[]
+  referralsMade           Referral[]            @relation("ReferralReferrer")
+  referralReceived        Referral?             @relation("ReferralReferred")
+}
+
+/// Invitación válida: un usuario referido solo cuenta una vez.
+model Referral {
+  id             String   @id @default(cuid())
+  referrerUserId String
+  referredUserId String   @unique
+  createdAt      DateTime @default(now())
+
+  referrer User @relation("ReferralReferrer", fields: [referrerUserId], references: [id], onDelete: Restrict)
+  referred User @relation("ReferralReferred", fields: [referredUserId], references: [id], onDelete: Cascade)
+
+  @@index([referrerUserId])
+}
+
+/// Token de un solo uso para recuperar contraseña (enlace por email).
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model Account {

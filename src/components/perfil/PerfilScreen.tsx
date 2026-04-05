@@ -8,6 +8,7 @@ import {
   Pencil,
   Star,
   Trophy,
+  UserPlus,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { getSession, useSession } from "next-auth/react";
@@ -434,6 +435,35 @@ export function PerfilScreen() {
               </span>
               <span className="mt-0.5 block text-[10px] text-app-muted">
                 Global, fecha y torneo
+              </span>
+            </span>
+          </span>
+          <ChevronRight
+            className="h-4 w-4 shrink-0 text-app-muted"
+            strokeWidth={2}
+            aria-hidden
+          />
+        </Link>
+      </section>
+
+      <section className="mt-3 space-y-1.5">
+        <h3 className="text-[11px] font-semibold uppercase tracking-wide text-app-muted">
+          Invitaciones
+        </h3>
+        <Link
+          href="/invitar"
+          className="flex items-center justify-between gap-2 rounded-[10px] border border-app-border bg-app-surface px-3 py-2.5 shadow-[0_1px_0_rgba(15,23,42,0.04)] transition hover:bg-app-bg active:scale-[0.995]"
+        >
+          <span className="flex min-w-0 items-center gap-2">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-app-bg text-app-primary">
+              <UserPlus className="h-4 w-4" strokeWidth={2} aria-hidden />
+            </span>
+            <span>
+              <span className="block text-[13px] font-semibold text-app-text">
+                Invitar amigos
+              </span>
+              <span className="mt-0.5 block text-[10px] text-app-muted">
+                Progreso y enlace de invitación
               </span>
             </span>
           </span>
