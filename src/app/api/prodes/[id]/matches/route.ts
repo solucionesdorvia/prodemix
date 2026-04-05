@@ -37,7 +37,20 @@ export async function GET(
     where: { prodeId: prode.id },
     select: { matchId: true },
   });
-  const matchIds = links.map((l) => l.matchId);
+  const predRows = await prisma.prediction.findMany({
+    where: { prodeId: prode.id },
+    select: { matchId: true },
+  });
+  const matchIds = [
+    ...new Set([
+      ...links.map((l) => l.matchId),
+      ...predRows.map((p) => p.matchId),
+    ]),
+  ];
+
+  if (matchIds.length === 0) {
+    return NextResponse.json({ matches: [] });
+  }
 
   const matches = await prisma.match.findMany({
     where: { id: { in: matchIds } },

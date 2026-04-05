@@ -12,6 +12,7 @@ export async function fetchProdeApi<T>(
     ...init,
     credentials: "include",
     headers,
+    cache: "no-store",
   });
   const data = (await res.json().catch(() => ({}))) as T & {
     error?: { message?: string };

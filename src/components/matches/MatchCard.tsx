@@ -182,13 +182,14 @@ export function MatchCard({
             {finalResult ? (
               <p
                 className={cn(
-                  "text-[10px] font-medium leading-snug text-app-sport",
+                  "text-[12px] font-bold tabular-nums leading-snug text-app-sport",
                   !hideTournamentLabel && "mt-1",
                 )}
+                aria-live="polite"
               >
-                Final: {finalResult.home}-{finalResult.away}
+                Resultado oficial: {finalResult.home}–{finalResult.away}
                 {pointsEarned !== null && pointsEarned !== undefined ? (
-                  <span className="ml-1 font-bold text-app-text">
+                  <span className="ml-1.5 text-[11px] font-bold text-app-text">
                     · +{pointsEarned} pts
                   </span>
                 ) : null}
