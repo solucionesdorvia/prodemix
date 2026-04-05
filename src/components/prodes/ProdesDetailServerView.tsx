@@ -112,8 +112,6 @@ export function ProdesDetailServerView({ prodeId }: Props) {
   const [shareUrl, setShareUrl] = useState("");
   const [saving, setSaving] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
-  const [kickoffClock, setKickoffClock] = useState(0);
-
   const reload = useCallback(async () => {
     setLoadError(null);
     setFeedback(null);
@@ -194,15 +192,29 @@ export function ProdesDetailServerView({ prodeId }: Props) {
     });
   }, [prodeId]);
 
+  /** Marcadores y ranking desde servidor: poll solo con la pestaña visible. */
   useEffect(() => {
-    const id = window.setInterval(() => setKickoffClock((c) => c + 1), 30_000);
+    const id = window.setInterval(() => {
+      if (document.visibilityState !== "visible") return;
+      void reload();
+    }, 15_000);
     return () => window.clearInterval(id);
-  }, []);
+  }, [reload]);
 
   useEffect(() => {
-    if (kickoffClock === 0) return;
-    void reload();
-  }, [kickoffClock, reload]);
+    const onVisible = () => {
+      if (document.visibilityState === "visible") void reload();
+    };
+    document.addEventListener("visibilitychange", onVisible);
+    const onPageShow = (e: PageTransitionEvent) => {
+      if (e.persisted) void reload();
+    };
+    window.addEventListener("pageshow", onPageShow);
+    return () => {
+      document.removeEventListener("visibilitychange", onVisible);
+      window.removeEventListener("pageshow", onPageShow);
+    };
+  }, [reload]);
 
   const globalOpen = prode ?
     clientCanEditPredictions({
