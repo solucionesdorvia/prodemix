@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import { apiError } from "@/lib/api-errors";
 import { assertCanViewProde } from "@/lib/prode-access";
 import { getPrisma } from "@/lib/prisma";
+import { recalculateProdeLeaderboard } from "@/lib/ranking-compute";
 import { findProdeByIdOrSlug } from "@/lib/prode-resolve";
 
 export type RankingApiRow = {
@@ -43,13 +44,13 @@ export async function queryProdeRanking(
     return { ok: false, response: access.response };
   }
 
-  const rows = await prisma.prodeLeaderboardEntry.findMany({
+  const leaderboardQuery = {
     where: { prodeId: prode.id },
     orderBy: [
-      { rankPosition: "asc" },
-      { points: "desc" },
-      { plenos: "desc" },
-      { signHits: "desc" },
+      { rankPosition: "asc" as const },
+      { points: "desc" as const },
+      { plenos: "desc" as const },
+      { signHits: "desc" as const },
     ],
     include: {
       user: {
@@ -61,7 +62,19 @@ export async function queryProdeRanking(
         },
       },
     },
-  });
+  };
+
+  let rows = await prisma.prodeLeaderboardEntry.findMany(leaderboardQuery);
+
+  if (rows.length === 0) {
+    const participants = await prisma.prodeEntry.count({
+      where: { prodeId: prode.id, status: "JOINED" },
+    });
+    if (participants > 0) {
+      await recalculateProdeLeaderboard(prode.id);
+      rows = await prisma.prodeLeaderboardEntry.findMany(leaderboardQuery);
+    }
+  }
 
   const ranking: RankingApiRow[] = rows.map((r) => ({
     rank: r.rankPosition,

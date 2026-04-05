@@ -118,10 +118,13 @@ export function MatchCard({
 
   const outcomeLabel = outcome ? outcomeLabelEs(outcome) : null;
 
+  const scorePlaceholder =
+    predictionLocked && !finalResult ? "–" : "0";
+
   const emptyHint = useMemo(() => {
     if (predictionLocked) {
       if (finalResult) return "Partido cerrado · marcador fijado";
-      return "Plazo cerrado · solo lectura";
+      return "Plazo cerrado · marcador oficial pendiente";
     }
     if (homeStr === "" && awayStr === "") return "Elegí goles o usá + / −";
     return "Completá ambos equipos";
@@ -257,7 +260,7 @@ export function MatchCard({
               inputMode="numeric"
               autoComplete="off"
               name={`score-home-${match.id}`}
-              placeholder="0"
+              placeholder={scorePlaceholder}
               value={homeStr}
               readOnly={predictionLocked}
               onChange={(e) => onHomeChange(e.target.value)}
@@ -297,7 +300,7 @@ export function MatchCard({
               inputMode="numeric"
               autoComplete="off"
               name={`score-away-${match.id}`}
-              placeholder="0"
+              placeholder={scorePlaceholder}
               value={awayStr}
               readOnly={predictionLocked}
               onChange={(e) => onAwayChange(e.target.value)}

@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import { apiError } from "@/lib/api-errors";
 import { assertCanViewProde } from "@/lib/prode-access";
 import { getPrisma } from "@/lib/prisma";
+import { recalculateProdeLeaderboard } from "@/lib/ranking-compute";
 import { findProdeByIdOrSlug } from "@/lib/prode-resolve";
 
 export const dynamic = "force-dynamic";
@@ -58,6 +59,8 @@ export async function POST(
       status: "JOINED",
     },
   });
+
+  await recalculateProdeLeaderboard(prode.id);
 
   return NextResponse.json({ ok: true });
 }

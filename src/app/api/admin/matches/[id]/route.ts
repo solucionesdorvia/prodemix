@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import { apiError } from "@/lib/api-errors";
 import { getPrisma } from "@/lib/prisma";
+import { recalculateProdeLeaderboard } from "@/lib/ranking-compute";
 import { requireAdminApi } from "@/lib/require-admin";
 import { adminMatchPatchSchema } from "@/lib/validation/admin-api";
 import { parseJsonBody } from "@/lib/validation/parse-json";
@@ -36,6 +37,16 @@ export async function PATCH(
       ...(data.awayScore !== undefined ? { awayScore: data.awayScore } : {}),
     },
   });
+
+  if (data.homeScore !== undefined || data.awayScore !== undefined) {
+    const links = await prisma.prodeMatch.findMany({
+      where: { matchId: id },
+      select: { prodeId: true },
+    });
+    for (const { prodeId } of links) {
+      await recalculateProdeLeaderboard(prodeId);
+    }
+  }
 
   return NextResponse.json({ match: m });
 }

@@ -8,6 +8,7 @@ import { rateLimit } from "@/lib/rate-limit";
 import { rateLimitResponse } from "@/lib/rate-limit-response";
 import { assertCanViewProde, canSubmitPredictions } from "@/lib/prode-access";
 import { getPrisma } from "@/lib/prisma";
+import { recalculateProdeLeaderboard } from "@/lib/ranking-compute";
 import { findProdeByIdOrSlug } from "@/lib/prode-resolve";
 import { parseJsonBody } from "@/lib/validation/parse-json";
 import {
@@ -176,6 +177,8 @@ export async function POST(
     prodeId: prode.id,
     matchCount: parsed.predictions.length,
   });
+
+  await recalculateProdeLeaderboard(prode.id);
 
   return NextResponse.json({ ok: true, saved: parsed.predictions.length });
 }
