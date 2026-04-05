@@ -487,8 +487,11 @@ export function ProdesDetailServerView({ prodeId }: Props) {
             <SectionHeader
               title="Ranking"
               action={
-                <Link href="/ranking" className="font-semibold hover:underline">
-                  Global
+                <Link
+                  href={`/ranking?prodeId=${encodeURIComponent(prode.slug || prode.id)}`}
+                  className="font-semibold hover:underline"
+                >
+                  Tabla completa
                 </Link>
               }
             />

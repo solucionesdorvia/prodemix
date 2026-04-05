@@ -1,6 +1,8 @@
 "use client";
 
 import { Trophy } from "lucide-react";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
 import type { RankingEntry, RankingScope } from "@/domain";
@@ -21,8 +23,8 @@ import { persistScopeRanks } from "@/state/ranking-snapshot";
 import { buildRankingEntries } from "@/state/selectors";
 import { useAppState } from "@/state/app-state";
 
-const DEFAULT_RANKING_TAB: RankingScope =
-  PRIMERA_PUBLIC_POOLS.some((p) => p.status !== "settled") ? "fecha" : "global";
+/** Por defecto ranking global real (API); la pestaña Fecha usa datos demo con bots. */
+const DEFAULT_RANKING_TAB: RankingScope = "global";
 
 const TABS: { id: RankingScope; label: string }[] = [
   { id: "fecha", label: "Fecha" },
@@ -98,6 +100,9 @@ function Top10Row({
 }
 
 export function RankingScreen() {
+  const searchParams = useSearchParams();
+  const prodeIdParam = searchParams.get("prodeId");
+
   const { user, state } = useAppState();
   const catRev = useCatalogueRevision();
   const [tab, setTab] = useState<RankingScope>(DEFAULT_RANKING_TAB);
@@ -116,6 +121,11 @@ export function RankingScreen() {
   >("idle");
   /** Hasta que el primer partido del calendario compartido esté finalizado, no hay ranking. */
   const [rankingLocked, setRankingLocked] = useState<boolean | null>(null);
+
+  const [prodeRows, setProdeRows] = useState<RankingEntry[] | null>(null);
+  const [prodeFetchState, setProdeFetchState] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
 
   const poolOptions = useMemo(
     () => PRIMERA_PUBLIC_POOLS.filter((p) => p.status !== "settled"),
@@ -139,6 +149,10 @@ export function RankingScreen() {
   }, [tab, catalogue, tournamentId]);
 
   const rows = useMemo(() => {
+    if (prodeIdParam) {
+      if (prodeRows === null) return [];
+      return prodeRows;
+    }
     void catRev;
     if (rankingLocked) return [];
     if (tab === "global") {
@@ -167,6 +181,8 @@ export function RankingScreen() {
     }
     return buildRankingEntries(tab, user.id, user.displayName, state);
   }, [
+    prodeIdParam,
+    prodeRows,
     tab,
     globalApiRows,
     resolvedTournamentId,
@@ -179,6 +195,46 @@ export function RankingScreen() {
   ]);
 
   useEffect(() => {
+    if (!prodeIdParam) {
+      setProdeRows(null);
+      setProdeFetchState("idle");
+      return;
+    }
+    let cancelled = false;
+    setProdeFetchState("loading");
+    setProdeRows(null);
+    fetch(
+      `/api/ranking?prodeId=${encodeURIComponent(prodeIdParam)}`,
+      { credentials: "include" },
+    )
+      .then(async (res) => {
+        const data = (await res.json()) as {
+          ranking?: ApiRankingUserRow[];
+          error?: { message?: string };
+        };
+        if (!res.ok) {
+          throw new Error(data.error?.message ?? "Error al cargar el ranking.");
+        }
+        return data;
+      })
+      .then((data) => {
+        if (cancelled) return;
+        setProdeRows(mapGlobalApiToEntries(data.ranking ?? []));
+        setProdeFetchState("success");
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setProdeRows([]);
+          setProdeFetchState("error");
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [prodeIdParam]);
+
+  useEffect(() => {
+    if (prodeIdParam) return;
     let cancelled = false;
     setGlobalFetchState("loading");
     setGlobalApiRows(null);
@@ -217,9 +273,10 @@ export function RankingScreen() {
     return () => {
       cancelled = true;
     };
-  }, [user.id]);
+  }, [user.id, prodeIdParam]);
 
   const scopeKey = useMemo(() => {
+    if (prodeIdParam) return `prode-api:${prodeIdParam}`;
     if (tab === "tournament" && resolvedTournamentId) {
       return `tournament:${resolvedTournamentId}`;
     }
@@ -227,11 +284,15 @@ export function RankingScreen() {
       return `pool:${resolvedPoolId}`;
     }
     return tab;
-  }, [tab, resolvedTournamentId, resolvedPoolId]);
+  }, [prodeIdParam, tab, resolvedTournamentId, resolvedPoolId]);
 
-  const listRows = useMemo(() => rows.slice(0, 10), [rows]);
+  const listRows = useMemo(() => {
+    if (prodeIdParam) return rows;
+    return rows.slice(0, 10);
+  }, [prodeIdParam, rows]);
 
   const rankingHeading = useMemo(() => {
+    if (prodeIdParam) return "Clasificación del prode";
     if (tab === "fecha") {
       if (resolvedPoolId) {
         const p = poolOptions.find((x) => x.id === resolvedPoolId);
@@ -253,6 +314,7 @@ export function RankingScreen() {
     }
     return "Clasificación";
   }, [
+    prodeIdParam,
     tab,
     resolvedPoolId,
     resolvedTournamentId,
@@ -271,10 +333,16 @@ export function RankingScreen() {
   );
 
   useEffect(() => {
+    if (prodeIdParam) return;
     if (rankingLocked) return;
     if (rows.length === 0) return;
     persistScopeRanks(scopeKey, rows);
-  }, [scopeKey, rows, rankingLocked]);
+  }, [prodeIdParam, scopeKey, rows, rankingLocked]);
+
+  const prodeViewLoading =
+    Boolean(prodeIdParam) &&
+    (prodeFetchState === "loading" ||
+      (prodeFetchState === "idle" && prodeRows === null));
 
   return (
     <div className="pb-2">
@@ -282,38 +350,50 @@ export function RankingScreen() {
         <p className={pageEyebrow}>ProdeMix</p>
         <h1 className={cn(pageTitle, "mt-0.5")}>Ranking</h1>
         <p className="mt-1.5 text-[12px] leading-relaxed text-app-muted">
-          Tabla por alcance. Puntuación: pleno 3 pts, acierto de signo 1 pt.
+          {prodeIdParam ?
+            "Participantes con cuenta en este prode (datos del servidor)."
+          : "Tabla por alcance. Puntuación: pleno 3 pts, acierto de signo 1 pt."}
         </p>
+        {prodeIdParam ?
+          <Link
+            href={`/prodes/${encodeURIComponent(prodeIdParam)}`}
+            className="mt-2 inline-flex text-[12px] font-semibold text-app-primary hover:underline"
+          >
+            ← Volver al prode
+          </Link>
+        : null}
       </header>
 
-      <div
-        className="mt-4 grid grid-cols-2 gap-1 rounded-lg border border-app-border bg-app-bg/50 p-1"
-        role="tablist"
-        aria-label="Alcance del ranking"
-      >
-        {TABS.map((t) => {
-          const active = tab === t.id;
-          return (
-            <button
-              key={t.id}
-              type="button"
-              role="tab"
-              aria-selected={active}
-              onClick={() => setTab(t.id)}
-              className={cn(
-                "rounded-md px-2 py-2 text-center text-[12px] font-semibold transition",
-                active
-                  ? "bg-app-surface text-app-text shadow-sm ring-1 ring-app-border"
-                  : "text-app-muted hover:text-app-text",
-              )}
-            >
-              {t.label}
-            </button>
-          );
-        })}
-      </div>
+      {!prodeIdParam ?
+        <div
+          className="mt-4 grid grid-cols-2 gap-1 rounded-lg border border-app-border bg-app-bg/50 p-1"
+          role="tablist"
+          aria-label="Alcance del ranking"
+        >
+          {TABS.map((t) => {
+            const active = tab === t.id;
+            return (
+              <button
+                key={t.id}
+                type="button"
+                role="tab"
+                aria-selected={active}
+                onClick={() => setTab(t.id)}
+                className={cn(
+                  "rounded-md px-2 py-2 text-center text-[12px] font-semibold transition",
+                  active
+                    ? "bg-app-surface text-app-text shadow-sm ring-1 ring-app-border"
+                    : "text-app-muted hover:text-app-text",
+                )}
+              >
+                {t.label}
+              </button>
+            );
+          })}
+        </div>
+      : null}
 
-      {tab === "fecha" && poolOptions.length > 0 && resolvedPoolId ? (
+      {!prodeIdParam && tab === "fecha" && poolOptions.length > 0 && resolvedPoolId ? (
         <label className="mt-2 block">
           <span className="text-[10px] font-medium uppercase tracking-wide text-app-muted">
             Fecha
@@ -334,7 +414,7 @@ export function RankingScreen() {
         </label>
       ) : null}
 
-      {tab === "tournament" && catalogue.length > 0 && resolvedTournamentId ? (
+      {!prodeIdParam && tab === "tournament" && catalogue.length > 0 && resolvedTournamentId ? (
         <label className="mt-2 block">
           <span className="text-[10px] font-medium uppercase tracking-wide text-app-muted">
             Competición
@@ -353,7 +433,72 @@ export function RankingScreen() {
         </label>
       ) : null}
 
-      {rankingLocked === null ?
+      {prodeIdParam ?
+        prodeViewLoading ?
+          <p className="mt-3 text-[13px] text-app-muted">
+            Cargando ranking del prode…
+          </p>
+        : prodeFetchState === "error" ?
+          <p className="mt-3 text-[13px] text-red-700">
+            No se pudo cargar el ranking de este prode. Reintentá más tarde.
+          </p>
+        : rows.length === 0 ?
+          <EmptyState
+            className="mt-3"
+            variant="soft"
+            layout="horizontal"
+            icon={Trophy}
+            title="Todavía no hay tabla"
+            description="Cuando haya participantes en el prode y el ranking se haya calculado, van a aparecer acá."
+          >
+            <EmptyStateButtonLink
+              href={`/prodes/${encodeURIComponent(prodeIdParam)}`}
+            >
+              Ir al prode
+            </EmptyStateButtonLink>
+          </EmptyState>
+        : (
+          <>
+            {listRows.length > 0 ?
+              <section className="mt-3">
+                <h2 className="text-[13px] font-semibold leading-snug tracking-tight text-app-text">
+                  {rankingHeading}
+                </h2>
+                <p className="mt-0.5 text-[10px] leading-snug text-app-muted">
+                  {rows.length}{" "}
+                  {rows.length === 1 ? "jugador" : "jugadores"} en el ranking
+                </p>
+                <ul className="mt-2 overflow-hidden rounded-lg border border-app-border bg-app-surface">
+                  {listRows.map((r) => (
+                    <Top10Row
+                      key={`${scopeKey}-${r.playerId}`}
+                      row={r}
+                      selfPlayerId={user.id}
+                    />
+                  ))}
+                </ul>
+                {userRow && !userInList ?
+                  <p className="mt-2 rounded-lg border border-dashed border-app-border bg-app-bg/80 px-2.5 py-2 text-[11px] text-app-muted">
+                    <span className="text-app-text">Tu posición:</span>{" "}
+                    <span className="font-semibold tabular-nums text-app-text">
+                      {userRow.rank}
+                    </span>
+                    <span className="text-app-border"> · </span>
+                    <span className="tabular-nums">{userRow.points} pts</span>
+                    <span className="block pt-0.5 text-[10px]">
+                      {userRow.exactScores} plenos
+                    </span>
+                  </p>
+                : null}
+              </section>
+            : null}
+            <p className="mt-3 text-[10px] leading-snug text-app-muted">
+              Mismos puntos y desempates que en la pantalla del prode. Nombres y
+              usuarios reales de quienes participan con cuenta.
+            </p>
+          </>
+        )
+      : rankingLocked === null ?
         <p className="mt-3 text-[13px] text-app-muted">
           Cargando clasificación…
         </p>
@@ -432,9 +577,10 @@ export function RankingScreen() {
               </>
             : (
               <>
-                En <span className="font-medium text-app-text">Fecha</span>{" "}
-                entran solo partidos de esa fecha con resultado. Desempate: más
-                plenos, más aciertos de signo, pronóstico guardado antes.
+                La pestaña <span className="font-medium text-app-text">Fecha</span>{" "}
+                usa una simulación local con jugadores de ejemplo. Para ranking
+                real, usá <span className="font-medium text-app-text">Global</span>{" "}
+                o abrí el ranking desde un prode.
               </>
             )}
           </p>

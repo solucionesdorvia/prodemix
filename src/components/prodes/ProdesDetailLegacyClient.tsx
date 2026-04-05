@@ -328,14 +328,17 @@ export function ProdesDetailLegacyClient({ prodeId }: Props) {
 
         <div className="flex items-end justify-between gap-2">
           <div>
-            <SectionHeader
-              title="Ranking"
-              action={
-                <Link href="/ranking" className="font-semibold hover:underline">
-                  Global
-                </Link>
-              }
-            />
+              <SectionHeader
+                title="Ranking"
+                action={
+                  <Link
+                    href={`/ranking?prodeId=${encodeURIComponent(prode.id)}`}
+                    className="font-semibold hover:underline"
+                  >
+                    Tabla completa
+                  </Link>
+                }
+              />
             <p className="-mt-0.5 text-[10px] font-semibold uppercase tracking-wide text-app-muted">
               Top 10
             </p>
