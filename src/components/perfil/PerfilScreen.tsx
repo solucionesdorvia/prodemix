@@ -323,7 +323,7 @@ export function PerfilScreen() {
       </section>
 
       {hydrated && loggedIn ?
-        <MisProdesServerSection className="mt-3" showViewAllLink />
+        <MisProdesServerSection className="mt-3" showViewAllLink compactHint />
       : (
         <MisProdesSection
           className="mt-3"

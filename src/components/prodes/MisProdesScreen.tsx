@@ -34,6 +34,16 @@ export function MisProdesScreen() {
       <header className={pageHeader}>
         <p className={pageEyebrow}>Cuenta</p>
         <h1 className={pageTitle}>Mis prodes</h1>
+        <p className="mt-1.5 text-[12px] leading-relaxed text-app-muted">
+          Acá están los prodes en los que entraste con tu cuenta:{" "}
+          <span className="font-medium text-app-text">próximos</span> (abiertos
+          al pronóstico),{" "}
+          <span className="font-medium text-app-text">en juego</span> (ya cerró
+          la carga; ranking y goles según la base) y{" "}
+          <span className="font-medium text-app-text">finalizados</span>. En
+          cada fila: tu posición y puntos. Dentro del prode: partidos, marcadores
+          y tabla.
+        </p>
       </header>
 
       {loggedIn ?

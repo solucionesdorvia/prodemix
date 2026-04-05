@@ -287,7 +287,7 @@ export function HomePageClient() {
         <HomeFollowedStrip items={followedTournaments} />
 
         {hydrated && loggedIn ?
-          <MisProdesServerSection showViewAllLink />
+          <MisProdesServerSection showViewAllLink compactHint />
         : (
           <MisProdesSection
             prodes={owned}
