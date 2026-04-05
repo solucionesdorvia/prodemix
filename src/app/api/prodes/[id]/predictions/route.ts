@@ -10,6 +10,7 @@ import { assertCanViewProde, canSubmitPredictions } from "@/lib/prode-access";
 import { getPrisma } from "@/lib/prisma";
 import { recalculateProdeLeaderboard } from "@/lib/ranking-compute";
 import { findProdeByIdOrSlug } from "@/lib/prode-resolve";
+import { pointsForPrediction } from "@/lib/scoring";
 import { parseJsonBody } from "@/lib/validation/parse-json";
 import {
   predictionsPostBodySchema,
@@ -19,9 +20,13 @@ import { zodToApiError } from "@/lib/validation/zod-to-api";
 
 export const dynamic = "force-dynamic";
 
-/** Current user’s saved predictions for this prode (read-only mirror for clients). */
+/**
+ * GET sin query: pronósticos del usuario actual (todos los partidos) — edición en cliente.
+ * GET `?forUser=<userId>`: pronósticos de ese usuario **solo en partidos ya jugados**
+ * (marcador oficial cargado), para comparar en el ranking. Requiere sesión y ver el prode.
+ */
 export async function GET(
-  _req: Request,
+  req: Request,
   context: { params: Promise<{ id: string }> },
 ) {
   const { id: rawId } = await context.params;
@@ -46,23 +51,82 @@ export async function GET(
   const access = await assertCanViewProde(userId, prode);
   if (!access.ok) return access.response;
 
+  const url = new URL(req.url);
+  const forUserId = url.searchParams.get("forUser")?.trim();
+
+  if (!forUserId) {
+    const rows = await prisma.prediction.findMany({
+      where: { userId, prodeId: prode.id },
+      select: {
+        matchId: true,
+        predictedHomeScore: true,
+        predictedAwayScore: true,
+        savedAt: true,
+      },
+    });
+
+    return NextResponse.json({
+      predictions: rows.map((r) => ({
+        matchId: r.matchId,
+        home: r.predictedHomeScore,
+        away: r.predictedAwayScore,
+        savedAt: r.savedAt.toISOString(),
+      })),
+    });
+  }
+
+  if (forUserId.length > 128) {
+    return apiError(422, "INVALID_DATA", "Invalid forUser.");
+  }
+
   const rows = await prisma.prediction.findMany({
-    where: { userId, prodeId: prode.id },
-    select: {
-      matchId: true,
-      predictedHomeScore: true,
-      predictedAwayScore: true,
-      savedAt: true,
+    where: {
+      userId: forUserId,
+      prodeId: prode.id,
+      match: {
+        homeScore: { not: null },
+        awayScore: { not: null },
+      },
     },
+    include: {
+      match: {
+        select: {
+          id: true,
+          startsAt: true,
+          homeScore: true,
+          awayScore: true,
+          homeTeam: { select: { name: true } },
+          awayTeam: { select: { name: true } },
+        },
+      },
+    },
+    orderBy: { match: { startsAt: "asc" } },
+  });
+
+  const predictions = rows.map((r) => {
+    const oh = r.match.homeScore!;
+    const oa = r.match.awayScore!;
+    const pts = pointsForPrediction(
+      { home: r.predictedHomeScore, away: r.predictedAwayScore },
+      { home: oh, away: oa },
+    );
+    return {
+      matchId: r.matchId,
+      homeTeamName: r.match.homeTeam.name,
+      awayTeamName: r.match.awayTeam.name,
+      predictedHome: r.predictedHomeScore,
+      predictedAway: r.predictedAwayScore,
+      officialHome: oh,
+      officialAway: oa,
+      pointsEarned: pts,
+      savedAt: r.savedAt.toISOString(),
+    };
   });
 
   return NextResponse.json({
-    predictions: rows.map((r) => ({
-      matchId: r.matchId,
-      home: r.predictedHomeScore,
-      away: r.predictedAwayScore,
-      savedAt: r.savedAt.toISOString(),
-    })),
+    scope: "played" as const,
+    userId: forUserId,
+    predictions,
   });
 }
 

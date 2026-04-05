@@ -17,7 +17,13 @@ import type { Match, ScorePrediction } from "@/domain";
 import { MatchCard } from "@/components/matches/MatchCard";
 import { EmptyState, EmptyStateButtonLink } from "@/components/ui/EmptyState";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { fetchProdeApi, postJoinProde, postProdePredictions } from "@/lib/api/prodes-fetch";
+import {
+  fetchProdeApi,
+  fetchProdePlayedPredictionsForUser,
+  postJoinProde,
+  postProdePredictions,
+  type PlayedPredictionPublic,
+} from "@/lib/api/prodes-fetch";
 import { prodeEntryLabel } from "@/lib/prode-entry-label";
 import { reportClientError } from "@/lib/observability/client-error";
 import { clientCanEditPredictions } from "@/lib/prode-prediction-window";
@@ -63,6 +69,12 @@ type ApiRankingRow = {
   signHits: number;
   user: { id: string; name: string | null; username: string | null };
 };
+
+function prodeRankingDisplayName(row: ApiRankingRow): string {
+  return row.user.username ?
+      `@${row.user.username}`
+    : row.user.name ?? "Usuario";
+}
 
 function toDomainMatch(m: ApiMatchRow, label: string): Match {
   return {
@@ -112,6 +124,16 @@ export function ProdesDetailServerView({ prodeId }: Props) {
   const [shareUrl, setShareUrl] = useState("");
   const [saving, setSaving] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
+  const [pickerUser, setPickerUser] = useState<{
+    id: string;
+    label: string;
+  } | null>(null);
+  const [playedRows, setPlayedRows] = useState<PlayedPredictionPublic[] | null>(
+    null,
+  );
+  const [playedLoading, setPlayedLoading] = useState(false);
+  const [playedError, setPlayedError] = useState<string | null>(null);
+
   const reload = useCallback(async () => {
     setLoadError(null);
     setFeedback(null);
@@ -163,6 +185,36 @@ export function ProdesDetailServerView({ prodeId }: Props) {
       );
     }
   }, [prodeId]);
+
+  useEffect(() => {
+    if (!pickerUser || !prode) {
+      setPlayedRows(null);
+      setPlayedLoading(false);
+      setPlayedError(null);
+      return;
+    }
+    let cancelled = false;
+    setPlayedLoading(true);
+    setPlayedError(null);
+    setPlayedRows(null);
+    void fetchProdePlayedPredictionsForUser(prode.id, pickerUser.id)
+      .then((res) => {
+        if (!cancelled) setPlayedRows(res.predictions);
+      })
+      .catch((e) => {
+        if (!cancelled) {
+          setPlayedError(
+            e instanceof Error ? e.message : "No se pudieron cargar los pronósticos.",
+          );
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setPlayedLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [pickerUser, prode]);
 
   useEffect(() => {
     let cancelled = false;
@@ -499,67 +551,154 @@ export function ProdesDetailServerView({ prodeId }: Props) {
         </details>
 
         <div>
-          <SectionHeader title="Ranking · Primeros 5" />
+          <SectionHeader title="Ranking" />
+          <p className="mt-0.5 text-[10px] leading-snug text-app-muted">
+            Tocá un nombre para ver sus pronósticos en partidos ya jugados.
+          </p>
         </div>
-        {rankingTop5.length > 0 ?
-          <div className="overflow-hidden rounded-[10px] border border-app-border bg-app-surface shadow-[0_1px_0_rgba(15,23,42,0.04)]">
-            <ul className="divide-y divide-app-border-subtle">
-              {rankingTop5.map((row) => {
-                const isSelf = row.user.id === userId;
-                const name =
-                  row.user.username ?
-                    `@${row.user.username}`
-                  : row.user.name ?? "Usuario";
-                return (
-                  <li
-                    key={row.user.id}
-                    className={cn(
-                      "grid grid-cols-[2rem_1fr_auto_auto] items-center gap-1.5 px-2.5 py-2",
-                      isSelf && "bg-blue-50/90 ring-1 ring-inset ring-app-primary/12",
-                    )}
-                  >
-                    <span className="text-center text-[12px] font-bold tabular-nums text-app-muted">
-                      {row.rank ?? "—"}
-                    </span>
-                    <span
+        {ranking.length > 0 ?
+          <div className="space-y-2">
+            <div className="overflow-hidden rounded-[10px] border border-app-border bg-app-surface shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+              <p className="border-b border-app-border-subtle px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-app-muted">
+                Primeros 5
+              </p>
+              <ul className="divide-y divide-app-border-subtle">
+                {rankingTop5.map((row) => {
+                  const isSelf = row.user.id === userId;
+                  const label = prodeRankingDisplayName(row);
+                  return (
+                    <li
+                      key={row.user.id}
                       className={cn(
-                        "min-w-0 truncate text-[12px] font-semibold leading-tight",
-                        isSelf ? "text-app-primary" : "text-app-text",
+                        "grid grid-cols-[2rem_1fr_auto_auto] items-center gap-1.5 px-2.5 py-2",
+                        isSelf &&
+                          "bg-blue-50/90 ring-1 ring-inset ring-app-primary/12",
                       )}
                     >
-                      {name}
-                      {isSelf ?
-                        <span className="ml-1 text-[10px] font-normal text-app-muted">
-                          (vos)
-                        </span>
-                      : null}
+                      <span className="text-center text-[12px] font-bold tabular-nums text-app-muted">
+                        {row.rank ?? "—"}
+                      </span>
+                      <button
+                        type="button"
+                        className={cn(
+                          "min-w-0 truncate text-left text-[12px] font-semibold leading-tight underline decoration-app-primary/35 decoration-1 underline-offset-2 hover:decoration-app-primary",
+                          isSelf ? "text-app-primary" : "text-app-text",
+                        )}
+                        onClick={() =>
+                          setPickerUser({ id: row.user.id, label })
+                        }
+                      >
+                        {label}
+                        {isSelf ?
+                          <span className="ml-1 text-[10px] font-normal text-app-muted no-underline">
+                            (vos)
+                          </span>
+                        : null}
+                      </button>
+                      <span className="shrink-0 text-[10px] font-semibold tabular-nums text-app-muted">
+                        {row.plenos} pl.
+                      </span>
+                      <div className="shrink-0 text-right">
+                        <p className="text-[14px] font-bold tabular-nums leading-none text-app-text">
+                          {row.points}
+                        </p>
+                        <p className="text-[8px] font-medium uppercase text-app-muted">
+                          pts
+                        </p>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+              {userRankingRow && !userInTop5 ?
+                <div className="border-t border-app-border-subtle bg-gradient-to-r from-blue-50/80 to-app-surface px-2.5 py-2.5">
+                  <button
+                    type="button"
+                    className="w-full text-left text-[11px] font-semibold leading-snug text-app-text underline decoration-app-primary/35 decoration-1 underline-offset-2 hover:decoration-app-primary"
+                    onClick={() =>
+                      setPickerUser({
+                        id: userRankingRow.user.id,
+                        label: prodeRankingDisplayName(userRankingRow),
+                      })
+                    }
+                  >
+                    <span className="text-app-muted">Tu posición:</span>{" "}
+                    <span className="tabular-nums text-app-primary">
+                      #{userRankingRow.rank ?? "—"}
                     </span>
-                    <span className="shrink-0 text-[10px] font-semibold tabular-nums text-app-muted">
-                      {row.plenos} pl.
+                    <span className="text-app-border"> — </span>
+                    <span className="tabular-nums">
+                      {userRankingRow.points} pts
                     </span>
-                    <div className="shrink-0 text-right">
-                      <p className="text-[14px] font-bold tabular-nums leading-none text-app-text">
-                        {row.points}
-                      </p>
-                      <p className="text-[8px] font-medium uppercase text-app-muted">
-                        pts
-                      </p>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-            {userRankingRow && !userInTop5 ?
-              <div className="border-t border-app-border-subtle bg-gradient-to-r from-blue-50/80 to-app-surface px-2.5 py-2.5">
-                <p className="text-[11px] font-semibold leading-snug text-app-text">
-                  <span className="text-app-muted">Tu posición:</span>{" "}
-                  <span className="tabular-nums text-app-primary">
-                    #{userRankingRow.rank ?? "—"}
+                    <span className="mt-0.5 block text-[9px] font-normal text-app-muted">
+                      Ver tus pronósticos en jugados
+                    </span>
+                  </button>
+                </div>
+              : null}
+            </div>
+
+            {ranking.length > 5 ?
+              <details className="group rounded-[10px] border border-app-border-subtle bg-app-bg/70">
+                <summary className="flex cursor-pointer list-none items-center gap-2 px-2.5 py-2 text-left [&::-webkit-details-marker]:hidden">
+                  <ChevronRight
+                    className="h-3.5 w-3.5 shrink-0 text-app-muted transition-transform duration-200 group-open:rotate-90"
+                    strokeWidth={2}
+                    aria-hidden
+                  />
+                  <span className="text-[11px] font-semibold leading-tight text-app-text">
+                    Ver tabla completa ({ranking.length})
                   </span>
-                  <span className="text-app-border"> — </span>
-                  <span className="tabular-nums">{userRankingRow.points} pts</span>
-                </p>
-              </div>
+                </summary>
+                <ul className="max-h-[min(60vh,28rem)] divide-y divide-app-border-subtle overflow-y-auto border-t border-app-border-subtle">
+                  {ranking.map((row) => {
+                    const isSelf = row.user.id === userId;
+                    const label = prodeRankingDisplayName(row);
+                    return (
+                      <li
+                        key={row.user.id}
+                        className={cn(
+                          "grid grid-cols-[2rem_1fr_auto_auto] items-center gap-1.5 px-2.5 py-2",
+                          isSelf &&
+                            "bg-blue-50/90 ring-1 ring-inset ring-app-primary/12",
+                        )}
+                      >
+                        <span className="text-center text-[12px] font-bold tabular-nums text-app-muted">
+                          {row.rank ?? "—"}
+                        </span>
+                        <button
+                          type="button"
+                          className={cn(
+                            "min-w-0 truncate text-left text-[12px] font-semibold leading-tight underline decoration-app-primary/35 decoration-1 underline-offset-2 hover:decoration-app-primary",
+                            isSelf ? "text-app-primary" : "text-app-text",
+                          )}
+                          onClick={() =>
+                            setPickerUser({ id: row.user.id, label })
+                          }
+                        >
+                          {label}
+                          {isSelf ?
+                            <span className="ml-1 text-[10px] font-normal text-app-muted no-underline">
+                              (vos)
+                            </span>
+                          : null}
+                        </button>
+                        <span className="shrink-0 text-[10px] font-semibold tabular-nums text-app-muted">
+                          {row.plenos} pl.
+                        </span>
+                        <div className="shrink-0 text-right">
+                          <p className="text-[14px] font-bold tabular-nums leading-none text-app-text">
+                            {row.points}
+                          </p>
+                          <p className="text-[8px] font-medium uppercase text-app-muted">
+                            pts
+                          </p>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </details>
             : null}
           </div>
         : (
@@ -571,6 +710,89 @@ export function ProdesDetailServerView({ prodeId }: Props) {
             description="Cuando haya participantes y puntos calculados, o después de cargar resultados y recalcular, verás el ranking acá."
           />
         )}
+
+        {pickerUser ?
+          <div
+            className="fixed inset-0 z-[120] flex items-end justify-center bg-black/45 p-3 sm:items-center"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="prode-pred-picker-title"
+            onClick={() => setPickerUser(null)}
+            onKeyDown={(e) => {
+              if (e.key === "Escape") setPickerUser(null);
+            }}
+          >
+            <div
+              className="max-h-[85vh] w-full max-w-md overflow-hidden rounded-xl border border-app-border bg-app-surface shadow-xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex items-start justify-between gap-2 border-b border-app-border-subtle px-3 py-2.5">
+                <div className="min-w-0">
+                  <h2
+                    id="prode-pred-picker-title"
+                    className="text-[14px] font-bold leading-tight text-app-text"
+                  >
+                    Pronósticos jugados
+                  </h2>
+                  <p className="mt-0.5 truncate text-[12px] font-semibold text-app-primary">
+                    {pickerUser.label}
+                  </p>
+                  <p className="mt-1 text-[10px] leading-snug text-app-muted">
+                    Solo partidos con resultado oficial cargado.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className="shrink-0 rounded-md px-2 py-1 text-[11px] font-semibold text-app-muted hover:bg-app-bg hover:text-app-text"
+                  onClick={() => setPickerUser(null)}
+                >
+                  Cerrar
+                </button>
+              </div>
+              <div className="max-h-[min(65vh,24rem)] overflow-y-auto px-3 py-2">
+                {playedLoading ?
+                  <p className="py-6 text-center text-[12px] text-app-muted">
+                    Cargando…
+                  </p>
+                : playedError ?
+                  <p className="py-4 text-[12px] text-red-700">{playedError}</p>
+                : playedRows && playedRows.length === 0 ?
+                  <p className="py-6 text-center text-[12px] text-app-muted">
+                    Todavía no hay partidos jugados con pronóstico para mostrar.
+                  </p>
+                : (
+                  <ul className="space-y-2.5 pb-2">
+                    {playedRows?.map((p) => (
+                      <li
+                        key={p.matchId}
+                        className="rounded-lg border border-app-border-subtle bg-app-bg/60 px-2.5 py-2"
+                      >
+                        <p className="text-[11px] font-semibold leading-snug text-app-text">
+                          {p.homeTeamName}{" "}
+                          <span className="font-normal text-app-muted">vs</span>{" "}
+                          {p.awayTeamName}
+                        </p>
+                        <div className="mt-1.5 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-[11px]">
+                          <span className="text-app-muted">Pronóstico:</span>
+                          <span className="font-bold tabular-nums text-app-text">
+                            {p.predictedHome} – {p.predictedAway}
+                          </span>
+                          <span className="text-app-muted">Resultado:</span>
+                          <span className="font-bold tabular-nums text-app-sport">
+                            {p.officialHome} – {p.officialAway}
+                          </span>
+                          <span className="rounded bg-app-surface px-1.5 py-0.5 text-[10px] font-bold tabular-nums text-app-text ring-1 ring-app-border">
+                            +{p.pointsEarned} pts
+                          </span>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+          </div>
+        : null}
       </section>
 
       <section className="mt-3 space-y-1.5">

@@ -70,3 +70,29 @@ export async function fetchProdePredictions(
     `/api/prodes/${encodeURIComponent(prodeId)}/predictions`,
   );
 }
+
+export type PlayedPredictionPublic = {
+  matchId: string;
+  homeTeamName: string;
+  awayTeamName: string;
+  predictedHome: number;
+  predictedAway: number;
+  officialHome: number;
+  officialAway: number;
+  pointsEarned: 0 | 1 | 3;
+  savedAt: string;
+};
+
+/** Pronósticos de un usuario en partidos ya jugados (ranking / comparar). */
+export async function fetchProdePlayedPredictionsForUser(
+  prodeId: string,
+  forUserId: string,
+): Promise<{ scope: "played"; userId: string; predictions: PlayedPredictionPublic[] }> {
+  return fetchProdeApi<{
+    scope: "played";
+    userId: string;
+    predictions: PlayedPredictionPublic[];
+  }>(
+    `/api/prodes/${encodeURIComponent(prodeId)}/predictions?forUser=${encodeURIComponent(forUserId)}`,
+  );
+}

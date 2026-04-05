@@ -17,6 +17,19 @@ function toIso(s: string): string {
   return Number.isNaN(d.getTime()) ? new Date().toISOString() : d.toISOString();
 }
 
+type AdminRankRow = {
+  rank: number | null;
+  points: number;
+  plenos: number;
+  signHits: number;
+  user: {
+    id: string;
+    email: string | null;
+    username: string | null;
+    name: string | null;
+  };
+};
+
 type ProdePayload = {
   id: string;
   slug: string;
@@ -91,6 +104,7 @@ export function AdminProdeDetailClient({ prodeId }: { prodeId: string }) {
     }[]
   >([]);
   const [predictionTotal, setPredictionTotal] = useState(0);
+  const [rankingRows, setRankingRows] = useState<AdminRankRow[]>([]);
   const [msg, setMsg] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -99,7 +113,7 @@ export function AdminProdeDetailClient({ prodeId }: { prodeId: string }) {
     setMsg(null);
     setErr(null);
     try {
-      const [detail, tlist, m, part, preds] = await Promise.all([
+      const [detail, tlist, m, part, preds, rankRes] = await Promise.all([
         adminFetch<{ prode: ProdePayload; tournaments: { id: string; name: string }[] }>(
           `/api/admin/prodes/${encodeURIComponent(prodeId)}`,
         ),
@@ -157,6 +171,9 @@ export function AdminProdeDetailClient({ prodeId }: { prodeId: string }) {
             }[];
           }[];
         }>(`/api/admin/prodes/${encodeURIComponent(prodeId)}/predictions`),
+        adminFetch<{
+          ranking: AdminRankRow[];
+        }>(`/api/admin/rankings?prodeId=${encodeURIComponent(prodeId)}`),
       ]);
       setProde(detail.prode);
       setLinkedTournaments(detail.tournaments);
@@ -165,6 +182,7 @@ export function AdminProdeDetailClient({ prodeId }: { prodeId: string }) {
       setParticipants(part.participants);
       setPredictionsByMatch(preds.byMatch);
       setPredictionTotal(preds.totalPredictions);
+      setRankingRows(rankRes.ranking);
     } catch (e) {
       setErr(e instanceof Error ? e.message : "Error");
     }
@@ -489,6 +507,76 @@ export function AdminProdeDetailClient({ prodeId }: { prodeId: string }) {
             </button>
           </div>
         </form>
+      </section>
+
+      <section className="rounded border border-neutral-200 bg-white p-3">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h2 className="text-[13px] font-bold">Ranking actual</h2>
+          <button
+            type="button"
+            disabled={busy}
+            className="rounded border border-neutral-300 bg-neutral-50 px-2 py-1 text-[11px] font-semibold disabled:opacity-50"
+            onClick={() => {
+              void (async () => {
+                setBusy(true);
+                setMsg(null);
+                setErr(null);
+                try {
+                  await adminFetch("/api/admin/recalculate", {
+                    method: "POST",
+                    body: JSON.stringify({ prodeId }),
+                  });
+                  await load();
+                  setMsg("Ranking recalculado.");
+                } catch (e) {
+                  setErr(e instanceof Error ? e.message : "Error");
+                } finally {
+                  setBusy(false);
+                }
+              })();
+            }}
+          >
+            Recalcular
+          </button>
+        </div>
+        <p className="mt-1 text-[11px] text-neutral-600">
+          Tabla materializada (mismos datos que la vista jugador). Tras cargar
+          resultados, usá recalcular si hace falta.
+        </p>
+        {rankingRows.length === 0 ?
+          <p className="mt-2 text-[12px] text-neutral-500">
+            Sin filas todavía (sin participantes con puntos o sin recálculo).
+          </p>
+        : (
+          <div className="mt-2 overflow-x-auto">
+            <table className="w-full border-collapse text-left text-[11px]">
+              <thead>
+                <tr className="border-b border-neutral-200">
+                  <th className="p-1">#</th>
+                  <th className="p-1">Usuario</th>
+                  <th className="p-1">Pts</th>
+                  <th className="p-1">Plenos</th>
+                  <th className="p-1">Signo</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rankingRows.map((r, i) => (
+                  <tr key={r.user.id} className="border-b border-neutral-100">
+                    <td className="p-1 tabular-nums">{r.rank ?? i + 1}</td>
+                    <td className="p-1">
+                      {r.user.username ?
+                        `@${r.user.username}`
+                      : r.user.name || r.user.email || "—"}
+                    </td>
+                    <td className="p-1 tabular-nums">{r.points}</td>
+                    <td className="p-1 tabular-nums">{r.plenos}</td>
+                    <td className="p-1 tabular-nums">{r.signHits}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </section>
 
       <section className="rounded border border-neutral-200 bg-white p-3">
