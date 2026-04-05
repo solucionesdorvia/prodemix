@@ -6,7 +6,7 @@
     "postinstall": "prisma generate",
     "dev": "next dev",
     "build": "prisma generate && next build",
-    "start": "npm run db:migrate:deploy:neon && npm run db:seed:if-empty && next start",
+    "start": "node scripts/migrate-prod.cjs && npm run db:seed:if-empty && next start",
     "start:next-only": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
@@ -19,6 +19,7 @@
     "db:migrate:dev": "prisma migrate dev",
     "db:migrate:deploy": "prisma migrate deploy",
     "db:migrate:deploy:neon": "env PRISMA_SCHEMA_DISABLE_ADVISORY_LOCK=1 prisma migrate deploy",
+    "db:migrate:prod": "node scripts/migrate-prod.cjs",
     "db:seed": "prisma db seed",
     "db:seed:if-empty": "tsx scripts/seed-if-empty.ts",
     "test:api:prodes": "bash scripts/test-prodes-api.sh"

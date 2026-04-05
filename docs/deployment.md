@@ -88,20 +88,14 @@ The Prisma client is emitted to `src/generated/prisma` and is **gitignored**, so
 
 This repo runs generation in **`postinstall`** and again in **`build`** (`prisma generate && next build`). **`prisma`** and **`dotenv`** (used by `prisma.config.ts`) are **dependencies** so `postinstall` works even when install omits dev-only tooling.
 
-**Producción en Railway:** **`railway.toml`** fija **`numReplicas = 1`** (evita varios `migrate` a la vez). **`npm start`** ejecuta **`db:migrate:deploy:neon`**, luego **`db:seed:if-empty`** (solo si no hay torneos/partidos en la base — primer deploy o DB nueva) y **`next start`**. No usamos **preDeploy** en Railway porque suele fallar con otro entorno que el runtime. Si escalás a más réplicas, corré migraciones en CI o un job aparte.
+**Producción en Railway:** **`railway.toml`** fija **`numReplicas = 1`** (evita varios `migrate` a la vez). **`npm start`** ejecuta **`scripts/migrate-prod.cjs`** (migrate + recuperación de referidos fallidos), luego **`db:seed:if-empty`** (solo si no hay torneos/partidos en la base — primer deploy o DB nueva) y **`next start`**. No usamos **preDeploy** en Railway porque suele fallar con otro entorno que el runtime. Si escalás a más réplicas, corré migraciones en CI o un job aparte.
 
 ### Migraciones: deploy en loop o P3009 / P3018
 
 - **`npm start` falla antes de `next start`** porque `prisma migrate deploy` sale con error → el contenedor reinfinita y “nunca deployea”.
 - **No despliegues un commit viejo** (p. ej. sin carpetas en `prisma/migrations/`) contra una base **Neon** donde ya se aplicaron migraciones nuevas: Prisma detecta historial distinto y falla.
-- **Recuperación típica** (Neon con migración `referrals` fallida): en tu máquina, con `DATABASE_URL` (o `DIRECT_URL`) apuntando a **esa** base:
-
-```bash
-npx prisma migrate resolve --rolled-back 20260330140000_referrals
-npm run db:migrate:deploy:neon
-```
-
-Luego redeploy del **último `main`** (con el `migration.sql` idempotente de referidos).
+- **Recuperación automática:** `scripts/migrate-prod.cjs` (invocado por `npm start`) intenta `migrate resolve --rolled-back` para `20260330140000_referrals` y luego `migrate deploy`. No hace falta correr comandos a mano salvo que falle otro error de migración.
+- **Recuperación manual** (si aún falla): con `DATABASE_URL` apuntando a Neon: `npx prisma migrate resolve --rolled-back 20260330140000_referrals` y `npm run db:migrate:deploy:neon`.
 
 - **Emergencia** (solo para levantar el sitio mientras arreglás la DB): en Railway cambiá el comando de inicio a **`npm run start:next-only`** (solo `next start`, **sin** migrar). Volvé a **`npm start`** cuando `migrate deploy` ya pase en local contra Neon.
 
@@ -128,7 +122,8 @@ npm run db:seed
 
 | Script | Command | Use |
 |--------|---------|-----|
-| `start` | `db:migrate:deploy:neon && db:seed:if-empty && next start` | Producción: migrate + seed si catálogo vacío + Next |
+| `start` | `node scripts/migrate-prod.cjs && db:seed:if-empty && next start` | Producción: migrate (con recuperación P3009 referidos) + seed + Next |
+| `db:migrate:prod` | `node scripts/migrate-prod.cjs` | Solo migraciones (mismo paso que al inicio de `start`) |
 | `start:next-only` | `next start` | Emergencia: sin migrar (usar solo hasta corregir DB; volver a `start`) |
 | `db:seed:if-empty` | `tsx scripts/seed-if-empty.ts` | Solo si `Tournament`/`Match` vacíos; usado por `start` |
 | `db:migrate:dev` | `prisma migrate dev` | Local: create/apply migrations interactively |
