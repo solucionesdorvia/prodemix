@@ -195,10 +195,14 @@ export function ProdesDetailServerView({ prodeId }: Props) {
   }, [prodeId]);
 
   useEffect(() => {
-    const id = window.setInterval(() => setKickoffClock((c) => c + 1), 20_000);
+    const id = window.setInterval(() => setKickoffClock((c) => c + 1), 30_000);
     return () => window.clearInterval(id);
   }, []);
-  void kickoffClock;
+
+  useEffect(() => {
+    if (kickoffClock === 0) return;
+    void reload();
+  }, [kickoffClock, reload]);
 
   const globalOpen = prode ?
     clientCanEditPredictions({
@@ -482,23 +486,8 @@ export function ProdesDetailServerView({ prodeId }: Props) {
           </div>
         </details>
 
-        <div className="flex items-end justify-between gap-2">
-          <div>
-            <SectionHeader
-              title="Ranking"
-              action={
-                <Link
-                  href={`/ranking?prodeId=${encodeURIComponent(prode.slug || prode.id)}`}
-                  className="font-semibold hover:underline"
-                >
-                  Tabla completa
-                </Link>
-              }
-            />
-            <p className="-mt-0.5 text-[10px] font-semibold uppercase tracking-wide text-app-muted">
-              Primeros 5
-            </p>
-          </div>
+        <div>
+          <SectionHeader title="Ranking · Primeros 5" />
         </div>
         {rankingTop5.length > 0 ?
           <div className="overflow-hidden rounded-[10px] border border-app-border bg-app-surface shadow-[0_1px_0_rgba(15,23,42,0.04)]">

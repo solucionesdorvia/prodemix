@@ -44,6 +44,9 @@ export async function queryProdeRanking(
     return { ok: false, response: access.response };
   }
 
+  /** Siempre al día con marcadores y pronósticos actuales (fixture en marcha). */
+  await recalculateProdeLeaderboard(prode.id);
+
   const leaderboardQuery = {
     where: { prodeId: prode.id },
     orderBy: [
@@ -64,17 +67,7 @@ export async function queryProdeRanking(
     },
   };
 
-  let rows = await prisma.prodeLeaderboardEntry.findMany(leaderboardQuery);
-
-  if (rows.length === 0) {
-    const participants = await prisma.prodeEntry.count({
-      where: { prodeId: prode.id, status: "JOINED" },
-    });
-    if (participants > 0) {
-      await recalculateProdeLeaderboard(prode.id);
-      rows = await prisma.prodeLeaderboardEntry.findMany(leaderboardQuery);
-    }
-  }
+  const rows = await prisma.prodeLeaderboardEntry.findMany(leaderboardQuery);
 
   const ranking: RankingApiRow[] = rows.map((r) => ({
     rank: r.rankPosition,

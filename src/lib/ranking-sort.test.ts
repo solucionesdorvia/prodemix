@@ -101,7 +101,7 @@ describe("compareLeaderboardRows", () => {
 });
 
 describe("sortAndAssignRanks", () => {
-  it("assigns dense ranks and shares rank on full ties", () => {
+  it("assigns ordinal ranks 1…n; breaks full ties by userId", () => {
     const t = d("2025-01-01T12:00:00.000Z");
     const ranked = sortAndAssignRanks([
       {
@@ -126,7 +126,7 @@ describe("sortAndAssignRanks", () => {
         minSavedAt: t,
       },
     ]);
-    expect(ranked.map((r) => r.rankPosition)).toEqual([1, 1, 3]);
     expect(ranked.map((r) => r.userId)).toEqual(["a", "b", "c"]);
+    expect(ranked.map((r) => r.rankPosition)).toEqual([1, 2, 3]);
   });
 });
