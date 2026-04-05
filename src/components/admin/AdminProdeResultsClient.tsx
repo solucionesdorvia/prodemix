@@ -171,8 +171,12 @@ export function AdminProdeResultsClient() {
     }
     setBusy(true);
     try {
+      const qs =
+        selectedId ?
+          `?prodeId=${encodeURIComponent(selectedId)}`
+        : "";
       await adminFetch<{ ok: boolean; affectedProdeIds: string[] }>(
-        "/api/admin/results",
+        `/api/admin/results${qs}`,
         {
           method: "POST",
           body: JSON.stringify({ results }),

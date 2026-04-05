@@ -9,31 +9,19 @@ import { scorePrediction } from "@/lib/scoring";
  * Recomputes ProdeLeaderboardEntry for a prode from Match results + Predictions.
  * Sort: points desc, plenos desc, signHits desc, min(prediction.savedAt) asc (earlier is better).
  * Only users with JOINED ProdeEntry are ranked (others’ predictions are ignored).
+ *
+ * Puntos: se calculan con `Prediction` + `Match` (marcador oficial). Si faltan filas en
+ * `ProdeMatch` pero hay pronósticos guardados para ese `matchId`, igual se puntúa
+ * (union de partidos vinculados y partidos con pronósticos en el prode).
  */
 export async function recalculateProdeLeaderboard(prodeId: string): Promise<void> {
   const prisma = getPrisma();
 
-  const prodeMatches = await prisma.prodeMatch.findMany({
+  const prodeMatchRows = await prisma.prodeMatch.findMany({
     where: { prodeId },
     select: { matchId: true },
   });
-  const matchIds = prodeMatches.map((m) => m.matchId);
-
-  const matches = await prisma.match.findMany({
-    where: { id: { in: matchIds } },
-    select: {
-      id: true,
-      homeScore: true,
-      awayScore: true,
-    },
-  });
-
-  const resultByMatch = new Map<string, { h: number; a: number }>();
-  for (const m of matches) {
-    if (m.homeScore != null && m.awayScore != null) {
-      resultByMatch.set(m.id, { h: m.homeScore, a: m.awayScore });
-    }
-  }
+  const fromLinks = new Set(prodeMatchRows.map((r) => r.matchId));
 
   const participants = await prisma.prodeEntry.findMany({
     where: { prodeId, status: "JOINED" },
@@ -43,7 +31,17 @@ export async function recalculateProdeLeaderboard(prodeId: string): Promise<void
 
   const predictions = await prisma.prediction.findMany({
     where: { prodeId },
+    include: {
+      match: {
+        select: { id: true, homeScore: true, awayScore: true },
+      },
+    },
   });
+
+  const allowedMatchIds = new Set(fromLinks);
+  for (const p of predictions) {
+    allowedMatchIds.add(p.matchId);
+  }
 
   const byUser = new Map<
     string,
@@ -56,16 +54,17 @@ export async function recalculateProdeLeaderboard(prodeId: string): Promise<void
 
   for (const p of predictions) {
     if (!participantIds.has(p.userId)) continue;
+    if (!allowedMatchIds.has(p.matchId)) continue;
 
-    const res = resultByMatch.get(p.matchId);
-    if (!res) continue;
+    const m = p.match;
+    if (m.homeScore == null || m.awayScore == null) continue;
 
     const row = byUser.get(p.userId)!;
     const r = scorePrediction(
       p.predictedHomeScore,
       p.predictedAwayScore,
-      res.h,
-      res.a,
+      m.homeScore,
+      m.awayScore,
     );
     row.points += r.points;
     if (r.pleno) row.plenos += 1;

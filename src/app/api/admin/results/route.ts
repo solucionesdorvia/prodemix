@@ -14,6 +14,10 @@ export async function POST(req: Request) {
   const denied = await requireAdminApi();
   if (denied) return denied;
 
+  const url = new URL(req.url);
+  /** Prode elegido en admin: recalcular siempre, aunque falle el vínculo ProdeMatch. */
+  const forceProdeId = url.searchParams.get("prodeId");
+
   let body: unknown;
   try {
     body = await req.json();
@@ -66,9 +70,15 @@ export async function POST(req: Request) {
     await recalculateProdeLeaderboard(pId);
   }
 
+  if (forceProdeId && !affectedProdeIds.has(forceProdeId)) {
+    await recalculateProdeLeaderboard(forceProdeId);
+    affectedProdeIds.add(forceProdeId);
+  }
+
   logStructured("admin.results_updated", {
     matchCount: results.length,
     affectedProdeCount: affectedProdeIds.size,
+    forceProdeId: forceProdeId ?? undefined,
   });
 
   return NextResponse.json({
