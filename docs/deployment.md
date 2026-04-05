@@ -90,6 +90,21 @@ This repo runs generation in **`postinstall`** and again in **`build`** (`prisma
 
 **Producción en Railway:** **`railway.toml`** fija **`numReplicas = 1`** (evita varios `migrate` a la vez). **`npm start`** ejecuta **`db:migrate:deploy:neon`**, luego **`db:seed:if-empty`** (solo si no hay torneos/partidos en la base — primer deploy o DB nueva) y **`next start`**. No usamos **preDeploy** en Railway porque suele fallar con otro entorno que el runtime. Si escalás a más réplicas, corré migraciones en CI o un job aparte.
 
+### Migraciones: deploy en loop o P3009 / P3018
+
+- **`npm start` falla antes de `next start`** porque `prisma migrate deploy` sale con error → el contenedor reinfinita y “nunca deployea”.
+- **No despliegues un commit viejo** (p. ej. sin carpetas en `prisma/migrations/`) contra una base **Neon** donde ya se aplicaron migraciones nuevas: Prisma detecta historial distinto y falla.
+- **Recuperación típica** (Neon con migración `referrals` fallida): en tu máquina, con `DATABASE_URL` (o `DIRECT_URL`) apuntando a **esa** base:
+
+```bash
+npx prisma migrate resolve --rolled-back 20260330140000_referrals
+npm run db:migrate:deploy:neon
+```
+
+Luego redeploy del **último `main`** (con el `migration.sql` idempotente de referidos).
+
+- **Emergencia** (solo para levantar el sitio mientras arreglás la DB): en Railway cambiá el comando de inicio a **`npm run start:next-only`** (solo `next start`, **sin** migrar). Volvé a **`npm start`** cuando `migrate deploy` ya pase en local contra Neon.
+
 **Primer deploy y health checks:** el seed puede tardar varios minutos en una base vacía. Si el host corta el proceso por timeout antes de que termine `next start`, subí el **health check delay / timeout** del servicio o ejecutá **`npm run db:seed`** una vez en un shell con `DATABASE_URL` y redeploy (así `db:seed:if-empty` no hace nada).
 
 **E2E (Playwright):** `npm run test:e2e` — levanta el dev server si el puerto está libre (`playwright.config.ts`). Flujo con cuenta real: `E2E_EMAIL=… E2E_PASSWORD=… npm run test:e2e`. Ver `e2e/`.
@@ -114,6 +129,7 @@ npm run db:seed
 | Script | Command | Use |
 |--------|---------|-----|
 | `start` | `db:migrate:deploy:neon && db:seed:if-empty && next start` | Producción: migrate + seed si catálogo vacío + Next |
+| `start:next-only` | `next start` | Emergencia: sin migrar (usar solo hasta corregir DB; volver a `start`) |
 | `db:seed:if-empty` | `tsx scripts/seed-if-empty.ts` | Solo si `Tournament`/`Match` vacíos; usado por `start` |
 | `db:migrate:dev` | `prisma migrate dev` | Local: create/apply migrations interactively |
 | `db:migrate:deploy` | `prisma migrate deploy` | Staging/prod: apply pending migrations |
