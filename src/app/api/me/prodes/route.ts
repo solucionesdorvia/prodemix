@@ -4,10 +4,6 @@ import { auth } from "@/auth";
 import { apiError } from "@/lib/api-errors";
 import { getPrisma } from "@/lib/prisma";
 import { misProdeServerStatus } from "@/lib/mis-prode-server-status";
-import {
-  isRankingUnlocked,
-  isRankingUnlockedForProde,
-} from "@/lib/ranking-visibility";
 import { meProdesQuerySchema } from "@/lib/validation/prodes-api";
 import { zodToApiError } from "@/lib/validation/zod-to-api";
 
@@ -60,15 +56,10 @@ export async function GET(req: Request) {
   });
 
   const now = new Date();
-  const globalRankingUnlocked = await isRankingUnlocked();
 
   const prodes = await Promise.all(
     entries.map(async (e) => {
       const prodeId = e.prode.id;
-      const rankingUnlocked = await isRankingUnlockedForProde(
-        prodeId,
-        globalRankingUnlocked,
-      );
       const [
         matchCount,
         predictionCount,
@@ -102,23 +93,21 @@ export async function GET(req: Request) {
             },
           },
         }),
-        rankingUnlocked ?
-          prisma.prodeLeaderboardEntry.findMany({
-            where: { prodeId },
-            orderBy: [
-              { rankPosition: "asc" },
-              { points: "desc" },
-              { plenos: "desc" },
-              { signHits: "desc" },
-            ],
-            take: 5,
-            include: {
-              user: {
-                select: { id: true, name: true, username: true },
-              },
+        prisma.prodeLeaderboardEntry.findMany({
+          where: { prodeId },
+          orderBy: [
+            { rankPosition: "asc" },
+            { points: "desc" },
+            { plenos: "desc" },
+            { signHits: "desc" },
+          ],
+          take: 5,
+          include: {
+            user: {
+              select: { id: true, name: true, username: true },
             },
-          })
-        : Promise.resolve([]),
+          },
+        }),
       ]);
 
       const pendingCount = Math.max(0, matchCount - predictionCount);
@@ -160,7 +149,7 @@ export async function GET(req: Request) {
             username: r.user.username,
           },
         })),
-        rankingPreviewLocked: !rankingUnlocked,
+        rankingPreviewLocked: false,
         status,
       };
     }),

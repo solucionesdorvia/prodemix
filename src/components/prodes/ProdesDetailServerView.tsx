@@ -109,7 +109,6 @@ export function ProdesDetailServerView({ prodeId }: Props) {
   const [matches, setMatches] = useState<ApiMatchRow[]>([]);
   const [predMap, setPredMap] = useState<Record<string, ScorePrediction>>({});
   const [ranking, setRanking] = useState<ApiRankingRow[]>([]);
-  const [rankingLocked, setRankingLocked] = useState(false);
   const [shareUrl, setShareUrl] = useState("");
   const [saving, setSaving] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -133,8 +132,7 @@ export function ProdesDetailServerView({ prodeId }: Props) {
       ]);
       setProde(detail.prode);
       setMatches(mRes.matches);
-      setRanking(rRes.rankingLocked ? [] : rRes.ranking);
-      setRankingLocked(Boolean(rRes.rankingLocked));
+      setRanking(rRes.ranking ?? []);
       setPredMap({});
 
       try {
@@ -273,8 +271,7 @@ export function ProdesDetailServerView({ prodeId }: Props) {
           ranking: ApiRankingRow[];
           rankingLocked?: boolean;
         }>(`/api/prodes/${encodeURIComponent(prode.id)}/ranking`).then((r) => {
-          setRanking(r.rankingLocked ? [] : r.ranking);
-          setRankingLocked(Boolean(r.rankingLocked));
+          setRanking(r.ranking ?? []);
         });
       } catch (e) {
         reportClientError(e, { area: "prode.predictions.save" });
@@ -566,12 +563,8 @@ export function ProdesDetailServerView({ prodeId }: Props) {
             variant="minimal"
             layout="horizontal"
             icon={Trophy}
-            title={rankingLocked ? "Todavía no hay ranking" : "Todavía no hay tabla"}
-            description={
-              rankingLocked ?
-                "Va a aparecer cuando haya marcadores oficiales en este prode o cuando el calendario general tenga partidos jugados."
-              : "Cuando haya resultados oficiales cargados, verás el ranking."
-            }
+            title="Todavía no hay tabla"
+            description="Cuando haya participantes y puntos calculados, o después de cargar resultados y recalcular, verás el ranking acá."
           />
         )}
       </section>

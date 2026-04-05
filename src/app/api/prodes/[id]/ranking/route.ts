@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
 
 import { queryProdeRanking } from "@/lib/ranking-query";
-import { isRankingUnlockedForProde } from "@/lib/ranking-visibility";
 import { prodeRouteIdSchema } from "@/lib/validation/prodes-api";
 import { zodToApiError } from "@/lib/validation/zod-to-api";
 
 export const dynamic = "force-dynamic";
 
+/** Ranking del prode (sin candado: quien puede ver el prode ve la tabla actual). */
 export async function GET(
   _req: Request,
   context: { params: Promise<{ id: string }> },
@@ -21,15 +21,6 @@ export async function GET(
   const result = await queryProdeRanking(id);
   if (!result.ok) {
     return result.response;
-  }
-
-  const unlocked = await isRankingUnlockedForProde(result.prodeId);
-  if (!unlocked) {
-    return NextResponse.json({
-      prodeId: result.prodeId,
-      rankingLocked: true,
-      ranking: [],
-    });
   }
 
   return NextResponse.json({

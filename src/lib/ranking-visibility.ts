@@ -24,28 +24,3 @@ export async function isRankingUnlocked(): Promise<boolean> {
   });
   return any != null;
 }
-
-/**
- * Ranking de un prode: visible si en este prode hay al menos un partido con
- * marcador oficial cargado, o si el ranking global ya está habilitado.
- *
- * @param globalUnlocked - Si ya calculaste `isRankingUnlocked()` (p. ej. en un
- *   batch de Mis prodes), pasalo para no repetir la query global por fila.
- */
-export async function isRankingUnlockedForProde(
-  prodeId: string,
-  globalUnlocked?: boolean,
-): Promise<boolean> {
-  const prisma = getPrisma();
-  const hasResultInProde = await prisma.match.findFirst({
-    where: {
-      prodeMatchJoins: { some: { prodeId } },
-      homeScore: { not: null },
-      awayScore: { not: null },
-    },
-    select: { id: true },
-  });
-  if (hasResultInProde) return true;
-  if (globalUnlocked !== undefined) return globalUnlocked;
-  return isRankingUnlocked();
-}
