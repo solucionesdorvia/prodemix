@@ -235,16 +235,16 @@ export function ProdesDetailServerView({ prodeId }: Props) {
     return n;
   }, [matches, predMap]);
 
-  const rankingTop10 = useMemo(() => ranking.slice(0, 10), [ranking]);
+  const rankingTop5 = useMemo(() => ranking.slice(0, 5), [ranking]);
 
   const userRankingRow = useMemo(
     () => ranking.find((r) => r.user.id === userId),
     [ranking, userId],
   );
 
-  const userInTop10 = useMemo(
-    () => rankingTop10.some((r) => r.user.id === userId),
-    [rankingTop10, userId],
+  const userInTop5 = useMemo(
+    () => rankingTop5.some((r) => r.user.id === userId),
+    [rankingTop5, userId],
   );
 
   const userRank = userRankingRow?.rank ?? null;
@@ -496,14 +496,14 @@ export function ProdesDetailServerView({ prodeId }: Props) {
               }
             />
             <p className="-mt-0.5 text-[10px] font-semibold uppercase tracking-wide text-app-muted">
-              Top 10
+              Primeros 5
             </p>
           </div>
         </div>
-        {rankingTop10.length > 0 ?
+        {rankingTop5.length > 0 ?
           <div className="overflow-hidden rounded-[10px] border border-app-border bg-app-surface shadow-[0_1px_0_rgba(15,23,42,0.04)]">
             <ul className="divide-y divide-app-border-subtle">
-              {rankingTop10.map((row) => {
+              {rankingTop5.map((row) => {
                 const isSelf = row.user.id === userId;
                 const name =
                   row.user.username ?
@@ -548,7 +548,7 @@ export function ProdesDetailServerView({ prodeId }: Props) {
                 );
               })}
             </ul>
-            {userRankingRow && !userInTop10 ?
+            {userRankingRow && !userInTop5 ?
               <div className="border-t border-app-border-subtle bg-gradient-to-r from-blue-50/80 to-app-surface px-2.5 py-2.5">
                 <p className="text-[11px] font-semibold leading-snug text-app-text">
                   <span className="text-app-muted">Tu posición:</span>{" "}

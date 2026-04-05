@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import { apiError } from "@/lib/api-errors";
 import { getPrisma } from "@/lib/prisma";
 import { misProdeServerStatus } from "@/lib/mis-prode-server-status";
+import { isRankingUnlocked } from "@/lib/ranking-visibility";
 import { meProdesQuerySchema } from "@/lib/validation/prodes-api";
 import { zodToApiError } from "@/lib/validation/zod-to-api";
 
@@ -56,11 +57,19 @@ export async function GET(req: Request) {
   });
 
   const now = new Date();
+  const rankingUnlocked = await isRankingUnlocked();
 
   const prodes = await Promise.all(
     entries.map(async (e) => {
       const prodeId = e.prode.id;
-      const [matchCount, predictionCount, leaderboard] = await Promise.all([
+      const [
+        matchCount,
+        predictionCount,
+        leaderboard,
+        scoredMatchesCount,
+        predictionsOnScoredCount,
+        rankingTop5Rows,
+      ] = await Promise.all([
         prisma.prodeMatch.count({ where: { prodeId } }),
         prisma.prediction.count({ where: { userId, prodeId } }),
         prisma.prodeLeaderboardEntry.findUnique({
@@ -69,6 +78,40 @@ export async function GET(req: Request) {
           },
           select: { points: true, rankPosition: true, plenos: true },
         }),
+        prisma.match.count({
+          where: {
+            prodeMatchJoins: { some: { prodeId } },
+            homeScore: { not: null },
+            awayScore: { not: null },
+          },
+        }),
+        prisma.prediction.count({
+          where: {
+            userId,
+            prodeId,
+            match: {
+              homeScore: { not: null },
+              awayScore: { not: null },
+            },
+          },
+        }),
+        rankingUnlocked ?
+          prisma.prodeLeaderboardEntry.findMany({
+            where: { prodeId },
+            orderBy: [
+              { rankPosition: "asc" },
+              { points: "desc" },
+              { plenos: "desc" },
+              { signHits: "desc" },
+            ],
+            take: 5,
+            include: {
+              user: {
+                select: { id: true, name: true, username: true },
+              },
+            },
+          })
+        : Promise.resolve([]),
       ]);
 
       const pendingCount = Math.max(0, matchCount - predictionCount);
@@ -94,10 +137,23 @@ export async function GET(req: Request) {
           matchCount,
           predictionCount,
           pendingCount,
+          scoredMatchesCount,
+          predictionsOnScoredCount,
           points: leaderboard?.points ?? 0,
           rank: leaderboard?.rankPosition ?? null,
           plenos: leaderboard?.plenos ?? 0,
         },
+        rankingTop5: rankingTop5Rows.map((r) => ({
+          rank: r.rankPosition,
+          points: r.points,
+          plenos: r.plenos,
+          user: {
+            id: r.user.id,
+            name: r.user.name,
+            username: r.user.username,
+          },
+        })),
+        rankingPreviewLocked: !rankingUnlocked,
         status,
       };
     }),

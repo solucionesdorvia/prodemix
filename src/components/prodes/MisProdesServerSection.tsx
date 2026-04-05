@@ -2,6 +2,7 @@
 
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useState } from "react";
 
 import { useAuth } from "@/components/auth/AuthProvider";
@@ -25,10 +26,19 @@ type MeProdeRow = {
     matchCount: number;
     predictionCount: number;
     pendingCount: number;
+    scoredMatchesCount: number;
+    predictionsOnScoredCount: number;
     points: number;
     rank: number | null;
     plenos: number;
   };
+  rankingTop5: Array<{
+    rank: number | null;
+    points: number;
+    plenos: number;
+    user: { id: string; name: string | null; username: string | null };
+  }>;
+  rankingPreviewLocked?: boolean;
   status: { kind: MisProdeServerKind; label: string };
 };
 
@@ -78,6 +88,14 @@ function statusPillClass(kind: MisProdeServerKind): string {
   }
 }
 
+function displayNameTop5(u: {
+  name: string | null;
+  username: string | null;
+}): string {
+  if (u.username) return `@${u.username}`;
+  return u.name ?? "Usuario";
+}
+
 export function MisProdesServerSection({
   className,
   showViewAllLink = false,
@@ -85,6 +103,8 @@ export function MisProdesServerSection({
   compactHint = false,
 }: MisProdesServerSectionProps) {
   const { hydrated, loggedIn } = useAuth();
+  const { data: session } = useSession();
+  const myUserId = session?.user?.id ?? "";
   const [rows, setRows] = useState<MeProdeRow[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -192,8 +212,8 @@ export function MisProdesServerSection({
       {misProdesHeader}
       <p className="text-[10px] leading-snug text-app-muted">
         {compactHint ?
-          "Agrupados por estado (datos reales). Tocá un prode para ranking y partidos."
-        : "Datos de tu cuenta en el servidor. Tocá un prode para ver cada partido (marcador oficial cuando está cargado), tu puntaje y el ranking."}
+          "Agrupados por estado. Cada fila muestra top 5, tu puntaje y pronósticos vs resultado cuando hay marcadores."
+        : "Datos de tu cuenta en el servidor. En cada fila: resumen de pronósticos vs resultado, top 5 y tu puntaje. Dentro del prode: todos los partidos y la tabla completa."}
       </p>
       {PHASE_ORDER.map((phase) => {
         const bucket = grouped[phase];
@@ -215,6 +235,10 @@ export function MisProdesServerSection({
                 const href = `/prodes/${encodeURIComponent(row.prode.slug || row.prode.id)}`;
                 const unfinished = row.stats.pendingCount > 0;
                 const matchCount = row.stats.matchCount;
+                const scored = row.stats.scoredMatchesCount ?? 0;
+                const onScored = row.stats.predictionsOnScoredCount ?? 0;
+                const top5 = row.rankingTop5 ?? [];
+                const rankingLocked = row.rankingPreviewLocked === true;
 
                 return (
                   <li key={row.prode.id}>
@@ -262,6 +286,55 @@ export function MisProdesServerSection({
                             </span>
                           : null}
                         </div>
+                        {scored > 0 ?
+                          <p className="mt-1.5 text-[9px] leading-snug text-app-muted">
+                            <span className="font-semibold text-app-text">
+                              Pronóstico vs resultado:
+                            </span>{" "}
+                            {onScored}/{scored} partidos con marcador cargado
+                          </p>
+                        : null}
+                        {top5.length > 0 ?
+                          <div className="mt-2 rounded-md border border-app-border-subtle bg-app-bg/60 px-2 py-1.5">
+                            <p className="text-[8px] font-bold uppercase tracking-wide text-app-muted">
+                              Top 5
+                            </p>
+                            <ol className="mt-1 space-y-0.5">
+                              {top5.map((r, i) => {
+                                const self = r.user.id === myUserId;
+                                return (
+                                  <li
+                                    key={`${r.user.id}-${i}`}
+                                    className={cn(
+                                      "flex items-baseline justify-between gap-2 text-[9px] tabular-nums",
+                                      self && "font-semibold text-app-primary",
+                                    )}
+                                  >
+                                    <span className="min-w-0 truncate">
+                                      <span className="text-app-muted">
+                                        {r.rank ?? i + 1}.
+                                      </span>{" "}
+                                      {displayNameTop5(r.user)}
+                                      {self ?
+                                        <span className="ml-0.5 font-normal text-app-muted">
+                                          (vos)
+                                        </span>
+                                      : null}
+                                    </span>
+                                    <span className="shrink-0 text-app-text">
+                                      {r.points} pts
+                                    </span>
+                                  </li>
+                                );
+                              })}
+                            </ol>
+                          </div>
+                        : rankingLocked ?
+                          <p className="mt-1.5 text-[9px] leading-snug text-app-muted">
+                            El top 5 del ranking aparece cuando el fixture oficial
+                            tenga partidos jugados.
+                          </p>
+                        : null}
                       </div>
                       <div className="flex shrink-0 flex-col items-end justify-center gap-0.5 text-right">
                         {row.stats.rank !== null ?

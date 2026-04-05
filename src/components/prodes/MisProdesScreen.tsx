@@ -41,8 +41,9 @@ export function MisProdesScreen() {
           <span className="font-medium text-app-text">en juego</span> (ya cerró
           la carga; ranking y goles según la base) y{" "}
           <span className="font-medium text-app-text">finalizados</span>. En
-          cada fila: tu posición y puntos. Dentro del prode: partidos, marcadores
-          y tabla.
+          cada fila: resumen pronóstico vs resultado, top 5 y tu posición. Dentro
+          del prode: todos los partidos con tu pronóstico y el marcador real, y la
+          tabla completa.
         </p>
       </header>
 
