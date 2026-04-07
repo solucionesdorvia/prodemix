@@ -15,6 +15,7 @@ const SIDEBAR: { href: string; label: string }[] = [
   { href: "/admin/teams", label: "Equipos" },
   { href: "/admin/results", label: "Resultados" },
   { href: "/admin/rankings", label: "Rankings" },
+  { href: "/admin/referidos", label: "Referidos" },
   { href: "/admin/users", label: "Usuarios" },
 ];
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 import { adminFetch } from "@/lib/admin/admin-fetch";
@@ -19,17 +20,18 @@ type UserRow = {
 };
 
 export function AdminUsersClient() {
+  const searchParams = useSearchParams();
   const [q, setQ] = useState("");
   const [users, setUsers] = useState<UserRow[]>([]);
   const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [busyId, setBusyId] = useState<string | null>(null);
 
-  const load = useCallback(async () => {
+  const loadWithQuery = useCallback(async (query: string) => {
     setErr(null);
     setLoading(true);
     try {
-      const qs = q.trim() ? `?q=${encodeURIComponent(q.trim())}` : "";
+      const qs = query.trim() ? `?q=${encodeURIComponent(query.trim())}` : "";
       const data = await adminFetch<{ users: UserRow[] }>(
         `/api/admin/users${qs}`,
       );
@@ -39,13 +41,17 @@ export function AdminUsersClient() {
     } finally {
       setLoading(false);
     }
-  }, [q]);
+  }, []);
 
   useEffect(() => {
-    void load();
-    // Carga inicial; la búsqueda se dispara con el botón.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const fromUrl = searchParams.get("q")?.trim();
+    if (fromUrl) {
+      setQ(fromUrl);
+      void loadWithQuery(fromUrl);
+    } else {
+      void loadWithQuery("");
+    }
+  }, [searchParams, loadWithQuery]);
 
   const setRole = async (id: string, role: "user" | "admin") => {
     setBusyId(id);
@@ -55,7 +61,7 @@ export function AdminUsersClient() {
         method: "PATCH",
         body: JSON.stringify({ role }),
       });
-      await load();
+      await loadWithQuery(q);
     } catch (e) {
       setErr(e instanceof Error ? e.message : "Error");
     } finally {
@@ -73,7 +79,7 @@ export function AdminUsersClient() {
           bannedAt: banned ? new Date().toISOString() : null,
         }),
       });
-      await load();
+      await loadWithQuery(q);
     } catch (e) {
       setErr(e instanceof Error ? e.message : "Error");
     } finally {
@@ -95,7 +101,7 @@ export function AdminUsersClient() {
           className="flex flex-wrap items-end gap-2"
           onSubmit={(e) => {
             e.preventDefault();
-            void load();
+            void loadWithQuery(q);
           }}
         >
           <AdminField label="Texto">
