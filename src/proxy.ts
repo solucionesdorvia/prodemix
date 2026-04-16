@@ -54,7 +54,7 @@ export async function proxy(request: NextRequest) {
           error: {
             code: "SERVICE_UNAVAILABLE" as const,
             message:
-              "ProdeMix está en mantenimiento. Probá de nuevo en unos minutos.",
+              "ProdeMix está en actualización y no está disponible por ahora.",
           },
         },
         { status: 503 },

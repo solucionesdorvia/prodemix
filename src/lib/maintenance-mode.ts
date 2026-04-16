@@ -18,24 +18,25 @@ function endOfDayHourART(
 /**
  * `MAINTENANCE_MODE=true` y una de:
  * - `MAINTENANCE_UNTIL` (ISO 8601, fin del mantenimiento), o
- * - `MAINTENANCE_DAY=YYYY-MM-DD` (día calendario en Argentina) → hasta las 15:00 ART ese día.
+ * - `MAINTENANCE_DAY=YYYY-MM-DD` (día calendario en Argentina) → hasta las 14:00 ART ese día.
  */
-export function isMaintenanceModeActive(): boolean {
+export function isMaintenanceModeActive(nowMs?: number): boolean {
+  const now = nowMs ?? Date.now();
   if (!envTruthy(process.env.MAINTENANCE_MODE)) return false;
   const until = process.env.MAINTENANCE_UNTIL?.trim();
   if (until) {
     const t = new Date(until).getTime();
     if (Number.isNaN(t)) return false;
-    return Date.now() < t;
+    return now < t;
   }
   const day = process.env.MAINTENANCE_DAY?.trim();
   if (!day) return false;
   const todayStr = new Intl.DateTimeFormat("en-CA", {
     timeZone: AR_TZ,
-  }).format(new Date());
+  }).format(new Date(now));
   if (todayStr !== day) return false;
-  const end = endOfDayHourART(day, 15);
-  return Date.now() < end.getTime();
+  const end = endOfDayHourART(day, 14);
+  return now < end.getTime();
 }
 
 /** Texto para la página de mantenimiento. */
@@ -53,12 +54,12 @@ export function getMaintenanceEndLabel(): string {
   }
   const day = process.env.MAINTENANCE_DAY?.trim();
   if (day) {
-    const end = endOfDayHourART(day, 15);
+    const end = endOfDayHourART(day, 14);
     return new Intl.DateTimeFormat("es-AR", {
       dateStyle: "full",
       timeStyle: "short",
       timeZone: AR_TZ,
     }).format(end);
   }
-  return "hoy a las 15:00 (hora Argentina)";
+  return "hoy a las 14:00 (hora Argentina)";
 }
