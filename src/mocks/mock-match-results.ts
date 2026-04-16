@@ -15,27 +15,41 @@ import { loadIngestionResultsOverlay } from "@/state/ingestion-storage";
 export const MOCK_MATCH_RESULTS: Partial<
   Record<MatchId, { home: number; away: number }>
 > = {
-  /** Primera A · fecha 3 — resultados cargados a mano (partidos jugados). */
-  "afa-premio-a-m3-0": { home: 6, away: 1 },
-  "afa-premio-a-m3-1": { home: 2, away: 5 },
-  "afa-premio-a-m3-2": { home: 3, away: 2 },
-  "afa-premio-a-m3-3": { home: 0, away: 1 },
-  "afa-premio-a-m3-4": { home: 3, away: 2 },
-  "afa-premio-a-m3-5": { home: 2, away: 5 },
-  "afa-premio-a-m3-6": { home: 3, away: 1 },
+  /**
+   * Primera A · fecha 4 — jugados (Kimberley–Barracas, Pinocho–17 de Agosto, Independiente–Boca
+   * postergados en el fixture; sin resultado en catálogo).
+   */
+  "afa-premio-a-m4-0": { home: 5, away: 2 },
+  "afa-premio-a-m4-2": { home: 2, away: 3 },
+  "afa-premio-a-m4-3": { home: 3, away: 1 },
+  "afa-premio-a-m4-4": { home: 2, away: 10 },
+  "afa-premio-a-m4-6": { home: 1, away: 4 },
+  "afa-premio-a-m4-7": { home: 1, away: 1 },
 
-  /** Primera B · fecha 3 — resultados cargados a mano. */
-  "afa-premio-b-m3-0": { home: 4, away: 5 },
-  "afa-premio-b-m3-1": { home: 1, away: 5 },
-  "afa-premio-b-m3-2": { home: 2, away: 0 },
-  "afa-premio-b-m3-3": { home: 7, away: 2 },
+  /** Primera B · fecha 4 — todos los partidos. */
+  "afa-premio-b-m4-0": { home: 2, away: 0 },
+  "afa-premio-b-m4-1": { home: 5, away: 1 },
+  "afa-premio-b-m4-2": { home: 2, away: 1 },
+  "afa-premio-b-m4-3": { home: 3, away: 4 },
+  "afa-premio-b-m4-4": { home: 4, away: 3 },
+  "afa-premio-b-m4-5": { home: 8, away: 4 },
+  "afa-premio-b-m4-6": { home: 1, away: 3 },
+  "afa-premio-b-m4-7": { home: 6, away: 3 },
+  "afa-premio-b-m4-8": { home: 5, away: 3 },
 
-  /** Primera C · fecha 2 — resultados cargados a mano. */
-  "afa-premio-c-m2-0": { home: 1, away: 1 },
-  "afa-premio-c-m2-1": { home: 3, away: 5 },
-  "afa-premio-c-m2-2": { home: 0, away: 6 },
-  "afa-premio-c-m2-3": { home: 5, away: 2 },
-  "afa-premio-c-m2-4": { home: 1, away: 3 },
+  /**
+   * Primera C — marcadores alineados a la captura (tercera fecha de la competencia en cancha).
+   * En el JSON de fixture corresponden a **fecha 20** (`afa-premio-c-m20-*`), orden local vs visitante.
+   */
+  "afa-premio-c-m20-0": { home: 0, away: 4 },
+  "afa-premio-c-m20-1": { home: 2, away: 5 },
+  "afa-premio-c-m20-2": { home: 3, away: 2 },
+  "afa-premio-c-m20-3": { home: 3, away: 3 },
+  "afa-premio-c-m20-4": { home: 1, away: 4 },
+  "afa-premio-c-m20-5": { home: 3, away: 4 },
+  "afa-premio-c-m20-6": { home: 1, away: 2 },
+  "afa-premio-c-m20-7": { home: 2, away: 4 },
+  "afa-premio-c-m20-8": { home: 5, away: 1 },
 };
 
 export function getMockResultForMatch(
