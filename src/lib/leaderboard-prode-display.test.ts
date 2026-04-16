@@ -12,10 +12,11 @@ describe("normalizePremioKey", () => {
 });
 
 describe("isNamedPremioTopThreeProde", () => {
-  it("detecta Premio A/B Fecha 4 y Premio C Fecha 2", () => {
+  it("detecta Premio A/B Fecha 4 y Premio C Fecha 2 o 3", () => {
     expect(isNamedPremioTopThreeProde("Premio B Fecha4", "")).toBe(true);
     expect(isNamedPremioTopThreeProde("Premio A Fecha 4", "")).toBe(true);
     expect(isNamedPremioTopThreeProde("Premio c Fecha2", "")).toBe(true);
+    expect(isNamedPremioTopThreeProde("Premio C Fecha 3", "")).toBe(true);
     expect(isNamedPremioTopThreeProde("Otro pool", "")).toBe(false);
   });
 });

@@ -23,14 +23,16 @@ export function normalizePremioKey(title: string, slug: string): string {
 }
 
 /**
- * Premio A/B Fecha 4 y Premio C Fecha 2: el podio mostrado son los primeros 3 usernames
+ * Premio A/B Fecha 4 y Premio C Fecha 2 o 3: el podio mostrado son los primeros 3 usernames
  * de la lista que participen (orden fijo de lista), con puntos reales.
  */
 export function isNamedPremioTopThreeProde(title: string, slug: string): boolean {
   const n = normalizePremioKey(title, slug);
   const premioB = n.includes("premio b") && n.includes("fecha 4");
   const premioA = n.includes("premio a") && n.includes("fecha 4");
-  const premioC = n.includes("premio c") && n.includes("fecha 2");
+  const premioC =
+    n.includes("premio c") &&
+    (n.includes("fecha 2") || n.includes("fecha 3"));
   return premioB || premioA || premioC;
 }
 

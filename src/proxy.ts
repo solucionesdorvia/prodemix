@@ -8,6 +8,7 @@ import {
   REFERRAL_COOKIE_MAX_AGE_SEC,
 } from "@/lib/referrals/constants";
 import { normalizeReferralCode } from "@/lib/referrals/normalize";
+import { isMaintenanceModeActive } from "@/lib/maintenance-mode";
 import { rateLimit } from "@/lib/rate-limit";
 import { rateLimitResponse } from "@/lib/rate-limit-response";
 
@@ -42,6 +43,27 @@ function withReferralCookie(
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const ip = getClientIp(request);
+
+  if (isMaintenanceModeActive()) {
+    if (pathname === "/mantenimiento" || pathname.startsWith("/mantenimiento/")) {
+      return NextResponse.next();
+    }
+    if (pathname.startsWith("/api/")) {
+      return NextResponse.json(
+        {
+          error: {
+            code: "SERVICE_UNAVAILABLE" as const,
+            message:
+              "ProdeMix está en mantenimiento. Probá de nuevo en unos minutos.",
+          },
+        },
+        { status: 503 },
+      );
+    }
+    const url = request.nextUrl.clone();
+    url.pathname = "/mantenimiento";
+    return NextResponse.redirect(url);
+  }
 
   if (pathname.startsWith("/api/auth")) {
     const rl = rateLimit(`auth:${ip}`, 60, 60_000);
