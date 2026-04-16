@@ -6,7 +6,7 @@ import {
   ChevronRight,
   Cloud,
   Lock,
-  Mail,
+  MessageSquare,
   Settings,
   Trophy,
 } from "lucide-react";
@@ -23,6 +23,7 @@ import {
   fetchProdePlayedPredictionsForUser,
   postJoinProde,
   postProdePredictions,
+  postProdeSupportMessage,
   type PlayedPredictionPublic,
 } from "@/lib/api/prodes-fetch";
 import { prodeEntryLabel } from "@/lib/prode-entry-label";
@@ -137,6 +138,11 @@ export function ProdesDetailServerView({ prodeId }: Props) {
   );
   const [playedLoading, setPlayedLoading] = useState(false);
   const [playedError, setPlayedError] = useState<string | null>(null);
+  const [supportOpen, setSupportOpen] = useState(false);
+  const [supportKind, setSupportKind] = useState<"prize" | "error">("prize");
+  const [supportMessage, setSupportMessage] = useState("");
+  const [supportBusy, setSupportBusy] = useState(false);
+  const [supportErr, setSupportErr] = useState<string | null>(null);
 
   const reload = useCallback(async () => {
     setLoadError(null);
@@ -318,19 +324,6 @@ export function ProdesDetailServerView({ prodeId }: Props) {
   );
 
   const userRank = userRankingRow?.rank ?? null;
-
-  const prizeSupportMailto = useMemo(() => {
-    const email = process.env.NEXT_PUBLIC_SUPPORT_EMAIL ?? "hola@prodemix.app";
-    const title = prode?.title ?? "Prode";
-    const subject = encodeURIComponent(`Reclamo de premio — ${title}`);
-    const me = session?.user?.name ?
-        `Mi nombre en la app: ${session.user.name}\n`
-    :   "";
-    const body = encodeURIComponent(
-      `Hola,\n\nQuiero consultar o reclamar por el premio de este prode.\n\n- Título: ${title}\n- Prode ID: ${prodeId}\n\n${me}`,
-    );
-    return `mailto:${email}?subject=${subject}&body=${body}`;
-  }, [prode?.title, prodeId, session?.user?.name]);
 
   const handleCommit = useCallback(
     async (matchId: string, score: ScorePrediction) => {
@@ -577,13 +570,24 @@ export function ProdesDetailServerView({ prodeId }: Props) {
               </p>
             </div>
             {prode ?
-              <a
-                href={prizeSupportMailto}
-                className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-app-border-subtle bg-app-surface px-2.5 py-1.5 text-[10px] font-semibold text-app-text shadow-sm hover:bg-app-bg"
+              <button
+                type="button"
+                className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-app-border-subtle bg-app-surface px-2.5 py-1.5 text-left text-[10px] font-semibold leading-snug text-app-text shadow-sm hover:bg-app-bg"
+                onClick={() => {
+                  setSupportErr(null);
+                  setSupportOpen(true);
+                }}
               >
-                <Mail className="h-3.5 w-3.5 text-app-primary" aria-hidden />
-                Premio / soporte
-              </a>
+                <MessageSquare
+                  className="h-3.5 w-3.5 shrink-0 text-app-primary"
+                  aria-hidden
+                />
+                <span>
+                  Reclamar premio
+                  <span className="text-app-muted"> · </span>
+                  reportar error
+                </span>
+              </button>
             : null}
           </div>
         </div>
@@ -753,6 +757,124 @@ export function ProdesDetailServerView({ prodeId }: Props) {
             description="Cuando haya participantes y puntos calculados, o después de cargar resultados y recalcular, verás el ranking acá."
           />
         )}
+
+        {supportOpen && prode ?
+          <div
+            className="fixed inset-0 z-[121] flex items-end justify-center bg-black/45 p-3 sm:items-center"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="prode-support-dialog-title"
+            onClick={() => !supportBusy && setSupportOpen(false)}
+            onKeyDown={(e) => {
+              if (e.key === "Escape" && !supportBusy) setSupportOpen(false);
+            }}
+          >
+            <div
+              className="w-full max-w-md overflow-hidden rounded-xl border border-app-border bg-app-surface shadow-xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="border-b border-app-border-subtle px-3 py-2.5">
+                <h2
+                  id="prode-support-dialog-title"
+                  className="text-[14px] font-bold leading-tight text-app-text"
+                >
+                  Mensaje a soporte
+                </h2>
+                <p className="mt-1 text-[10px] leading-snug text-app-muted">
+                  Elegí el motivo y escribí tu mensaje. Lo recibe el equipo por correo
+                  junto con tu usuario y este prode.
+                </p>
+              </div>
+              <div className="space-y-3 px-3 py-3">
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    disabled={supportBusy}
+                    className={cn(
+                      "flex-1 rounded-lg border px-2 py-2 text-[11px] font-semibold transition-colors",
+                      supportKind === "prize" ?
+                        "border-app-primary bg-blue-50/80 text-app-primary"
+                      : "border-app-border-subtle bg-app-bg/60 text-app-text hover:bg-app-bg",
+                    )}
+                    onClick={() => setSupportKind("prize")}
+                  >
+                    Reclamar premio
+                  </button>
+                  <button
+                    type="button"
+                    disabled={supportBusy}
+                    className={cn(
+                      "flex-1 rounded-lg border px-2 py-2 text-[11px] font-semibold transition-colors",
+                      supportKind === "error" ?
+                        "border-app-primary bg-blue-50/80 text-app-primary"
+                      : "border-app-border-subtle bg-app-bg/60 text-app-text hover:bg-app-bg",
+                    )}
+                    onClick={() => setSupportKind("error")}
+                  >
+                    Reportar error
+                  </button>
+                </div>
+                <label className="block">
+                  <span className="sr-only">Mensaje</span>
+                  <textarea
+                    value={supportMessage}
+                    onChange={(e) => setSupportMessage(e.target.value)}
+                    disabled={supportBusy}
+                    rows={5}
+                    maxLength={4000}
+                    placeholder="Contanos qué necesitás (mínimo 10 caracteres)."
+                    className="w-full resize-y rounded-lg border border-app-border-subtle bg-app-bg/80 px-2.5 py-2 text-[12px] leading-snug text-app-text placeholder:text-app-muted focus:border-app-primary focus:outline-none focus:ring-1 focus:ring-app-primary/25"
+                  />
+                </label>
+                {supportErr ?
+                  <p className="text-[11px] text-red-700">{supportErr}</p>
+                : null}
+                <div className="flex justify-end gap-2">
+                  <button
+                    type="button"
+                    disabled={supportBusy}
+                    className="rounded-lg px-3 py-1.5 text-[11px] font-semibold text-app-muted hover:bg-app-bg hover:text-app-text"
+                    onClick={() => setSupportOpen(false)}
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="button"
+                    disabled={
+                      supportBusy || supportMessage.trim().length < 10
+                    }
+                    className="rounded-lg bg-app-primary px-3 py-1.5 text-[11px] font-semibold text-white hover:opacity-95 disabled:opacity-40"
+                    onClick={async () => {
+                      setSupportErr(null);
+                      setSupportBusy(true);
+                      try {
+                        await postProdeSupportMessage({
+                          prodeId: prode.id,
+                          kind: supportKind,
+                          message: supportMessage.trim(),
+                        });
+                        setSupportOpen(false);
+                        setSupportMessage("");
+                        setFeedback("Mensaje enviado. Te contactamos por correo si hace falta.");
+                        window.setTimeout(() => setFeedback(null), 4000);
+                      } catch (e) {
+                        setSupportErr(
+                          e instanceof Error ?
+                            e.message
+                          : "No se pudo enviar. Probá de nuevo.",
+                        );
+                      } finally {
+                        setSupportBusy(false);
+                      }
+                    }}
+                  >
+                    {supportBusy ? "Enviando…" : "Enviar"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        : null}
 
         {pickerUser ?
           <div

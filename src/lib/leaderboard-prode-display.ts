@@ -16,6 +16,55 @@ const PLACEHOLDER_PROFILES = [
   { id: "__display_lb_ph_3__", name: "Sofía Ramírez" },
 ] as const;
 
+/** Une título y slug y normaliza “Fecha4” → “fecha 4” para comparar. */
+export function normalizePremioKey(title: string, slug: string): string {
+  const raw = `${title} ${slug}`.toLowerCase().replace(/\s+/g, " ").trim();
+  return raw.replace(/fecha(\d)/g, "fecha $1");
+}
+
+/**
+ * Premio A/B Fecha 4 y Premio C Fecha 2: el podio mostrado son los primeros 3 usernames
+ * de la lista que participen (orden fijo de lista), con puntos reales.
+ */
+export function isNamedPremioTopThreeProde(title: string, slug: string): boolean {
+  const n = normalizePremioKey(title, slug);
+  const premioB = n.includes("premio b") && n.includes("fecha 4");
+  const premioA = n.includes("premio a") && n.includes("fecha 4");
+  const premioC = n.includes("premio c") && n.includes("fecha 2");
+  return premioB || premioA || premioC;
+}
+
+/**
+ * Primeros 3 lugares: los primeros 3 de `SHOWCASE_PRIORITY_USERNAMES` que estén en el ranking
+ * (orden de lista). El resto sigue el orden materializado en DB.
+ */
+export function applyNamedPremioTopThreeOverlay(
+  ranking: RankingApiRow[],
+): RankingApiRow[] {
+  if (ranking.length === 0) return ranking;
+
+  const byUsername = new Map<string, RankingApiRow>();
+  for (const r of ranking) {
+    const u = r.user.username;
+    if (u && !byUsername.has(u)) byUsername.set(u, r);
+  }
+
+  const top3: RankingApiRow[] = [];
+  for (const un of SHOWCASE_PRIORITY_USERNAMES) {
+    if (top3.length >= 3) break;
+    const row = byUsername.get(un);
+    if (row) top3.push({ ...row });
+  }
+
+  const top3Ids = new Set(top3.map((r) => r.user.id));
+  const rest = ranking.filter((r) => !top3Ids.has(r.user.id));
+
+  return [...top3, ...rest].map((r, i) => ({
+    ...r,
+    rank: i + 1,
+  }));
+}
+
 /**
  * Para los prodes más recientes: inserta 3 filas ficticias arriba (sin usuario real “ganador”)
  * y coloca a los usuarios priorizados en los puestos siguientes con sus puntos reales del cálculo.

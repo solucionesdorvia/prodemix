@@ -4,7 +4,11 @@ import { auth } from "@/auth";
 import { apiError } from "@/lib/api-errors";
 import { assertCanViewProde } from "@/lib/prode-access";
 import { getPrisma } from "@/lib/prisma";
-import { applyShowcaseLeaderboardOverlay } from "@/lib/leaderboard-prode-display";
+import {
+  applyNamedPremioTopThreeOverlay,
+  applyShowcaseLeaderboardOverlay,
+  isNamedPremioTopThreeProde,
+} from "@/lib/leaderboard-prode-display";
 import { recalculateProdeLeaderboard } from "@/lib/ranking-compute";
 import { findProdeByIdOrSlug } from "@/lib/prode-resolve";
 import { prismaUserIncludedInRankings } from "@/lib/ranking-user-filter";
@@ -91,7 +95,9 @@ export async function queryProdeRanking(
     select: { id: true },
   });
   const lastThreeIds = new Set(lastThree.map((p) => p.id));
-  if (lastThreeIds.has(prode.id)) {
+  if (isNamedPremioTopThreeProde(prode.title, prode.slug)) {
+    ranking = applyNamedPremioTopThreeOverlay(ranking);
+  } else if (lastThreeIds.has(prode.id)) {
     ranking = applyShowcaseLeaderboardOverlay(ranking);
   }
 

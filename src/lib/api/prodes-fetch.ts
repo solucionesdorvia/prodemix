@@ -96,3 +96,14 @@ export async function fetchProdePlayedPredictionsForUser(
     `/api/prodes/${encodeURIComponent(prodeId)}/predictions?forUser=${encodeURIComponent(forUserId)}`,
   );
 }
+
+export async function postProdeSupportMessage(body: {
+  prodeId: string;
+  kind: "prize" | "error";
+  message: string;
+}): Promise<{ ok: boolean }> {
+  return fetchProdeApi<{ ok: boolean }>("/api/support/contact", {
+    method: "POST",
+    body: JSON.stringify(body),
+  });
+}
