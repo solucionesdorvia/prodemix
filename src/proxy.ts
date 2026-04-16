@@ -8,7 +8,10 @@ import {
   REFERRAL_COOKIE_MAX_AGE_SEC,
 } from "@/lib/referrals/constants";
 import { normalizeReferralCode } from "@/lib/referrals/normalize";
-import { isMaintenanceModeActive } from "@/lib/maintenance-mode";
+import {
+  buildMaintenanceHtmlPage,
+  isMaintenanceModeActive,
+} from "@/lib/maintenance-mode";
 import { rateLimit } from "@/lib/rate-limit";
 import { rateLimitResponse } from "@/lib/rate-limit-response";
 
@@ -45,9 +48,6 @@ export async function proxy(request: NextRequest) {
   const ip = getClientIp(request);
 
   if (isMaintenanceModeActive()) {
-    if (pathname === "/mantenimiento" || pathname.startsWith("/mantenimiento/")) {
-      return NextResponse.next();
-    }
     if (pathname.startsWith("/api/")) {
       return NextResponse.json(
         {
@@ -60,9 +60,14 @@ export async function proxy(request: NextRequest) {
         { status: 503 },
       );
     }
-    const url = request.nextUrl.clone();
-    url.pathname = "/mantenimiento";
-    return NextResponse.redirect(url);
+    /** Sin pasar por Next: no hay React, sesión ni rutas de la app. */
+    return new NextResponse(buildMaintenanceHtmlPage(), {
+      status: 503,
+      headers: {
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": "no-store, no-cache, must-revalidate",
+      },
+    });
   }
 
   if (pathname.startsWith("/api/auth")) {
