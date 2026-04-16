@@ -32,6 +32,7 @@ export async function GET(
       plenos: r.plenos,
       signHits: r.signHits,
       computedAt: r.computedAt,
+      ...(r.displayPlaceholder ? { displayPlaceholder: true } : {}),
       user: r.user,
     })),
   });

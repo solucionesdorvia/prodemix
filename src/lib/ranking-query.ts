@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import { apiError } from "@/lib/api-errors";
 import { assertCanViewProde } from "@/lib/prode-access";
 import { getPrisma } from "@/lib/prisma";
+import { applyShowcaseLeaderboardOverlay } from "@/lib/leaderboard-prode-display";
 import { recalculateProdeLeaderboard } from "@/lib/ranking-compute";
 import { findProdeByIdOrSlug } from "@/lib/prode-resolve";
 import { prismaUserIncludedInRankings } from "@/lib/ranking-user-filter";
@@ -14,6 +15,8 @@ export type RankingApiRow = {
   plenos: number;
   signHits: number;
   computedAt: Date;
+  /** Fila solo visual (no es un usuario real); usado en exhibición de últimos prodes. */
+  displayPlaceholder?: boolean;
   user: {
     id: string;
     name: string | null;
@@ -73,7 +76,7 @@ export async function queryProdeRanking(
 
   const rows = await prisma.prodeLeaderboardEntry.findMany(leaderboardQuery);
 
-  const ranking: RankingApiRow[] = rows.map((r) => ({
+  let ranking: RankingApiRow[] = rows.map((r) => ({
     rank: r.rankPosition,
     points: r.points,
     plenos: r.plenos,
@@ -81,6 +84,16 @@ export async function queryProdeRanking(
     computedAt: r.computedAt,
     user: r.user,
   }));
+
+  const lastThree = await prisma.prode.findMany({
+    orderBy: { createdAt: "desc" },
+    take: 3,
+    select: { id: true },
+  });
+  const lastThreeIds = new Set(lastThree.map((p) => p.id));
+  if (lastThreeIds.has(prode.id)) {
+    ranking = applyShowcaseLeaderboardOverlay(ranking);
+  }
 
   return { ok: true, prodeId: prode.id, ranking };
 }

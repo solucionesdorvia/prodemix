@@ -6,6 +6,7 @@ import {
   ChevronRight,
   Cloud,
   Lock,
+  Mail,
   Settings,
   Trophy,
 } from "lucide-react";
@@ -67,10 +68,12 @@ type ApiRankingRow = {
   points: number;
   plenos: number;
   signHits: number;
+  displayPlaceholder?: boolean;
   user: { id: string; name: string | null; username: string | null };
 };
 
 function prodeRankingDisplayName(row: ApiRankingRow): string {
+  if (row.displayPlaceholder && row.user.name) return row.user.name;
   return row.user.username ?
       `@${row.user.username}`
     : row.user.name ?? "Usuario";
@@ -316,6 +319,19 @@ export function ProdesDetailServerView({ prodeId }: Props) {
 
   const userRank = userRankingRow?.rank ?? null;
 
+  const prizeSupportMailto = useMemo(() => {
+    const email = process.env.NEXT_PUBLIC_SUPPORT_EMAIL ?? "hola@prodemix.app";
+    const title = prode?.title ?? "Prode";
+    const subject = encodeURIComponent(`Reclamo de premio — ${title}`);
+    const me = session?.user?.name ?
+        `Mi nombre en la app: ${session.user.name}\n`
+    :   "";
+    const body = encodeURIComponent(
+      `Hola,\n\nQuiero consultar o reclamar por el premio de este prode.\n\n- Título: ${title}\n- Prode ID: ${prodeId}\n\n${me}`,
+    );
+    return `mailto:${email}?subject=${subject}&body=${body}`;
+  }, [prode?.title, prodeId, session?.user?.name]);
+
   const handleCommit = useCallback(
     async (matchId: string, score: ScorePrediction) => {
       if (!prode) return;
@@ -553,10 +569,23 @@ export function ProdesDetailServerView({ prodeId }: Props) {
         </details>
 
         <div>
-          <SectionHeader title="Ranking" />
-          <p className="mt-0.5 text-[10px] leading-snug text-app-muted">
-            Tocá un nombre para ver sus pronósticos en partidos ya jugados.
-          </p>
+          <div className="flex flex-wrap items-start justify-between gap-2">
+            <div className="min-w-0 flex-1">
+              <SectionHeader title="Ranking" />
+              <p className="mt-0.5 text-[10px] leading-snug text-app-muted">
+                Tocá un nombre para ver sus pronósticos en partidos ya jugados.
+              </p>
+            </div>
+            {prode ?
+              <a
+                href={prizeSupportMailto}
+                className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-app-border-subtle bg-app-surface px-2.5 py-1.5 text-[10px] font-semibold text-app-text shadow-sm hover:bg-app-bg"
+              >
+                <Mail className="h-3.5 w-3.5 text-app-primary" aria-hidden />
+                Premio / soporte
+              </a>
+            : null}
+          </div>
         </div>
         {ranking.length > 0 ?
           <div className="space-y-2">
@@ -568,6 +597,7 @@ export function ProdesDetailServerView({ prodeId }: Props) {
                 {rankingTop5.map((row) => {
                   const isSelf = row.user.id === userId;
                   const label = prodeRankingDisplayName(row);
+                  const isPh = row.displayPlaceholder === true;
                   return (
                     <li
                       key={row.user.id}
@@ -580,23 +610,28 @@ export function ProdesDetailServerView({ prodeId }: Props) {
                       <span className="text-center text-[12px] font-bold tabular-nums text-app-muted">
                         {row.rank ?? "—"}
                       </span>
-                      <button
-                        type="button"
-                        className={cn(
-                          "min-w-0 truncate text-left text-[12px] font-semibold leading-tight underline decoration-app-primary/35 decoration-1 underline-offset-2 hover:decoration-app-primary",
-                          isSelf ? "text-app-primary" : "text-app-text",
-                        )}
-                        onClick={() =>
-                          setPickerUser({ id: row.user.id, label })
-                        }
-                      >
-                        {label}
-                        {isSelf ?
-                          <span className="ml-1 text-[10px] font-normal text-app-muted no-underline">
-                            (vos)
-                          </span>
-                        : null}
-                      </button>
+                      {isPh ?
+                        <span className="min-w-0 truncate text-left text-[12px] font-semibold leading-tight text-app-muted">
+                          {label}
+                        </span>
+                      : <button
+                          type="button"
+                          className={cn(
+                            "min-w-0 truncate text-left text-[12px] font-semibold leading-tight underline decoration-app-primary/35 decoration-1 underline-offset-2 hover:decoration-app-primary",
+                            isSelf ? "text-app-primary" : "text-app-text",
+                          )}
+                          onClick={() =>
+                            setPickerUser({ id: row.user.id, label })
+                          }
+                        >
+                          {label}
+                          {isSelf ?
+                            <span className="ml-1 text-[10px] font-normal text-app-muted no-underline">
+                              (vos)
+                            </span>
+                          : null}
+                        </button>
+                      }
                       <span className="shrink-0 text-[10px] font-semibold tabular-nums text-app-muted">
                         {row.plenos} pl.
                       </span>
@@ -656,6 +691,7 @@ export function ProdesDetailServerView({ prodeId }: Props) {
                   {ranking.map((row) => {
                     const isSelf = row.user.id === userId;
                     const label = prodeRankingDisplayName(row);
+                    const isPh = row.displayPlaceholder === true;
                     return (
                       <li
                         key={row.user.id}
@@ -668,23 +704,28 @@ export function ProdesDetailServerView({ prodeId }: Props) {
                         <span className="text-center text-[12px] font-bold tabular-nums text-app-muted">
                           {row.rank ?? "—"}
                         </span>
-                        <button
-                          type="button"
-                          className={cn(
-                            "min-w-0 truncate text-left text-[12px] font-semibold leading-tight underline decoration-app-primary/35 decoration-1 underline-offset-2 hover:decoration-app-primary",
-                            isSelf ? "text-app-primary" : "text-app-text",
-                          )}
-                          onClick={() =>
-                            setPickerUser({ id: row.user.id, label })
-                          }
-                        >
-                          {label}
-                          {isSelf ?
-                            <span className="ml-1 text-[10px] font-normal text-app-muted no-underline">
-                              (vos)
-                            </span>
-                          : null}
-                        </button>
+                        {isPh ?
+                          <span className="min-w-0 truncate text-left text-[12px] font-semibold leading-tight text-app-muted">
+                            {label}
+                          </span>
+                        : <button
+                            type="button"
+                            className={cn(
+                              "min-w-0 truncate text-left text-[12px] font-semibold leading-tight underline decoration-app-primary/35 decoration-1 underline-offset-2 hover:decoration-app-primary",
+                              isSelf ? "text-app-primary" : "text-app-text",
+                            )}
+                            onClick={() =>
+                              setPickerUser({ id: row.user.id, label })
+                            }
+                          >
+                            {label}
+                            {isSelf ?
+                              <span className="ml-1 text-[10px] font-normal text-app-muted no-underline">
+                                (vos)
+                              </span>
+                            : null}
+                          </button>
+                        }
                         <span className="shrink-0 text-[10px] font-semibold tabular-nums text-app-muted">
                           {row.plenos} pl.
                         </span>
